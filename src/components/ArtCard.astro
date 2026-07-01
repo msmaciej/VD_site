@@ -1,0 +1,40 @@
+---
+// src/components/ArtCard.astro
+const { title, year, price, image, enabled, showTitle, showYear, showPrice, showLine } = Astro.props;
+
+// If the piece is disabled in the admin list, do not render [cite: 21]
+if (!enabled) return null;
+---
+
+<div class="group flex flex-col mb-12">
+  <div class="aspect-[4/5] overflow-hidden bg-zinc-200 dark:bg-zinc-900/20 mb-6">
+    <img 
+      src={image} 
+      alt={title} 
+      class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out scale-100 group-hover:scale-105"
+    />
+  </div>
+
+  <div class={`flex justify-between items-baseline pb-4 min-h-[40px] ${showLine ? 'border-b border-zinc-200 dark:border-zinc-800' : ''}`}>
+    <div>
+      {showTitle && title && (
+        <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-zinc-900 dark:text-white/90">
+          {title}
+        </h3>
+      )}
+      {showYear && year && (
+        <p class="text-[10px] text-zinc-500 tracking-[0.2em] mt-1 uppercase">
+          {year}
+        </p>
+      )}
+    </div>
+    
+    <div class="text-right">
+      {showPrice && price && (
+        <span class="text-[10px] font-thin tracking-[0.1em] text-zinc-800 dark:text-white/70">
+          CHF {price.toLocaleString()}
+        </span>
+      )}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+fragment PageParts on Page {
+  __typename
+  blocks {
+    __typename
+    ... on PageBlocksSection {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      subTitle
+      subTitleFont
+      subTitleFontSize
+      subTitleFontWeight
+      content
+      bodyFont
+      fontSize
+      fontWeight
+      email
+      showArt
+      columns
+      enabled
+    }
+  }
+}
+
+fragment SettingsParts on Settings {
+  __typename
+  siteName
+  siteNameFont
+  siteNameFontSize
+  siteNameFontWeight
+  subSiteName
+  subSiteNameFont
+  subSiteNameFontSize
+  subSiteNameFontWeight
+  showSubSiteNameOnly
+  headerLayout
+  headerLinksFontSize
+  navLinks {
+    __typename
+    label
+    url
+  }
+  footerText
+  showFooterLine
+  footerTextFontSize
+  socialLinks {
+    __typename
+    platform
+    url
+  }
+  fontPreset
+  customFontName
+  theme
+  baseTextColor
+  customBackgroundColor
+  headerHeight
+  footerHeight
+  headerInnerWidth
+}
+
+fragment ArtParts on Art {
+  __typename
+  title
+  year
+  price
+  image
+  enabled
+  showTitle
+  showPrice
+  showLine
+}

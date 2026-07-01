@@ -1,0 +1,55 @@
+{
+  "blocks": [
+    {
+      "title": "What We Do",
+      "titleFont": "",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted | workflows | .. | Human control stays | at the centre | .",
+      "subTitleFontSize": "text-[13px]",
+      "content": "",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-thin",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "How It Works",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | We start by listening | .. | Your situation | Workflow | Human review | .",
+      "subTitleFontSize": "text-[13px]",
+      "content": "",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-thin",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "Process Flow",
+      "titleFont": "",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": ". | Situation|.| Clarified need|.| Simple workflow|.| Human review|.| Result|.| .",
+      "subTitleFontSize": "text-[13px]",
+      "content": "",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-thin",
+      "enabled": false,
+      "_template": "section"
+    },
+    {
+      "title": "Contact",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": ".",
+      "subTitleFontSize": "text-[13px]",
+      "content": "",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-thin",
+      "email": "info@vortexdeep.ch",
+      "enabled": true,
+      "_template": "section"
+    }
+  ]
+}

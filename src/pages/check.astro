@@ -1,0 +1,433 @@
+---
+// src/pages/check.astro
+// VortexDeep — Quick Operations Check (v2 — broader scope)
+// Drop into src/pages/ of the ARTMJS/_VORTEXDEEP project.
+import Layout from '../layouts/Layout.astro';
+const theme = 'paper';
+---
+
+<Layout title="VortexDeep — Quick Operations Check" theme={theme}>
+  <style is:global define:vars={{ theme }}>
+    :root[data-theme="paper"] {
+      --zen-bg: #F9F7F2;
+      --zen-text: #0a0a0a;
+      --zen-muted: #737373;
+      --zen-accent: #0a0a0a;
+    }
+  </style>
+
+  <main class="min-h-screen flex flex-col items-center justify-center px-6 py-24"
+        style="background-color: var(--zen-bg); color: var(--zen-text);">
+    <div class="max-w-xl w-full mx-auto" id="vd-root">
+
+      <a href="/" class="text-[11px] uppercase tracking-[1.2em] mb-3 opacity-60 text-center translate-x-[0.3em] hover:opacity-100 transition-opacity block" style="text-decoration:none; color:inherit;">
+        VortexDeep
+      </a>
+      <p class="text-[10px] uppercase tracking-[0.4em] mb-16 opacity-40 text-center">
+        Quick Operations Check
+      </p>
+
+      <div class="flex gap-2 mb-16" id="vd-progress"></div>
+
+      <!-- Q0: Role -->
+      <div class="vd-q" data-q="0">
+        <p class="vd-ql">What best describes you right now?</p>
+        <div class="flex flex-col gap-1">
+          <button class="vd-opt" data-val="business">Business owner or manager handling day-to-day operations</button>
+          <button class="vd-opt" data-val="consultant">Consultant or agency exploring this for clients</button>
+          <button class="vd-opt" data-val="curious">Researching AI automation generally / just curious</button>
+        </div>
+      </div>
+
+      <!-- Q1: Pain area — broad -->
+      <div class="vd-q hidden" data-q="1">
+        <p class="vd-ql">Which of these takes up too much time in your business right now?</p>
+        <div class="flex flex-col gap-1">
+          <button class="vd-opt" data-val="inbox">Sorting and prioritising incoming messages or inquiries</button>
+          <button class="vd-opt" data-val="followup">Following up with clients or leads — things fall through the cracks</button>
+          <button class="vd-opt" data-val="admin">Repetitive admin or data entry that someone just has to do</button>
+          <button class="vd-opt" data-val="reporting">Pulling together reports or summaries from scattered information</button>
+          <button class="vd-opt" data-val="intake">Client intake, booking, or onboarding — too manual, too slow</button>
+          <button class="vd-opt" data-val="several">Several of these at once</button>
+        </div>
+      </div>
+
+      <!-- Q2: Time cost -->
+      <div class="vd-q hidden" data-q="2">
+        <p class="vd-ql">Roughly how many hours a week does this kind of work absorb?</p>
+        <div class="flex flex-col gap-1">
+          <button class="vd-opt" data-val="high">More than 5 hours</button>
+          <button class="vd-opt" data-val="mid">1–5 hours</button>
+          <button class="vd-opt" data-val="low">Less than an hour</button>
+          <button class="vd-opt" data-val="unsure">Hard to say — it's spread across the team</button>
+        </div>
+      </div>
+
+      <!-- Q3: Process ownership -->
+      <div class="vd-q hidden" data-q="3">
+        <p class="vd-ql">Is there a clear process for this, or does it depend on who's available?</p>
+        <div class="flex flex-col gap-1">
+          <button class="vd-opt" data-val="none">No real process — whoever has time handles it</button>
+          <button class="vd-opt" data-val="partial">Some rules exist but it's still inconsistent</button>
+          <button class="vd-opt" data-val="full">There's a defined process — we just need it to run faster</button>
+        </div>
+      </div>
+
+      <!-- Q4: Goal / intent -->
+      <div class="vd-q hidden" data-q="4">
+        <p class="vd-ql">What would a useful outcome look like for you?</p>
+        <div class="flex flex-col gap-1">
+          <button class="vd-opt" data-val="solve">A practical workflow that takes this off my plate — or at least reduces it</button>
+          <button class="vd-opt" data-val="clarity">More visibility into what's happening, so I can make better decisions</button>
+          <button class="vd-opt" data-val="explore">A general sense of what's possible before committing to anything</button>
+          <button class="vd-opt" data-val="compare">Understanding how others have approached this</button>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mt-12" id="vd-nav">
+        <button id="vd-back" class="text-[10px] uppercase tracking-[0.3em] opacity-40 hover:opacity-80 transition-opacity" disabled>← Back</button>
+        <span id="vd-step" class="text-[10px] uppercase tracking-[0.3em] opacity-40">1 / 5</span>
+      </div>
+
+      <!-- GATE: Contact required before result is revealed -->
+      <div id="vd-gate" class="hidden text-center">
+        <p class="vd-tag">One last step</p>
+        <h2 class="vd-rh">Leave your email to see your result.</h2>
+        <p class="vd-rb">
+          We'll show you where you stand and follow up directly if there's a fit.
+          No automated sequences.
+        </p>
+        <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
+          <input type="hidden" name="source" value="vortexdeep.ch quick check">
+          <input type="hidden" name="bucket"  id="gate-bucket">
+          <input type="hidden" name="pain"    id="gate-pain">
+          <input type="hidden" name="time"    id="gate-time">
+          <input type="hidden" name="process" id="gate-process">
+          <input type="hidden" name="goal"    id="gate-goal">
+          <input type="hidden" name="form_load_time" id="gate-load-time">
+          <!-- Honeypot: invisible to users, bots fill it in -->
+          <input type="text" name="website_url" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="off"/>
+          <label class="block">
+            <span class="vd-fl">Email</span>
+            <input name="email" type="email" required class="vd-input" placeholder="your@email.com"/>
+          </label>
+          <label class="block">
+            <span class="vd-fl">Name (optional)</span>
+            <input name="name" type="text" class="vd-input"/>
+          </label>
+          <label class="block">
+            <span class="vd-fl">Company (optional)</span>
+            <input name="company" type="text" class="vd-input"/>
+          </label>
+          <label class="block">
+            <span class="vd-fl">One line on your situation (optional)</span>
+            <textarea name="note" rows="2" class="vd-input"></textarea>
+          </label>
+          <!-- Math security check -->
+          <div style="border:1px solid var(--zen-muted); padding:16px 20px; border-radius:4px; opacity:0.85;">
+            <div class="flex items-center justify-between gap-6">
+              <div>
+                <span class="vd-fl" style="margin-bottom:6px;display:block;">Security check</span>
+                <p class="text-[12px] uppercase tracking-[0.08em]" style="color:var(--zen-text); margin:0;">
+                  Calculate: <strong id="vd-math-q" style="opacity:1;">···</strong>
+                </p>
+              </div>
+              <input name="math_answer" type="number" required
+                     class="vd-input"
+                     placeholder="?"
+                     style="width:64px; text-align:center; font-size:16px; border-bottom:1px solid var(--zen-text);"/>
+            </div>
+          </div>
+          <p id="vd-gate-error" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
+            Incorrect answer or invalid email — please try again.
+          </p>
+          <button type="submit"
+                  class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
+                  style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
+            See my result
+          </button>
+        </form>
+      </div>
+
+      <!-- RESULT: Lead -->
+      <div class="vd-result hidden text-center" id="vd-res-lead">
+        <p class="vd-tag">Likely a fit</p>
+        <h2 class="vd-rh">This sounds like exactly the kind of situation we work on.</h2>
+        <p class="vd-rb">
+          Real operational cost, no clear owner, and a practical outcome in mind —
+          that's the pattern behind most of our projects. We'll be in touch directly.
+        </p>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
+        <br><button class="vd-restart mt-8">Start over</button>
+      </div>
+
+      <!-- RESULT: Warm -->
+      <div class="vd-result hidden text-center" id="vd-res-warm">
+        <p class="vd-tag">Worth keeping in mind</p>
+        <h2 class="vd-rh">Not urgent yet — but noted.</h2>
+        <p class="vd-rb">
+          It doesn't sound like this is costing you much time right now, which is fine.
+          We have your details — if your situation changes, feel free to reach out,
+          or we may check back in when the timing makes sense.
+        </p>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
+        <br><button class="vd-restart mt-8">Start over</button>
+      </div>
+
+      <!-- RESULT: Other -->
+      <div class="vd-result hidden text-center" id="vd-res-other">
+        <p class="vd-tag">Thanks for going through this</p>
+        <h2 class="vd-rh">If you'd like to see how we work, the best place is our LinkedIn.</h2>
+        <p class="vd-rb">
+          We share practical case studies and real workflow examples there —
+          the kind of detail that gives a clearer picture than a check like this can.
+        </p>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
+        <br><button class="vd-restart mt-8">Start over</button>
+      </div>
+
+    </div>
+  </main>
+
+  <style>
+    .vd-ql {
+      font-size: 14px;
+      font-weight: 200;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.5;
+      margin: 0 0 2rem;
+      text-align: center;
+    }
+    .vd-opt {
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 14px 4px;
+      border: none;
+      border-bottom: 1px solid var(--zen-muted);
+      background: transparent;
+      color: var(--zen-text);
+      opacity: 0.6;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+      width: 100%;
+    }
+    .vd-opt:hover { opacity: 1; border-color: var(--zen-text); }
+    .vd-opt.selected { opacity: 1; border-color: var(--zen-text); font-weight: 600; }
+
+    .vd-tag {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      border-bottom: 1px solid var(--zen-muted);
+      display: inline-block;
+      padding-bottom: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .vd-rh {
+      font-size: 16px;
+      font-weight: 200;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.5;
+      margin: 0 0 1rem;
+    }
+    .vd-rb {
+      opacity: 0.65;
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 38rem;
+      margin: 0 auto 2rem;
+    }
+    .vd-fl {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .vd-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--zen-muted);
+      color: var(--zen-text);
+      font-family: inherit;
+      font-size: 13px;
+      padding: 8px 2px;
+      resize: vertical;
+    }
+    .vd-input:focus { outline: none; border-color: var(--zen-text); }
+    .vd-soft-link {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      color: var(--zen-text);
+      border-bottom: 1px solid var(--zen-muted);
+      padding-bottom: 3px;
+      text-decoration: none;
+    }
+    .vd-soft-link:hover { opacity: 1; }
+    .vd-restart {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--zen-text);
+    }
+    .vd-restart:hover { opacity: 0.9; }
+    .vd-mini-form { margin: 1.5rem 0 0.5rem; }
+    #vd-progress span {
+      height: 1px;
+      flex: 1;
+      background: var(--zen-muted);
+      opacity: 0.3;
+      transition: opacity 0.3s ease, background 0.3s ease;
+    }
+    #vd-progress span.done { opacity: 1; background: var(--zen-text); }
+    .hidden { display: none; }
+  </style>
+
+  <script>
+    const TOTAL = 5;
+    const answers: Record<number, string> = {};
+    let current = 0;
+
+    const progressWrap = document.getElementById('vd-progress')!;
+    for (let i = 0; i < TOTAL; i++) {
+      progressWrap.appendChild(document.createElement('span'));
+    }
+
+    const backBtn = document.getElementById('vd-back') as HTMLButtonElement;
+    const stepEl  = document.getElementById('vd-step')!;
+    const nav     = document.getElementById('vd-nav')!;
+    const qEls    = Array.from(document.querySelectorAll<HTMLElement>('.vd-q'));
+
+    function render() {
+      qEls.forEach(q => q.classList.toggle('hidden', Number(q.dataset.q) !== current));
+      progressWrap.querySelectorAll('span').forEach((s, i) =>
+        s.classList.toggle('done', i <= current));
+      stepEl.textContent = `${current + 1} / ${TOTAL}`;
+      backBtn.disabled = current === 0;
+    }
+
+    qEls.forEach(q => {
+      q.querySelectorAll<HTMLButtonElement>('.vd-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(q.dataset.q);
+          answers[idx] = btn.dataset.val || '';
+          q.querySelectorAll('.vd-opt').forEach(o => o.classList.remove('selected'));
+          btn.classList.add('selected');
+          setTimeout(() => {
+            if (idx < TOTAL - 1) { current = idx + 1; render(); }
+            else showGate();
+          }, 160);
+        });
+      });
+    });
+
+    backBtn.addEventListener('click', () => {
+      if (current > 0) { current--; render(); }
+    });
+
+    function calcBucket(): 'lead' | 'warm' | 'other' {
+      const role    = answers[0];
+      const pain    = answers[1];
+      const time    = answers[2];
+      const process = answers[3];
+      const goal    = answers[4];
+      if (role === 'consultant' || goal === 'compare' || role === 'curious') return 'other';
+      if (
+        role === 'business' &&
+        (time === 'high' || time === 'mid' || pain === 'several') &&
+        process !== 'full' &&
+        (goal === 'solve' || goal === 'clarity')
+      ) return 'lead';
+      if (role === 'business') return 'warm';
+      return 'other';
+    }
+
+    async function showGate() {
+      // Hide quiz UI
+      qEls.forEach(q => q.classList.add('hidden'));
+      nav.classList.add('hidden');
+      progressWrap.classList.add('hidden');
+
+      // Pre-fill hidden fields in the gate form
+      const bucket = calcBucket();
+      (document.getElementById('gate-bucket')  as HTMLInputElement).value = bucket;
+      (document.getElementById('gate-pain')    as HTMLInputElement).value = answers[1] || '';
+      (document.getElementById('gate-time')    as HTMLInputElement).value = answers[2] || '';
+      (document.getElementById('gate-process') as HTMLInputElement).value = answers[3] || '';
+      (document.getElementById('gate-goal')    as HTMLInputElement).value = answers[4] || '';
+
+      // Time trap: record when the gate form was shown
+      (document.getElementById('gate-load-time') as HTMLInputElement).value =
+        String(Math.floor(Date.now() / 1000));
+
+      // Fetch math challenge from server (session-based, answer never in JS)
+      try {
+        const res  = await fetch('/get-math.php');
+        const data = await res.json();
+        const el = document.getElementById('vd-math-q');
+        if (el) el.textContent = data.question;
+      } catch (_) {
+        const el = document.getElementById('vd-math-q');
+        if (el) el.textContent = '3 + 5'; // fallback display only; server validates
+      }
+
+      document.getElementById('vd-gate')!.classList.remove('hidden');
+    }
+
+    // Gate form submit: send email then reveal result
+    document.getElementById('vd-gate-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form    = e.target as HTMLFormElement;
+      const errorEl = document.getElementById('vd-gate-error')!;
+      const bucket  = (document.getElementById('gate-bucket') as HTMLInputElement).value;
+      const btn     = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+      btn.textContent = '...';
+      btn.disabled = true;
+      errorEl.classList.add('hidden');
+
+      try {
+        const res  = await fetch('/send-check.php', { method: 'POST', body: new FormData(form) });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          document.getElementById('vd-gate')!.classList.add('hidden');
+          document.getElementById('vd-res-' + bucket)!.classList.remove('hidden');
+        } else {
+          // Wrong math answer or invalid email — refresh the math question
+          errorEl.classList.remove('hidden');
+          btn.textContent = 'See my result';
+          btn.disabled = false;
+          const mathRes  = await fetch('/get-math.php');
+          const mathData = await mathRes.json();
+          const mathEl = document.getElementById('vd-math-q');
+          if (mathEl) mathEl.textContent = mathData.question;
+          (form.querySelector('input[name="math_answer"]') as HTMLInputElement).value = '';
+        }
+      } catch (_) {
+        errorEl.classList.remove('hidden');
+        btn.textContent = 'See my result';
+        btn.disabled = false;
+      }
+    });
+
+    document.querySelectorAll('.vd-restart').forEach(btn =>
+      btn.addEventListener('click', () => window.location.reload()));
+
+    render();
+  </script>
+</Layout>

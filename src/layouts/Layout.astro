@@ -1,0 +1,84 @@
+---
+// src/layouts/Layout.astro
+interface Props {
+	title: string;
+	theme?: string;
+}
+const { title, theme = "light" } = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-theme={theme}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+		<slot name="head" />
+		<style is:global>
+			:root[data-theme="light"]  { --zen-bg:#ffffff; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#000000; }
+			:root[data-theme="dark"]   { --zen-bg:#000000; --zen-text:#f5f5f5; --zen-muted:#a3a3a3; --zen-accent:#ffffff; }
+			:root[data-theme="paper"]  { --zen-bg:#F9F7F2; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#0a0a0a; }
+			body {
+				background-color: var(--zen-bg);
+				color: var(--zen-text);
+				font-family: 'Inter', sans-serif;
+				transition: background-color 0.7s ease, color 0.7s ease;
+				margin: 0;
+				-webkit-font-smoothing: antialiased;
+			}
+			/* Disable text selection globally — keep inputs functional */
+			* { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+			input, textarea, [contenteditable] { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+			/* Disable image drag */
+			img { -webkit-user-drag:none; pointer-events:none; }
+			/* Scrollbar */
+			::-webkit-scrollbar { width:5px; }
+			::-webkit-scrollbar-track { background:var(--zen-bg); }
+			::-webkit-scrollbar-thumb { background:var(--zen-muted); border-radius:10px; }
+		</style>
+	</head>
+	<body>
+		<slot />
+		<!-- Content & code protection -->
+		<script is:inline>
+		(function(){
+			// 1. Right-click disabled
+			document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+			// 2. Keyboard shortcuts that expose source / devtools
+			document.addEventListener('keydown', function(e){
+				var c = e.ctrlKey || e.metaKey, s = e.shiftKey, k = e.key;
+				if(c && k==='u'){ e.preventDefault(); return; }  // view-source
+				if(c && k==='s'){ e.preventDefault(); return; }  // save page
+				if(c && k==='a'){ e.preventDefault(); return; }  // select all
+				if(c && k==='p'){ e.preventDefault(); return; }  // print
+				if(k==='F12'){    e.preventDefault(); return; }  // devtools
+				if(c && s && k==='I'){ e.preventDefault(); return; } // devtools
+				if(c && s && k==='J'){ e.preventDefault(); return; } // console
+				if(c && s && k==='C'){ e.preventDefault(); return; } // element picker
+			});
+
+			// 3. Drag disabled
+			document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+			// 4. Copy disabled outside input fields
+			document.addEventListener('copy', function(e){
+				var t = document.activeElement ? document.activeElement.tagName : '';
+				if(t !== 'INPUT' && t !== 'TEXTAREA'){ e.preventDefault(); }
+			});
+
+			// 5. DevTools size detection — clears page if docked devtools detected
+			var threshold = 160, open = false;
+			setInterval(function(){
+				var w = window.outerWidth  - window.innerWidth  > threshold;
+				var h = window.outerHeight - window.innerHeight > threshold;
+				if(w || h){ if(!open){ open=true; document.body.innerHTML=''; } }
+				else{ open=false; }
+			}, 1000);
+		})();
+		</script>
+	</body>
+</html>
