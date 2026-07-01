@@ -1,0 +1,24 @@
+{
+  "name": "artmjs-zen",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "admin": "tinacms dev -c \"astro dev\"",
+    "build": "astro build",
+    "start": "astro dev",
+    "preview": "astro preview",
+    "astro": "astro",
+    "tree": "find . -maxdepth 4 -not -path '*/.*' -not -path '*/node_modules/*' -not -path './.astro*' > site-tree.txt",
+    "clean": "rm -rf .tina/__generated__ && npm run admin"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.5",
+    "@tinacms/cli": "^2.2.0",
+    "astro": "^4.16.19",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.19",
+    "tinacms": "^1.6.7"
+  }
+}

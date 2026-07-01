@@ -1,0 +1,98 @@
+.
+./z-old-nodejs-install-screenshot
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.16.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.32.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.11.48.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.34.02.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.07.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.59.36.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.59.28.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.19.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.58.40.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.40.47.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.54.24.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.38.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.09.03.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.12.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.55.11.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.08.01.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.01.39.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.09.06.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.08.04.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.54.08.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.18.56.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.59.43.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.05.57.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.25.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.32.00.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.40.58.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.30.37.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.23.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.12.03.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.31.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.21.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.33.59.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.54.29.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.23.57.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.01.54.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.05.07.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.18.49.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.54.02.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.41.16.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.34.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.13.51.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.51.40.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.46.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.12.12.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.23.06.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.30.40.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.36.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.23.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.24.15.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.31.21.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.57.png
+./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.43.png
+./tina
+./tina/tina-lock.json
+./tina/__generated__
+./tina/__generated__/static-media.json
+./tina/__generated__/queries.gql
+./tina/__generated__/_schema.json
+./tina/__generated__/types.ts
+./tina/__generated__/client.ts
+./tina/__generated__/_graphql.json
+./tina/__generated__/frags.gql
+./tina/__generated__/config.prebuild.jsx
+./tina/__generated__/_lookup.json
+./tina/__generated__/schema.gql
+./tina/config.ts
+./site-tree.txt
+./node_modules
+./astro.config.mjs
+./README.md
+./tailwind.config.mjs
+./public
+./public/admin
+./public/admin/index.html
+./package-lock.json
+./package.json
+./z-old
+./z-old/index_260329_01.astro
+./z-old/index_260329_02.astro
+./src
+./src/env.d.ts
+./src/content
+./src/content/settings
+./src/content/settings/site.json
+./src/content/art
+./src/content/art/fragment-02.json
+./src/content/art/fragment-01.json
+./src/content/pages
+./src/content/pages/home.json
+./src/components
+./src/components/Hero.astro
+./src/components/ArtCard.astro
+./src/layouts
+./src/layouts/Layout.astro
+./src/pages
+./src/pages/index.astro
