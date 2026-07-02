@@ -1,10 +1,24 @@
 ---
 // src/layouts/Layout.astro
 interface Props {
-	title: string;
-	theme?: string;
+	title:       string;
+	theme?:      string;
+	description?: string;
+	ogImage?:    string;
+	siteUrl?:    string;
 }
-const { title, theme = "light" } = Astro.props;
+const {
+	title,
+	theme       = 'light',
+	description = '',
+	ogImage     = '',
+	siteUrl     = 'https://vortexdeep.ch',
+} = Astro.props;
+
+const canonical   = `${siteUrl}${Astro.url.pathname}`;
+const ogImageFull = ogImage
+	? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
+	: `${siteUrl}/og-image.png`;
 ---
 <!doctype html>
 <html lang="en" data-theme={theme}>
@@ -12,7 +26,28 @@ const { title, theme = "light" } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- ── SEO: Core ── -->
 		<title>{title}</title>
+		<meta name="description"        content={description} />
+		<link rel="canonical"           href={canonical} />
+		<meta name="robots"             content="index, follow" />
+
+		<!-- ── SEO: Open Graph (Facebook, LinkedIn) ── -->
+		<meta property="og:type"        content="website" />
+		<meta property="og:url"         content={canonical} />
+		<meta property="og:title"       content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image"       content={ogImageFull} />
+		<meta property="og:locale"      content="de_CH" />
+		<meta property="og:site_name"   content="VortexDeep" />
+
+		<!-- ── SEO: Twitter / X Card ── -->
+		<meta name="twitter:card"        content="summary_large_image" />
+		<meta name="twitter:title"       content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image"       content={ogImageFull} />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
@@ -21,6 +56,11 @@ const { title, theme = "light" } = Astro.props;
 			:root[data-theme="light"]  { --zen-bg:#ffffff; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#000000; }
 			:root[data-theme="dark"]   { --zen-bg:#000000; --zen-text:#f5f5f5; --zen-muted:#a3a3a3; --zen-accent:#ffffff; }
 			:root[data-theme="paper"]  { --zen-bg:#F9F7F2; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#0a0a0a; }
+			:root[data-theme="stone"]  { --zen-bg:#f0ede8; --zen-text:#2c2a28; --zen-muted:#7a6e65; --zen-accent:#7a6e65; }
+			:root[data-theme="mist"]   { --zen-bg:#eef0f2; --zen-text:#1e2428; --zen-muted:#5a7080; --zen-accent:#5a7080; }
+			:root[data-theme="ink"]    { --zen-bg:#141414; --zen-text:#e8e4de; --zen-muted:#8c7355; --zen-accent:#8c7355; }
+			:root[data-theme="sand"]   { --zen-bg:#f5f0e8; --zen-text:#2a2520; --zen-muted:#9a8060; --zen-accent:#9a8060; }
+			:root[data-theme="deep"]   { --zen-bg:#0c0f14; --zen-text:#e0e2e8; --zen-muted:#6e7a8a; --zen-accent:#8aa4c0; }
 			body {
 				background-color: var(--zen-bg);
 				color: var(--zen-text);

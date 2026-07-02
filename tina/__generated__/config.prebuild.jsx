@@ -79,6 +79,104 @@ var config_default = defineConfig({
                   ] },
                   { type: "boolean", name: "enabled", label: "Section Enabled" }
                 ]
+              },
+              // ── Process Flow template ──────────────────────────────────────
+              {
+                name: "processFlow",
+                label: "Process Flow",
+                ui: {
+                  itemProps: (item) => ({ label: item?.title || "Process Flow" })
+                },
+                fields: [
+                  { type: "string", name: "title", label: "Section Title" },
+                  { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
+                  { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
+                  { type: "string", name: "orientation", label: "Arrow Direction", options: [
+                    { label: "Vertical \u2193  (stacked)", value: "vertical" },
+                    { label: "Horizontal \u2192 (inline)", value: "horizontal" }
+                  ] },
+                  // ── Step label appearance (applies to all steps) ───────────
+                  { type: "string", name: "stepFont", label: "Steps \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "stepFontSize", label: "Steps \u2014 Size", options: fontSizeOptions },
+                  { type: "string", name: "stepFontWeight", label: "Steps \u2014 Weight", options: fontWeightOptions },
+                  {
+                    type: "object",
+                    list: true,
+                    name: "steps",
+                    label: "Process Steps",
+                    fields: [
+                      { type: "string", name: "label", label: "Step Label" },
+                      { type: "string", name: "font", label: "Override Font (optional)", options: fontTypeOptions },
+                      { type: "string", name: "fontSize", label: "Override Size (optional)", options: fontSizeOptions },
+                      { type: "string", name: "fontWeight", label: "Override Weight (optional)", options: fontWeightOptions }
+                    ],
+                    ui: { itemProps: (item) => ({ label: item?.label || "Step" }) }
+                  },
+                  { type: "boolean", name: "enabled", label: "Section Enabled" }
+                ]
+              },
+              // ── Case Study template ────────────────────────────────────────
+              {
+                name: "caseStudy",
+                label: "Case Study",
+                ui: {
+                  itemProps: (item) => ({ label: item?.industry ? `Case Study \u2014 ${item.industry}` : "Case Study" })
+                },
+                fields: [
+                  // ── Content ───────────────────────────────────────────────
+                  {
+                    type: "string",
+                    name: "industry",
+                    label: "Industry / Sector",
+                    description: "e.g. International Trade \u2014 never use client name"
+                  },
+                  { type: "string", name: "location", label: "Location", description: "e.g. Switzerland" },
+                  {
+                    type: "string",
+                    name: "package",
+                    label: "Package Used",
+                    description: "e.g. Basic + AI Triage"
+                  },
+                  { type: "string", name: "timeline", label: "Timeline to Go-live", description: "e.g. 4 weeks" },
+                  {
+                    type: "string",
+                    name: "challenge",
+                    label: "Challenge",
+                    description: "The problem \u2014 no internal detail, no client specifics",
+                    ui: { component: "textarea" }
+                  },
+                  {
+                    type: "string",
+                    name: "built",
+                    label: "What Was Built",
+                    description: "High-level only \u2014 no tools, no routing logic",
+                    ui: { component: "textarea" }
+                  },
+                  {
+                    type: "string",
+                    name: "result",
+                    label: "Result",
+                    description: "Business outcome in plain language",
+                    ui: { component: "textarea" }
+                  },
+                  // ── Industry title typography ──────────────────────────────
+                  { type: "string", name: "titleFont", label: "Industry Title \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "titleFontSize", label: "Industry Title \u2014 Size", options: fontSizeOptions },
+                  { type: "string", name: "titleFontWeight", label: "Industry Title \u2014 Weight", options: fontWeightOptions },
+                  // ── Body text typography (Challenge / Built / Result) ──────
+                  { type: "string", name: "bodyFont", label: "Body Text \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "bodyFontSize", label: "Body Text \u2014 Size", options: fontSizeOptions },
+                  { type: "string", name: "bodyFontWeight", label: "Body Text \u2014 Weight", options: fontWeightOptions },
+                  // ── Label typography (Challenge / What Was Built / Result headings) ──
+                  { type: "string", name: "labelFont", label: "Labels \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "labelFontSize", label: "Labels \u2014 Size", options: fontSizeOptions },
+                  { type: "string", name: "labelFontWeight", label: "Labels \u2014 Weight", options: fontWeightOptions },
+                  // ── Meta typography (Package / Timeline / Location) ────────
+                  { type: "string", name: "metaFont", label: "Meta Text \u2014 Font", options: fontTypeOptions },
+                  { type: "string", name: "metaFontSize", label: "Meta Text \u2014 Size", options: fontSizeOptions },
+                  { type: "boolean", name: "enabled", label: "Section Enabled" }
+                ]
               }
             ]
           }
@@ -163,10 +261,16 @@ var config_default = defineConfig({
             { label: "Custom Google Font", value: "custom" }
           ] },
           { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+          { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
           { type: "string", name: "theme", label: "Theme", options: [
-            { label: "Light", value: "light" },
-            { label: "Dark", value: "dark" },
-            { label: "Paper", value: "paper" }
+            { label: "Light \u2014 pure white", value: "light" },
+            { label: "Dark  \u2014 pure black", value: "dark" },
+            { label: "Paper \u2014 warm white", value: "paper" },
+            { label: "Stone \u2014 warm grey", value: "stone" },
+            { label: "Mist  \u2014 cool blue-grey", value: "mist" },
+            { label: "Ink   \u2014 dark warm ground", value: "ink" },
+            { label: "Sand  \u2014 dry neutral", value: "sand" },
+            { label: "Deep  \u2014 constellation dark", value: "deep" }
           ] },
           { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
           { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
@@ -189,7 +293,39 @@ var config_default = defineConfig({
             { label: "Standard \u2014 680px (recommended)", value: "680px" },
             { label: "Wide \u2014 820px", value: "820px" },
             { label: "Full width", value: "100%" }
-          ] }
+          ] },
+          // ── SEO ────────────────────────────────────────────────────────────
+          {
+            type: "string",
+            name: "siteUrl",
+            label: "SEO: Site URL",
+            description: "Full URL with no trailing slash \u2014 e.g. https://vortexdeep.ch"
+          },
+          {
+            type: "string",
+            name: "metaTitle",
+            label: "SEO: Page Title",
+            description: "Shown in Google results. 50\u201360 chars. Leave blank to use site name."
+          },
+          {
+            type: "string",
+            name: "metaDescription",
+            label: "SEO: Meta Description",
+            description: "Shown in Google results. 120\u2013155 chars. Be specific \u2014 include 'Z\xFCrich' and what you do.",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "image",
+            name: "ogImage",
+            label: "SEO: Social Share Image",
+            description: "Shown when shared on LinkedIn/Facebook. 1200\xD7630px recommended."
+          },
+          // ── LocalBusiness (Google / JSON-LD) ───────────────────────────────
+          { type: "string", name: "addressStreet", label: "Address: Street (for Google)" },
+          { type: "string", name: "addressCity", label: "Address: City", description: "e.g. Z\xFCrich" },
+          { type: "string", name: "addressPostal", label: "Address: Postal Code", description: "e.g. 8001" },
+          { type: "string", name: "contactEmail", label: "Contact Email (for Google schema)" },
+          { type: "string", name: "contactPhone", label: "Contact Phone (optional, for Google schema)" }
         ]
       },
       // ── ART GALLERY ────────────────────────────────────────────────────────

@@ -6,8 +6,8 @@
   "siteName": "VortexDeep",
   "siteNameFont": "",
   "siteNameFontSize": "text-2xl md:text-3xl",
-  "subSiteName": ".. | Practical | AI Workflows | .",
-  "subSiteNameFontSize": "text-base md:text-lg",
+  "subSiteName": "Practical AI automation | for small business | . | ZH | Switzerland ",
+  "subSiteNameFontSize": "text-xs md:text-sm",
   "subSiteNameFontWeight": "font-normal",
   "showSubSiteNameOnly": true,
   "headerLayout": "centered",
@@ -29,9 +29,19 @@
     }
   ],
   "fontPreset": "Space Mono",
-  "theme": "dark",
+  "showLogo": true,
+  "theme": "paper",
   "baseTextColor": "",
   "customBackgroundColor": "",
   "headerHeight": "52px",
-  "footerHeight": "56px"
+  "footerHeight": "56px",
+  "siteUrl": "https://vortexdeep.ch",
+  "metaTitle": "VortexDeep — AI Automation for Small Business in Zürich",
+  "metaDescription": "AI automation for small businesses in Zürich. Email routing, document handling, data triage. Phase-gated delivery, managed monthly. Human control central.",
+  "ogImage": "/uploads/_VortexDeep-background-LI.png",
+  "addressStreet": "",
+  "addressCity": "Zürich",
+  "addressPostal": "",
+  "contactEmail": "info@vortexdeep.ch",
+  "contactPhone": ""
 }

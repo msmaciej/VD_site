@@ -2,14 +2,10 @@
   "blocks": [
     {
       "title": "What We Do",
-      "titleFont": "",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted | workflows | .. | Human control stays | at the centre | .",
+      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Email routing | Document handling | Data triage | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
       "subTitleFontSize": "text-[13px]",
-      "content": "",
-      "fontSize": "text-[13px]",
-      "fontWeight": "font-thin",
       "enabled": true,
       "_template": "section"
     },
@@ -17,36 +13,72 @@
       "title": "How It Works",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | We start by listening | .. | Your situation | Workflow | Human review | .",
+      "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your approval | .",
       "subTitleFontSize": "text-[13px]",
-      "content": "",
-      "fontSize": "text-[13px]",
-      "fontWeight": "font-thin",
       "enabled": true,
       "_template": "section"
     },
     {
-      "title": "Process Flow",
-      "titleFont": "",
+      "title": "Our Process",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ". | Situation|.| Clarified need|.| Simple workflow|.| Human review|.| Result|.| .",
+      "subTitle": "... | Discovery | .. | Scope & MVP Design | .. | Solution Blueprint | .. | Build | .. | Validation | . | Go-live & | Managed Service | .",
       "subTitleFontSize": "text-[13px]",
-      "content": "",
-      "fontSize": "text-[13px]",
-      "fontWeight": "font-thin",
-      "enabled": false,
+      "enabled": true,
       "_template": "section"
+    },
+    {
+      "title": "Our Process -",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "orientation": "vertical",
+      "stepFontSize": "text-[11px]",
+      "stepFontWeight": "font-thin",
+      "steps": [
+        {
+          "label": "Discovery"
+        },
+        {
+          "label": "Scope & MVP Design"
+        },
+        {
+          "label": "Solution Blueprint"
+        },
+        {
+          "label": "Build"
+        },
+        {
+          "label": "Validation"
+        },
+        {
+          "label": "Go-live & Managed Service"
+        }
+      ],
+      "enabled": false,
+      "_template": "processFlow"
+    },
+    {
+      "industry": "International Trade",
+      "location": "Switzerland",
+      "package": "Basic + AI Triage",
+      "timeline": "4 weeks to go-live",
+      "challenge": "High volume of mixed inbound email inquiries — leads, technical questions, and noise — required manual reading, classification, and routing daily. Inconsistent handling and missed messages were a recurring problem.",
+      "built": "AI classification of all inbound email into actionable categories. Automatic CRM logging. Draft response preparation for relevant inquiries. Human review and approval preserved on every outbound action.",
+      "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. | Operational consistency achieved from day one of go-live.",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "bodyFontSize": "text-[13px]",
+      "labelFontSize": "text-[13px]",
+      "metaFontSize": "text-[13px]",
+      "enabled": true,
+      "_template": "caseStudy"
     },
     {
       "title": "Contact",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ".",
+      "subTitle": "",
       "subTitleFontSize": "text-[13px]",
-      "content": "",
-      "fontSize": "text-[13px]",
-      "fontWeight": "font-thin",
       "email": "info@vortexdeep.ch",
       "enabled": true,
       "_template": "section"

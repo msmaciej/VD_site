@@ -20,6 +20,45 @@ fragment PageParts on Page {
       columns
       enabled
     }
+    ... on PageBlocksProcessFlow {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      orientation
+      stepFont
+      stepFontSize
+      stepFontWeight
+      steps {
+        __typename
+        label
+        font
+        fontSize
+        fontWeight
+      }
+      enabled
+    }
+    ... on PageBlocksCaseStudy {
+      industry
+      location
+      package
+      timeline
+      challenge
+      built
+      result
+      titleFont
+      titleFontSize
+      titleFontWeight
+      bodyFont
+      bodyFontSize
+      bodyFontWeight
+      labelFont
+      labelFontSize
+      labelFontWeight
+      metaFont
+      metaFontSize
+      enabled
+    }
   }
 }
 
@@ -51,12 +90,22 @@ fragment SettingsParts on Settings {
   }
   fontPreset
   customFontName
+  showLogo
   theme
   baseTextColor
   customBackgroundColor
   headerHeight
   footerHeight
   headerInnerWidth
+  siteUrl
+  metaTitle
+  metaDescription
+  ogImage
+  addressStreet
+  addressCity
+  addressPostal
+  contactEmail
+  contactPhone
 }
 
 fragment ArtParts on Art {

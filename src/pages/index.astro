@@ -18,14 +18,24 @@ const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
 // Pre-load ALL preset fonts so any element can use any font without extra requests
 const allFontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap";
 
+// Theme colour map — must match Layout.astro CSS variables exactly
+const themeColors: Record<string, { bg: string; text: string }> = {
+  light: { bg: '#ffffff',  text: '#0a0a0a' },
+  dark:  { bg: '#000000',  text: '#f5f5f5' },
+  paper: { bg: '#F9F7F2',  text: '#0a0a0a' },
+  stone: { bg: '#f0ede8',  text: '#2c2a28' },
+  mist:  { bg: '#eef0f2',  text: '#1e2428' },
+  ink:   { bg: '#141414',  text: '#e8e4de' },
+  sand:  { bg: '#f5f0e8',  text: '#2a2520' },
+  deep:  { bg: '#0c0f14',  text: '#e0e2e8' },
+};
 const getBgColor = () => {
   if (settings.customBackgroundColor) return settings.customBackgroundColor;
-  if (currentTheme === 'paper') return '#F9F7F2';
-  return currentTheme === 'dark' ? '#09090b' : '#ffffff';
+  return themeColors[currentTheme]?.bg || '#ffffff';
 };
 const getTextColor = (customColor?: string) => {
   const base = customColor || settings.baseTextColor;
-  if (!base) return currentTheme === 'dark' ? '#FFFFFF' : '#2A2A2A';
+  if (!base) return themeColors[currentTheme]?.text || '#0a0a0a';
   return base;
 };
 
@@ -39,6 +49,9 @@ const fontFamily = (name: string): string => {
   };
   return map[name] || `'${name}', sans-serif`;
 };
+
+// Full CSS font-family string — computed after fontFamily() is defined
+const activeFontFamily = fontFamily(activeFont);
 
 // Builds an inline style string for a text element
 const textStyle = (color: string, fontName?: string): string => {
@@ -69,13 +82,43 @@ const socialIcon = (platform: string) => {
 };
 ---
 
-<Layout title={settings.siteName} theme={currentTheme}>
+<Layout
+  title={settings.metaTitle || `${settings.siteName || 'VortexDeep'} — Practical AI Automation for Small Business`}
+  theme={currentTheme}
+  description={settings.metaDescription || 'VortexDeep helps small businesses adopt practical AI automation. No hype — just workflows that work. Based in Zürich, Switzerland.'}
+  ogImage={settings.ogImage || ''}
+  siteUrl={settings.siteUrl || 'https://vortexdeep.ch'}
+>
   <link rel="stylesheet" href={allFontsUrl} slot="head" />
 
-  <style is:global define:vars={{ activeFont, headerHeight, footerHeight, headerInnerWidth }}>
-    /* ── Global default font — no !important so per-element inline styles can override ── */
-    :root { --main-font: var(--activeFont), sans-serif; }
-    html, body { font-family: var(--main-font); }
+  <!-- ── JSON-LD: LocalBusiness structured data ── -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": settings.siteName || "VortexDeep",
+    "description": settings.metaDescription || "Practical AI automation for small businesses in Zürich, Switzerland.",
+    "url": settings.siteUrl || "https://vortexdeep.ch",
+    "email": settings.contactEmail || "info@vortexdeep.ch",
+    ...(settings.contactPhone ? { "telephone": settings.contactPhone } : {}),
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress":   settings.addressStreet  || "",
+      "addressLocality": settings.addressCity    || "Zürich",
+      "postalCode":      settings.addressPostal  || "",
+      "addressCountry":  "CH"
+    },
+    "areaServed": [
+      { "@type": "City",    "name": "Zürich" },
+      { "@type": "Country", "name": "Switzerland" }
+    ],
+    "serviceType": "AI Automation Consulting",
+    "priceRange": "$$",
+    "sameAs": (settings.socialLinks || []).map((l: any) => l.url).filter(Boolean)
+  })} />
+
+  <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth }}>
+    /* ── Global default font — properly quoted, correct fallback ── */
+    html, body { font-family: var(--activeFontFamily); }
 
     /* ── Scroll snap ── */
     html {
@@ -165,10 +208,32 @@ const socialIcon = (platform: string) => {
   <!-- ── FIXED HEADER ── -->
   <header class="vd-fixed-header vd-load-fade" style={`background-color: ${getBgColor()};`}>
     <div class="vd-fixed-header-inner">
-      <a href="/"
-         class="text-[10px] uppercase tracking-[0.4em] opacity-70 hover:opacity-100 transition-opacity"
-         style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
-        {settings.siteName || 'VortexDeep'}
+      <a href="/" class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+        {settings.showLogo && (
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+               style={`color: ${getTextColor()};`}
+               class="w-5 h-5 flex-shrink-0">
+            <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="100" cy="22"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="61"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="139" r="5" fill="currentColor"/>
+            <circle cx="100" cy="178" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="139" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="61"  r="5" fill="currentColor"/>
+            <polyline points="56,76 78,122 100,76"
+                      fill="none" stroke="currentColor" stroke-width="6"
+                      stroke-linecap="round" stroke-linejoin="miter"/>
+            <line x1="104" y1="76" x2="104" y2="122"
+                  stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+                  fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        )}
+        <span class="text-[10px] uppercase tracking-[0.4em]"
+              style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
+          {settings.siteName || 'VortexDeep'}
+        </span>
       </a>
       <nav class="flex gap-6">
         {settings.navLinks?.map((link: any) => (
@@ -246,27 +311,123 @@ const socialIcon = (platform: string) => {
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
               {block.title && (
-                <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60`}
+                <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60 translate-x-[0.6em]`}
                     style={textStyle(getTextColor(), block.titleFont)}>
                   {block.title}
                 </h2>
               )}
-              <div class={`flex ${isVertical ? 'flex-col items-center gap-6' : 'flex-row flex-wrap items-center justify-center'}`}>
+              <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
                 {block.steps?.map((step: any, i: number) => (
-                  <div class={`flex ${isVertical ? 'flex-col items-center gap-4' : 'flex-row items-center'}`}>
-                    <span class="text-[10px] uppercase tracking-[0.25em] opacity-75 font-thin"
-                          style={`color: ${getTextColor()};`}>
+                  <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
+                    <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75 py-3`}
+                          style={textStyle(getTextColor(), step.font || block.stepFont)}>
                       {step.label}
                     </span>
                     {i < (block.steps?.length ?? 0) - 1 && (
-                      <span class={`opacity-25 font-thin ${isVertical ? 'mt-3 text-base' : 'mx-4 text-sm'}`}
-                            style={`color: ${getTextColor()};`}>
-                        {isVertical ? '↓' : '→'}
-                      </span>
+                      isVertical ? (
+                        <div class="flex flex-col items-center opacity-20" style={`color: ${getTextColor()};`}>
+                          <div style="width:1px; height:20px; background:currentColor;"></div>
+                          <svg width="8" height="6" viewBox="0 0 8 6" fill="currentColor">
+                            <path d="M4 6L0 0h8L4 6z"/>
+                          </svg>
+                        </div>
+                      ) : (
+                        <span class="opacity-25 font-thin mx-4 text-sm" style={`color: ${getTextColor()};`}>→</span>
+                      )
                     )}
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ── Case Study block ────────────────────────────────────────────────
+      if (block._template === 'caseStudy') {
+        return (
+          <div class="vd-screen vd-reveal">
+            <div class="w-full max-w-2xl text-center">
+
+              {/* Case Study tag */}
+              <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.3em] opacity-40 mb-2 translate-x-[0.15em]`}
+                 style={textStyle(getTextColor(), block.metaFont)}>
+                Case Study
+              </p>
+
+              {/* Industry title */}
+              <h2 class={`${block.titleFontSize || 'text-[13px]'} ${block.titleFontWeight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em]`}
+                  style={textStyle(getTextColor(), block.titleFont)}>
+                {block.industry || 'Industry'}
+              </h2>
+
+              {/* Location + meta */}
+              {block.location && (
+                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 mb-12 translate-x-[0.125em]`}
+                   style={textStyle(getTextColor(), block.metaFont)}>
+                  {block.location}
+                </p>
+              )}
+
+              {/* Three content blocks */}
+              <div class="grid grid-cols-1 gap-8 text-left mb-10">
+
+                {block.challenge && (
+                  <div class="border-l border-current border-opacity-10 pl-5">
+                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                       style={textStyle(getTextColor(), block.labelFont)}>Challenge</p>
+                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                         style={textStyle(getTextColor(), block.bodyFont)}>
+                      {block.challenge.split('|').map((line: string) => (
+                        <span class="block">{line.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {block.built && (
+                  <div class="border-l border-current border-opacity-10 pl-5">
+                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                       style={textStyle(getTextColor(), block.labelFont)}>What Was Built</p>
+                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                         style={textStyle(getTextColor(), block.bodyFont)}>
+                      {block.built.split('|').map((line: string) => (
+                        <span class="block">{line.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {block.result && (
+                  <div class="border-l border-current border-opacity-10 pl-5">
+                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                       style={textStyle(getTextColor(), block.labelFont)}>Result</p>
+                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                         style={textStyle(getTextColor(), block.bodyFont)}>
+                      {block.result.split('|').map((line: string) => (
+                        <span class="block">{line.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer: package + timeline */}
+              <div class="flex justify-center gap-10 opacity-30">
+                {block.package && (
+                  <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
+                     style={textStyle(getTextColor(), block.metaFont)}>
+                    Package: {block.package}
+                  </p>
+                )}
+                {block.timeline && (
+                  <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
+                     style={textStyle(getTextColor(), block.metaFont)}>
+                    Timeline: {block.timeline}
+                  </p>
+                )}
+              </div>
+
             </div>
           </div>
         );
@@ -279,7 +440,7 @@ const socialIcon = (platform: string) => {
 
             {/* Title */}
             {block.title && (
-              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60`}
+              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60 translate-x-[0.6em]`}
                   style={textStyle(getTextColor(), block.titleFont)}>
                 {block.title}
               </h2>
@@ -307,11 +468,13 @@ const socialIcon = (platform: string) => {
 
             {/* Email */}
             {block.email && (
-              <a href={`mailto:${block.email}`}
-                 class="inline-block mt-10 opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px]"
-                 style={`color: ${getTextColor()};`}>
-                {block.email}
-              </a>
+              <div class="flex justify-center mt-10">
+                <a href={`mailto:${block.email}`}
+                   class="opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px] translate-x-[0.075em]"
+                   style={`color: ${getTextColor()};`}>
+                  {block.email}
+                </a>
+              </div>
             )}
 
             {/* Art gallery */}

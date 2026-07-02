@@ -221,7 +221,52 @@ export type PageBlocksSection = {
   enabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type PageBlocks = PageBlocksSection;
+export type PageBlocksProcessFlowSteps = {
+  __typename?: 'PageBlocksProcessFlowSteps';
+  label?: Maybe<Scalars['String']['output']>;
+  font?: Maybe<Scalars['String']['output']>;
+  fontSize?: Maybe<Scalars['String']['output']>;
+  fontWeight?: Maybe<Scalars['String']['output']>;
+};
+
+export type PageBlocksProcessFlow = {
+  __typename?: 'PageBlocksProcessFlow';
+  title?: Maybe<Scalars['String']['output']>;
+  titleFont?: Maybe<Scalars['String']['output']>;
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  titleFontWeight?: Maybe<Scalars['String']['output']>;
+  orientation?: Maybe<Scalars['String']['output']>;
+  stepFont?: Maybe<Scalars['String']['output']>;
+  stepFontSize?: Maybe<Scalars['String']['output']>;
+  stepFontWeight?: Maybe<Scalars['String']['output']>;
+  steps?: Maybe<Array<Maybe<PageBlocksProcessFlowSteps>>>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type PageBlocksCaseStudy = {
+  __typename?: 'PageBlocksCaseStudy';
+  industry?: Maybe<Scalars['String']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  package?: Maybe<Scalars['String']['output']>;
+  timeline?: Maybe<Scalars['String']['output']>;
+  challenge?: Maybe<Scalars['String']['output']>;
+  built?: Maybe<Scalars['String']['output']>;
+  result?: Maybe<Scalars['String']['output']>;
+  titleFont?: Maybe<Scalars['String']['output']>;
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  titleFontWeight?: Maybe<Scalars['String']['output']>;
+  bodyFont?: Maybe<Scalars['String']['output']>;
+  bodyFontSize?: Maybe<Scalars['String']['output']>;
+  bodyFontWeight?: Maybe<Scalars['String']['output']>;
+  labelFont?: Maybe<Scalars['String']['output']>;
+  labelFontSize?: Maybe<Scalars['String']['output']>;
+  labelFontWeight?: Maybe<Scalars['String']['output']>;
+  metaFont?: Maybe<Scalars['String']['output']>;
+  metaFontSize?: Maybe<Scalars['String']['output']>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy;
 
 export type Page = Node & Document & {
   __typename?: 'Page';
@@ -262,8 +307,52 @@ export type PageBlocksSectionFilter = {
   enabled?: InputMaybe<BooleanFilter>;
 };
 
+export type PageBlocksProcessFlowStepsFilter = {
+  label?: InputMaybe<StringFilter>;
+  font?: InputMaybe<StringFilter>;
+  fontSize?: InputMaybe<StringFilter>;
+  fontWeight?: InputMaybe<StringFilter>;
+};
+
+export type PageBlocksProcessFlowFilter = {
+  title?: InputMaybe<StringFilter>;
+  titleFont?: InputMaybe<StringFilter>;
+  titleFontSize?: InputMaybe<StringFilter>;
+  titleFontWeight?: InputMaybe<StringFilter>;
+  orientation?: InputMaybe<StringFilter>;
+  stepFont?: InputMaybe<StringFilter>;
+  stepFontSize?: InputMaybe<StringFilter>;
+  stepFontWeight?: InputMaybe<StringFilter>;
+  steps?: InputMaybe<PageBlocksProcessFlowStepsFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+};
+
+export type PageBlocksCaseStudyFilter = {
+  industry?: InputMaybe<StringFilter>;
+  location?: InputMaybe<StringFilter>;
+  package?: InputMaybe<StringFilter>;
+  timeline?: InputMaybe<StringFilter>;
+  challenge?: InputMaybe<StringFilter>;
+  built?: InputMaybe<StringFilter>;
+  result?: InputMaybe<StringFilter>;
+  titleFont?: InputMaybe<StringFilter>;
+  titleFontSize?: InputMaybe<StringFilter>;
+  titleFontWeight?: InputMaybe<StringFilter>;
+  bodyFont?: InputMaybe<StringFilter>;
+  bodyFontSize?: InputMaybe<StringFilter>;
+  bodyFontWeight?: InputMaybe<StringFilter>;
+  labelFont?: InputMaybe<StringFilter>;
+  labelFontSize?: InputMaybe<StringFilter>;
+  labelFontWeight?: InputMaybe<StringFilter>;
+  metaFont?: InputMaybe<StringFilter>;
+  metaFontSize?: InputMaybe<StringFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+};
+
 export type PageBlocksFilter = {
   section?: InputMaybe<PageBlocksSectionFilter>;
+  processFlow?: InputMaybe<PageBlocksProcessFlowFilter>;
+  caseStudy?: InputMaybe<PageBlocksCaseStudyFilter>;
 };
 
 export type PageFilter = {
@@ -315,12 +404,22 @@ export type Settings = Node & Document & {
   socialLinks?: Maybe<Array<Maybe<SettingsSocialLinks>>>;
   fontPreset?: Maybe<Scalars['String']['output']>;
   customFontName?: Maybe<Scalars['String']['output']>;
+  showLogo?: Maybe<Scalars['Boolean']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   baseTextColor?: Maybe<Scalars['String']['output']>;
   customBackgroundColor?: Maybe<Scalars['String']['output']>;
   headerHeight?: Maybe<Scalars['String']['output']>;
   footerHeight?: Maybe<Scalars['String']['output']>;
   headerInnerWidth?: Maybe<Scalars['String']['output']>;
+  siteUrl?: Maybe<Scalars['String']['output']>;
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+  addressStreet?: Maybe<Scalars['String']['output']>;
+  addressCity?: Maybe<Scalars['String']['output']>;
+  addressPostal?: Maybe<Scalars['String']['output']>;
+  contactEmail?: Maybe<Scalars['String']['output']>;
+  contactPhone?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -334,6 +433,13 @@ export type SettingsNavLinksFilter = {
 export type SettingsSocialLinksFilter = {
   platform?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type SettingsFilter = {
@@ -355,12 +461,22 @@ export type SettingsFilter = {
   socialLinks?: InputMaybe<SettingsSocialLinksFilter>;
   fontPreset?: InputMaybe<StringFilter>;
   customFontName?: InputMaybe<StringFilter>;
+  showLogo?: InputMaybe<BooleanFilter>;
   theme?: InputMaybe<StringFilter>;
   baseTextColor?: InputMaybe<StringFilter>;
   customBackgroundColor?: InputMaybe<StringFilter>;
   headerHeight?: InputMaybe<StringFilter>;
   footerHeight?: InputMaybe<StringFilter>;
   headerInnerWidth?: InputMaybe<StringFilter>;
+  siteUrl?: InputMaybe<StringFilter>;
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+  addressStreet?: InputMaybe<StringFilter>;
+  addressCity?: InputMaybe<StringFilter>;
+  addressPostal?: InputMaybe<StringFilter>;
+  contactEmail?: InputMaybe<StringFilter>;
+  contactPhone?: InputMaybe<StringFilter>;
 };
 
 export type SettingsConnectionEdges = {
@@ -399,13 +515,6 @@ export type NumberFilter = {
   eq?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
-};
-
-export type ImageFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type ArtFilter = {
@@ -548,8 +657,52 @@ export type PageBlocksSectionMutation = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type PageBlocksProcessFlowStepsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  font?: InputMaybe<Scalars['String']['input']>;
+  fontSize?: InputMaybe<Scalars['String']['input']>;
+  fontWeight?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PageBlocksProcessFlowMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  titleFont?: InputMaybe<Scalars['String']['input']>;
+  titleFontSize?: InputMaybe<Scalars['String']['input']>;
+  titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  orientation?: InputMaybe<Scalars['String']['input']>;
+  stepFont?: InputMaybe<Scalars['String']['input']>;
+  stepFontSize?: InputMaybe<Scalars['String']['input']>;
+  stepFontWeight?: InputMaybe<Scalars['String']['input']>;
+  steps?: InputMaybe<Array<InputMaybe<PageBlocksProcessFlowStepsMutation>>>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PageBlocksCaseStudyMutation = {
+  industry?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  package?: InputMaybe<Scalars['String']['input']>;
+  timeline?: InputMaybe<Scalars['String']['input']>;
+  challenge?: InputMaybe<Scalars['String']['input']>;
+  built?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  titleFont?: InputMaybe<Scalars['String']['input']>;
+  titleFontSize?: InputMaybe<Scalars['String']['input']>;
+  titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  bodyFont?: InputMaybe<Scalars['String']['input']>;
+  bodyFontSize?: InputMaybe<Scalars['String']['input']>;
+  bodyFontWeight?: InputMaybe<Scalars['String']['input']>;
+  labelFont?: InputMaybe<Scalars['String']['input']>;
+  labelFontSize?: InputMaybe<Scalars['String']['input']>;
+  labelFontWeight?: InputMaybe<Scalars['String']['input']>;
+  metaFont?: InputMaybe<Scalars['String']['input']>;
+  metaFontSize?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type PageBlocksMutation = {
   section?: InputMaybe<PageBlocksSectionMutation>;
+  processFlow?: InputMaybe<PageBlocksProcessFlowMutation>;
+  caseStudy?: InputMaybe<PageBlocksCaseStudyMutation>;
 };
 
 export type PageMutation = {
@@ -585,12 +738,22 @@ export type SettingsMutation = {
   socialLinks?: InputMaybe<Array<InputMaybe<SettingsSocialLinksMutation>>>;
   fontPreset?: InputMaybe<Scalars['String']['input']>;
   customFontName?: InputMaybe<Scalars['String']['input']>;
+  showLogo?: InputMaybe<Scalars['Boolean']['input']>;
   theme?: InputMaybe<Scalars['String']['input']>;
   baseTextColor?: InputMaybe<Scalars['String']['input']>;
   customBackgroundColor?: InputMaybe<Scalars['String']['input']>;
   headerHeight?: InputMaybe<Scalars['String']['input']>;
   footerHeight?: InputMaybe<Scalars['String']['input']>;
   headerInnerWidth?: InputMaybe<Scalars['String']['input']>;
+  siteUrl?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+  addressStreet?: InputMaybe<Scalars['String']['input']>;
+  addressCity?: InputMaybe<Scalars['String']['input']>;
+  addressPostal?: InputMaybe<Scalars['String']['input']>;
+  contactEmail?: InputMaybe<Scalars['String']['input']>;
+  contactPhone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ArtMutation = {
@@ -604,9 +767,9 @@ export type ArtMutation = {
   showLine?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | null> | null };
+export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
+export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
 
 export type ArtPartsFragment = { __typename: 'Art', title: string, year?: string | null, price?: number | null, image?: string | null, enabled?: boolean | null, showTitle?: boolean | null, showPrice?: boolean | null, showLine?: boolean | null };
 
@@ -615,7 +778,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | null> | null } };
+export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
 
 export type PageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -627,14 +790,14 @@ export type PageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type SettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
+export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
 
 export type SettingsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -646,7 +809,7 @@ export type SettingsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
+export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
 
 export type ArtQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -690,6 +853,45 @@ export const PagePartsFragmentDoc = gql`
       columns
       enabled
     }
+    ... on PageBlocksProcessFlow {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      orientation
+      stepFont
+      stepFontSize
+      stepFontWeight
+      steps {
+        __typename
+        label
+        font
+        fontSize
+        fontWeight
+      }
+      enabled
+    }
+    ... on PageBlocksCaseStudy {
+      industry
+      location
+      package
+      timeline
+      challenge
+      built
+      result
+      titleFont
+      titleFontSize
+      titleFontWeight
+      bodyFont
+      bodyFontSize
+      bodyFontWeight
+      labelFont
+      labelFontSize
+      labelFontWeight
+      metaFont
+      metaFontSize
+      enabled
+    }
   }
 }
     `;
@@ -722,12 +924,22 @@ export const SettingsPartsFragmentDoc = gql`
   }
   fontPreset
   customFontName
+  showLogo
   theme
   baseTextColor
   customBackgroundColor
   headerHeight
   footerHeight
   headerInnerWidth
+  siteUrl
+  metaTitle
+  metaDescription
+  ogImage
+  addressStreet
+  addressCity
+  addressPostal
+  contactEmail
+  contactPhone
 }
     `;
 export const ArtPartsFragmentDoc = gql`

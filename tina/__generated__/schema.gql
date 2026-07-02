@@ -112,7 +112,49 @@ type PageBlocksSection {
   enabled: Boolean
 }
 
-union PageBlocks = PageBlocksSection
+type PageBlocksProcessFlowSteps {
+  label: String
+  font: String
+  fontSize: String
+  fontWeight: String
+}
+
+type PageBlocksProcessFlow {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  orientation: String
+  stepFont: String
+  stepFontSize: String
+  stepFontWeight: String
+  steps: [PageBlocksProcessFlowSteps]
+  enabled: Boolean
+}
+
+type PageBlocksCaseStudy {
+  industry: String
+  location: String
+  package: String
+  timeline: String
+  challenge: String
+  built: String
+  result: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
+  labelFont: String
+  labelFontSize: String
+  labelFontWeight: String
+  metaFont: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
+union PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy
 
 type Page implements Node & Document {
   blocks: [PageBlocks]
@@ -152,8 +194,52 @@ input PageBlocksSectionFilter {
   enabled: BooleanFilter
 }
 
+input PageBlocksProcessFlowStepsFilter {
+  label: StringFilter
+  font: StringFilter
+  fontSize: StringFilter
+  fontWeight: StringFilter
+}
+
+input PageBlocksProcessFlowFilter {
+  title: StringFilter
+  titleFont: StringFilter
+  titleFontSize: StringFilter
+  titleFontWeight: StringFilter
+  orientation: StringFilter
+  stepFont: StringFilter
+  stepFontSize: StringFilter
+  stepFontWeight: StringFilter
+  steps: PageBlocksProcessFlowStepsFilter
+  enabled: BooleanFilter
+}
+
+input PageBlocksCaseStudyFilter {
+  industry: StringFilter
+  location: StringFilter
+  package: StringFilter
+  timeline: StringFilter
+  challenge: StringFilter
+  built: StringFilter
+  result: StringFilter
+  titleFont: StringFilter
+  titleFontSize: StringFilter
+  titleFontWeight: StringFilter
+  bodyFont: StringFilter
+  bodyFontSize: StringFilter
+  bodyFontWeight: StringFilter
+  labelFont: StringFilter
+  labelFontSize: StringFilter
+  labelFontWeight: StringFilter
+  metaFont: StringFilter
+  metaFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
 input PageBlocksFilter {
   section: PageBlocksSectionFilter
+  processFlow: PageBlocksProcessFlowFilter
+  caseStudy: PageBlocksCaseStudyFilter
 }
 
 input PageFilter {
@@ -200,12 +286,22 @@ type Settings implements Node & Document {
   socialLinks: [SettingsSocialLinks]
   fontPreset: String
   customFontName: String
+  showLogo: Boolean
   theme: String
   baseTextColor: String
   customBackgroundColor: String
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
+  siteUrl: String
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+  addressStreet: String
+  addressCity: String
+  addressPostal: String
+  contactEmail: String
+  contactPhone: String
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -219,6 +315,13 @@ input SettingsNavLinksFilter {
 input SettingsSocialLinksFilter {
   platform: StringFilter
   url: StringFilter
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
 }
 
 input SettingsFilter {
@@ -240,12 +343,22 @@ input SettingsFilter {
   socialLinks: SettingsSocialLinksFilter
   fontPreset: StringFilter
   customFontName: StringFilter
+  showLogo: BooleanFilter
   theme: StringFilter
   baseTextColor: StringFilter
   customBackgroundColor: StringFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
+  siteUrl: StringFilter
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+  addressStreet: StringFilter
+  addressCity: StringFilter
+  addressPostal: StringFilter
+  contactEmail: StringFilter
+  contactPhone: StringFilter
 }
 
 type SettingsConnectionEdges {
@@ -281,13 +394,6 @@ input NumberFilter {
   eq: Float
   exists: Boolean
   in: [Float]
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
 }
 
 input ArtFilter {
@@ -358,8 +464,52 @@ input PageBlocksSectionMutation {
   enabled: Boolean
 }
 
+input PageBlocksProcessFlowStepsMutation {
+  label: String
+  font: String
+  fontSize: String
+  fontWeight: String
+}
+
+input PageBlocksProcessFlowMutation {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  orientation: String
+  stepFont: String
+  stepFontSize: String
+  stepFontWeight: String
+  steps: [PageBlocksProcessFlowStepsMutation]
+  enabled: Boolean
+}
+
+input PageBlocksCaseStudyMutation {
+  industry: String
+  location: String
+  package: String
+  timeline: String
+  challenge: String
+  built: String
+  result: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
+  labelFont: String
+  labelFontSize: String
+  labelFontWeight: String
+  metaFont: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
 input PageBlocksMutation {
   section: PageBlocksSectionMutation
+  processFlow: PageBlocksProcessFlowMutation
+  caseStudy: PageBlocksCaseStudyMutation
 }
 
 input PageMutation {
@@ -395,12 +545,22 @@ input SettingsMutation {
   socialLinks: [SettingsSocialLinksMutation]
   fontPreset: String
   customFontName: String
+  showLogo: Boolean
   theme: String
   baseTextColor: String
   customBackgroundColor: String
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
+  siteUrl: String
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+  addressStreet: String
+  addressCity: String
+  addressPostal: String
+  contactEmail: String
+  contactPhone: String
 }
 
 input ArtMutation {
