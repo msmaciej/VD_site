@@ -23,7 +23,6 @@ const ogImageFull = ogImage
   : `${siteUrl}/og-image.png`;
 
 // ── hreflang alternate URLs ───────────────────────────────────────────────────
-// Strip /de prefix to get EN path; add /de prefix to get DE path.
 const currentPath = Astro.url.pathname;
 const enPath = currentPath.replace(/^\/de(\/|$)/, '/').replace(/\/+$/, '') || '/';
 const dePath = currentPath.startsWith('/de')
@@ -34,12 +33,28 @@ const hreflangEn = `${siteUrl}${enPath === '/' ? '/' : enPath}`;
 const hreflangDe = `${siteUrl}${dePath}`;
 
 const ogLocale = lang === 'de' ? 'de_CH' : 'en_GB';
+
+// ── FIX 3: theme-color matches page background on mobile browser chrome ───────
+const themeColorMap: Record<string, string> = {
+  light: '#ffffff',
+  dark:  '#000000',
+  paper: '#F9F7F2',
+  stone: '#f0ede8',
+  mist:  '#eef0f2',
+  ink:   '#141414',
+  sand:  '#f5f0e8',
+  deep:  '#0c0f14',
+};
+const themeColor = themeColorMap[theme] || '#ffffff';
 ---
 <!doctype html>
 <html lang={lang} data-theme={theme}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <!-- FIX 2: initial-scale=1 prevents mobile browsers zooming in/out on load -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- FIX 3: browser chrome bar matches page background colour on iOS/Android -->
+    <meta name="theme-color" content={themeColor} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- ── SEO: Core ── -->
@@ -49,8 +64,8 @@ const ogLocale = lang === 'de' ? 'de_CH' : 'en_GB';
     <meta name="robots"             content="index, follow" />
 
     <!-- ── SEO: hreflang (bilingual) ── -->
-    <link rel="alternate" hreflang="en"       href={hreflangEn} />
-    <link rel="alternate" hreflang="de"       href={hreflangDe} />
+    <link rel="alternate" hreflang="en"        href={hreflangEn} />
+    <link rel="alternate" hreflang="de"        href={hreflangDe} />
     <link rel="alternate" hreflang="x-default" href={hreflangEn} />
 
     <!-- ── SEO: Open Graph ── -->
@@ -102,30 +117,35 @@ const ogLocale = lang === 'de' ? 'de_CH' : 'en_GB';
     <!-- Content & code protection -->
     <script is:inline>
     (function(){
+      // Right-click disabled
       document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+      // Keyboard shortcuts that expose source / devtools
       document.addEventListener('keydown', function(e){
         var c = e.ctrlKey || e.metaKey, s = e.shiftKey, k = e.key;
-        if(c && k==='u'){ e.preventDefault(); return; }
-        if(c && k==='s'){ e.preventDefault(); return; }
-        if(c && k==='a'){ e.preventDefault(); return; }
-        if(c && k==='p'){ e.preventDefault(); return; }
-        if(k==='F12'){    e.preventDefault(); return; }
-        if(c && s && k==='I'){ e.preventDefault(); return; }
-        if(c && s && k==='J'){ e.preventDefault(); return; }
-        if(c && s && k==='C'){ e.preventDefault(); return; }
+        if(c && k==='u'){ e.preventDefault(); return; }  // view-source
+        if(c && k==='s'){ e.preventDefault(); return; }  // save page
+        if(c && k==='a'){ e.preventDefault(); return; }  // select all
+        if(c && k==='p'){ e.preventDefault(); return; }  // print
+        if(k==='F12'){    e.preventDefault(); return; }  // devtools
+        if(c && s && k==='I'){ e.preventDefault(); return; } // devtools
+        if(c && s && k==='J'){ e.preventDefault(); return; } // console
+        if(c && s && k==='C'){ e.preventDefault(); return; } // element picker
       });
+
+      // Drag disabled
       document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+      // Copy disabled outside input fields
       document.addEventListener('copy', function(e){
         var t = document.activeElement ? document.activeElement.tagName : '';
         if(t !== 'INPUT' && t !== 'TEXTAREA'){ e.preventDefault(); }
       });
-      var threshold = 160, open = false;
-      setInterval(function(){
-        var w = window.outerWidth  - window.innerWidth  > threshold;
-        var h = window.outerHeight - window.innerHeight > threshold;
-        if(w || h){ if(!open){ open=true; document.body.innerHTML=''; } }
-        else{ open=false; }
-      }, 1000);
+
+      // FIX 1: removed window size DevTools detection — it false-positives on
+      // every iPhone and iPad because Safari's address bar / toolbar creates an
+      // outerHeight vs innerHeight gap that exceeds the 160px threshold, causing
+      // document.body.innerHTML='' to fire and produce a blank page on mobile.
     })();
     </script>
   </body>

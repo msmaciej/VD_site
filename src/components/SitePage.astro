@@ -118,9 +118,17 @@ const jsonLd = {
     html {
       scroll-snap-type: y mandatory !important;
       overflow-y: scroll !important;
+      /* FIX 5: prevent letter-spacing / translate-x utilities bleeding horizontally */
+      overflow-x: hidden !important;
       height: 100% !important;
     }
-    body { height: 100% !important; margin: 0 !important; overflow: visible !important; }
+    body {
+      height: 100% !important;
+      margin: 0 !important;
+      /* FIX 5: split overflow so x is hidden but y stays visible for the snap container */
+      overflow-y: visible !important;
+      overflow-x: hidden !important;
+    }
     html::-webkit-scrollbar { display: none; }
     html { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -161,7 +169,13 @@ const jsonLd = {
 
     /* ── Snap sections ── */
     .vd-screen {
+      /* FIX 4: 100vh = full viewport incl. browser chrome on iOS Safari,
+         so sections appear taller than the visible area → content clips under
+         the address bar / toolbar. 100svh = "small viewport height" which always
+         excludes the browser chrome. Browsers that don't support svh fall back
+         to 100vh gracefully. */
       height: 100vh;
+      height: 100svh;
       scroll-snap-align: start; scroll-snap-stop: always;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -358,13 +372,15 @@ const jsonLd = {
               </h2>
 
               {block.location && (
-                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 mb-12 translate-x-[0.125em]`}
+                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 translate-x-[0.125em]
+                  mb-6 md:mb-12`}
                    style={textStyle(getTextColor(), block.metaFont)}>
                   {block.location}
                 </p>
               )}
 
-              <div class="grid grid-cols-1 gap-8 text-left mb-10">
+              {/* FIX 7: gap-4 on mobile saves ~64px on phones without changing desktop layout */}
+              <div class="grid grid-cols-1 gap-4 md:gap-8 text-left mb-6 md:mb-10">
 
                 {block.challenge && (
                   <div class="border-l border-current border-opacity-10 pl-5">
@@ -487,6 +503,10 @@ const jsonLd = {
 </Layout>
 
 <script>
+  // FIX 6: threshold reduced from 0.4 → 0.15 so reveal animations fire on mobile.
+  // On iOS Safari, 100svh sections can still be fractionally taller than the visible
+  // area when the browser chrome is present — a 40% visibility threshold was never
+  // reached and animations never triggered. 15% fires reliably on all devices.
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -496,7 +516,7 @@ const jsonLd = {
         }
       });
     },
-    { root: null, threshold: 0.4 }
+    { root: null, threshold: 0.15 }
   );
   document.querySelectorAll('.vd-reveal').forEach(el => observer.observe(el));
 </script>
