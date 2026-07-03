@@ -117,17 +117,16 @@ const jsonLd = {
     /* ── Scroll snap ── */
     html {
       scroll-snap-type: y mandatory !important;
+      scroll-behavior: smooth;         /* smooth transitions on touch + keyboard + logo click */
       overflow-y: scroll !important;
-      /* FIX 5: prevent letter-spacing / translate-x utilities bleeding horizontally */
-      overflow-x: hidden !important;
+      /* Never set overflow-x on html — kills scroll-snap */
       height: 100% !important;
     }
     body {
       height: 100% !important;
       margin: 0 !important;
-      /* FIX 5: split overflow so x is hidden but y stays visible for the snap container */
-      overflow-y: visible !important;
-      overflow-x: hidden !important;
+      overflow-y: visible !important;  /* must be visible so html stays the snap container */
+      overflow-x: clip !important;     /* clip ≠ hidden: doesn't create a scroll container */
     }
     html::-webkit-scrollbar { display: none; }
     html { -ms-overflow-style: none; scrollbar-width: none; }
@@ -510,10 +509,7 @@ const jsonLd = {
 </Layout>
 
 <script>
-  // FIX 6: threshold reduced from 0.4 → 0.15 so reveal animations fire on mobile.
-  // On iOS Safari, 100svh sections can still be fractionally taller than the visible
-  // area when the browser chrome is present — a 40% visibility threshold was never
-  // reached and animations never triggered. 15% fires reliably on all devices.
+  // ── Reveal animations ────────────────────────────────────────────────────
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -526,4 +522,61 @@ const jsonLd = {
     { root: null, threshold: 0.15 }
   );
   document.querySelectorAll('.vd-reveal').forEach(el => observer.observe(el));
+
+  // ── Logo: scroll to top when already on the home page ───────────────────
+  const logoLink = document.querySelector('.vd-fixed-header a');
+  if (logoLink) {
+    logoLink.addEventListener('click', (e) => {
+      const target = new URL(logoLink.getAttribute('href'), location.href);
+      if (target.pathname === location.pathname) {
+        e.preventDefault();
+        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // ── Scroll controller ────────────────────────────────────────────────────
+  // TOUCH: no JS handler here — CSS scroll-snap + scroll-behavior:smooth on
+  // html handles touch/swipe natively and smoothly. Adding a JS touchend handler
+  // causes double-advance: the browser's native CSS snap fires AND the JS fires,
+  // jumping TWO sections per swipe. Leave touch entirely to the browser.
+  //
+  // MOUSE WHEEL: JS is needed on desktop because without it a single fast wheel
+  // tick can fire before the snap settles, jumping multiple sections. The cooldown
+  // lock ensures exactly one section per wheel event.
+  (function () {
+    const html    = document.documentElement;
+    const screens = Array.from(document.querySelectorAll('.vd-screen'));
+    if (!screens.length) return;
+
+    let locked = false;
+    const COOLDOWN = 600; // ms — enough for the smooth scroll to settle
+
+    function currentIndex() {
+      const mid = html.scrollTop + window.innerHeight * 0.5;
+      let idx = 0;
+      screens.forEach((s, i) => { if (s.offsetTop <= mid) idx = i; });
+      return idx;
+    }
+
+    function goTo(i) {
+      if (locked || i < 0 || i >= screens.length) return;
+      locked = true;
+      screens[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => { locked = false; }, COOLDOWN);
+    }
+
+    // Mouse wheel — one tick, one section
+    html.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (locked) return;
+      goTo(currentIndex() + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: false });
+
+    // Keyboard — arrow keys and Page Up/Down
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(currentIndex() + 1); }
+      if (e.key === 'ArrowUp'   || e.key === 'PageUp')   { e.preventDefault(); goTo(currentIndex() - 1); }
+    });
+  })();
 </script>
