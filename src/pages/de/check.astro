@@ -15,7 +15,7 @@ const theme = 'paper';
     }
   </style>
 
-  <main class="min-h-screen flex flex-col items-center justify-center px-6 py-24"
+  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6 pt-16 pb-12 sm:py-24"
         style="background-color: var(--zen-bg); color: var(--zen-text);">
     <div class="max-w-xl w-full mx-auto" id="vd-root">
 
@@ -29,11 +29,11 @@ const theme = 'paper';
         <LanguageSwitcher lang="de" slug="check" />
       </div>
 
-      <p class="text-[10px] uppercase tracking-[0.4em] mb-16 opacity-40 text-center">
+      <p class="text-[10px] uppercase tracking-[0.4em] mb-8 sm:mb-16 opacity-40 text-center">
         Schnell-Check
       </p>
 
-      <div class="flex gap-2 mb-16" id="vd-progress"></div>
+      <div class="flex gap-2 mb-8 sm:mb-16" id="vd-progress"></div>
 
       <!-- F0: Rolle -->
       <div class="vd-q" data-q="0">

@@ -15,7 +15,12 @@ const theme = 'paper';
     }
   </style>
 
-  <main class="min-h-screen flex flex-col items-center justify-center px-6 py-24"
+  <!-- FIX 10: min-h-[100svh] avoids the iOS Safari 100vh-includes-chrome trap.
+       justify-start on mobile keeps content anchored to the top so all 6 answer
+       options are reachable without blind scrolling; justify-center kicks in at sm
+       (640px+) where there's room to centre. Padding reduced on mobile so the
+       subtitle + progress bar don't consume the viewport before the first question. -->
+  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6 pt-16 pb-12 sm:py-24"
         style="background-color: var(--zen-bg); color: var(--zen-text);">
     <div class="max-w-xl w-full mx-auto" id="vd-root">
 
@@ -29,11 +34,11 @@ const theme = 'paper';
         <LanguageSwitcher lang="en" slug="check" />
       </div>
 
-      <p class="text-[10px] uppercase tracking-[0.4em] mb-16 opacity-40 text-center">
+      <p class="text-[10px] uppercase tracking-[0.4em] mb-8 sm:mb-16 opacity-40 text-center">
         Quick Operations Check
       </p>
 
-      <div class="flex gap-2 mb-16" id="vd-progress"></div>
+      <div class="flex gap-2 mb-8 sm:mb-16" id="vd-progress"></div>
 
       <!-- Q0: Role -->
       <div class="vd-q" data-q="0">

@@ -142,13 +142,19 @@ const jsonLd = {
     .vd-fixed-header-inner {
       width: 100%; max-width: var(--headerInnerWidth);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem;
+      /* FIX 9: clamp prevents the logo + nav from colliding on iPhone SE (320px).
+         1rem on very narrow viewports, interpolates up to 2rem by ~500px. */
+      padding: 0 clamp(1rem, 4vw, 2rem);
     }
 
     /* ── Fixed Footer ── */
     .vd-fixed-footer {
       position: fixed; bottom: 0; left: 0; right: 0;
-      height: var(--footerHeight);
+      /* FIX 8: min-height + padding-bottom so the home indicator bar on iPhone X+
+         (env(safe-area-inset-bottom) ≈ 34px) does not overlap the footer content.
+         Older devices and desktop return 0px so layout is identical there. */
+      min-height: var(--footerHeight);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
       z-index: 50;
       display: flex; align-items: center; justify-content: center;
       gap: 1.2rem;
@@ -180,7 +186,8 @@ const jsonLd = {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding-top: calc(var(--headerHeight) + 12px);
-      padding-bottom: calc(var(--footerHeight) + 12px);
+      /* FIX 8 cont: match the footer's expanded height on notched phones */
+      padding-bottom: calc(var(--footerHeight) + env(safe-area-inset-bottom, 0px) + 12px);
       padding-left: 1.5rem; padding-right: 1.5rem;
       box-sizing: border-box; position: relative;
     }
