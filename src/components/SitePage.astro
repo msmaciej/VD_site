@@ -114,19 +114,17 @@ const jsonLd = {
   <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth }}>
     html, body { font-family: var(--activeFontFamily); }
 
-    /* ── Scroll snap ── */
+    /* ── Scroll snap — original setup, unchanged ── */
     html {
       scroll-snap-type: y mandatory !important;
-
       overflow-y: scroll !important;
-      /* Never set overflow-x on html — kills scroll-snap */
       height: 100% !important;
     }
     body {
       height: 100% !important;
       margin: 0 !important;
-      overflow-y: visible !important;  /* must be visible so html stays the snap container */
-      overflow-x: clip !important;     /* clip ≠ hidden: doesn't create a scroll container */
+      overflow-y: visible !important;
+      overflow-x: clip !important;
     }
     html::-webkit-scrollbar { display: none; }
     html { -ms-overflow-style: none; scrollbar-width: none; }
@@ -509,7 +507,7 @@ const jsonLd = {
 </Layout>
 
 <script>
-  // ── Reveal animations ────────────────────────────────────────────────────
+  // Original reveal animation — fires when 40% of a section is visible after snap
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -519,11 +517,11 @@ const jsonLd = {
         }
       });
     },
-    { root: null, threshold: 0.15 }
+    { root: null, threshold: 0.4 }
   );
   document.querySelectorAll('.vd-reveal').forEach(el => observer.observe(el));
 
-  // ── Logo: scroll to top when already on the home page ───────────────────
+  // Logo: scroll to top when already on the home page
   const logoLink = document.querySelector('.vd-fixed-header a');
   if (logoLink) {
     logoLink.addEventListener('click', (e) => {
@@ -534,49 +532,4 @@ const jsonLd = {
       }
     });
   }
-
-  // ── Scroll controller ────────────────────────────────────────────────────
-  // TOUCH: no JS handler here — CSS scroll-snap + scroll-behavior:smooth on
-  // html handles touch/swipe natively and smoothly. Adding a JS touchend handler
-  // causes double-advance: the browser's native CSS snap fires AND the JS fires,
-  // jumping TWO sections per swipe. Leave touch entirely to the browser.
-  //
-  // MOUSE WHEEL: JS is needed on desktop because without it a single fast wheel
-  // tick can fire before the snap settles, jumping multiple sections. The cooldown
-  // lock ensures exactly one section per wheel event.
-  (function () {
-    const html    = document.documentElement;
-    const screens = Array.from(document.querySelectorAll('.vd-screen'));
-    if (!screens.length) return;
-
-    let locked = false;
-    const COOLDOWN = 600; // ms — enough for the smooth scroll to settle
-
-    function currentIndex() {
-      const mid = html.scrollTop + window.innerHeight * 0.5;
-      let idx = 0;
-      screens.forEach((s, i) => { if (s.offsetTop <= mid) idx = i; });
-      return idx;
-    }
-
-    function goTo(i) {
-      if (locked || i < 0 || i >= screens.length) return;
-      locked = true;
-      screens[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => { locked = false; }, COOLDOWN);
-    }
-
-    // Mouse wheel — one tick, one section
-    html.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (locked) return;
-      goTo(currentIndex() + (e.deltaY > 0 ? 1 : -1));
-    }, { passive: false });
-
-    // Keyboard — arrow keys and Page Up/Down
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(currentIndex() + 1); }
-      if (e.key === 'ArrowUp'   || e.key === 'PageUp')   { e.preventDefault(); goTo(currentIndex() - 1); }
-    });
-  })();
 </script>
