@@ -62,6 +62,70 @@ fragment PageParts on Page {
   }
 }
 
+fragment Page_deParts on Page_de {
+  __typename
+  blocks {
+    __typename
+    ... on Page_deBlocksSection {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      subTitle
+      subTitleFont
+      subTitleFontSize
+      subTitleFontWeight
+      content
+      bodyFont
+      fontSize
+      fontWeight
+      email
+      showArt
+      columns
+      enabled
+    }
+    ... on Page_deBlocksProcessFlow {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      orientation
+      stepFont
+      stepFontSize
+      stepFontWeight
+      steps {
+        __typename
+        label
+        font
+        fontSize
+        fontWeight
+      }
+      enabled
+    }
+    ... on Page_deBlocksCaseStudy {
+      industry
+      location
+      package
+      timeline
+      challenge
+      built
+      result
+      titleFont
+      titleFontSize
+      titleFontWeight
+      bodyFont
+      bodyFontSize
+      bodyFontWeight
+      labelFont
+      labelFontSize
+      labelFontWeight
+      metaFont
+      metaFontSize
+      enabled
+    }
+  }
+}
+
 fragment SettingsParts on Settings {
   __typename
   siteName
@@ -69,6 +133,7 @@ fragment SettingsParts on Settings {
   siteNameFontSize
   siteNameFontWeight
   subSiteName
+  subSiteName_de
   subSiteNameFont
   subSiteNameFontSize
   subSiteNameFontWeight
@@ -78,6 +143,7 @@ fragment SettingsParts on Settings {
   navLinks {
     __typename
     label
+    label_de
     url
   }
   footerText
@@ -99,7 +165,9 @@ fragment SettingsParts on Settings {
   headerInnerWidth
   siteUrl
   metaTitle
+  metaTitle_de
   metaDescription
+  metaDescription_de
   ogImage
   addressStreet
   addressCity

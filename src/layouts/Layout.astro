@@ -1,124 +1,132 @@
 ---
 // src/layouts/Layout.astro
 interface Props {
-	title:       string;
-	theme?:      string;
-	description?: string;
-	ogImage?:    string;
-	siteUrl?:    string;
+  title:        string;
+  theme?:       string;
+  description?: string;
+  ogImage?:     string;
+  siteUrl?:     string;
+  lang?:        'en' | 'de';
 }
 const {
-	title,
-	theme       = 'light',
-	description = '',
-	ogImage     = '',
-	siteUrl     = 'https://vortexdeep.ch',
+  title,
+  theme       = 'light',
+  description = '',
+  ogImage     = '',
+  siteUrl     = 'https://vortexdeep.ch',
+  lang        = 'en',
 } = Astro.props;
 
 const canonical   = `${siteUrl}${Astro.url.pathname}`;
 const ogImageFull = ogImage
-	? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
-	: `${siteUrl}/og-image.png`;
+  ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
+  : `${siteUrl}/og-image.png`;
+
+// ── hreflang alternate URLs ───────────────────────────────────────────────────
+// Strip /de prefix to get EN path; add /de prefix to get DE path.
+const currentPath = Astro.url.pathname;
+const enPath = currentPath.replace(/^\/de(\/|$)/, '/').replace(/\/+$/, '') || '/';
+const dePath = currentPath.startsWith('/de')
+  ? currentPath
+  : '/de' + currentPath;
+
+const hreflangEn = `${siteUrl}${enPath === '/' ? '/' : enPath}`;
+const hreflangDe = `${siteUrl}${dePath}`;
+
+const ogLocale = lang === 'de' ? 'de_CH' : 'en_GB';
 ---
 <!doctype html>
-<html lang="en" data-theme={theme}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<html lang={lang} data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-		<!-- ── SEO: Core ── -->
-		<title>{title}</title>
-		<meta name="description"        content={description} />
-		<link rel="canonical"           href={canonical} />
-		<meta name="robots"             content="index, follow" />
+    <!-- ── SEO: Core ── -->
+    <title>{title}</title>
+    <meta name="description"        content={description} />
+    <link rel="canonical"           href={canonical} />
+    <meta name="robots"             content="index, follow" />
 
-		<!-- ── SEO: Open Graph (Facebook, LinkedIn) ── -->
-		<meta property="og:type"        content="website" />
-		<meta property="og:url"         content={canonical} />
-		<meta property="og:title"       content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image"       content={ogImageFull} />
-		<meta property="og:locale"      content="de_CH" />
-		<meta property="og:site_name"   content="VortexDeep" />
+    <!-- ── SEO: hreflang (bilingual) ── -->
+    <link rel="alternate" hreflang="en"       href={hreflangEn} />
+    <link rel="alternate" hreflang="de"       href={hreflangDe} />
+    <link rel="alternate" hreflang="x-default" href={hreflangEn} />
 
-		<!-- ── SEO: Twitter / X Card ── -->
-		<meta name="twitter:card"        content="summary_large_image" />
-		<meta name="twitter:title"       content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image"       content={ogImageFull} />
+    <!-- ── SEO: Open Graph ── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonical} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={ogImageFull} />
+    <meta property="og:locale"      content={ogLocale} />
+    <meta property="og:site_name"   content="VortexDeep" />
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
-		<slot name="head" />
-		<style is:global>
-			:root[data-theme="light"]  { --zen-bg:#ffffff; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#000000; }
-			:root[data-theme="dark"]   { --zen-bg:#000000; --zen-text:#f5f5f5; --zen-muted:#a3a3a3; --zen-accent:#ffffff; }
-			:root[data-theme="paper"]  { --zen-bg:#F9F7F2; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#0a0a0a; }
-			:root[data-theme="stone"]  { --zen-bg:#f0ede8; --zen-text:#2c2a28; --zen-muted:#7a6e65; --zen-accent:#7a6e65; }
-			:root[data-theme="mist"]   { --zen-bg:#eef0f2; --zen-text:#1e2428; --zen-muted:#5a7080; --zen-accent:#5a7080; }
-			:root[data-theme="ink"]    { --zen-bg:#141414; --zen-text:#e8e4de; --zen-muted:#8c7355; --zen-accent:#8c7355; }
-			:root[data-theme="sand"]   { --zen-bg:#f5f0e8; --zen-text:#2a2520; --zen-muted:#9a8060; --zen-accent:#9a8060; }
-			:root[data-theme="deep"]   { --zen-bg:#0c0f14; --zen-text:#e0e2e8; --zen-muted:#6e7a8a; --zen-accent:#8aa4c0; }
-			body {
-				background-color: var(--zen-bg);
-				color: var(--zen-text);
-				font-family: 'Inter', sans-serif;
-				transition: background-color 0.7s ease, color 0.7s ease;
-				margin: 0;
-				-webkit-font-smoothing: antialiased;
-			}
-			/* Disable text selection globally — keep inputs functional */
-			* { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
-			input, textarea, [contenteditable] { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
-			/* Disable image drag */
-			img { -webkit-user-drag:none; pointer-events:none; }
-			/* Scrollbar */
-			::-webkit-scrollbar { width:5px; }
-			::-webkit-scrollbar-track { background:var(--zen-bg); }
-			::-webkit-scrollbar-thumb { background:var(--zen-muted); border-radius:10px; }
-		</style>
-	</head>
-	<body>
-		<slot />
-		<!-- Content & code protection -->
-		<script is:inline>
-		(function(){
-			// 1. Right-click disabled
-			document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    <!-- ── SEO: Twitter / X Card ── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImageFull} />
 
-			// 2. Keyboard shortcuts that expose source / devtools
-			document.addEventListener('keydown', function(e){
-				var c = e.ctrlKey || e.metaKey, s = e.shiftKey, k = e.key;
-				if(c && k==='u'){ e.preventDefault(); return; }  // view-source
-				if(c && k==='s'){ e.preventDefault(); return; }  // save page
-				if(c && k==='a'){ e.preventDefault(); return; }  // select all
-				if(c && k==='p'){ e.preventDefault(); return; }  // print
-				if(k==='F12'){    e.preventDefault(); return; }  // devtools
-				if(c && s && k==='I'){ e.preventDefault(); return; } // devtools
-				if(c && s && k==='J'){ e.preventDefault(); return; } // console
-				if(c && s && k==='C'){ e.preventDefault(); return; } // element picker
-			});
-
-			// 3. Drag disabled
-			document.addEventListener('dragstart', function(e){ e.preventDefault(); });
-
-			// 4. Copy disabled outside input fields
-			document.addEventListener('copy', function(e){
-				var t = document.activeElement ? document.activeElement.tagName : '';
-				if(t !== 'INPUT' && t !== 'TEXTAREA'){ e.preventDefault(); }
-			});
-
-			// 5. DevTools size detection — clears page if docked devtools detected
-			var threshold = 160, open = false;
-			setInterval(function(){
-				var w = window.outerWidth  - window.innerWidth  > threshold;
-				var h = window.outerHeight - window.innerHeight > threshold;
-				if(w || h){ if(!open){ open=true; document.body.innerHTML=''; } }
-				else{ open=false; }
-			}, 1000);
-		})();
-		</script>
-	</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <slot name="head" />
+    <style is:global>
+      :root[data-theme="light"]  { --zen-bg:#ffffff; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#000000; }
+      :root[data-theme="dark"]   { --zen-bg:#000000; --zen-text:#f5f5f5; --zen-muted:#a3a3a3; --zen-accent:#ffffff; }
+      :root[data-theme="paper"]  { --zen-bg:#F9F7F2; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#0a0a0a; }
+      :root[data-theme="stone"]  { --zen-bg:#f0ede8; --zen-text:#2c2a28; --zen-muted:#7a6e65; --zen-accent:#7a6e65; }
+      :root[data-theme="mist"]   { --zen-bg:#eef0f2; --zen-text:#1e2428; --zen-muted:#5a7080; --zen-accent:#5a7080; }
+      :root[data-theme="ink"]    { --zen-bg:#141414; --zen-text:#e8e4de; --zen-muted:#8c7355; --zen-accent:#8c7355; }
+      :root[data-theme="sand"]   { --zen-bg:#f5f0e8; --zen-text:#2a2520; --zen-muted:#9a8060; --zen-accent:#9a8060; }
+      :root[data-theme="deep"]   { --zen-bg:#0c0f14; --zen-text:#e0e2e8; --zen-muted:#6e7a8a; --zen-accent:#8aa4c0; }
+      body {
+        background-color: var(--zen-bg);
+        color: var(--zen-text);
+        font-family: 'Inter', sans-serif;
+        transition: background-color 0.7s ease, color 0.7s ease;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+      * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+      input, textarea, [contenteditable] { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+      img { -webkit-user-drag:none; pointer-events:none; }
+      ::-webkit-scrollbar { width:5px; }
+      ::-webkit-scrollbar-track { background:var(--zen-bg); }
+      ::-webkit-scrollbar-thumb { background:var(--zen-muted); border-radius:10px; }
+    </style>
+  </head>
+  <body>
+    <slot />
+    <!-- Content & code protection -->
+    <script is:inline>
+    (function(){
+      document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+      document.addEventListener('keydown', function(e){
+        var c = e.ctrlKey || e.metaKey, s = e.shiftKey, k = e.key;
+        if(c && k==='u'){ e.preventDefault(); return; }
+        if(c && k==='s'){ e.preventDefault(); return; }
+        if(c && k==='a'){ e.preventDefault(); return; }
+        if(c && k==='p'){ e.preventDefault(); return; }
+        if(k==='F12'){    e.preventDefault(); return; }
+        if(c && s && k==='I'){ e.preventDefault(); return; }
+        if(c && s && k==='J'){ e.preventDefault(); return; }
+        if(c && s && k==='C'){ e.preventDefault(); return; }
+      });
+      document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+      document.addEventListener('copy', function(e){
+        var t = document.activeElement ? document.activeElement.tagName : '';
+        if(t !== 'INPUT' && t !== 'TEXTAREA'){ e.preventDefault(); }
+      });
+      var threshold = 160, open = false;
+      setInterval(function(){
+        var w = window.outerWidth  - window.innerWidth  > threshold;
+        var h = window.outerHeight - window.innerHeight > threshold;
+        if(w || h){ if(!open){ open=true; document.body.innerHTML=''; } }
+        else{ open=false; }
+      }, 1000);
+    })();
+    </script>
+  </body>
 </html>

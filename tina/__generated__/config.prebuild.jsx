@@ -22,6 +22,140 @@ var fontWeightOptions = [
   { label: "Semibold (600)", value: "font-semibold" },
   { label: "Bold (700)", value: "font-bold" }
 ];
+var pageTemplates = [
+  {
+    name: "section",
+    label: "Page Section",
+    ui: {
+      itemProps: (item) => ({ label: item?.title || "Unnamed Section" })
+    },
+    fields: [
+      { type: "string", name: "title", label: "Title text" },
+      { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "subTitle", label: "Sub-title text" },
+      { type: "string", name: "subTitleFont", label: "Sub-title \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "subTitleFontSize", label: "Sub-title \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "subTitleFontWeight", label: "Sub-title \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "content", label: "Body text (use | for line breaks)", ui: { component: "textarea" } },
+      { type: "string", name: "bodyFont", label: "Body \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "fontSize", label: "Body \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "fontWeight", label: "Body \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "email", label: "Contact Email (optional)" },
+      { type: "boolean", name: "showArt", label: "Activate Art Gallery?" },
+      { type: "string", name: "columns", label: "Gallery columns", options: [
+        { label: "2 Columns", value: "grid-cols-2" },
+        { label: "3 Columns", value: "grid-cols-3" },
+        { label: "4 Columns", value: "grid-cols-4" }
+      ] },
+      { type: "boolean", name: "enabled", label: "Section Enabled" }
+    ]
+  },
+  {
+    name: "processFlow",
+    label: "Process Flow",
+    ui: {
+      itemProps: (item) => ({ label: item?.title || "Process Flow" })
+    },
+    fields: [
+      { type: "string", name: "title", label: "Section Title" },
+      { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "orientation", label: "Arrow Direction", options: [
+        { label: "Vertical \u2193  (stacked)", value: "vertical" },
+        { label: "Horizontal \u2192 (inline)", value: "horizontal" }
+      ] },
+      { type: "string", name: "stepFont", label: "Steps \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "stepFontSize", label: "Steps \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "stepFontWeight", label: "Steps \u2014 Weight", options: fontWeightOptions },
+      {
+        type: "object",
+        list: true,
+        name: "steps",
+        label: "Process Steps",
+        fields: [
+          { type: "string", name: "label", label: "Step Label" },
+          { type: "string", name: "font", label: "Override Font (optional)", options: fontTypeOptions },
+          { type: "string", name: "fontSize", label: "Override Size (optional)", options: fontSizeOptions },
+          { type: "string", name: "fontWeight", label: "Override Weight (optional)", options: fontWeightOptions }
+        ],
+        ui: { itemProps: (item) => ({ label: item?.label || "Step" }) }
+      },
+      { type: "boolean", name: "enabled", label: "Section Enabled" }
+    ]
+  },
+  {
+    name: "caseStudy",
+    label: "Case Study",
+    ui: {
+      itemProps: (item) => ({ label: item?.industry ? `Case Study \u2014 ${item.industry}` : "Case Study" })
+    },
+    fields: [
+      {
+        type: "string",
+        name: "industry",
+        label: "Industry / Sector",
+        description: "e.g. International Trade \u2014 never use client name"
+      },
+      { type: "string", name: "location", label: "Location", description: "e.g. Switzerland" },
+      {
+        type: "string",
+        name: "package",
+        label: "Package Used",
+        description: "e.g. Basic + AI Triage"
+      },
+      { type: "string", name: "timeline", label: "Timeline to Go-live", description: "e.g. 4 weeks" },
+      {
+        type: "string",
+        name: "challenge",
+        label: "Challenge",
+        description: "The problem \u2014 no internal detail, no client specifics",
+        ui: { component: "textarea" }
+      },
+      {
+        type: "string",
+        name: "built",
+        label: "What Was Built",
+        description: "High-level only \u2014 no tools, no routing logic",
+        ui: { component: "textarea" }
+      },
+      {
+        type: "string",
+        name: "result",
+        label: "Result",
+        description: "Business outcome in plain language",
+        ui: { component: "textarea" }
+      },
+      { type: "string", name: "titleFont", label: "Industry Title \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "titleFontSize", label: "Industry Title \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "titleFontWeight", label: "Industry Title \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "bodyFont", label: "Body Text \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "bodyFontSize", label: "Body Text \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "bodyFontWeight", label: "Body Text \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "labelFont", label: "Labels \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "labelFontSize", label: "Labels \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "labelFontWeight", label: "Labels \u2014 Weight", options: fontWeightOptions },
+      { type: "string", name: "metaFont", label: "Meta Text \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "metaFontSize", label: "Meta Text \u2014 Size", options: fontSizeOptions },
+      { type: "boolean", name: "enabled", label: "Section Enabled" }
+    ]
+  }
+];
+var pageFields = [
+  {
+    type: "object",
+    list: true,
+    name: "blocks",
+    label: "Page Sections",
+    ui: {
+      // @ts-ignore
+      itemProps: (item) => ({ label: item?.title || item?.industry || "Section" })
+    },
+    templates: pageTemplates
+  }
+];
 var config_default = defineConfig({
   branch: "main",
   clientId: null,
@@ -30,166 +164,30 @@ var config_default = defineConfig({
   media: { tina: { mediaRoot: "uploads", publicFolder: "public" } },
   schema: {
     collections: [
-      // ── PAGES ──────────────────────────────────────────────────────────────
+      // ── PAGES (EN) ────────────────────────────────────────────────────────
       {
         name: "page",
-        label: "Pages",
-        path: "src/content/pages",
+        label: "Pages (EN)",
+        path: "src/content/pages/en",
         format: "json",
-        fields: [
-          {
-            type: "object",
-            list: true,
-            name: "blocks",
-            label: "Page Sections",
-            ui: {
-              // @ts-ignore
-              itemProps: (item) => ({ label: item?.title || "Section" })
-            },
-            templates: [
-              {
-                name: "section",
-                label: "Page Section",
-                ui: {
-                  itemProps: (item) => ({ label: item?.title || "Unnamed Section" })
-                },
-                fields: [
-                  // ── Section title ──────────────────────────────────────────
-                  { type: "string", name: "title", label: "Title text" },
-                  { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
-                  // ── Sub-title ──────────────────────────────────────────────
-                  { type: "string", name: "subTitle", label: "Sub-title text" },
-                  { type: "string", name: "subTitleFont", label: "Sub-title \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "subTitleFontSize", label: "Sub-title \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "subTitleFontWeight", label: "Sub-title \u2014 Weight", options: fontWeightOptions },
-                  // ── Body text ──────────────────────────────────────────────
-                  { type: "string", name: "content", label: "Body text (use | for line breaks)", ui: { component: "textarea" } },
-                  { type: "string", name: "bodyFont", label: "Body \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "fontSize", label: "Body \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "fontWeight", label: "Body \u2014 Weight", options: fontWeightOptions },
-                  // ── Contact / other ────────────────────────────────────────
-                  { type: "string", name: "email", label: "Contact Email (optional)" },
-                  { type: "boolean", name: "showArt", label: "Activate Art Gallery?" },
-                  { type: "string", name: "columns", label: "Gallery columns", options: [
-                    { label: "2 Columns", value: "grid-cols-2" },
-                    { label: "3 Columns", value: "grid-cols-3" },
-                    { label: "4 Columns", value: "grid-cols-4" }
-                  ] },
-                  { type: "boolean", name: "enabled", label: "Section Enabled" }
-                ]
-              },
-              // ── Process Flow template ──────────────────────────────────────
-              {
-                name: "processFlow",
-                label: "Process Flow",
-                ui: {
-                  itemProps: (item) => ({ label: item?.title || "Process Flow" })
-                },
-                fields: [
-                  { type: "string", name: "title", label: "Section Title" },
-                  { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
-                  { type: "string", name: "orientation", label: "Arrow Direction", options: [
-                    { label: "Vertical \u2193  (stacked)", value: "vertical" },
-                    { label: "Horizontal \u2192 (inline)", value: "horizontal" }
-                  ] },
-                  // ── Step label appearance (applies to all steps) ───────────
-                  { type: "string", name: "stepFont", label: "Steps \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "stepFontSize", label: "Steps \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "stepFontWeight", label: "Steps \u2014 Weight", options: fontWeightOptions },
-                  {
-                    type: "object",
-                    list: true,
-                    name: "steps",
-                    label: "Process Steps",
-                    fields: [
-                      { type: "string", name: "label", label: "Step Label" },
-                      { type: "string", name: "font", label: "Override Font (optional)", options: fontTypeOptions },
-                      { type: "string", name: "fontSize", label: "Override Size (optional)", options: fontSizeOptions },
-                      { type: "string", name: "fontWeight", label: "Override Weight (optional)", options: fontWeightOptions }
-                    ],
-                    ui: { itemProps: (item) => ({ label: item?.label || "Step" }) }
-                  },
-                  { type: "boolean", name: "enabled", label: "Section Enabled" }
-                ]
-              },
-              // ── Case Study template ────────────────────────────────────────
-              {
-                name: "caseStudy",
-                label: "Case Study",
-                ui: {
-                  itemProps: (item) => ({ label: item?.industry ? `Case Study \u2014 ${item.industry}` : "Case Study" })
-                },
-                fields: [
-                  // ── Content ───────────────────────────────────────────────
-                  {
-                    type: "string",
-                    name: "industry",
-                    label: "Industry / Sector",
-                    description: "e.g. International Trade \u2014 never use client name"
-                  },
-                  { type: "string", name: "location", label: "Location", description: "e.g. Switzerland" },
-                  {
-                    type: "string",
-                    name: "package",
-                    label: "Package Used",
-                    description: "e.g. Basic + AI Triage"
-                  },
-                  { type: "string", name: "timeline", label: "Timeline to Go-live", description: "e.g. 4 weeks" },
-                  {
-                    type: "string",
-                    name: "challenge",
-                    label: "Challenge",
-                    description: "The problem \u2014 no internal detail, no client specifics",
-                    ui: { component: "textarea" }
-                  },
-                  {
-                    type: "string",
-                    name: "built",
-                    label: "What Was Built",
-                    description: "High-level only \u2014 no tools, no routing logic",
-                    ui: { component: "textarea" }
-                  },
-                  {
-                    type: "string",
-                    name: "result",
-                    label: "Result",
-                    description: "Business outcome in plain language",
-                    ui: { component: "textarea" }
-                  },
-                  // ── Industry title typography ──────────────────────────────
-                  { type: "string", name: "titleFont", label: "Industry Title \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "titleFontSize", label: "Industry Title \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "titleFontWeight", label: "Industry Title \u2014 Weight", options: fontWeightOptions },
-                  // ── Body text typography (Challenge / Built / Result) ──────
-                  { type: "string", name: "bodyFont", label: "Body Text \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "bodyFontSize", label: "Body Text \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "bodyFontWeight", label: "Body Text \u2014 Weight", options: fontWeightOptions },
-                  // ── Label typography (Challenge / What Was Built / Result headings) ──
-                  { type: "string", name: "labelFont", label: "Labels \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "labelFontSize", label: "Labels \u2014 Size", options: fontSizeOptions },
-                  { type: "string", name: "labelFontWeight", label: "Labels \u2014 Weight", options: fontWeightOptions },
-                  // ── Meta typography (Package / Timeline / Location) ────────
-                  { type: "string", name: "metaFont", label: "Meta Text \u2014 Font", options: fontTypeOptions },
-                  { type: "string", name: "metaFontSize", label: "Meta Text \u2014 Size", options: fontSizeOptions },
-                  { type: "boolean", name: "enabled", label: "Section Enabled" }
-                ]
-              }
-            ]
-          }
-        ]
+        fields: pageFields
       },
-      // ── SITE SETTINGS ──────────────────────────────────────────────────────
+      // ── PAGES (DE) ────────────────────────────────────────────────────────
+      {
+        name: "page_de",
+        label: "Pages (DE)",
+        path: "src/content/pages/de",
+        format: "json",
+        fields: pageFields
+      },
+      // ── SITE SETTINGS ─────────────────────────────────────────────────────
       {
         name: "settings",
         label: "Site Settings",
         path: "src/content/settings",
         format: "json",
         fields: [
-          // ── Hero: Main title ───────────────────────────────────────────────
+          // ── Hero: Main title ──────────────────────────────────────────────
           { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
           { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: [
@@ -200,8 +198,19 @@ var config_default = defineConfig({
             { label: "XL \u2014 hero scale", value: "text-6xl md:text-7xl lg:text-[6vw]" }
           ] },
           { type: "string", name: "siteNameFontWeight", label: "Main title \u2014 Weight", options: fontWeightOptions },
-          // ── Hero: Subtitle ─────────────────────────────────────────────────
-          { type: "string", name: "subSiteName", label: "Subtitle text (e.g. Practical AI Workflows)" },
+          // ── Hero: Subtitle (EN + DE) ──────────────────────────────────────
+          {
+            type: "string",
+            name: "subSiteName",
+            label: "Subtitle (EN) \u2014 use | for line breaks",
+            description: "e.g. Practical AI automation | for small business"
+          },
+          {
+            type: "string",
+            name: "subSiteName_de",
+            label: "Subtitle (DE) \u2014 use | for line breaks",
+            description: "e.g. Praktische KI-Automatisierung | f\xFCr KMU"
+          },
           { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
           { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: [
             { label: "XS \u2014 fine caption", value: "text-xs md:text-sm" },
@@ -229,8 +238,9 @@ var config_default = defineConfig({
             name: "navLinks",
             label: "Header Navigation Links",
             fields: [
-              { type: "string", name: "label", label: "Link Label" },
-              { type: "string", name: "url", label: "URL (e.g. /check)" }
+              { type: "string", name: "label", label: "Link Label (EN)" },
+              { type: "string", name: "label_de", label: "Link Label (DE)" },
+              { type: "string", name: "url", label: "URL (e.g. /check) \u2014 /de is added automatically for DE" }
             ],
             ui: { itemProps: (item) => ({ label: item?.label || "New Link" }) }
           },
@@ -252,7 +262,7 @@ var config_default = defineConfig({
             ],
             ui: { itemProps: (item) => ({ label: item?.platform || "New Social Link" }) }
           },
-          // ── Global appearance ──────────────────────────────────────────────
+          // ── Global appearance ─────────────────────────────────────────────
           { type: "string", name: "fontPreset", label: "Global Default Font", options: [
             { label: "Inter \u2014 Modern Sans", value: "Inter" },
             { label: "Lora \u2014 Elegant Serif", value: "Lora" },
@@ -294,7 +304,7 @@ var config_default = defineConfig({
             { label: "Wide \u2014 820px", value: "820px" },
             { label: "Full width", value: "100%" }
           ] },
-          // ── SEO ────────────────────────────────────────────────────────────
+          // ── SEO (EN + DE) ──────────────────────────────────────────────────
           {
             type: "string",
             name: "siteUrl",
@@ -304,23 +314,36 @@ var config_default = defineConfig({
           {
             type: "string",
             name: "metaTitle",
-            label: "SEO: Page Title",
-            description: "Shown in Google results. 50\u201360 chars. Leave blank to use site name."
+            label: "SEO: Page Title (EN)",
+            description: "Shown in Google results. 50\u201360 chars."
+          },
+          {
+            type: "string",
+            name: "metaTitle_de",
+            label: "SEO: Page Title (DE)",
+            description: "Shown in Google results for German page. 50\u201360 chars."
           },
           {
             type: "string",
             name: "metaDescription",
-            label: "SEO: Meta Description",
-            description: "Shown in Google results. 120\u2013155 chars. Be specific \u2014 include 'Z\xFCrich' and what you do.",
+            label: "SEO: Meta Description (EN)",
+            description: "120\u2013155 chars. Include 'Z\xFCrich' and what you do.",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "metaDescription_de",
+            label: "SEO: Meta Description (DE)",
+            description: "120\u2013155 chars f\xFCr die deutsche Seite.",
             ui: { component: "textarea" }
           },
           {
             type: "image",
             name: "ogImage",
             label: "SEO: Social Share Image",
-            description: "Shown when shared on LinkedIn/Facebook. 1200\xD7630px recommended."
+            description: "1200\xD7630px recommended."
           },
-          // ── LocalBusiness (Google / JSON-LD) ───────────────────────────────
+          // ── LocalBusiness (Google / JSON-LD) ──────────────────────────────
           { type: "string", name: "addressStreet", label: "Address: Street (for Google)" },
           { type: "string", name: "addressCity", label: "Address: City", description: "e.g. Z\xFCrich" },
           { type: "string", name: "addressPostal", label: "Address: Postal Code", description: "e.g. 8001" },
@@ -328,7 +351,7 @@ var config_default = defineConfig({
           { type: "string", name: "contactPhone", label: "Contact Phone (optional, for Google schema)" }
         ]
       },
-      // ── ART GALLERY ────────────────────────────────────────────────────────
+      // ── ART GALLERY ───────────────────────────────────────────────────────
       {
         name: "art",
         label: "Art Gallery Items",

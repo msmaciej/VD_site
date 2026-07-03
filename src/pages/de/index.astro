@@ -1,0 +1,14 @@
+---
+// src/pages/de/index.astro  →  vortexdeep.ch/de/
+import SitePage from '../../components/SitePage.astro';
+
+const artFiles     = await Astro.glob('../../content/art/*.json');
+const pageFiles    = await Astro.glob('../../content/pages/de/*.json');
+const settingFiles = await Astro.glob('../../content/settings/*.json');
+---
+<SitePage
+  lang="de"
+  pageData={pageFiles[0]?.default?.blocks || []}
+  settings={settingFiles[0]?.default || {}}
+  artFiles={artFiles}
+/>

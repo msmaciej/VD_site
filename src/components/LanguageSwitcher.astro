@@ -1,0 +1,44 @@
+---
+// src/components/LanguageSwitcher.astro
+// Pure anchor links — no JavaScript. Works everywhere CSS color is inherited.
+//
+// Props:
+//   lang  — current page language ('en' | 'de')
+//   slug  — current page slug WITHOUT locale prefix or leading slash
+//           '' (empty string) = home / root
+//           'check'           = /check  or  /de/check
+//
+interface Props {
+  lang: 'en' | 'de';
+  slug?: string;
+}
+
+const { lang, slug = '' } = Astro.props;
+
+const enUrl = slug ? `/${slug}` : '/';
+const deUrl = slug ? `/de/${slug}` : '/de/';
+---
+
+<div class="flex items-center gap-[0.6rem]" aria-label="Language switcher">
+  <a
+    href={enUrl}
+    aria-current={lang === 'en' ? 'page' : undefined}
+    class={[
+      'text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity',
+      lang === 'en' ? 'opacity-80' : 'opacity-30 hover:opacity-70',
+    ].join(' ')}
+    style="color: inherit;"
+  >EN</a>
+
+  <span class="opacity-20 text-[9px]" aria-hidden="true">/</span>
+
+  <a
+    href={deUrl}
+    aria-current={lang === 'de' ? 'page' : undefined}
+    class={[
+      'text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity',
+      lang === 'de' ? 'opacity-80' : 'opacity-30 hover:opacity-70',
+    ].join(' ')}
+    style="color: inherit;"
+  >DE</a>
+</div>

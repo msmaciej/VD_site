@@ -84,6 +84,8 @@ export type Query = {
   document: DocumentNode;
   page: Page;
   pageConnection: PageConnection;
+  page_de: Page_De;
+  page_deConnection: Page_DeConnection;
   settings: Settings;
   settingsConnection: SettingsConnection;
   art: Art;
@@ -127,6 +129,21 @@ export type QueryPageConnectionArgs = {
 };
 
 
+export type QueryPage_DeArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPage_DeConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<Page_DeFilter>;
+};
+
+
 export type QuerySettingsArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -158,6 +175,7 @@ export type QueryArtConnectionArgs = {
 
 export type DocumentFilter = {
   page?: InputMaybe<PageFilter>;
+  page_de?: InputMaybe<Page_DeFilter>;
   settings?: InputMaybe<SettingsFilter>;
   art?: InputMaybe<ArtFilter>;
 };
@@ -199,7 +217,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Page | Settings | Art | Folder;
+export type DocumentNode = Page | Page_De | Settings | Art | Folder;
 
 export type PageBlocksSection = {
   __typename?: 'PageBlocksSection';
@@ -372,9 +390,169 @@ export type PageConnection = Connection & {
   edges?: Maybe<Array<Maybe<PageConnectionEdges>>>;
 };
 
+export type Page_DeBlocksSection = {
+  __typename?: 'Page_deBlocksSection';
+  title?: Maybe<Scalars['String']['output']>;
+  titleFont?: Maybe<Scalars['String']['output']>;
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  titleFontWeight?: Maybe<Scalars['String']['output']>;
+  subTitle?: Maybe<Scalars['String']['output']>;
+  subTitleFont?: Maybe<Scalars['String']['output']>;
+  subTitleFontSize?: Maybe<Scalars['String']['output']>;
+  subTitleFontWeight?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+  bodyFont?: Maybe<Scalars['String']['output']>;
+  fontSize?: Maybe<Scalars['String']['output']>;
+  fontWeight?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  showArt?: Maybe<Scalars['Boolean']['output']>;
+  columns?: Maybe<Scalars['String']['output']>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Page_DeBlocksProcessFlowSteps = {
+  __typename?: 'Page_deBlocksProcessFlowSteps';
+  label?: Maybe<Scalars['String']['output']>;
+  font?: Maybe<Scalars['String']['output']>;
+  fontSize?: Maybe<Scalars['String']['output']>;
+  fontWeight?: Maybe<Scalars['String']['output']>;
+};
+
+export type Page_DeBlocksProcessFlow = {
+  __typename?: 'Page_deBlocksProcessFlow';
+  title?: Maybe<Scalars['String']['output']>;
+  titleFont?: Maybe<Scalars['String']['output']>;
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  titleFontWeight?: Maybe<Scalars['String']['output']>;
+  orientation?: Maybe<Scalars['String']['output']>;
+  stepFont?: Maybe<Scalars['String']['output']>;
+  stepFontSize?: Maybe<Scalars['String']['output']>;
+  stepFontWeight?: Maybe<Scalars['String']['output']>;
+  steps?: Maybe<Array<Maybe<Page_DeBlocksProcessFlowSteps>>>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Page_DeBlocksCaseStudy = {
+  __typename?: 'Page_deBlocksCaseStudy';
+  industry?: Maybe<Scalars['String']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  package?: Maybe<Scalars['String']['output']>;
+  timeline?: Maybe<Scalars['String']['output']>;
+  challenge?: Maybe<Scalars['String']['output']>;
+  built?: Maybe<Scalars['String']['output']>;
+  result?: Maybe<Scalars['String']['output']>;
+  titleFont?: Maybe<Scalars['String']['output']>;
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  titleFontWeight?: Maybe<Scalars['String']['output']>;
+  bodyFont?: Maybe<Scalars['String']['output']>;
+  bodyFontSize?: Maybe<Scalars['String']['output']>;
+  bodyFontWeight?: Maybe<Scalars['String']['output']>;
+  labelFont?: Maybe<Scalars['String']['output']>;
+  labelFontSize?: Maybe<Scalars['String']['output']>;
+  labelFontWeight?: Maybe<Scalars['String']['output']>;
+  metaFont?: Maybe<Scalars['String']['output']>;
+  metaFontSize?: Maybe<Scalars['String']['output']>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Page_DeBlocks = Page_DeBlocksSection | Page_DeBlocksProcessFlow | Page_DeBlocksCaseStudy;
+
+export type Page_De = Node & Document & {
+  __typename?: 'Page_de';
+  blocks?: Maybe<Array<Maybe<Page_DeBlocks>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type Page_DeBlocksSectionFilter = {
+  title?: InputMaybe<StringFilter>;
+  titleFont?: InputMaybe<StringFilter>;
+  titleFontSize?: InputMaybe<StringFilter>;
+  titleFontWeight?: InputMaybe<StringFilter>;
+  subTitle?: InputMaybe<StringFilter>;
+  subTitleFont?: InputMaybe<StringFilter>;
+  subTitleFontSize?: InputMaybe<StringFilter>;
+  subTitleFontWeight?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringFilter>;
+  bodyFont?: InputMaybe<StringFilter>;
+  fontSize?: InputMaybe<StringFilter>;
+  fontWeight?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+  showArt?: InputMaybe<BooleanFilter>;
+  columns?: InputMaybe<StringFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+};
+
+export type Page_DeBlocksProcessFlowStepsFilter = {
+  label?: InputMaybe<StringFilter>;
+  font?: InputMaybe<StringFilter>;
+  fontSize?: InputMaybe<StringFilter>;
+  fontWeight?: InputMaybe<StringFilter>;
+};
+
+export type Page_DeBlocksProcessFlowFilter = {
+  title?: InputMaybe<StringFilter>;
+  titleFont?: InputMaybe<StringFilter>;
+  titleFontSize?: InputMaybe<StringFilter>;
+  titleFontWeight?: InputMaybe<StringFilter>;
+  orientation?: InputMaybe<StringFilter>;
+  stepFont?: InputMaybe<StringFilter>;
+  stepFontSize?: InputMaybe<StringFilter>;
+  stepFontWeight?: InputMaybe<StringFilter>;
+  steps?: InputMaybe<Page_DeBlocksProcessFlowStepsFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+};
+
+export type Page_DeBlocksCaseStudyFilter = {
+  industry?: InputMaybe<StringFilter>;
+  location?: InputMaybe<StringFilter>;
+  package?: InputMaybe<StringFilter>;
+  timeline?: InputMaybe<StringFilter>;
+  challenge?: InputMaybe<StringFilter>;
+  built?: InputMaybe<StringFilter>;
+  result?: InputMaybe<StringFilter>;
+  titleFont?: InputMaybe<StringFilter>;
+  titleFontSize?: InputMaybe<StringFilter>;
+  titleFontWeight?: InputMaybe<StringFilter>;
+  bodyFont?: InputMaybe<StringFilter>;
+  bodyFontSize?: InputMaybe<StringFilter>;
+  bodyFontWeight?: InputMaybe<StringFilter>;
+  labelFont?: InputMaybe<StringFilter>;
+  labelFontSize?: InputMaybe<StringFilter>;
+  labelFontWeight?: InputMaybe<StringFilter>;
+  metaFont?: InputMaybe<StringFilter>;
+  metaFontSize?: InputMaybe<StringFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+};
+
+export type Page_DeBlocksFilter = {
+  section?: InputMaybe<Page_DeBlocksSectionFilter>;
+  processFlow?: InputMaybe<Page_DeBlocksProcessFlowFilter>;
+  caseStudy?: InputMaybe<Page_DeBlocksCaseStudyFilter>;
+};
+
+export type Page_DeFilter = {
+  blocks?: InputMaybe<Page_DeBlocksFilter>;
+};
+
+export type Page_DeConnectionEdges = {
+  __typename?: 'Page_deConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Page_De>;
+};
+
+export type Page_DeConnection = Connection & {
+  __typename?: 'Page_deConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<Page_DeConnectionEdges>>>;
+};
+
 export type SettingsNavLinks = {
   __typename?: 'SettingsNavLinks';
   label?: Maybe<Scalars['String']['output']>;
+  label_de?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
 
@@ -391,6 +569,7 @@ export type Settings = Node & Document & {
   siteNameFontSize?: Maybe<Scalars['String']['output']>;
   siteNameFontWeight?: Maybe<Scalars['String']['output']>;
   subSiteName?: Maybe<Scalars['String']['output']>;
+  subSiteName_de?: Maybe<Scalars['String']['output']>;
   subSiteNameFont?: Maybe<Scalars['String']['output']>;
   subSiteNameFontSize?: Maybe<Scalars['String']['output']>;
   subSiteNameFontWeight?: Maybe<Scalars['String']['output']>;
@@ -413,7 +592,9 @@ export type Settings = Node & Document & {
   headerInnerWidth?: Maybe<Scalars['String']['output']>;
   siteUrl?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
+  metaTitle_de?: Maybe<Scalars['String']['output']>;
   metaDescription?: Maybe<Scalars['String']['output']>;
+  metaDescription_de?: Maybe<Scalars['String']['output']>;
   ogImage?: Maybe<Scalars['String']['output']>;
   addressStreet?: Maybe<Scalars['String']['output']>;
   addressCity?: Maybe<Scalars['String']['output']>;
@@ -427,6 +608,7 @@ export type Settings = Node & Document & {
 
 export type SettingsNavLinksFilter = {
   label?: InputMaybe<StringFilter>;
+  label_de?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
 };
 
@@ -448,6 +630,7 @@ export type SettingsFilter = {
   siteNameFontSize?: InputMaybe<StringFilter>;
   siteNameFontWeight?: InputMaybe<StringFilter>;
   subSiteName?: InputMaybe<StringFilter>;
+  subSiteName_de?: InputMaybe<StringFilter>;
   subSiteNameFont?: InputMaybe<StringFilter>;
   subSiteNameFontSize?: InputMaybe<StringFilter>;
   subSiteNameFontWeight?: InputMaybe<StringFilter>;
@@ -470,7 +653,9 @@ export type SettingsFilter = {
   headerInnerWidth?: InputMaybe<StringFilter>;
   siteUrl?: InputMaybe<StringFilter>;
   metaTitle?: InputMaybe<StringFilter>;
+  metaTitle_de?: InputMaybe<StringFilter>;
   metaDescription?: InputMaybe<StringFilter>;
+  metaDescription_de?: InputMaybe<StringFilter>;
   ogImage?: InputMaybe<ImageFilter>;
   addressStreet?: InputMaybe<StringFilter>;
   addressCity?: InputMaybe<StringFilter>;
@@ -550,6 +735,8 @@ export type Mutation = {
   createFolder: DocumentNode;
   updatePage: Page;
   createPage: Page;
+  updatePage_de: Page_De;
+  createPage_de: Page_De;
   updateSettings: Settings;
   createSettings: Settings;
   updateArt: Art;
@@ -602,6 +789,18 @@ export type MutationCreatePageArgs = {
 };
 
 
+export type MutationUpdatePage_DeArgs = {
+  relativePath: Scalars['String']['input'];
+  params: Page_DeMutation;
+};
+
+
+export type MutationCreatePage_DeArgs = {
+  relativePath: Scalars['String']['input'];
+  params: Page_DeMutation;
+};
+
+
 export type MutationUpdateSettingsArgs = {
   relativePath: Scalars['String']['input'];
   params: SettingsMutation;
@@ -627,6 +826,7 @@ export type MutationCreateArtArgs = {
 
 export type DocumentUpdateMutation = {
   page?: InputMaybe<PageMutation>;
+  page_de?: InputMaybe<Page_DeMutation>;
   settings?: InputMaybe<SettingsMutation>;
   art?: InputMaybe<ArtMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
@@ -634,6 +834,7 @@ export type DocumentUpdateMutation = {
 
 export type DocumentMutation = {
   page?: InputMaybe<PageMutation>;
+  page_de?: InputMaybe<Page_DeMutation>;
   settings?: InputMaybe<SettingsMutation>;
   art?: InputMaybe<ArtMutation>;
 };
@@ -709,8 +910,80 @@ export type PageMutation = {
   blocks?: InputMaybe<Array<InputMaybe<PageBlocksMutation>>>;
 };
 
+export type Page_DeBlocksSectionMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  titleFont?: InputMaybe<Scalars['String']['input']>;
+  titleFontSize?: InputMaybe<Scalars['String']['input']>;
+  titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  subTitle?: InputMaybe<Scalars['String']['input']>;
+  subTitleFont?: InputMaybe<Scalars['String']['input']>;
+  subTitleFontSize?: InputMaybe<Scalars['String']['input']>;
+  subTitleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  bodyFont?: InputMaybe<Scalars['String']['input']>;
+  fontSize?: InputMaybe<Scalars['String']['input']>;
+  fontWeight?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  showArt?: InputMaybe<Scalars['Boolean']['input']>;
+  columns?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Page_DeBlocksProcessFlowStepsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  font?: InputMaybe<Scalars['String']['input']>;
+  fontSize?: InputMaybe<Scalars['String']['input']>;
+  fontWeight?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Page_DeBlocksProcessFlowMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  titleFont?: InputMaybe<Scalars['String']['input']>;
+  titleFontSize?: InputMaybe<Scalars['String']['input']>;
+  titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  orientation?: InputMaybe<Scalars['String']['input']>;
+  stepFont?: InputMaybe<Scalars['String']['input']>;
+  stepFontSize?: InputMaybe<Scalars['String']['input']>;
+  stepFontWeight?: InputMaybe<Scalars['String']['input']>;
+  steps?: InputMaybe<Array<InputMaybe<Page_DeBlocksProcessFlowStepsMutation>>>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Page_DeBlocksCaseStudyMutation = {
+  industry?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  package?: InputMaybe<Scalars['String']['input']>;
+  timeline?: InputMaybe<Scalars['String']['input']>;
+  challenge?: InputMaybe<Scalars['String']['input']>;
+  built?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  titleFont?: InputMaybe<Scalars['String']['input']>;
+  titleFontSize?: InputMaybe<Scalars['String']['input']>;
+  titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  bodyFont?: InputMaybe<Scalars['String']['input']>;
+  bodyFontSize?: InputMaybe<Scalars['String']['input']>;
+  bodyFontWeight?: InputMaybe<Scalars['String']['input']>;
+  labelFont?: InputMaybe<Scalars['String']['input']>;
+  labelFontSize?: InputMaybe<Scalars['String']['input']>;
+  labelFontWeight?: InputMaybe<Scalars['String']['input']>;
+  metaFont?: InputMaybe<Scalars['String']['input']>;
+  metaFontSize?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Page_DeBlocksMutation = {
+  section?: InputMaybe<Page_DeBlocksSectionMutation>;
+  processFlow?: InputMaybe<Page_DeBlocksProcessFlowMutation>;
+  caseStudy?: InputMaybe<Page_DeBlocksCaseStudyMutation>;
+};
+
+export type Page_DeMutation = {
+  blocks?: InputMaybe<Array<InputMaybe<Page_DeBlocksMutation>>>;
+};
+
 export type SettingsNavLinksMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
+  label_de?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -725,6 +998,7 @@ export type SettingsMutation = {
   siteNameFontSize?: InputMaybe<Scalars['String']['input']>;
   siteNameFontWeight?: InputMaybe<Scalars['String']['input']>;
   subSiteName?: InputMaybe<Scalars['String']['input']>;
+  subSiteName_de?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFont?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFontSize?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFontWeight?: InputMaybe<Scalars['String']['input']>;
@@ -747,7 +1021,9 @@ export type SettingsMutation = {
   headerInnerWidth?: InputMaybe<Scalars['String']['input']>;
   siteUrl?: InputMaybe<Scalars['String']['input']>;
   metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaTitle_de?: InputMaybe<Scalars['String']['input']>;
   metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaDescription_de?: InputMaybe<Scalars['String']['input']>;
   ogImage?: InputMaybe<Scalars['String']['input']>;
   addressStreet?: InputMaybe<Scalars['String']['input']>;
   addressCity?: InputMaybe<Scalars['String']['input']>;
@@ -769,7 +1045,9 @@ export type ArtMutation = {
 
 export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
+export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
+
+export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
 
 export type ArtPartsFragment = { __typename: 'Art', title: string, year?: string | null, price?: number | null, image?: string | null, enabled?: boolean | null, showTitle?: boolean | null, showPrice?: boolean | null, showLine?: boolean | null };
 
@@ -792,12 +1070,31 @@ export type PageConnectionQueryVariables = Exact<{
 
 export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
+export type Page_DeQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type Page_DeQuery = { __typename?: 'Query', page_de: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
+
+export type Page_DeConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<Page_DeFilter>;
+}>;
+
+
+export type Page_DeConnectionQuery = { __typename?: 'Query', page_deConnection: { __typename?: 'Page_deConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'Page_deConnectionEdges', cursor: string, node?: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+
 export type SettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
+export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
 
 export type SettingsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -809,7 +1106,7 @@ export type SettingsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
+export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
 
 export type ArtQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -895,6 +1192,71 @@ export const PagePartsFragmentDoc = gql`
   }
 }
     `;
+export const Page_DePartsFragmentDoc = gql`
+    fragment Page_deParts on Page_de {
+  __typename
+  blocks {
+    __typename
+    ... on Page_deBlocksSection {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      subTitle
+      subTitleFont
+      subTitleFontSize
+      subTitleFontWeight
+      content
+      bodyFont
+      fontSize
+      fontWeight
+      email
+      showArt
+      columns
+      enabled
+    }
+    ... on Page_deBlocksProcessFlow {
+      title
+      titleFont
+      titleFontSize
+      titleFontWeight
+      orientation
+      stepFont
+      stepFontSize
+      stepFontWeight
+      steps {
+        __typename
+        label
+        font
+        fontSize
+        fontWeight
+      }
+      enabled
+    }
+    ... on Page_deBlocksCaseStudy {
+      industry
+      location
+      package
+      timeline
+      challenge
+      built
+      result
+      titleFont
+      titleFontSize
+      titleFontWeight
+      bodyFont
+      bodyFontSize
+      bodyFontWeight
+      labelFont
+      labelFontSize
+      labelFontWeight
+      metaFont
+      metaFontSize
+      enabled
+    }
+  }
+}
+    `;
 export const SettingsPartsFragmentDoc = gql`
     fragment SettingsParts on Settings {
   __typename
@@ -903,6 +1265,7 @@ export const SettingsPartsFragmentDoc = gql`
   siteNameFontSize
   siteNameFontWeight
   subSiteName
+  subSiteName_de
   subSiteNameFont
   subSiteNameFontSize
   subSiteNameFontWeight
@@ -912,6 +1275,7 @@ export const SettingsPartsFragmentDoc = gql`
   navLinks {
     __typename
     label
+    label_de
     url
   }
   footerText
@@ -933,7 +1297,9 @@ export const SettingsPartsFragmentDoc = gql`
   headerInnerWidth
   siteUrl
   metaTitle
+  metaTitle_de
   metaDescription
+  metaDescription_de
   ogImage
   addressStreet
   addressCity
@@ -1012,6 +1378,63 @@ export const PageConnectionDocument = gql`
   }
 }
     ${PagePartsFragmentDoc}`;
+export const Page_DeDocument = gql`
+    query page_de($relativePath: String!) {
+  page_de(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...Page_deParts
+  }
+}
+    ${Page_DePartsFragmentDoc}`;
+export const Page_DeConnectionDocument = gql`
+    query page_deConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: Page_deFilter) {
+  page_deConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...Page_deParts
+      }
+    }
+  }
+}
+    ${Page_DePartsFragmentDoc}`;
 export const SettingsDocument = gql`
     query settings($relativePath: String!) {
   settings(relativePath: $relativePath) {
@@ -1134,6 +1557,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     pageConnection(variables?: PageConnectionQueryVariables, options?: C): Promise<{data: PageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageConnectionQueryVariables, query: string}> {
         return requester<{data: PageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageConnectionQueryVariables, query: string}, PageConnectionQueryVariables>(PageConnectionDocument, variables, options);
+      },
+    page_de(variables: Page_DeQueryVariables, options?: C): Promise<{data: Page_DeQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: Page_DeQueryVariables, query: string}> {
+        return requester<{data: Page_DeQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: Page_DeQueryVariables, query: string}, Page_DeQueryVariables>(Page_DeDocument, variables, options);
+      },
+    page_deConnection(variables?: Page_DeConnectionQueryVariables, options?: C): Promise<{data: Page_DeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: Page_DeConnectionQueryVariables, query: string}> {
+        return requester<{data: Page_DeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: Page_DeConnectionQueryVariables, query: string}, Page_DeConnectionQueryVariables>(Page_DeConnectionDocument, variables, options);
       },
     settings(variables: SettingsQueryVariables, options?: C): Promise<{data: SettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsQueryVariables, query: string}> {
         return requester<{data: SettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsQueryVariables, query: string}, SettingsQueryVariables>(SettingsDocument, variables, options);

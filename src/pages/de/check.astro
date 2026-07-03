@@ -1,11 +1,11 @@
 ---
-// src/pages/check.astro  →  vortexdeep.ch/check
-import Layout from '../layouts/Layout.astro';
-import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+// src/pages/de/check.astro  →  vortexdeep.ch/de/check
+import Layout from '../../layouts/Layout.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 const theme = 'paper';
 ---
 
-<Layout title="VortexDeep — Quick Operations Check" theme={theme} lang="en">
+<Layout title="VortexDeep — Schnell-Check" theme={theme} lang="de">
   <style is:global define:vars={{ theme }}>
     :root[data-theme="paper"] {
       --zen-bg: #F9F7F2;
@@ -21,90 +21,90 @@ const theme = 'paper';
 
       <!-- Top bar: back link + language switcher -->
       <div class="flex justify-between items-center mb-3" style="color: var(--zen-text);">
-        <a href="/"
+        <a href="/de/"
            class="text-[11px] uppercase tracking-[1.2em] opacity-60 hover:opacity-100 transition-opacity translate-x-[0.3em]"
            style="text-decoration:none; color:inherit;">
           VortexDeep
         </a>
-        <LanguageSwitcher lang="en" slug="check" />
+        <LanguageSwitcher lang="de" slug="check" />
       </div>
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-16 opacity-40 text-center">
-        Quick Operations Check
+        Schnell-Check
       </p>
 
       <div class="flex gap-2 mb-16" id="vd-progress"></div>
 
-      <!-- Q0: Role -->
+      <!-- F0: Rolle -->
       <div class="vd-q" data-q="0">
-        <p class="vd-ql">What best describes you right now?</p>
+        <p class="vd-ql">Was trifft auf Sie am ehesten zu?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="business">Business owner or manager handling day-to-day operations</button>
-          <button class="vd-opt" data-val="consultant">Consultant or agency exploring this for clients</button>
-          <button class="vd-opt" data-val="curious">Researching AI automation generally / just curious</button>
+          <button class="vd-opt" data-val="business">Geschäftsführer oder Inhaber – ich verantworte den laufenden Betrieb</button>
+          <button class="vd-opt" data-val="consultant">Berater oder Agentur – ich erkunde das für Kunden</button>
+          <button class="vd-opt" data-val="curious">Ich informiere mich über KI-Automatisierung – oder bin einfach neugierig</button>
         </div>
       </div>
 
-      <!-- Q1: Pain area -->
+      <!-- F1: Problembereich -->
       <div class="vd-q hidden" data-q="1">
-        <p class="vd-ql">Which of these takes up too much time in your business right now?</p>
+        <p class="vd-ql">Was frisst bei Ihnen gerade am meisten Zeit?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="inbox">Sorting and prioritising incoming messages or inquiries</button>
-          <button class="vd-opt" data-val="followup">Following up with clients or leads — things fall through the cracks</button>
-          <button class="vd-opt" data-val="admin">Repetitive admin or data entry that someone just has to do</button>
-          <button class="vd-opt" data-val="reporting">Pulling together reports or summaries from scattered information</button>
-          <button class="vd-opt" data-val="intake">Client intake, booking, or onboarding — too manual, too slow</button>
-          <button class="vd-opt" data-val="several">Several of these at once</button>
+          <button class="vd-opt" data-val="inbox">Eingehende Nachrichten und Anfragen sortieren und priorisieren</button>
+          <button class="vd-opt" data-val="followup">Kunden oder Leads nachfassen – Dinge fallen durchs Raster</button>
+          <button class="vd-opt" data-val="admin">Immer wiederkehrende Verwaltungsarbeit oder Dateneingaben</button>
+          <button class="vd-opt" data-val="reporting">Berichte oder Auswertungen aus verstreuten Informationen zusammenstellen</button>
+          <button class="vd-opt" data-val="intake">Neukundenaufnahme, Buchungen oder Onboarding – zu umständlich und langsam</button>
+          <button class="vd-opt" data-val="several">Mehreres davon gleichzeitig</button>
         </div>
       </div>
 
-      <!-- Q2: Time cost -->
+      <!-- F2: Zeitaufwand -->
       <div class="vd-q hidden" data-q="2">
-        <p class="vd-ql">Roughly how many hours a week does this kind of work absorb?</p>
+        <p class="vd-ql">Wie viele Stunden pro Woche bindet das in etwa?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="high">More than 5 hours</button>
-          <button class="vd-opt" data-val="mid">1–5 hours</button>
-          <button class="vd-opt" data-val="low">Less than an hour</button>
-          <button class="vd-opt" data-val="unsure">Hard to say — it's spread across the team</button>
+          <button class="vd-opt" data-val="high">Mehr als 5 Stunden</button>
+          <button class="vd-opt" data-val="mid">1 bis 5 Stunden</button>
+          <button class="vd-opt" data-val="low">Weniger als eine Stunde</button>
+          <button class="vd-opt" data-val="unsure">Schwer zu sagen – es verteilt sich quer durchs Team</button>
         </div>
       </div>
 
-      <!-- Q3: Process ownership -->
+      <!-- F3: Prozessklarheit -->
       <div class="vd-q hidden" data-q="3">
-        <p class="vd-ql">Is there a clear process for this, or does it depend on who's available?</p>
+        <p class="vd-ql">Gibt es dafür einen klaren Ablauf – oder hängt es davon ab, wer gerade Zeit hat?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="none">No real process — whoever has time handles it</button>
-          <button class="vd-opt" data-val="partial">Some rules exist but it's still inconsistent</button>
-          <button class="vd-opt" data-val="full">There's a defined process — we just need it to run faster</button>
+          <button class="vd-opt" data-val="none">Keinen richtigen Ablauf – wer Zeit hat, kümmert sich</button>
+          <button class="vd-opt" data-val="partial">Es gibt Regeln, aber in der Praxis läuft es trotzdem uneinheitlich</button>
+          <button class="vd-opt" data-val="full">Es gibt einen definierten Ablauf – wir müssen ihn nur schneller machen</button>
         </div>
       </div>
 
-      <!-- Q4: Goal / intent -->
+      <!-- F4: Ziel -->
       <div class="vd-q hidden" data-q="4">
-        <p class="vd-ql">What would a useful outcome look like for you?</p>
+        <p class="vd-ql">Was wäre für Sie ein gutes Ergebnis?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="solve">A practical workflow that takes this off my plate — or at least reduces it</button>
-          <button class="vd-opt" data-val="clarity">More visibility into what's happening, so I can make better decisions</button>
-          <button class="vd-opt" data-val="explore">A general sense of what's possible before committing to anything</button>
-          <button class="vd-opt" data-val="compare">Understanding how others have approached this</button>
+          <button class="vd-opt" data-val="solve">Ein Ablauf, der mir das abnimmt – oder zumindest deutlich reduziert</button>
+          <button class="vd-opt" data-val="clarity">Mehr Überblick über das, was läuft – damit ich bessere Entscheidungen treffe</button>
+          <button class="vd-opt" data-val="explore">Erst verstehen, was überhaupt möglich ist – bevor ich mich auf etwas einlasse</button>
+          <button class="vd-opt" data-val="compare">Sehen, wie andere das angegangen sind</button>
         </div>
       </div>
 
       <div class="flex justify-between items-center mt-12" id="vd-nav">
-        <button id="vd-back" class="text-[10px] uppercase tracking-[0.3em] opacity-40 hover:opacity-80 transition-opacity" disabled>← Back</button>
+        <button id="vd-back" class="text-[10px] uppercase tracking-[0.3em] opacity-40 hover:opacity-80 transition-opacity" disabled>← Zurück</button>
         <span id="vd-step" class="text-[10px] uppercase tracking-[0.3em] opacity-40">1 / 5</span>
       </div>
 
       <!-- GATE -->
       <div id="vd-gate" class="hidden text-center">
-        <p class="vd-tag">One last step</p>
-        <h2 class="vd-rh">Leave your email to see your result.</h2>
+        <p class="vd-tag">Noch ein Schritt</p>
+        <h2 class="vd-rh">Ihre E-Mail genügt – dann sehen Sie Ihr Ergebnis.</h2>
         <p class="vd-rb">
-          We'll show you where you stand and follow up directly if there's a fit.
-          No automated sequences.
+          Wir zeigen Ihnen, wo Sie stehen, und melden uns persönlich bei Ihnen,
+          wenn es passt. Keine automatisierten E-Mails.
         </p>
         <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
-          <input type="hidden" name="source" value="vortexdeep.ch quick check">
+          <input type="hidden" name="source" value="vortexdeep.ch/de schnell-check">
           <input type="hidden" name="bucket"  id="gate-bucket">
           <input type="hidden" name="pain"    id="gate-pain">
           <input type="hidden" name="time"    id="gate-time">
@@ -113,27 +113,27 @@ const theme = 'paper';
           <input type="hidden" name="form_load_time" id="gate-load-time">
           <input type="text" name="website_url" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="off"/>
           <label class="block">
-            <span class="vd-fl">Email</span>
-            <input name="email" type="email" required class="vd-input" placeholder="your@email.com"/>
+            <span class="vd-fl">E-Mail</span>
+            <input name="email" type="email" required class="vd-input" placeholder="ihre@email.com"/>
           </label>
           <label class="block">
             <span class="vd-fl">Name (optional)</span>
             <input name="name" type="text" class="vd-input"/>
           </label>
           <label class="block">
-            <span class="vd-fl">Company (optional)</span>
+            <span class="vd-fl">Unternehmen (optional)</span>
             <input name="company" type="text" class="vd-input"/>
           </label>
           <label class="block">
-            <span class="vd-fl">One line on your situation (optional)</span>
+            <span class="vd-fl">Kurze Situationsbeschreibung (optional)</span>
             <textarea name="note" rows="2" class="vd-input"></textarea>
           </label>
           <div style="border:1px solid var(--zen-muted); padding:16px 20px; border-radius:4px; opacity:0.85;">
             <div class="flex items-center justify-between gap-6">
               <div>
-                <span class="vd-fl" style="margin-bottom:6px;display:block;">Security check</span>
+                <span class="vd-fl" style="margin-bottom:6px;display:block;">Sicherheitsfrage</span>
                 <p class="text-[12px] uppercase tracking-[0.08em]" style="color:var(--zen-text); margin:0;">
-                  Calculate: <strong id="vd-math-q" style="opacity:1;">···</strong>
+                  Berechnen: <strong id="vd-math-q" style="opacity:1;">···</strong>
                 </p>
               </div>
               <input name="math_answer" type="number" required
@@ -143,51 +143,51 @@ const theme = 'paper';
             </div>
           </div>
           <p id="vd-gate-error" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
-            Incorrect answer or invalid email — please try again.
+            Falsche Antwort oder ungültige E-Mail – bitte nochmal versuchen.
           </p>
           <button type="submit"
                   class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
                   style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
-            See my result
+            Mein Ergebnis sehen
           </button>
         </form>
       </div>
 
-      <!-- RESULT: Lead -->
+      <!-- ERGEBNIS: Lead -->
       <div class="vd-result hidden text-center" id="vd-res-lead">
-        <p class="vd-tag">Likely a fit</p>
-        <h2 class="vd-rh">This sounds like exactly the kind of situation we work on.</h2>
+        <p class="vd-tag">Wahrscheinlich passend</p>
+        <h2 class="vd-rh">Das klingt nach genau der Situation, mit der wir regelmässig arbeiten.</h2>
         <p class="vd-rb">
-          Real operational cost, no clear owner, and a practical outcome in mind —
-          that's the pattern behind most of our projects. We'll be in touch directly.
+          Echter operativer Aufwand, keine klare Zuständigkeit und ein konkretes Ziel –
+          das ist das Muster hinter den meisten unserer Projekte. Wir melden uns direkt bei Ihnen.
         </p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
-        <br><button class="vd-restart mt-8">Start over</button>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
+        <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
-      <!-- RESULT: Warm -->
+      <!-- ERGEBNIS: Warm -->
       <div class="vd-result hidden text-center" id="vd-res-warm">
-        <p class="vd-tag">Worth keeping in mind</p>
-        <h2 class="vd-rh">Not urgent yet — but noted.</h2>
+        <p class="vd-tag">Gut im Blick</p>
+        <h2 class="vd-rh">Noch nicht dringend – aber wir haben es notiert.</h2>
         <p class="vd-rb">
-          It doesn't sound like this is costing you much time right now, which is fine.
-          We have your details — if your situation changes, feel free to reach out,
-          or we may check back in when the timing makes sense.
+          Im Moment scheint das noch keinen grossen Zeitaufwand zu verursachen – das ist völlig in Ordnung.
+          Wir haben Ihre Angaben. Wenn sich etwas ändert, melden Sie sich einfach –
+          oder wir kommen auf Sie zu, wenn der Zeitpunkt passt.
         </p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
-        <br><button class="vd-restart mt-8">Start over</button>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
+        <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
-      <!-- RESULT: Other -->
+      <!-- ERGEBNIS: Other -->
       <div class="vd-result hidden text-center" id="vd-res-other">
-        <p class="vd-tag">Thanks for going through this</p>
-        <h2 class="vd-rh">If you'd like to see how we work, the best place is our LinkedIn.</h2>
+        <p class="vd-tag">Vielen Dank</p>
+        <h2 class="vd-rh">Am besten sehen Sie, wie wir arbeiten, auf LinkedIn.</h2>
         <p class="vd-rb">
-          We share practical case studies and real workflow examples there —
-          the kind of detail that gives a clearer picture than a check like this can.
+          Dort teilen wir konkrete Fallstudien und echte Workflow-Beispiele –
+          den Einblick, den ein solcher Check nicht bieten kann.
         </p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
-        <br><button class="vd-restart mt-8">Start over</button>
+        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
+        <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
     </div>
@@ -298,7 +298,7 @@ const theme = 'paper';
           document.getElementById('vd-res-' + bucket)!.classList.remove('hidden');
         } else {
           errorEl.classList.remove('hidden');
-          btn.textContent = 'See my result'; btn.disabled = false;
+          btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
           const mathRes = await fetch('/get-math.php');
           const mathData = await mathRes.json();
           const mathEl = document.getElementById('vd-math-q');
@@ -306,7 +306,7 @@ const theme = 'paper';
           (form.querySelector('input[name="math_answer"]') as HTMLInputElement).value = '';
         }
       } catch (_) {
-        errorEl.classList.remove('hidden'); btn.textContent = 'See my result'; btn.disabled = false;
+        errorEl.classList.remove('hidden'); btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
       }
     });
 

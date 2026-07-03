@@ -56,6 +56,8 @@ type Query {
   document(collection: String, relativePath: String): DocumentNode!
   page(relativePath: String): Page!
   pageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PageFilter): PageConnection!
+  page_de(relativePath: String): Page_de!
+  page_deConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: Page_deFilter): Page_deConnection!
   settings(relativePath: String): Settings!
   settingsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SettingsFilter): SettingsConnection!
   art(relativePath: String): Art!
@@ -64,6 +66,7 @@ type Query {
 
 input DocumentFilter {
   page: PageFilter
+  page_de: Page_deFilter
   settings: SettingsFilter
   art: ArtFilter
 }
@@ -91,7 +94,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Page | Settings | Art | Folder
+union DocumentNode = Page | Page_de | Settings | Art | Folder
 
 type PageBlocksSection {
   title: String
@@ -257,8 +260,161 @@ type PageConnection implements Connection {
   edges: [PageConnectionEdges]
 }
 
+type Page_deBlocksSection {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
+  content: String
+  bodyFont: String
+  fontSize: String
+  fontWeight: String
+  email: String
+  showArt: Boolean
+  columns: String
+  enabled: Boolean
+}
+
+type Page_deBlocksProcessFlowSteps {
+  label: String
+  font: String
+  fontSize: String
+  fontWeight: String
+}
+
+type Page_deBlocksProcessFlow {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  orientation: String
+  stepFont: String
+  stepFontSize: String
+  stepFontWeight: String
+  steps: [Page_deBlocksProcessFlowSteps]
+  enabled: Boolean
+}
+
+type Page_deBlocksCaseStudy {
+  industry: String
+  location: String
+  package: String
+  timeline: String
+  challenge: String
+  built: String
+  result: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
+  labelFont: String
+  labelFontSize: String
+  labelFontWeight: String
+  metaFont: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
+union Page_deBlocks = Page_deBlocksSection | Page_deBlocksProcessFlow | Page_deBlocksCaseStudy
+
+type Page_de implements Node & Document {
+  blocks: [Page_deBlocks]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input Page_deBlocksSectionFilter {
+  title: StringFilter
+  titleFont: StringFilter
+  titleFontSize: StringFilter
+  titleFontWeight: StringFilter
+  subTitle: StringFilter
+  subTitleFont: StringFilter
+  subTitleFontSize: StringFilter
+  subTitleFontWeight: StringFilter
+  content: StringFilter
+  bodyFont: StringFilter
+  fontSize: StringFilter
+  fontWeight: StringFilter
+  email: StringFilter
+  showArt: BooleanFilter
+  columns: StringFilter
+  enabled: BooleanFilter
+}
+
+input Page_deBlocksProcessFlowStepsFilter {
+  label: StringFilter
+  font: StringFilter
+  fontSize: StringFilter
+  fontWeight: StringFilter
+}
+
+input Page_deBlocksProcessFlowFilter {
+  title: StringFilter
+  titleFont: StringFilter
+  titleFontSize: StringFilter
+  titleFontWeight: StringFilter
+  orientation: StringFilter
+  stepFont: StringFilter
+  stepFontSize: StringFilter
+  stepFontWeight: StringFilter
+  steps: Page_deBlocksProcessFlowStepsFilter
+  enabled: BooleanFilter
+}
+
+input Page_deBlocksCaseStudyFilter {
+  industry: StringFilter
+  location: StringFilter
+  package: StringFilter
+  timeline: StringFilter
+  challenge: StringFilter
+  built: StringFilter
+  result: StringFilter
+  titleFont: StringFilter
+  titleFontSize: StringFilter
+  titleFontWeight: StringFilter
+  bodyFont: StringFilter
+  bodyFontSize: StringFilter
+  bodyFontWeight: StringFilter
+  labelFont: StringFilter
+  labelFontSize: StringFilter
+  labelFontWeight: StringFilter
+  metaFont: StringFilter
+  metaFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
+input Page_deBlocksFilter {
+  section: Page_deBlocksSectionFilter
+  processFlow: Page_deBlocksProcessFlowFilter
+  caseStudy: Page_deBlocksCaseStudyFilter
+}
+
+input Page_deFilter {
+  blocks: Page_deBlocksFilter
+}
+
+type Page_deConnectionEdges {
+  cursor: String!
+  node: Page_de
+}
+
+type Page_deConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [Page_deConnectionEdges]
+}
+
 type SettingsNavLinks {
   label: String
+  label_de: String
   url: String
 }
 
@@ -273,6 +429,7 @@ type Settings implements Node & Document {
   siteNameFontSize: String
   siteNameFontWeight: String
   subSiteName: String
+  subSiteName_de: String
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
@@ -295,7 +452,9 @@ type Settings implements Node & Document {
   headerInnerWidth: String
   siteUrl: String
   metaTitle: String
+  metaTitle_de: String
   metaDescription: String
+  metaDescription_de: String
   ogImage: String
   addressStreet: String
   addressCity: String
@@ -309,6 +468,7 @@ type Settings implements Node & Document {
 
 input SettingsNavLinksFilter {
   label: StringFilter
+  label_de: StringFilter
   url: StringFilter
 }
 
@@ -330,6 +490,7 @@ input SettingsFilter {
   siteNameFontSize: StringFilter
   siteNameFontWeight: StringFilter
   subSiteName: StringFilter
+  subSiteName_de: StringFilter
   subSiteNameFont: StringFilter
   subSiteNameFontSize: StringFilter
   subSiteNameFontWeight: StringFilter
@@ -352,7 +513,9 @@ input SettingsFilter {
   headerInnerWidth: StringFilter
   siteUrl: StringFilter
   metaTitle: StringFilter
+  metaTitle_de: StringFilter
   metaDescription: StringFilter
+  metaDescription_de: StringFilter
   ogImage: ImageFilter
   addressStreet: StringFilter
   addressCity: StringFilter
@@ -426,6 +589,8 @@ type Mutation {
   createFolder(collection: String, relativePath: String!): DocumentNode!
   updatePage(relativePath: String!, params: PageMutation!): Page!
   createPage(relativePath: String!, params: PageMutation!): Page!
+  updatePage_de(relativePath: String!, params: Page_deMutation!): Page_de!
+  createPage_de(relativePath: String!, params: Page_deMutation!): Page_de!
   updateSettings(relativePath: String!, params: SettingsMutation!): Settings!
   createSettings(relativePath: String!, params: SettingsMutation!): Settings!
   updateArt(relativePath: String!, params: ArtMutation!): Art!
@@ -434,6 +599,7 @@ type Mutation {
 
 input DocumentUpdateMutation {
   page: PageMutation
+  page_de: Page_deMutation
   settings: SettingsMutation
   art: ArtMutation
   relativePath: String
@@ -441,6 +607,7 @@ input DocumentUpdateMutation {
 
 input DocumentMutation {
   page: PageMutation
+  page_de: Page_deMutation
   settings: SettingsMutation
   art: ArtMutation
 }
@@ -516,8 +683,80 @@ input PageMutation {
   blocks: [PageBlocksMutation]
 }
 
+input Page_deBlocksSectionMutation {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
+  content: String
+  bodyFont: String
+  fontSize: String
+  fontWeight: String
+  email: String
+  showArt: Boolean
+  columns: String
+  enabled: Boolean
+}
+
+input Page_deBlocksProcessFlowStepsMutation {
+  label: String
+  font: String
+  fontSize: String
+  fontWeight: String
+}
+
+input Page_deBlocksProcessFlowMutation {
+  title: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  orientation: String
+  stepFont: String
+  stepFontSize: String
+  stepFontWeight: String
+  steps: [Page_deBlocksProcessFlowStepsMutation]
+  enabled: Boolean
+}
+
+input Page_deBlocksCaseStudyMutation {
+  industry: String
+  location: String
+  package: String
+  timeline: String
+  challenge: String
+  built: String
+  result: String
+  titleFont: String
+  titleFontSize: String
+  titleFontWeight: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
+  labelFont: String
+  labelFontSize: String
+  labelFontWeight: String
+  metaFont: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
+input Page_deBlocksMutation {
+  section: Page_deBlocksSectionMutation
+  processFlow: Page_deBlocksProcessFlowMutation
+  caseStudy: Page_deBlocksCaseStudyMutation
+}
+
+input Page_deMutation {
+  blocks: [Page_deBlocksMutation]
+}
+
 input SettingsNavLinksMutation {
   label: String
+  label_de: String
   url: String
 }
 
@@ -532,6 +771,7 @@ input SettingsMutation {
   siteNameFontSize: String
   siteNameFontWeight: String
   subSiteName: String
+  subSiteName_de: String
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
@@ -554,7 +794,9 @@ input SettingsMutation {
   headerInnerWidth: String
   siteUrl: String
   metaTitle: String
+  metaTitle_de: String
   metaDescription: String
+  metaDescription_de: String
   ogImage: String
   addressStreet: String
   addressCity: String
