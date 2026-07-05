@@ -50,15 +50,16 @@ const theme = 'paper';
         </div>
       </div>
 
-      <!-- Q1: Pain area -->
+      <!-- Q1: Pain area — aligned to 10 automation categories -->
       <div class="vd-q hidden" data-q="1">
-        <p class="vd-ql">Which of these takes up too much time in your business right now?</p>
+        <p class="vd-ql">Which area of your operations absorbs the most unnecessary time right now?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="inbox">Sorting and prioritising incoming messages or inquiries</button>
-          <button class="vd-opt" data-val="followup">Following up with clients or leads — things fall through the cracks</button>
-          <button class="vd-opt" data-val="admin">Repetitive admin or data entry that someone just has to do</button>
-          <button class="vd-opt" data-val="reporting">Pulling together reports or summaries from scattered information</button>
-          <button class="vd-opt" data-val="intake">Client intake, booking, or onboarding — too manual, too slow</button>
+          <button class="vd-opt" data-val="comms">Handling incoming inquiries, messages, or customer support requests</button>
+          <button class="vd-opt" data-val="sales">Following up with leads or managing the sales pipeline — things fall through the cracks</button>
+          <button class="vd-opt" data-val="docs">Processing documents, invoices, contracts, or forms — reading, extracting, re-entering data</button>
+          <button class="vd-opt" data-val="ops">Internal approvals, task routing, onboarding sequences, or scheduling</button>
+          <button class="vd-opt" data-val="reporting">Pulling together reports or aggregating data from multiple sources</button>
+          <button class="vd-opt" data-val="content">Creating or distributing content — social posts, newsletters, or e-commerce flows</button>
           <button class="vd-opt" data-val="several">Several of these at once</button>
         </div>
       </div>
@@ -166,18 +167,20 @@ const theme = 'paper';
           Real operational cost, no clear owner, and a practical outcome in mind —
           that's the pattern behind most of our projects. We'll be in touch directly.
         </p>
+        <p id="vd-lead-context" class="vd-rb" style="opacity:0.5; font-style:normal;"></p>
         <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
         <br><button class="vd-restart mt-8">Start over</button>
       </div>
 
       <!-- RESULT: Warm -->
       <div class="vd-result hidden text-center" id="vd-res-warm">
-        <p class="vd-tag">Worth keeping in mind</p>
-        <h2 class="vd-rh">Not urgent yet — but noted.</h2>
+        <p class="vd-tag">Worth a closer look</p>
+        <h2 class="vd-rh">Knowing your operations well is a good sign, not a disqualifier.</h2>
         <p class="vd-rb">
-          It doesn't sound like this is costing you much time right now, which is fine.
-          We have your details — if your situation changes, feel free to reach out,
-          or we may check back in when the timing makes sense.
+          Processes that appear low-cost on time are often strong candidates for automation —
+          the value shows up in consistency, error reduction, or freed attention rather than hours alone.
+          A Discovery session is the right way to evaluate whether there is a genuine fit.
+          We have your details and will follow up.
         </p>
         <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">Follow on LinkedIn</a>
         <br><button class="vd-restart mt-8">Start over</button>
@@ -255,10 +258,23 @@ const theme = 'paper';
 
     backBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
 
+    // pain values: comms | sales | docs | ops | reporting | content | several
+    // Categories covered:
+    //   comms     → Communication & Intake + Customer Support & After-Sales
+    //   sales     → Lead & Sales Pipeline
+    //   docs      → Document & Data Processing + Finance & Admin
+    //   ops       → Internal Operations & Approvals + Scheduling & Booking
+    //   reporting → Reporting & Analytics
+    //   content   → Content & Marketing + E-commerce & Fulfilment
+    //   several   → multiple categories (strongest signal)
     function calcBucket(): 'lead' | 'warm' | 'other' {
       const role = answers[0], pain = answers[1], time = answers[2], process = answers[3], goal = answers[4];
       if (role === 'consultant' || goal === 'compare' || role === 'curious') return 'other';
-      if (role === 'business' && (time === 'high' || time === 'mid' || pain === 'several') && process !== 'full' && (goal === 'solve' || goal === 'clarity')) return 'lead';
+      const hasRealTimeCost = time === 'high' || time === 'mid' || time === 'unsure';
+      const hasMultiPain   = pain === 'several';
+      const wantsOutcome   = goal === 'solve' || goal === 'clarity';
+      const processGap     = process !== 'full';
+      if (role === 'business' && (hasRealTimeCost || hasMultiPain) && processGap && wantsOutcome) return 'lead';
       if (role === 'business') return 'warm';
       return 'other';
     }
@@ -301,6 +317,20 @@ const theme = 'paper';
         if (data.status === 'ok') {
           document.getElementById('vd-gate')!.classList.add('hidden');
           document.getElementById('vd-res-' + bucket)!.classList.remove('hidden');
+          // Inject category-specific line into lead result
+          if (bucket === 'lead') {
+            const ctx: Record<string, string> = {
+              comms:     'Communication and inquiry handling is one of our most active areas — classification, routing, and draft replies.',
+              sales:     'Sales pipeline automation fits the phase-gated approach well — clear scope, measurable outcome from day one.',
+              docs:      'Document processing — invoice extraction, contract handling, form capture — is where we see some of the fastest project gains.',
+              ops:       'Internal workflow automation — approvals, onboarding, scheduling — reduces coordination overhead quickly and durably.',
+              reporting: 'Automated reporting runs well as a managed service — once built, it runs and you receive the output monthly.',
+              content:   'Content and e-commerce automation scales output without scaling headcount — exactly the kind of leverage we build for.',
+              several:   'Multi-area operational pain is often the clearest fit for what we do — we scope and prioritise together in Phase 1.',
+            };
+            const ctxEl = document.getElementById('vd-lead-context');
+            if (ctxEl) ctxEl.textContent = ctx[answers[1]] || '';
+          }
         } else {
           errorEl.classList.remove('hidden');
           btn.textContent = 'See my result'; btn.disabled = false;

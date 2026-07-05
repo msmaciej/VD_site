@@ -45,15 +45,16 @@ const theme = 'paper';
         </div>
       </div>
 
-      <!-- F1: Problembereich -->
+      <!-- F1: Bereich — abgestimmt auf die 10 Automatisierungskategorien -->
       <div class="vd-q hidden" data-q="1">
-        <p class="vd-ql">Was frisst bei Ihnen gerade am meisten Zeit?</p>
+        <p class="vd-ql">In welchem Bereich Ihres Betriebs fällt am meisten unnötige Zeit an?</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="inbox">Eingehende Nachrichten und Anfragen sortieren und priorisieren</button>
-          <button class="vd-opt" data-val="followup">Kunden oder Leads nachfassen – Dinge fallen durchs Raster</button>
-          <button class="vd-opt" data-val="admin">Immer wiederkehrende Verwaltungsarbeit oder Dateneingaben</button>
-          <button class="vd-opt" data-val="reporting">Berichte oder Auswertungen aus verstreuten Informationen zusammenstellen</button>
-          <button class="vd-opt" data-val="intake">Neukundenaufnahme, Buchungen oder Onboarding – zu umständlich und langsam</button>
+          <button class="vd-opt" data-val="comms">Eingehende Anfragen, Nachrichten oder Kundensupport-Fälle bearbeiten und beantworten</button>
+          <button class="vd-opt" data-val="sales">Leads nachfassen oder die Vertriebspipeline verwalten — Dinge fallen durchs Raster</button>
+          <button class="vd-opt" data-val="docs">Dokumente, Rechnungen, Verträge oder Formulare verarbeiten — lesen, extrahieren, neu erfassen</button>
+          <button class="vd-opt" data-val="ops">Interne Freigaben, Aufgabenverteilung, Onboarding-Abläufe oder Terminplanung</button>
+          <button class="vd-opt" data-val="reporting">Berichte oder Auswertungen aus verstreuten Datenquellen zusammenstellen</button>
+          <button class="vd-opt" data-val="content">Inhalte erstellen oder verbreiten — Social, Newsletter oder E-Commerce-Benachrichtigungen</button>
           <button class="vd-opt" data-val="several">Mehreres davon gleichzeitig</button>
         </div>
       </div>
@@ -161,18 +162,20 @@ const theme = 'paper';
           Echter operativer Aufwand, keine klare Zuständigkeit und ein konkretes Ziel –
           das ist das Muster hinter den meisten unserer Projekte. Wir melden uns direkt bei Ihnen.
         </p>
+        <p id="vd-lead-context" class="vd-rb" style="opacity:0.5; font-style:normal;"></p>
         <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
         <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
       <!-- ERGEBNIS: Warm -->
       <div class="vd-result hidden text-center" id="vd-res-warm">
-        <p class="vd-tag">Gut im Blick</p>
-        <h2 class="vd-rh">Noch nicht dringend – aber wir haben es notiert.</h2>
+        <p class="vd-tag">Einen näheren Blick wert</p>
+        <h2 class="vd-rh">Ihre Prozesse zu kennen ist ein gutes Zeichen — kein Ausschlusskriterium.</h2>
         <p class="vd-rb">
-          Im Moment scheint das noch keinen grossen Zeitaufwand zu verursachen – das ist völlig in Ordnung.
-          Wir haben Ihre Angaben. Wenn sich etwas ändert, melden Sie sich einfach –
-          oder wir kommen auf Sie zu, wenn der Zeitpunkt passt.
+          Abläufe, die auf den ersten Blick wenig Zeit kosten, eignen sich oft gut für Automatisierung —
+          der Nutzen zeigt sich in Verlässlichkeit, weniger Fehlern oder freigewordener Aufmerksamkeit,
+          nicht nur in Stunden. Ein Discovery-Gespräch ist der richtige Weg, das sauber zu bewerten.
+          Wir haben Ihre Angaben und melden uns bei Ihnen.
         </p>
         <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
         <br><button class="vd-restart mt-8">Nochmals starten</button>
@@ -250,10 +253,23 @@ const theme = 'paper';
 
     backBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
 
+    // Schmerz-Werte: comms | sales | docs | ops | reporting | content | several
+    // Kategorien:
+    //   comms     → Kommunikation & Eingang + Kundenbetreuung & After-Sales
+    //   sales     → Lead- & Vertriebsprozesse
+    //   docs      → Dokumente & Daten + Finanzen & Verwaltung
+    //   ops       → Interne Abläufe & Freigaben + Terminplanung & Buchungen
+    //   reporting → Reporting & Analysen
+    //   content   → Content & Marketing + E-Commerce & Fulfilment
+    //   several   → mehrere Kategorien gleichzeitig (stärkstes Signal)
     function calcBucket(): 'lead' | 'warm' | 'other' {
       const role = answers[0], pain = answers[1], time = answers[2], process = answers[3], goal = answers[4];
       if (role === 'consultant' || goal === 'compare' || role === 'curious') return 'other';
-      if (role === 'business' && (time === 'high' || time === 'mid' || pain === 'several') && process !== 'full' && (goal === 'solve' || goal === 'clarity')) return 'lead';
+      const hasRealTimeCost = time === 'high' || time === 'mid' || time === 'unsure';
+      const hasMultiPain   = pain === 'several';
+      const wantsOutcome   = goal === 'solve' || goal === 'clarity';
+      const processGap     = process !== 'full';
+      if (role === 'business' && (hasRealTimeCost || hasMultiPain) && processGap && wantsOutcome) return 'lead';
       if (role === 'business') return 'warm';
       return 'other';
     }
@@ -296,6 +312,20 @@ const theme = 'paper';
         if (data.status === 'ok') {
           document.getElementById('vd-gate')!.classList.add('hidden');
           document.getElementById('vd-res-' + bucket)!.classList.remove('hidden');
+          // Kategoriespezifische Zeile in Lead-Ergebnis einfügen
+          if (bucket === 'lead') {
+            const ctx: Record<string, string> = {
+              comms:     'Kommunikation und Anfragebearbeitung ist einer unserer aktivsten Bereiche — Klassifizierung, Weiterleitung und Antwortentwürfe.',
+              sales:     'Vertriebsautomatisierung passt gut zum phasenbasierten Ansatz — klarer Umfang, messbares Ergebnis ab Tag eins.',
+              docs:      'Dokumentenverarbeitung — Rechnungsextraktion, Vertragsanalyse, Formularerfassung — liefert oft die schnellsten Projektergebnisse.',
+              ops:       'Interne Workflow-Automatisierung — Freigaben, Onboarding, Terminplanung — reduziert Koordinationsaufwand nachhaltig.',
+              reporting: 'Automatisiertes Reporting funktioniert gut als Managed Service — einmal aufgebaut, läuft es und Sie erhalten monatlich den Output.',
+              content:   'Content- und E-Commerce-Automatisierung skaliert den Output, ohne Köpfe zu skalieren — genau der Hebel, den wir bauen.',
+              several:   'Mehrere Problembereiche gleichzeitig sind oft das klarste Zeichen für einen guten Fit — wir priorisieren gemeinsam in Phase 1.',
+            };
+            const ctxEl = document.getElementById('vd-lead-context');
+            if (ctxEl) ctxEl.textContent = ctx[answers[1]] || '';
+          }
         } else {
           errorEl.classList.remove('hidden');
           btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;

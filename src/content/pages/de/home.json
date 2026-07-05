@@ -4,9 +4,19 @@
       "title": "Was wir tun",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | E-Mail-Routing | Dokumentenverarbeitung | Datentriage | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
+      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "Wo wir die Methodik einsetzen",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": ".  | Kommunikation & Eingang | .  | Lead- & Vertriebsprozesse | .  | Dokumente & Daten | .  | Content & Marketing | .  | Interne Abläufe & Freigaben | .  | Reporting & Analysen | .  | Finanzen & Verwaltung | .  | Terminplanung & Buchungen | .  | Kundenbetreuung & After-Sales | .  | E-Commerce & Fulfilment | . ",
+      "subTitleFontSize": "text-[11px]",
+      "content": "Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
+      "enabled": false,
       "_template": "section"
     },
     {
@@ -35,12 +45,24 @@
       "stepFontSize": "text-[11px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Discovery" },
-        { "label": "Umfang & MVP-Design" },
-        { "label": "Lösungsplan" },
-        { "label": "Aufbau" },
-        { "label": "Validierung" },
-        { "label": "Go-live & Managed Service" }
+        {
+          "label": "Discovery"
+        },
+        {
+          "label": "Umfang & MVP-Design"
+        },
+        {
+          "label": "Lösungsplan"
+        },
+        {
+          "label": "Aufbau"
+        },
+        {
+          "label": "Validierung"
+        },
+        {
+          "label": "Go-live & Managed Service"
+        }
       ],
       "enabled": false,
       "_template": "processFlow"
@@ -59,6 +81,22 @@
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "caseStudy"
+    },
+    {
+      "industry": "Professional Services",
+      "location": "Schweiz",
+      "package": "Dokumentenverarbeitung",
+      "timeline": "3 Wochen bis Go-live",
+      "challenge": "Eingehende Lieferantenrechnungen und Kundenverträge trafen in unterschiedlichen Formaten ein — PDF, eingescannte Unterlagen, E-Mail-Anhänge. Jedes Dokument erforderte manuelles Lesen, Datenextraktion und erneute Eingabe ins Buchhaltungssystem. Der Prozess beanspruchte 6 bis 8 Stunden pro Woche und verursachte regelmässig Eingabefehler.",
+      "built": "Automatisierte Extraktion relevanter Datenfelder aus eingehenden Dokumenten. Abgleich mit Stammdaten der Lieferanten. Strukturierter Output für den Import ins Buchhaltungssystem. Menschliche Prüfung wird nur bei Ausnahmen und Auffälligkeiten ausgelöst — nicht bei jedem Dokument.",
+      "result": "Wöchentlicher Aufwand von 6 bis 8 Stunden auf unter eine Stunde reduziert. Dateneingabefehler nahezu eliminiert. Mitarbeiter-Aufmerksamkeit von Datentransfer auf Entscheidungen verlagert. | Einheitliche Ergebnisse ab dem ersten Tag nach Go-live.",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "bodyFontSize": "text-[13px]",
+      "labelFontSize": "text-[13px]",
+      "metaFontSize": "text-[13px]",
+      "enabled": false,
       "_template": "caseStudy"
     },
     {

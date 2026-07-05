@@ -4,9 +4,19 @@
       "title": "What We Do",
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Email routing | Document handling | Data triage | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
+      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "Where We Apply the Framework",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": ".  | Communication & Intake | .  | Lead & Sales Pipeline | .  | Document & Data Processing | .  | Content & Marketing | .  | Internal Operations | .  | Reporting & Analytics | .  | Finance & Admin | .  | Scheduling & Booking | .  | Customer Support | .  | E-commerce & Fulfilment | . ",
+      "subTitleFontSize": "text-[13px]",
+      "content": "The same six-phase methodology applies across all areas.",
+      "enabled": false,
       "_template": "section"
     },
     {
@@ -35,12 +45,24 @@
       "stepFontSize": "text-[11px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Discovery" },
-        { "label": "Scope & MVP Design" },
-        { "label": "Solution Blueprint" },
-        { "label": "Build" },
-        { "label": "Validation" },
-        { "label": "Go-live & Managed Service" }
+        {
+          "label": "Discovery"
+        },
+        {
+          "label": "Scope & MVP Design"
+        },
+        {
+          "label": "Solution Blueprint"
+        },
+        {
+          "label": "Build"
+        },
+        {
+          "label": "Validation"
+        },
+        {
+          "label": "Go-live & Managed Service"
+        }
       ],
       "enabled": false,
       "_template": "processFlow"
@@ -59,6 +81,22 @@
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "caseStudy"
+    },
+    {
+      "industry": "Professional Services",
+      "location": "Switzerland",
+      "package": "Document Processing",
+      "timeline": "3 weeks to go-live",
+      "challenge": "Incoming supplier invoices and client contracts arrived in varying formats — PDF, scanned paper, email attachments. Each required manual reading, data extraction, and re-entry into the accounting system. The process absorbed 6–8 hours per week and produced consistent data-entry errors.",
+      "built": "Automated extraction of key data fields from incoming documents. Validation against supplier master records. Structured output prepared for accounting system import. Human review triggered only on exceptions and anomalies — not on every document.",
+      "result": "Weekly processing time reduced from 6–8 hours to under one hour. Data entry errors near-eliminated. Staff attention redirected from data transfer to decisions. | Consistent output from go-live day one.",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-bold",
+      "bodyFontSize": "text-[13px]",
+      "labelFontSize": "text-[13px]",
+      "metaFontSize": "text-[13px]",
+      "enabled": false,
       "_template": "caseStudy"
     },
     {
