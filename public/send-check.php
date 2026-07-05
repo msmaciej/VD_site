@@ -91,35 +91,92 @@ if (!checkdnsrr($email_domain, "MX") && !checkdnsrr($email_domain, "A")) {
 
 // ── Build email ───────────────────────────────────────────────────────────────
 $subjects = [
-    "lead"  => "★ Strong fit — VortexDeep Quick Check",
-    "warm"  => "◎ Warm lead — VortexDeep Quick Check",
-    "other" => "○ Interest noted — VortexDeep Quick Check",
+    "lead"  => "★ Strong fit — VortexDeep Fit Check",
+    "warm"  => "◎ Warm lead — VortexDeep Fit Check",
+    "other" => "○ Interest noted — VortexDeep Fit Check",
 ];
-$subject = $subjects[$bucket] ?? "New submission — VortexDeep Quick Check";
+$subject = $subjects[$bucket] ?? "New submission — VortexDeep Fit Check";
 
+$role    = clean($_POST["role"]    ?? "");
 $pain    = clean($_POST["pain"]    ?? "");
 $time    = clean($_POST["time"]    ?? "");
 $process = clean($_POST["process"] ?? "");
 $goal    = clean($_POST["goal"]    ?? "");
 
+// ── Human-readable label maps ─────────────────────────────────────────────────
 $bucket_labels = [
     "lead"  => "Strong fit",
     "warm"  => "Warm lead",
     "other" => "Interest noted",
 ];
 
-$body = "BUCKET: " . ($bucket_labels[$bucket] ?? "Unknown") . "\n"
+$role_labels = [
+    "business"   => "Business owner / manager",
+    "consultant" => "Consultant or agency (for clients)",
+    "curious"    => "Researching / curious",
+];
+
+$pain_labels = [
+    "comms"     => "Inquiries, messages & customer support",
+    "sales"     => "Sales pipeline & lead follow-up",
+    "docs"      => "Documents, invoices, contracts & forms",
+    "ops"       => "Internal approvals, scheduling & onboarding",
+    "reporting" => "Reporting & data aggregation",
+    "content"   => "Content, marketing & e-commerce flows",
+    "several"   => "Multiple areas simultaneously",
+];
+
+$time_labels = [
+    "high"   => "More than 5 hours per week",
+    "mid"    => "1-5 hours per week",
+    "low"    => "Less than 1 hour per week",
+    "unsure" => "Spread across the team (hard to quantify)",
+];
+
+$process_labels = [
+    "none"    => "No defined process — whoever has time handles it",
+    "partial" => "Some rules exist but inconsistently followed",
+    "full"    => "Defined process — needs to run faster",
+];
+
+$goal_labels = [
+    "solve"   => "Practical workflow to reduce the manual work",
+    "clarity" => "Better visibility for decision-making",
+    "explore" => "Understanding what is possible before committing",
+    "compare" => "Seeing how others have approached this",
+];
+
+// ── Helper: resolve label with fallback to raw value ─────────────────────────
+function label($map, $key) {
+    return isset($map[$key]) ? $map[$key] : $key;
+}
+
+$body = "BUCKET: " . label($bucket_labels, $bucket) . " [$bucket]\n"
       . "Source: $source\n\n"
+
       . "--- Contact ---\n"
       . "Email:   $email\n"
       . "Name:    $name\n"
       . "Company: $company\n"
       . "Note:    $note\n\n"
-      . "--- Quiz answers ---\n"
-      . "Pain area:         $pain\n"
-      . "Time cost:         $time\n"
-      . "Process ownership: $process\n"
-      . "Goal:              $goal\n";
+
+      . "--- Fit Check answers ---\n"
+      . "Role:     " . label($role_labels,    $role)    . "\n"
+      . "Category: " . label($pain_labels,    $pain)    . "\n"
+      . "Time:     " . label($time_labels,    $time)    . "\n"
+      . "Process:  " . label($process_labels, $process) . "\n"
+      . "Goal:     " . label($goal_labels,    $goal)    . "\n\n"
+
+      . "--- AI READY ---\n"
+      . "bucket:       " . label($bucket_labels, $bucket)  . "\n"
+      . "role:         " . label($role_labels,   $role)    . "\n"
+      . "category:     " . label($pain_labels,   $pain)    . "\n"
+      . "time_per_week:" . label($time_labels,   $time)    . "\n"
+      . "process:      " . label($process_labels,$process) . "\n"
+      . "goal:         " . label($goal_labels,   $goal)    . "\n"
+      . "name:         $name\n"
+      . "company:      $company\n"
+      . "note:         $note\n";
 
 $headers = "From: noreply@vortexdeep.ch\r\n"
          . "Reply-To: $email\r\n"

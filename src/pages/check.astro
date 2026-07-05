@@ -112,6 +112,7 @@ const theme = 'paper';
         <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
           <input type="hidden" name="source" value="vortexdeep.ch quick check">
           <input type="hidden" name="bucket"  id="gate-bucket">
+          <input type="hidden" name="role"    id="gate-role">
           <input type="hidden" name="pain"    id="gate-pain">
           <input type="hidden" name="time"    id="gate-time">
           <input type="hidden" name="process" id="gate-process">
@@ -286,6 +287,7 @@ const theme = 'paper';
 
       const bucket = calcBucket();
       (document.getElementById('gate-bucket')  as HTMLInputElement).value = bucket;
+      (document.getElementById('gate-role')    as HTMLInputElement).value = answers[0] || '';
       (document.getElementById('gate-pain')    as HTMLInputElement).value = answers[1] || '';
       (document.getElementById('gate-time')    as HTMLInputElement).value = answers[2] || '';
       (document.getElementById('gate-process') as HTMLInputElement).value = answers[3] || '';

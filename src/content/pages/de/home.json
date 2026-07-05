@@ -16,7 +16,7 @@
       "subTitle": ".  | Kommunikation & Eingang | .  | Lead- & Vertriebsprozesse | .  | Dokumente & Daten | .  | Content & Marketing | .  | Interne Abläufe & Freigaben | .  | Reporting & Analysen | .  | Finanzen & Verwaltung | .  | Terminplanung & Buchungen | .  | Kundenbetreuung & After-Sales | .  | E-Commerce & Fulfilment | . ",
       "subTitleFontSize": "text-[11px]",
       "content": "Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
-      "enabled": false,
+      "enabled": true,
       "_template": "section"
     },
     {

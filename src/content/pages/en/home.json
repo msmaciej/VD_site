@@ -14,9 +14,9 @@
       "titleFontSize": "text-[13px]",
       "titleFontWeight": "font-bold",
       "subTitle": ".  | Communication & Intake | .  | Lead & Sales Pipeline | .  | Document & Data Processing | .  | Content & Marketing | .  | Internal Operations | .  | Reporting & Analytics | .  | Finance & Admin | .  | Scheduling & Booking | .  | Customer Support | .  | E-commerce & Fulfilment | . ",
-      "subTitleFontSize": "text-[13px]",
+      "subTitleFontSize": "text-[11px]",
       "content": "The same six-phase methodology applies across all areas.",
-      "enabled": false,
+      "enabled": true,
       "_template": "section"
     },
     {
