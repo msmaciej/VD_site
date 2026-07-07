@@ -1,8 +1,8 @@
 {
   "blocks": [
     {
-      "title": "What We Do",
-      "titleFontSize": "text-[13px]",
+      "title": "What | We Do",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
       "subTitleFontSize": "text-[13px]",
@@ -10,39 +10,39 @@
       "_template": "section"
     },
     {
-      "title": "Where We Apply the Framework",
-      "titleFontSize": "text-[13px]",
+      "title": "- Where We Apply the Framework",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": ".  | Communication & Intake | .  | Lead & Sales Pipeline | .  | Document & Data Processing | .  | Content & Marketing | .  | Internal Operations | .  | Reporting & Analytics | .  | Finance & Admin | .  | Scheduling & Booking | .  | Customer Support | .  | E-commerce & Fulfilment | . ",
-      "subTitleFontSize": "text-[11px]",
+      "subTitleFontSize": "text-[13px]",
       "content": "The same six-phase methodology applies across all areas.",
       "enabled": false,
       "_template": "section"
     },
     {
       "title": "How It Works",
-      "titleFontSize": "text-[13px]",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your approval | .",
+      "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your | approval | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
       "_template": "section"
     },
     {
       "title": "Our Process",
-      "titleFontSize": "text-[13px]",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Discovery | .. | Scope & MVP Design | .. | Solution Blueprint | .. | Build | .. | Validation | . | Go-live & | Managed Service | .",
+      "subTitle": "... | Discovery | .. | Scope | .. | Solution | .. | Build | .. | Validation | . | Live | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
       "_template": "section"
     },
     {
-      "title": "Our Process -",
-      "titleFontSize": "text-[13px]",
+      "title": "- Our Process",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "orientation": "vertical",
-      "stepFontSize": "text-[11px]",
+      "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
         {
@@ -68,30 +68,30 @@
       "_template": "processFlow"
     },
     {
-      "industry": "International Trade",
+      "industry": "International Trade -",
       "location": "Switzerland",
       "package": "Basic + AI Triage",
-      "timeline": "4 weeks to go-live",
+      "timeline": "3 weeks to go-live",
       "challenge": "High volume of mixed inbound email inquiries — leads, technical questions, and noise — required manual reading, classification, and routing daily. Inconsistent handling and missed messages were a recurring problem.",
       "built": "AI classification of all inbound email into actionable categories. Automatic CRM logging. Draft response preparation for relevant inquiries. Human review and approval preserved on every outbound action.",
-      "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. | Operational consistency achieved from day one of go-live.",
-      "titleFontSize": "text-[13px]",
+      "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. Operational consistency achieved from day one of go-live.",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "caseStudy"
     },
     {
-      "industry": "Professional Services",
+      "industry": "Professional Services -",
       "location": "Switzerland",
       "package": "Document Processing",
-      "timeline": "3 weeks to go-live",
+      "timeline": "4 weeks to go-live",
       "challenge": "Incoming supplier invoices and client contracts arrived in varying formats — PDF, scanned paper, email attachments. Each required manual reading, data extraction, and re-entry into the accounting system. The process absorbed 6–8 hours per week and produced consistent data-entry errors.",
       "built": "Automated extraction of key data fields from incoming documents. Validation against supplier master records. Structured output prepared for accounting system import. Human review triggered only on exceptions and anomalies — not on every document.",
-      "result": "Weekly processing time reduced from 6–8 hours to under one hour. Data entry errors near-eliminated. Staff attention redirected from data transfer to decisions. | Consistent output from go-live day one.",
-      "titleFontSize": "text-[13px]",
+      "result": "Weekly processing time reduced from 6–8 hours to under one hour. Data entry errors near-eliminated. Staff attention redirected from data transfer to decisions. Consistent output from go-live day one.",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
@@ -101,10 +101,10 @@
     },
     {
       "title": "Contact",
-      "titleFontSize": "text-[13px]",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",
-      "subTitleFontSize": "text-[13px]",
+      "subTitleFontSize": "text-[15px]",
       "email": "info@vortexdeep.ch",
       "enabled": true,
       "_template": "section"

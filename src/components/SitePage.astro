@@ -329,7 +329,9 @@ const jsonLd = {
               {block.title && (
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60 translate-x-[0.6em]`}
                     style={textStyle(getTextColor(), block.titleFont)}>
-                  {block.title}
+                  {block.title.split('|').map((line: string) => (
+                    <span class="block">{line.trim()}</span>
+                  ))}
                 </h2>
               )}
               <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
@@ -454,7 +456,9 @@ const jsonLd = {
             {block.title && (
               <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60 translate-x-[0.6em]`}
                   style={textStyle(getTextColor(), block.titleFont)}>
-                {block.title}
+                {block.title.split('|').map((line: string) => (
+                  <span class="block">{line.trim()}</span>
+                ))}
               </h2>
             )}
 
