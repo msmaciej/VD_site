@@ -137,6 +137,7 @@ fragment SettingsParts on Settings {
   subSiteNameFont
   subSiteNameFontSize
   subSiteNameFontWeight
+  subSiteNameTracking
   showSubSiteNameOnly
   headerLayout
   headerLinksFontSize

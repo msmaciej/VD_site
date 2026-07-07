@@ -187,11 +187,12 @@ export default defineConfig({
           { type: "string", name: "siteName",         label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont",     label: "Main title — Font",   options: fontTypeOptions },
           { type: "string", name: "siteNameFontSize", label: "Main title — Size", options: [
-            { label: "XS — subtle wordmark",           value: "text-lg md:text-xl"   },
-            { label: "S  — compact",                   value: "text-2xl md:text-3xl" },
-            { label: "M  — balanced (recommended)",    value: "text-3xl md:text-4xl" },
-            { label: "L  — prominent",                 value: "text-4xl md:text-5xl" },
-            { label: "XL — hero scale",                value: "text-6xl md:text-7xl lg:text-[6vw]" },
+            { label: "XXS — match page sections (11px)", value: "text-[11px]"                       },
+            { label: "XS — subtle wordmark",             value: "text-lg md:text-xl"                },
+            { label: "S  — compact",                     value: "text-2xl md:text-3xl"              },
+            { label: "M  — balanced (recommended)",      value: "text-3xl md:text-4xl"              },
+            { label: "L  — prominent",                   value: "text-4xl md:text-5xl"              },
+            { label: "XL — hero scale",                  value: "text-6xl md:text-7xl lg:text-[6vw]"},
           ]},
           { type: "string", name: "siteNameFontWeight", label: "Main title — Weight", options: fontWeightOptions },
 
@@ -204,13 +205,20 @@ export default defineConfig({
             description: "e.g. Praktische KI-Automatisierung | für KMU" },
           { type: "string", name: "subSiteNameFont",       label: "Subtitle — Font",   options: fontTypeOptions },
           { type: "string", name: "subSiteNameFontSize",   label: "Subtitle — Size", options: [
-            { label: "XS — fine caption",        value: "text-xs md:text-sm"   },
-            { label: "S  — small (recommended)", value: "text-sm md:text-base" },
-            { label: "M  — balanced",            value: "text-base md:text-lg" },
-            { label: "L  — prominent",           value: "text-lg md:text-xl"   },
-            { label: "XL — large",               value: "text-2xl md:text-3xl" },
+            { label: "XXS — match page sections (11px)", value: "text-[11px]"         },
+            { label: "XS — fine caption",                value: "text-xs md:text-sm"  },
+            { label: "S  — small (recommended)",         value: "text-sm md:text-base"},
+            { label: "M  — balanced",                    value: "text-base md:text-lg"},
+            { label: "L  — prominent",                   value: "text-lg md:text-xl"  },
+            { label: "XL — large",                       value: "text-2xl md:text-3xl"},
           ]},
           { type: "string",  name: "subSiteNameFontWeight",  label: "Subtitle — Weight", options: fontWeightOptions },
+          { type: "string",  name: "subSiteNameTracking", label: "Subtitle — Letter Spacing", options: [
+            { label: "Tight  — 0.25em", value: "tracking-[0.25em]" },
+            { label: "Normal — 0.5em",  value: "tracking-[0.5em]"  },
+            { label: "Wide   — 1.2em (matches page sections)", value: "tracking-[1.2em]" },
+            { label: "Wider  — 1.5em",  value: "tracking-[1.5em]"  },
+          ]},
           { type: "boolean", name: "showSubSiteNameOnly",    label: "Show subtitle only (hide main title)" },
 
           // ── Header ────────────────────────────────────────────────────────

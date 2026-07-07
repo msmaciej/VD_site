@@ -191,6 +191,7 @@ var config_default = defineConfig({
           { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
           { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: [
+            { label: "XXS \u2014 match page sections (11px)", value: "text-[11px]" },
             { label: "XS \u2014 subtle wordmark", value: "text-lg md:text-xl" },
             { label: "S  \u2014 compact", value: "text-2xl md:text-3xl" },
             { label: "M  \u2014 balanced (recommended)", value: "text-3xl md:text-4xl" },
@@ -213,6 +214,7 @@ var config_default = defineConfig({
           },
           { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
           { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: [
+            { label: "XXS \u2014 match page sections (11px)", value: "text-[11px]" },
             { label: "XS \u2014 fine caption", value: "text-xs md:text-sm" },
             { label: "S  \u2014 small (recommended)", value: "text-sm md:text-base" },
             { label: "M  \u2014 balanced", value: "text-base md:text-lg" },
@@ -220,6 +222,12 @@ var config_default = defineConfig({
             { label: "XL \u2014 large", value: "text-2xl md:text-3xl" }
           ] },
           { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
+          { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [
+            { label: "Tight  \u2014 0.25em", value: "tracking-[0.25em]" },
+            { label: "Normal \u2014 0.5em", value: "tracking-[0.5em]" },
+            { label: "Wide   \u2014 1.2em (matches page sections)", value: "tracking-[1.2em]" },
+            { label: "Wider  \u2014 1.5em", value: "tracking-[1.5em]" }
+          ] },
           { type: "boolean", name: "showSubSiteNameOnly", label: "Show subtitle only (hide main title)" },
           // ── Header ────────────────────────────────────────────────────────
           { type: "string", name: "headerLayout", label: "Header Layout Style", options: [

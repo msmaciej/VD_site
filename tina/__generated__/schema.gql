@@ -433,6 +433,7 @@ type Settings implements Node & Document {
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
+  subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
   headerLayout: String
   headerLinksFontSize: String
@@ -494,6 +495,7 @@ input SettingsFilter {
   subSiteNameFont: StringFilter
   subSiteNameFontSize: StringFilter
   subSiteNameFontWeight: StringFilter
+  subSiteNameTracking: StringFilter
   showSubSiteNameOnly: BooleanFilter
   headerLayout: StringFilter
   headerLinksFontSize: StringFilter
@@ -775,6 +777,7 @@ input SettingsMutation {
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
+  subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
   headerLayout: String
   headerLinksFontSize: String

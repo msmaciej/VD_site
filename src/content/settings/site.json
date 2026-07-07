@@ -8,7 +8,7 @@
   "siteNameFontSize": "text-lg md:text-xl",
   "subSiteName": "Practical | AI automation | for small business | . | ZH | Switzerland",
   "subSiteName_de": "Praktische | KI-Automatisierung | für KMU | . | ZH | Schweiz",
-  "subSiteNameFontSize": "text-sm md:text-base",
+  "subSiteNameFontSize": "text-[11px]",
   "subSiteNameFontWeight": "font-normal",
   "showSubSiteNameOnly": true,
   "headerLayout": "centered",
