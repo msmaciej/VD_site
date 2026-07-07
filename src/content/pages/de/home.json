@@ -43,7 +43,7 @@
       "titleFontWeight": "font-bold",
       "subTitle": "... | Phasenbasierte Umsetzung | .. | Schriftliche Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
       "subTitleFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {
