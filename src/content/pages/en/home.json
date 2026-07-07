@@ -4,13 +4,22 @@
       "title": "What? | We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
+      "subTitle": "... | We turn | Repetitive tasks: | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | into | Managed monthly | Practical workflows | . | Human control | stays always | at the centre | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
       "_template": "section"
     },
     {
-      "title": "- Where We Apply the Framework",
+      "title": "- What? | We Do -",
+      "titleFontSize": "text-lg",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": false,
+      "_template": "section"
+    },
+    {
+      "title": "- Where We Apply the Framework -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": ".  | Communication & Intake | .  | Lead & Sales Pipeline | .  | Document & Data Processing | .  | Content & Marketing | .  | Internal Operations | .  | Reporting & Analytics | .  | Finance & Admin | .  | Scheduling & Booking | .  | Customer Support | .  | E-commerce & Fulfilment | . ",
@@ -23,9 +32,18 @@
       "title": "How? | It Works",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your | approval | .",
+      "subTitle": "... | Phase-delivery | .. | Sign-off | at every step | . | Nothing goes live | without your | approval | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "- How? | It Works -",
+      "titleFontSize": "text-lg",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your | approval | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": false,
       "_template": "section"
     },
     {
@@ -38,7 +56,7 @@
       "_template": "section"
     },
     {
-      "title": "- Our Process",
+      "title": "- Our Process -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "orientation": "vertical",
@@ -101,7 +119,7 @@
     },
     {
       "title": "Contact",
-      "titleFontSize": "text-[15px]",
+      "titleFontSize": "text-lg",
       "titleFontWeight": "font-bold",
       "subTitle": "",
       "subTitleFontSize": "text-[15px]",

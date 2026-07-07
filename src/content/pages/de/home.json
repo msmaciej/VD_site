@@ -4,9 +4,18 @@
       "title": "Was? | wir tun",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
+      "subTitle": "... | Wir wandeln | Repetitive Aufgaben: | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Content | Betrieb | .. | in | Monatlich betreute | Praktische Workflows | . | Menschliche Kontrolle | bleibt immer | im Mittelpunkt | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "- Was? | wir tun",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": false,
       "_template": "section"
     },
     {
@@ -23,6 +32,15 @@
       "title": "Wie? | es funktioniert",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
+      "subTitle": "... | Phasenweise Umsetzung | .. | Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "- Wie? | es funktioniert -",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
       "subTitle": "... | Phasenbasierte Umsetzung | .. | Schriftliche Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
@@ -32,7 +50,7 @@
       "title": "Unser | Prozess",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Discovery | .. | Umfang | .. | Lösungsplan | .. | Aufbau | .. | Validierung | . | Live | .",
+      "subTitle": "... | Discovery | .. | Scope | .. | Lösung | .. | Umsetzung | .. | Validierung | . | Live | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
       "_template": "section"
