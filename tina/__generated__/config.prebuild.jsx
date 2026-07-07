@@ -214,12 +214,12 @@ var config_default = defineConfig({
           },
           { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
           { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: [
-            { label: "XXS \u2014 match page sections (11px)", value: "text-[11px]" },
-            { label: "XS \u2014 fine caption", value: "text-xs md:text-sm" },
-            { label: "S  \u2014 small (recommended)", value: "text-sm md:text-base" },
-            { label: "M  \u2014 balanced", value: "text-base md:text-lg" },
-            { label: "L  \u2014 prominent", value: "text-lg md:text-xl" },
-            { label: "XL \u2014 large", value: "text-2xl md:text-3xl" }
+            { label: "XXS \u2014 11px", value: "text-[11px]" },
+            { label: "XS  \u2014 13px (match page sections)", value: "text-[13px]" },
+            { label: "S   \u2014 small", value: "text-xs md:text-sm" },
+            { label: "M   \u2014 balanced", value: "text-sm md:text-base" },
+            { label: "L   \u2014 prominent", value: "text-base md:text-lg" },
+            { label: "XL  \u2014 large", value: "text-lg md:text-xl" }
           ] },
           { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
           { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [

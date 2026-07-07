@@ -205,12 +205,12 @@ export default defineConfig({
             description: "e.g. Praktische KI-Automatisierung | für KMU" },
           { type: "string", name: "subSiteNameFont",       label: "Subtitle — Font",   options: fontTypeOptions },
           { type: "string", name: "subSiteNameFontSize",   label: "Subtitle — Size", options: [
-            { label: "XXS — match page sections (11px)", value: "text-[11px]"         },
-            { label: "XS — fine caption",                value: "text-xs md:text-sm"  },
-            { label: "S  — small (recommended)",         value: "text-sm md:text-base"},
-            { label: "M  — balanced",                    value: "text-base md:text-lg"},
-            { label: "L  — prominent",                   value: "text-lg md:text-xl"  },
-            { label: "XL — large",                       value: "text-2xl md:text-3xl"},
+            { label: "XXS — 11px",                        value: "text-[11px]"         },
+            { label: "XS  — 13px (match page sections)",  value: "text-[13px]"         },
+            { label: "S   — small",                       value: "text-xs md:text-sm"  },
+            { label: "M   — balanced",                    value: "text-sm md:text-base"},
+            { label: "L   — prominent",                   value: "text-base md:text-lg"},
+            { label: "XL  — large",                       value: "text-lg md:text-xl"  },
           ]},
           { type: "string",  name: "subSiteNameFontWeight",  label: "Subtitle — Weight", options: fontWeightOptions },
           { type: "string",  name: "subSiteNameTracking", label: "Subtitle — Letter Spacing", options: [
