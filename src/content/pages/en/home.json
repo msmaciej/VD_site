@@ -119,7 +119,7 @@
     },
     {
       "title": "Contact",
-      "titleFontSize": "text-lg",
+      "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",
       "subTitleFontSize": "text-[15px]",
