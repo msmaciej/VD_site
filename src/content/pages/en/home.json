@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "title": "What | We Do",
+      "title": "What? | We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
@@ -20,7 +20,7 @@
       "_template": "section"
     },
     {
-      "title": "How It Works",
+      "title": "How? | It Works",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your | approval | .",
@@ -29,7 +29,7 @@
       "_template": "section"
     },
     {
-      "title": "Our Process",
+      "title": "Our | Process",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Discovery | .. | Scope | .. | Solution | .. | Build | .. | Validation | . | Live | .",

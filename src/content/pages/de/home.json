@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "title": "Was wir tun",
+      "title": "Was? | wir tun",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
@@ -20,7 +20,7 @@
       "_template": "section"
     },
     {
-      "title": "Wie es funktioniert",
+      "title": "Wie? | es funktioniert",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Phasenbasierte Umsetzung | .. | Schriftliche Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
@@ -29,7 +29,7 @@
       "_template": "section"
     },
     {
-      "title": "Unser Prozess",
+      "title": "Unser | Prozess",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Discovery | .. | Umfang | .. | Lösungsplan | .. | Aufbau | .. | Validierung | . | Live | .",
