@@ -110,13 +110,18 @@ const animDot     = settings.enableStatusDot            !== false;
 const animFlow    = settings.enableProcessFlowAnimation !== false;
 const animCascade = settings.enableCascadeReveal        !== false;
 const animTextHover = settings.enableTextHover          !== false;
-// Unlike the other five toggles, this one defaults OFF (=== true, not
-// !== false) — it's a much bigger visual commitment than a quiet dot or a
-// hover nudge, and should be something someone deliberately turns on for a
-// theme, not something that silently appears site-wide the first time this
-// code ships.
-const animDepthBg = settings.enableDepthBackground       === true;
-const animPlanetary = settings.enablePlanetarySystems    === true; // same off-by-default logic as animDepthBg
+// Unlike the other five toggles, this one defaults OFF ('none', not an
+// opt-out default) — it's a much bigger visual commitment than a quiet dot
+// or a hover nudge, and should be something someone deliberately turns on
+// for a theme, not something that silently appears site-wide the first
+// time this code ships.
+//
+// backgroundStyle replaces two independent booleans (enableDepthBackground,
+// enablePlanetarySystems) that used to allow both three.js renderers to run
+// at once. It's a single select now, so at most one can ever be active.
+const backgroundStyle = settings.backgroundStyle || 'none';
+const animDepthBg = backgroundStyle === 'depth';
+const animPlanetary = backgroundStyle === 'planetary';
 const anyFixedBackground = animDepthBg || animPlanetary; // either one needs the same translucency + z-index treatment below
 
 // ── Fixed-background translucency ───────────────────────────────────────────

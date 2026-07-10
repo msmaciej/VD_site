@@ -491,14 +491,13 @@ type Settings implements Node & Document {
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
-  enableDepthBackground: Boolean
+  backgroundStyle: String
   depthNodeCount: Float
   depthConnectDistance: Float
   depthLineOpacity: Float
   depthNodeOpacity: Float
   depthNodeColor: String
   depthFogColor: String
-  enablePlanetarySystems: Boolean
   planetarySystemCount: Float
   planetaryMaxPlanets: Float
   planetaryOrbitMinRadius: Float
@@ -572,14 +571,13 @@ input SettingsFilter {
   enableProcessFlowAnimation: BooleanFilter
   enableCascadeReveal: BooleanFilter
   enableTextHover: BooleanFilter
-  enableDepthBackground: BooleanFilter
+  backgroundStyle: StringFilter
   depthNodeCount: NumberFilter
   depthConnectDistance: NumberFilter
   depthLineOpacity: NumberFilter
   depthNodeOpacity: NumberFilter
   depthNodeColor: StringFilter
   depthFogColor: StringFilter
-  enablePlanetarySystems: BooleanFilter
   planetarySystemCount: NumberFilter
   planetaryMaxPlanets: NumberFilter
   planetaryOrbitMinRadius: NumberFilter
@@ -877,14 +875,13 @@ input SettingsMutation {
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
-  enableDepthBackground: Boolean
+  backgroundStyle: String
   depthNodeCount: Float
   depthConnectDistance: Float
   depthLineOpacity: Float
   depthNodeOpacity: Float
   depthNodeColor: String
   depthFogColor: String
-  enablePlanetarySystems: Boolean
   planetarySystemCount: Float
   planetaryMaxPlanets: Float
   planetaryOrbitMinRadius: Float

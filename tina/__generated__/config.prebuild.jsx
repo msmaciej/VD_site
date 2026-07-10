@@ -371,10 +371,15 @@ var config_default = defineConfig({
             description: "Off = body text and case-study lines have no hover effect."
           },
           {
-            type: "boolean",
-            name: "enableDepthBackground",
-            label: "Animated depth-network background (experimental)",
-            description: "A field of slowly drifting connected points behind the whole page, rendered with three.js. Off by default \u2014 this is a bigger visual change than the others, turn on deliberately per theme. Requires 'three' installed (npm install three)."
+            type: "string",
+            name: "backgroundStyle",
+            label: "Background style",
+            description: "Only one animated background can run at a time \u2014 both are three.js WebGL renderers, and running two simultaneously doubles the render cost for no visual benefit. Choose which one (if any) plays behind the whole page. Requires 'three' installed (npm install three).",
+            options: [
+              { label: "None", value: "none" },
+              { label: "Depth network", value: "depth" },
+              { label: "Planetary systems", value: "planetary" }
+            ]
           },
           {
             type: "number",
@@ -413,12 +418,6 @@ var config_default = defineConfig({
             label: "Depth background: fog colour override",
             description: "Leave empty to auto-match the theme's background colour.",
             ui: { component: "color" }
-          },
-          {
-            type: "boolean",
-            name: "enablePlanetarySystems",
-            label: "Animated planetary systems background (experimental)",
-            description: "Small star + orbiting-planet clusters drifting across the screen on faint elliptical paths. Off by default, same as the depth-network background \u2014 can run alongside it or on its own."
           },
           {
             type: "number",

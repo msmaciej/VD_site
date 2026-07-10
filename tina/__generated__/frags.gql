@@ -180,14 +180,13 @@ fragment SettingsParts on Settings {
   enableProcessFlowAnimation
   enableCascadeReveal
   enableTextHover
-  enableDepthBackground
+  backgroundStyle
   depthNodeCount
   depthConnectDistance
   depthLineOpacity
   depthNodeOpacity
   depthNodeColor
   depthFogColor
-  enablePlanetarySystems
   planetarySystemCount
   planetaryMaxPlanets
   planetaryOrbitMinRadius
