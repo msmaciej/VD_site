@@ -10,6 +10,7 @@
   "subSiteName_de": "Praktische | KI-Automatisierung | für KMU | . | ZH | Schweiz",
   "subSiteNameFontSize": "text-[13px]",
   "subSiteNameFontWeight": "font-normal",
+  "subSiteNameTracking": "tracking-[1.2em]",
   "showSubSiteNameOnly": true,
   "headerLayout": "centered",
   "navLinks": [
@@ -31,6 +32,7 @@
   "theme": "paper",
   "baseTextColor": "",
   "customBackgroundColor": "",
+  "enableLogoAnimation": true,
   "headerHeight": "52px",
   "footerHeight": "56px",
   "siteUrl": "https://vortexdeep.ch",
@@ -43,6 +45,5 @@
   "addressCity": "Zürich",
   "addressPostal": "",
   "contactEmail": "info@vortexdeep.ch",
-  "contactPhone": "",
-  "subSiteNameTracking": "tracking-[1.2em]"
+  "contactPhone": ""
 }

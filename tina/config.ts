@@ -279,6 +279,24 @@ export default defineConfig({
           { type: "string",  name: "baseTextColor",         label: "Global Text Colour",       ui: { component: "color" } },
           { type: "string",  name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
 
+          // ── Animations ────────────────────────────────────────────────────
+          // Each defaults to ON when left unset (existing content with no
+          // value for these fields keeps animating exactly as before — this
+          // is opt-out, not opt-in, so nothing changes until someone
+          // deliberately flips one off).
+          { type: "boolean", name: "enableLogoAnimation",
+            label: "Header logo draws itself in on load",
+            description: "Off = logo appears instantly, no ink-draw effect." },
+          { type: "boolean", name: "enableStatusDot",
+            label: "Breathing status dot beside the wordmark",
+            description: "Off = wordmark shown with no dot." },
+          { type: "boolean", name: "enableProcessFlowAnimation",
+            label: "Traveling dot on Process Flow connectors",
+            description: "Off = connectors shown as plain static lines." },
+          { type: "boolean", name: "enableCascadeReveal",
+            label: "Case Study fields reveal line-by-line",
+            description: "Off = each field fades in as one block, same as other sections." },
+
           // ── Layout dimensions ─────────────────────────────────────────────
           { type: "string", name: "headerHeight", label: "Header Height", options: [
             { label: "Compact — 40px",                value: "40px" },

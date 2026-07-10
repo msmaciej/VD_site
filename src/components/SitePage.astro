@@ -99,7 +99,14 @@ const jsonLd = {
   "sameAs": (settings.socialLinks || []).map((l: any) => l.url).filter(Boolean),
 };
 
-// ── Process-flow single relay dot ─────────────────────────────────────────────
+// ── Animation toggles ──────────────────────────────────────────────────────────
+// Each defaults to ON (!== false, not === true) so existing content with no
+// value saved for these fields yet keeps animating exactly as it does today —
+// this is opt-out from the CMS, not opt-in.
+const animLogo    = settings.enableLogoAnimation        !== false;
+const animDot     = settings.enableStatusDot            !== false;
+const animFlow    = settings.enableProcessFlowAnimation !== false;
+const animCascade = settings.enableCascadeReveal        !== false;
 // Every connector previously ran its own independent, continuously-looping
 // comet — since they all loop on their own schedule, several were visibly
 // active at once ("dots everywhere"). Instead: all connectors in one
@@ -109,29 +116,42 @@ const jsonLd = {
 // visibly moving, handing off from connector to connector down the chain.
 // Pure CSS (no JS position measurement, no resize handling needed) because
 // each connector's dot still only ever moves within its own local box.
-const relaySlotDuration = 1.1; // seconds "owned" by each connector within the shared cycle — tune pacing here
+const relaySlotDuration = 2; // seconds "owned" by each connector within the shared cycle — tune pacing here
 
 function relayKeyframes(name: string, i: number, count: number, prop: 'left' | 'top') {
   const from = '0%';
   const to = 'calc(100% - 6px)';
   const slot = 100 / count;
   const base = i * slot;
-  const raw: [number, string, number][] = [
-    [0,               from, 0],
-    [base,            from, 0],
-    [base + slot * 0.14, from, 0.9],
-    [base + slot * 0.82, to,   0.9],
-    [base + slot,     to,   0],
-    [100,             to,   0],
+  const end = base + slot;
+
+  // Position is only defined at the two window boundaries — CSS interpolates
+  // it smoothly across the ENTIRE window on its own, independent of however
+  // many opacity stops fall in between. Opacity gets its own separate curve:
+  // a single peak exactly at the window's midpoint, rising continuously from
+  // 0 into it and falling continuously back to 0 out of it — no flat "held"
+  // plateau, so full brightness lands precisely mid-move, not across a
+  // range. Because position and opacity are declared at different stops,
+  // they blend and overlap rather than happening in sequence — the dot is
+  // already moving while it brightens, and still moving as it dims.
+  const mid = base + slot * 0.5;
+
+  const raw: [number, string][] = [
+    [0,    `opacity: 0;`],
+    [base, `${prop}: ${from}; opacity: 0;`],
+    [mid,  `opacity: 0.9;`],
+    [end,  `${prop}: ${to}; opacity: 0;`],
+    [100,  `opacity: 0;`],
   ];
+
   // Map de-dupes identical percentage stops (e.g. connector 0's own "base"
   // coincides with the fixed 0% bookend) — last write wins, values match.
   const stops = new Map<string, string>();
   raw
     .sort((a, b) => a[0] - b[0])
-    .forEach(([pct, val, op]) => {
+    .forEach(([pct, decl]) => {
       const key = `${Math.min(100, Math.max(0, pct)).toFixed(3)}%`;
-      stops.set(key, `${prop}: ${val}; opacity: ${op};`);
+      stops.set(key, (stops.get(key) ? stops.get(key) + ' ' : '') + decl);
     });
   const body = Array.from(stops.entries()).map(([pct, decl]) => `${pct} { ${decl} }`).join(' ');
   return `@keyframes ${name} { ${body} }`;
@@ -150,7 +170,7 @@ let relayCss = '';
       const uid = `pf${pfCounter++}`;
       blockUidMap.set(block, uid);
       const count = Math.max((block.steps?.length ?? 1) - 1, 0);
-      if (count > 0) {
+      if (count > 0 && animFlow) {
         const prop = block.orientation === 'vertical' ? 'top' : 'left';
         for (let i = 0; i < count; i++) {
           relayCss += relayKeyframes(`vdRelay_${uid}_${i}`, i, count, prop) + '\n';
@@ -162,10 +182,14 @@ let relayCss = '';
 // Splits a '|'-delimited string into lines and returns each with an
 // incrementing transition-delay, so the lines populate in sequence rather
 // than all at once when the parent .vd-reveal section becomes visible.
+// When the cascade-reveal toggle is off, every line gets the same fixed
+// delay instead — they still use the same fade+rise transition (so nothing
+// looks broken), they just all arrive together as one block, same as every
+// other section on the page.
 const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
   text.split('|').map((line: string, i: number) => ({
     text: line.trim(),
-    delay: `${(startDelay + i * step).toFixed(2)}s`,
+    delay: animCascade ? `${(startDelay + i * step).toFixed(2)}s` : `${startDelay.toFixed(2)}s`,
   }));
 ---
 
@@ -392,7 +416,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
         {settings.showLogo && (
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
                style={`color: ${getTextColor()};`}
-               class="w-5 h-5 flex-shrink-0 vd-logo">
+               class={`w-5 h-5 flex-shrink-0 ${animLogo ? 'vd-logo' : ''}`}>
             <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
                      fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
             <circle cx="100" cy="22"  r="5" fill="currentColor"/>
@@ -414,7 +438,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
           {settings.siteName || 'VortexDeep'}
         </span>
-        <span class="vd-status-dot" style={`color: ${getTextColor()};`} aria-hidden="true"></span>
+        {animDot && (
+          <span class="vd-status-dot" style={`color: ${getTextColor()};`} aria-hidden="true"></span>
+        )}
       </a>
 
       <!-- Nav links + language switcher -->
@@ -516,14 +542,18 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                       isVertical ? (
                         <span class="vd-connector-v" style={`color: ${getTextColor()};`} aria-hidden="true">
                           <span class="vd-connector-v-line"></span>
-                          <span class="vd-connector-v-comet"
-                                style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
+                          {animFlow && (
+                            <span class="vd-connector-v-comet"
+                                  style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
+                          )}
                         </span>
                       ) : (
                         <span class="vd-connector" style={`color: ${getTextColor()};`} aria-hidden="true">
                           <span class="vd-connector-line"></span>
-                          <span class="vd-connector-comet"
-                                style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
+                          {animFlow && (
+                            <span class="vd-connector-comet"
+                                  style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
+                          )}
                         </span>
                       )
                     )}

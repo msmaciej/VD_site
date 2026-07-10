@@ -161,6 +161,10 @@ fragment SettingsParts on Settings {
   theme
   baseTextColor
   customBackgroundColor
+  enableLogoAnimation
+  enableStatusDot
+  enableProcessFlowAnimation
+  enableCascadeReveal
   headerHeight
   footerHeight
   headerInnerWidth

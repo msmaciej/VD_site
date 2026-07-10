@@ -52,7 +52,7 @@
       "titleFontWeight": "font-bold",
       "subTitle": "... | Discovery | .. | Scope | .. | Solution | .. | Build | .. | Validation | . | Live | .",
       "subTitleFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {

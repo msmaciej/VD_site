@@ -52,11 +52,11 @@
       "titleFontWeight": "font-bold",
       "subTitle": "... | Discovery | .. | Scope | .. | Lösung | .. | Umsetzung | .. | Validierung | . | Live | .",
       "subTitleFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {
-      "title": "- Unser Prozess",
+      "title": "Unser | Prozess",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "orientation": "vertical",
@@ -67,7 +67,7 @@
           "label": "Discovery"
         },
         {
-          "label": "Umfang & MVP-Design"
+          "label": "Umfang"
         },
         {
           "label": "Lösungsplan"
@@ -79,10 +79,10 @@
           "label": "Validierung"
         },
         {
-          "label": "Go-live & Managed Service"
+          "label": "Live"
         }
       ],
-      "enabled": false,
+      "enabled": true,
       "_template": "processFlow"
     },
     {

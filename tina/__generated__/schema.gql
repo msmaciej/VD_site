@@ -448,6 +448,10 @@ type Settings implements Node & Document {
   theme: String
   baseTextColor: String
   customBackgroundColor: String
+  enableLogoAnimation: Boolean
+  enableStatusDot: Boolean
+  enableProcessFlowAnimation: Boolean
+  enableCascadeReveal: Boolean
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
@@ -510,6 +514,10 @@ input SettingsFilter {
   theme: StringFilter
   baseTextColor: StringFilter
   customBackgroundColor: StringFilter
+  enableLogoAnimation: BooleanFilter
+  enableStatusDot: BooleanFilter
+  enableProcessFlowAnimation: BooleanFilter
+  enableCascadeReveal: BooleanFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
@@ -792,6 +800,10 @@ input SettingsMutation {
   theme: String
   baseTextColor: String
   customBackgroundColor: String
+  enableLogoAnimation: Boolean
+  enableStatusDot: Boolean
+  enableProcessFlowAnimation: Boolean
+  enableCascadeReveal: Boolean
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
