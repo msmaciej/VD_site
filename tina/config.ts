@@ -296,6 +296,9 @@ export default defineConfig({
           { type: "boolean", name: "enableCascadeReveal",
             label: "Case Study fields reveal line-by-line",
             description: "Off = each field fades in as one block, same as other sections." },
+          { type: "boolean", name: "enableTextHover",
+            label: "Text lines grow slightly on hover",
+            description: "Off = body text and case-study lines have no hover effect." },
 
           // ── Layout dimensions ─────────────────────────────────────────────
           { type: "string", name: "headerHeight", label: "Header Height", options: [

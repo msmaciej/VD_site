@@ -452,6 +452,7 @@ type Settings implements Node & Document {
   enableStatusDot: Boolean
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
+  enableTextHover: Boolean
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
@@ -518,6 +519,7 @@ input SettingsFilter {
   enableStatusDot: BooleanFilter
   enableProcessFlowAnimation: BooleanFilter
   enableCascadeReveal: BooleanFilter
+  enableTextHover: BooleanFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
@@ -804,6 +806,7 @@ input SettingsMutation {
   enableStatusDot: Boolean
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
+  enableTextHover: Boolean
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String

@@ -107,6 +107,7 @@ const animLogo    = settings.enableLogoAnimation        !== false;
 const animDot     = settings.enableStatusDot            !== false;
 const animFlow    = settings.enableProcessFlowAnimation !== false;
 const animCascade = settings.enableCascadeReveal        !== false;
+const animTextHover = settings.enableTextHover          !== false;
 // Every connector previously ran its own independent, continuously-looping
 // comet — since they all loop on their own schedule, several were visibly
 // active at once ("dots everywhere"). Instead: all connectors in one
@@ -401,6 +402,31 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                   transform 0.9s cubic-bezier(0.4,0,0.2,1);
     }
     .vd-visible .vd-line { opacity: 1; transform: translateY(0); }
+
+    /* ── NEW 5: Text-line hover grow ─────────────────────────────────────────
+       Individual text lines (body copy, case-study lines) scale up slightly
+       on hover — a quiet way of making prose feel alive without turning it
+       into a button. .vd-hover-grow alone handles plain lines; the .vd-line
+       combination below preserves the cascade-reveal's own transform state
+       (translateY) instead of clobbering it, so a line that's already
+       settled into place on-screen doesn't jump when scaling on hover. */
+    .vd-hover-grow {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      transform-origin: center;
+    }
+    .vd-hover-grow:hover { transform: scale(1.045); }
+
+    .vd-line.vd-hover-grow { display: block; }
+    .vd-visible .vd-line.vd-hover-grow:hover {
+      transform: translateY(0) scale(1.045);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vd-hover-grow:hover,
+      .vd-visible .vd-line.vd-hover-grow:hover { transform: none; }
+    }
   </style>
 
   <!-- Generated per-connector relay keyframes — see relayKeyframes() above.
@@ -599,7 +625,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
                       {streamLines(block.challenge).map((line) => (
-                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
+                        <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>
@@ -612,7 +638,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
                       {streamLines(block.built).map((line) => (
-                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
+                        <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>
@@ -625,7 +651,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
                       {streamLines(block.result).map((line) => (
-                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
+                        <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>
@@ -679,7 +705,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               <div class={`${block.fontSize || 'text-[11px]'} ${block.fontWeight || 'font-thin'} opacity-80 leading-relaxed`}
                    style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
                 {block.content.split('|').map((line: string) => (
-                  <p class="mb-3">{line.trim()}</p>
+                  <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line.trim()}</p>
                 ))}
               </div>
             )}

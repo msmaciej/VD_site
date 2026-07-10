@@ -33,6 +33,7 @@
   "baseTextColor": "",
   "customBackgroundColor": "",
   "enableLogoAnimation": true,
+  "enableTextHover": true,
   "headerHeight": "52px",
   "footerHeight": "56px",
   "siteUrl": "https://vortexdeep.ch",

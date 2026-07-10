@@ -165,6 +165,7 @@ fragment SettingsParts on Settings {
   enableStatusDot
   enableProcessFlowAnimation
   enableCascadeReveal
+  enableTextHover
   headerHeight
   footerHeight
   headerInnerWidth
