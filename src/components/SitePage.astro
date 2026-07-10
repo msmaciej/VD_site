@@ -98,6 +98,16 @@ const jsonLd = {
   "priceRange": "$$",
   "sameAs": (settings.socialLinks || []).map((l: any) => l.url).filter(Boolean),
 };
+
+// ── Cascading-reveal helper (4th animation) ───────────────────────────────────
+// Splits a '|'-delimited string into lines and returns each with an
+// incrementing transition-delay, so the lines populate in sequence rather
+// than all at once when the parent .vd-reveal section becomes visible.
+const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
+  text.split('|').map((line: string, i: number) => ({
+    text: line.trim(),
+    delay: `${(startDelay + i * step).toFixed(2)}s`,
+  }));
 ---
 
 <Layout
@@ -215,6 +225,96 @@ const jsonLd = {
       0%,100% { transform: translateX(-50%) translateY(0);   }
       50%      { transform: translateX(-50%) translateY(7px); }
     }
+
+    /* ── NEW 1: Logo ink-draw ──────────────────────────────────────────────
+       The wordmark svg is a hex node-graph. On load, the outline and the
+       inner "V" stroke draw themselves in rather than just fading, so the
+       mark reads as a network assembling itself — reinforcing "automation"
+       without adding any new visual element. */
+    .vd-logo polygon,
+    .vd-logo polyline,
+    .vd-logo path {
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+      animation: vdDraw 1.3s ease forwards;
+    }
+    .vd-logo polyline,
+    .vd-logo path { animation-delay: 0.85s; }
+    .vd-logo circle {
+      opacity: 0;
+      animation: vdDot 0.35s ease forwards 1.25s;
+    }
+    @keyframes vdDraw { to { stroke-dashoffset: 0; } }
+    @keyframes vdDot  { to { opacity: 1; } }
+
+    /* ── NEW 2: Breathing status dot ───────────────────────────────────────
+       A single slow-pulsing dot beside the wordmark — the same visual
+       language as a system status page. Quiet, not decorative. */
+    .vd-status-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.3;
+      display: inline-block; margin-left: 8px;
+      animation: vdBreathe 3s ease-in-out infinite;
+    }
+    @keyframes vdBreathe {
+      0%, 100% { opacity: 0.25; transform: scale(1);   }
+      50%      { opacity: 0.85; transform: scale(1.5); }
+    }
+
+    /* ── NEW 3: Process-flow connector pulse ───────────────────────────────
+       Replaces the static → glyph / vertical chevron between processFlow
+       steps with a hairline track and a small dot that travels along it on
+       loop — a pipeline moving work from one stage to the next. */
+    .vd-connector {
+      position: relative; display: inline-block;
+      width: 48px; height: 2px; margin: 0 12px;
+      vertical-align: middle; flex-shrink: 0;
+    }
+    .vd-connector-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
+    .vd-connector-pulse {
+      position: absolute; top: -2px; left: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; opacity: 0;
+      animation: vdTravel 2.4s linear infinite;
+    }
+    @keyframes vdTravel {
+      0%   { left: 0;   opacity: 0;   }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.8; }
+      100% { left: 42px; opacity: 0; }
+    }
+    .vd-connector-v {
+      position: relative; display: block;
+      width: 2px; height: 20px; margin: 4px auto;
+    }
+    .vd-connector-v-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
+    .vd-connector-v-pulse {
+      position: absolute; left: -2px; top: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; opacity: 0;
+      animation: vdTravelV 2.4s linear infinite;
+    }
+    @keyframes vdTravelV {
+      0%   { top: 0;   opacity: 0;   }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.8; }
+      100% { top: 14px; opacity: 0; }
+    }
+
+    /* ── NEW 4: Cascading line reveal ──────────────────────────────────────
+       Individual lines inside a .vd-reveal section (case-study challenge /
+       built / result fields) populate one after another instead of all at
+       once — reading like an automated report filling in its fields in
+       sequence, rather than a generic fade-up block. Delay is set per-line
+       inline via streamLines() above; this class only defines the motion. */
+    .vd-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.9s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vd-visible .vd-line { opacity: 1; transform: translateY(0); }
   </style>
 
   <!-- ── FIXED HEADER ── -->
@@ -225,7 +325,7 @@ const jsonLd = {
         {settings.showLogo && (
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
                style={`color: ${getTextColor()};`}
-               class="w-5 h-5 flex-shrink-0">
+               class="w-5 h-5 flex-shrink-0 vd-logo">
             <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
                      fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
             <circle cx="100" cy="22"  r="5" fill="currentColor"/>
@@ -247,6 +347,7 @@ const jsonLd = {
               style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
           {settings.siteName || 'VortexDeep'}
         </span>
+        <span class="vd-status-dot" style={`color: ${getTextColor()};`} aria-hidden="true"></span>
       </a>
 
       <!-- Nav links + language switcher -->
@@ -343,14 +444,15 @@ const jsonLd = {
                     </span>
                     {i < (block.steps?.length ?? 0) - 1 && (
                       isVertical ? (
-                        <div class="flex flex-col items-center opacity-20" style={`color: ${getTextColor()};`}>
-                          <div style="width:1px; height:20px; background:currentColor;"></div>
-                          <svg width="8" height="6" viewBox="0 0 8 6" fill="currentColor">
-                            <path d="M4 6L0 0h8L4 6z"/>
-                          </svg>
-                        </div>
+                        <span class="vd-connector-v" style={`color: ${getTextColor()};`} aria-hidden="true">
+                          <span class="vd-connector-v-line"></span>
+                          <span class="vd-connector-v-pulse"></span>
+                        </span>
                       ) : (
-                        <span class="opacity-25 font-thin mx-4 text-sm" style={`color: ${getTextColor()};`}>→</span>
+                        <span class="vd-connector" style={`color: ${getTextColor()};`} aria-hidden="true">
+                          <span class="vd-connector-line"></span>
+                          <span class="vd-connector-pulse"></span>
+                        </span>
                       )
                     )}
                   </div>
@@ -394,8 +496,8 @@ const jsonLd = {
                        style={textStyle(getTextColor(), block.labelFont)}>{t.challenge}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
-                      {block.challenge.split('|').map((line: string) => (
-                        <span class="block">{line.trim()}</span>
+                      {streamLines(block.challenge).map((line) => (
+                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>
@@ -407,8 +509,8 @@ const jsonLd = {
                        style={textStyle(getTextColor(), block.labelFont)}>{t.built}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
-                      {block.built.split('|').map((line: string) => (
-                        <span class="block">{line.trim()}</span>
+                      {streamLines(block.built).map((line) => (
+                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>
@@ -420,8 +522,8 @@ const jsonLd = {
                        style={textStyle(getTextColor(), block.labelFont)}>{t.result}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(getTextColor(), block.bodyFont)}>
-                      {block.result.split('|').map((line: string) => (
-                        <span class="block">{line.trim()}</span>
+                      {streamLines(block.result).map((line) => (
+                        <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
                     </div>
                   </div>

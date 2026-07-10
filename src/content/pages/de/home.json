@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "title": "Was? | wir tun",
+      "title": "Was | wir tun?",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Wir wandeln | Repetitive Aufgaben: | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Content | Betrieb | .. | in | Monatlich betreute | Praktische Workflows | . | Menschliche Kontrolle | bleibt immer | im Mittelpunkt | .",
@@ -29,7 +29,7 @@
       "_template": "section"
     },
     {
-      "title": "Wie? | es funktioniert",
+      "title": "Wie | es funktioniert?",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Phasenweise Umsetzung | .. | Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",

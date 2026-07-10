@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "title": "What? | We Do",
+      "title": "What | We Do?",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | We turn | Repetitive tasks: | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | into | Managed monthly | Practical workflows | . | Human control | stays always | at the centre | .",
@@ -29,7 +29,7 @@
       "_template": "section"
     },
     {
-      "title": "How? | It Works",
+      "title": "How | It Works?",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "... | Phase-delivery | .. | Sign-off | at every step | . | Nothing goes live | without your | approval | .",
