@@ -230,7 +230,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
        The wordmark svg is a hex node-graph. On load, the outline and the
        inner "V" stroke draw themselves in rather than just fading, so the
        mark reads as a network assembling itself — reinforcing "automation"
-       without adding any new visual element. */
+       without adding any new visual element. Fires once per full page load;
+       it will not replay on Tina's in-place content patches, only on a
+       real navigation / hard refresh. */
     .vd-logo polygon,
     .vd-logo polyline,
     .vd-logo path {
@@ -248,8 +250,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
     @keyframes vdDot  { to { opacity: 1; } }
 
     /* ── NEW 2: Breathing status dot ───────────────────────────────────────
-       A single slow-pulsing dot beside the wordmark — the same visual
-       language as a system status page. Quiet, not decorative. */
+       A single slow-pulsing dot beside the wordmark. Not language-gated —
+       renders identically on every language route since this file is the
+       single shared template for both / and /de/. */
     .vd-status-dot {
       width: 5px; height: 5px; border-radius: 50%;
       background: currentColor; opacity: 0.3;
@@ -261,45 +264,35 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       50%      { opacity: 0.85; transform: scale(1.5); }
     }
 
-    /* ── NEW 3: Process-flow connector pulse ───────────────────────────────
-       Replaces the static → glyph / vertical chevron between processFlow
-       steps with a hairline track and a small dot that travels along it on
-       loop — a pipeline moving work from one stage to the next. */
+    /* ── NEW 3: Process-flow — single traveling dot ────────────────────────
+       Replaced the earlier "pulse on every segment simultaneously" version.
+       The connector lines below stay as a static, faint track; a single dot
+       (.vd-flow-dot, appended once per track) is moved along that track by
+       the script at the bottom of this file, which measures the real
+       rendered position of each connector — so it works regardless of step
+       count, label length, or orientation. This reads as one process moving
+       step by step, not several steps running at once. */
+    .vd-flow-track { position: relative; }
+    .vd-flow-dot {
+      position: absolute; top: 0; left: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; opacity: 0;
+      pointer-events: none;
+      /* centers the dot ON the coordinate instead of placing its
+         top-left corner there — this is what kept it off the line */
+      transform: translate(-50%, -50%);
+    }
     .vd-connector {
       position: relative; display: inline-block;
       width: 48px; height: 2px; margin: 0 12px;
       vertical-align: middle; flex-shrink: 0;
     }
     .vd-connector-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
-    .vd-connector-pulse {
-      position: absolute; top: -2px; left: 0;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: currentColor; opacity: 0;
-      animation: vdTravel 2.4s linear infinite;
-    }
-    @keyframes vdTravel {
-      0%   { left: 0;   opacity: 0;   }
-      10%  { opacity: 0.8; }
-      90%  { opacity: 0.8; }
-      100% { left: 42px; opacity: 0; }
-    }
     .vd-connector-v {
       position: relative; display: block;
       width: 2px; height: 20px; margin: 4px auto;
     }
     .vd-connector-v-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
-    .vd-connector-v-pulse {
-      position: absolute; left: -2px; top: 0;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: currentColor; opacity: 0;
-      animation: vdTravelV 2.4s linear infinite;
-    }
-    @keyframes vdTravelV {
-      0%   { top: 0;   opacity: 0;   }
-      10%  { opacity: 0.8; }
-      90%  { opacity: 0.8; }
-      100% { top: 14px; opacity: 0; }
-    }
 
     /* ── NEW 4: Cascading line reveal ──────────────────────────────────────
        Individual lines inside a .vd-reveal section (case-study challenge /
@@ -435,7 +428,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                   ))}
                 </h2>
               )}
-              <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
+              <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'} vd-flow-track`}>
                 {block.steps?.map((step: any, i: number) => (
                   <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
                     <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75 py-3`}
@@ -446,17 +439,16 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                       isVertical ? (
                         <span class="vd-connector-v" style={`color: ${getTextColor()};`} aria-hidden="true">
                           <span class="vd-connector-v-line"></span>
-                          <span class="vd-connector-v-pulse"></span>
                         </span>
                       ) : (
                         <span class="vd-connector" style={`color: ${getTextColor()};`} aria-hidden="true">
                           <span class="vd-connector-line"></span>
-                          <span class="vd-connector-pulse"></span>
                         </span>
                       )
                     )}
                   </div>
                 ))}
+                <span class="vd-flow-dot" style={`color: ${getTextColor()};`} aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -638,4 +630,100 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       }
     });
   }
+
+  // ── Process-flow: single dot traveling through every step in sequence ────
+  // Rather than every connector pulsing independently (looked like several
+  // steps running at once), one dot is measured against the *real* rendered
+  // position of each connector line and moved along the whole chain — a
+  // single process moving step by step, pausing briefly "at" each label
+  // before continuing to the next connector. Works for any step count,
+  // label length, or orientation because positions are measured, not
+  // hardcoded. Respects prefers-reduced-motion by simply not animating.
+  (function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let frameIds: number[] = [];
+
+    // Returns one {start, end} pair per connector line — NOT a flat list —
+    // so the animation loop below can never index past the end of it.
+    function computeSegments(track: Element) {
+      const lines = Array.from(track.querySelectorAll('.vd-connector-line, .vd-connector-v-line'));
+      if (lines.length === 0) return null;
+      const trackRect = track.getBoundingClientRect();
+      const segments = lines.map((line) => {
+        const r = line.getBoundingClientRect();
+        const vertical = line.classList.contains('vd-connector-v-line');
+        return vertical
+          ? {
+              start: { x: r.left + r.width / 2 - trackRect.left, y: r.top - trackRect.top },
+              end:   { x: r.left + r.width / 2 - trackRect.left, y: r.bottom - trackRect.top },
+            }
+          : {
+              start: { x: r.left - trackRect.left, y: r.top + r.height / 2 - trackRect.top },
+              end:   { x: r.right - trackRect.left, y: r.top + r.height / 2 - trackRect.top },
+            };
+      });
+      return segments.length > 0 ? segments : null;
+    }
+
+    function animateTrack(track: Element) {
+      const dot = track.querySelector('.vd-flow-dot') as HTMLElement | null;
+      if (!dot) return;
+      if (reduceMotion) { dot.style.display = 'none'; return; }
+
+      const segments = computeSegments(track);
+      if (!segments) { dot.style.display = 'none'; return; }
+
+      const speed       = 45;   // px/sec while travelling a connector
+      const pause        = 320; // ms held, visibly resting, at each step
+      const restOpacity  = 0.35;
+      const peakOpacity  = 0.85;
+
+      let i = 0;                                  // which connector we're on
+      let phase: 'rest' | 'travel' = 'rest';       // resting AT a step, or travelling BETWEEN two
+      let phaseStart: number | null = null;
+
+      function tick(ts: number) {
+        if (phaseStart === null) phaseStart = ts;
+        const seg = segments![i];
+
+        if (phase === 'rest') {
+          // Resting at the step this connector leaves FROM — this is what
+          // makes step 1 visibly "hold" before the dot ever starts moving,
+          // instead of appearing to begin mid-flight.
+          dot!.style.left = `${seg.start.x}px`;
+          dot!.style.top  = `${seg.start.y}px`;
+          dot!.style.opacity = String(restOpacity);
+          if (ts - (phaseStart as number) >= pause) { phase = 'travel'; phaseStart = ts; }
+        } else {
+          const dist = Math.hypot(seg.end.x - seg.start.x, seg.end.y - seg.start.y);
+          const dur = Math.max((dist / speed) * 1000, 220);
+          const t = Math.min((ts - (phaseStart as number)) / dur, 1);
+          dot!.style.left = `${seg.start.x + (seg.end.x - seg.start.x) * t}px`;
+          dot!.style.top  = `${seg.start.y + (seg.end.y - seg.start.y) * t}px`;
+          dot!.style.opacity = String(restOpacity + (peakOpacity - restOpacity) * Math.sin(Math.PI * t));
+          if (t >= 1) {
+            i = (i + 1) % segments!.length; // always wraps within a valid index — no overflow
+            phase = 'rest';
+            phaseStart = ts;
+          }
+        }
+        frameIds.push(requestAnimationFrame(tick));
+      }
+      frameIds.push(requestAnimationFrame(tick));
+    }
+
+    function start() {
+      frameIds.forEach((id) => cancelAnimationFrame(id));
+      frameIds = [];
+      document.querySelectorAll('.vd-flow-track').forEach(animateTrack);
+    }
+
+    start();
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(start, 250);
+    });
+  })();
 </script>

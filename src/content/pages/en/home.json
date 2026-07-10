@@ -82,7 +82,7 @@
           "label": "Go-live & Managed Service"
         }
       ],
-      "enabled": false,
+      "enabled": true,
       "_template": "processFlow"
     },
     {
