@@ -634,8 +634,17 @@ export type Settings = Node & Document & {
   enableDepthBackground?: Maybe<Scalars['Boolean']['output']>;
   depthNodeCount?: Maybe<Scalars['Float']['output']>;
   depthConnectDistance?: Maybe<Scalars['Float']['output']>;
+  depthLineOpacity?: Maybe<Scalars['Float']['output']>;
+  depthNodeOpacity?: Maybe<Scalars['Float']['output']>;
   depthNodeColor?: Maybe<Scalars['String']['output']>;
   depthFogColor?: Maybe<Scalars['String']['output']>;
+  enablePlanetarySystems?: Maybe<Scalars['Boolean']['output']>;
+  planetarySystemCount?: Maybe<Scalars['Float']['output']>;
+  planetaryMaxPlanets?: Maybe<Scalars['Float']['output']>;
+  planetaryOrbitMinRadius?: Maybe<Scalars['Float']['output']>;
+  planetaryOrbitMaxRadius?: Maybe<Scalars['Float']['output']>;
+  planetaryStarColor?: Maybe<Scalars['String']['output']>;
+  planetaryPathOpacity?: Maybe<Scalars['Float']['output']>;
   headerHeight?: Maybe<Scalars['String']['output']>;
   footerHeight?: Maybe<Scalars['String']['output']>;
   headerInnerWidth?: Maybe<Scalars['String']['output']>;
@@ -706,8 +715,17 @@ export type SettingsFilter = {
   enableDepthBackground?: InputMaybe<BooleanFilter>;
   depthNodeCount?: InputMaybe<NumberFilter>;
   depthConnectDistance?: InputMaybe<NumberFilter>;
+  depthLineOpacity?: InputMaybe<NumberFilter>;
+  depthNodeOpacity?: InputMaybe<NumberFilter>;
   depthNodeColor?: InputMaybe<StringFilter>;
   depthFogColor?: InputMaybe<StringFilter>;
+  enablePlanetarySystems?: InputMaybe<BooleanFilter>;
+  planetarySystemCount?: InputMaybe<NumberFilter>;
+  planetaryMaxPlanets?: InputMaybe<NumberFilter>;
+  planetaryOrbitMinRadius?: InputMaybe<NumberFilter>;
+  planetaryOrbitMaxRadius?: InputMaybe<NumberFilter>;
+  planetaryStarColor?: InputMaybe<StringFilter>;
+  planetaryPathOpacity?: InputMaybe<NumberFilter>;
   headerHeight?: InputMaybe<StringFilter>;
   footerHeight?: InputMaybe<StringFilter>;
   headerInnerWidth?: InputMaybe<StringFilter>;
@@ -1089,8 +1107,17 @@ export type SettingsMutation = {
   enableDepthBackground?: InputMaybe<Scalars['Boolean']['input']>;
   depthNodeCount?: InputMaybe<Scalars['Float']['input']>;
   depthConnectDistance?: InputMaybe<Scalars['Float']['input']>;
+  depthLineOpacity?: InputMaybe<Scalars['Float']['input']>;
+  depthNodeOpacity?: InputMaybe<Scalars['Float']['input']>;
   depthNodeColor?: InputMaybe<Scalars['String']['input']>;
   depthFogColor?: InputMaybe<Scalars['String']['input']>;
+  enablePlanetarySystems?: InputMaybe<Scalars['Boolean']['input']>;
+  planetarySystemCount?: InputMaybe<Scalars['Float']['input']>;
+  planetaryMaxPlanets?: InputMaybe<Scalars['Float']['input']>;
+  planetaryOrbitMinRadius?: InputMaybe<Scalars['Float']['input']>;
+  planetaryOrbitMaxRadius?: InputMaybe<Scalars['Float']['input']>;
+  planetaryStarColor?: InputMaybe<Scalars['String']['input']>;
+  planetaryPathOpacity?: InputMaybe<Scalars['Float']['input']>;
   headerHeight?: InputMaybe<Scalars['String']['input']>;
   footerHeight?: InputMaybe<Scalars['String']['input']>;
   headerInnerWidth?: InputMaybe<Scalars['String']['input']>;
@@ -1122,7 +1149,7 @@ export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typenam
 
 export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
+export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthLineOpacity?: number | null, depthNodeOpacity?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, enablePlanetarySystems?: boolean | null, planetarySystemCount?: number | null, planetaryMaxPlanets?: number | null, planetaryOrbitMinRadius?: number | null, planetaryOrbitMaxRadius?: number | null, planetaryStarColor?: string | null, planetaryPathOpacity?: number | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null };
 
 export type ArtPartsFragment = { __typename: 'Art', title: string, year?: string | null, price?: number | null, image?: string | null, enabled?: boolean | null, showTitle?: boolean | null, showPrice?: boolean | null, showLine?: boolean | null };
 
@@ -1169,7 +1196,7 @@ export type SettingsQueryVariables = Exact<{
 }>;
 
 
-export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
+export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthLineOpacity?: number | null, depthNodeOpacity?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, enablePlanetarySystems?: boolean | null, planetarySystemCount?: number | null, planetaryMaxPlanets?: number | null, planetaryOrbitMinRadius?: number | null, planetaryOrbitMaxRadius?: number | null, planetaryStarColor?: string | null, planetaryPathOpacity?: number | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } };
 
 export type SettingsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -1181,7 +1208,7 @@ export type SettingsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
+export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableProcessFlowAnimation?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableDepthBackground?: boolean | null, depthNodeCount?: number | null, depthConnectDistance?: number | null, depthLineOpacity?: number | null, depthNodeOpacity?: number | null, depthNodeColor?: string | null, depthFogColor?: string | null, enablePlanetarySystems?: boolean | null, planetarySystemCount?: number | null, planetaryMaxPlanets?: number | null, planetaryOrbitMinRadius?: number | null, planetaryOrbitMaxRadius?: number | null, planetaryStarColor?: string | null, planetaryPathOpacity?: number | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
 
 export type ArtQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1390,8 +1417,17 @@ export const SettingsPartsFragmentDoc = gql`
   enableDepthBackground
   depthNodeCount
   depthConnectDistance
+  depthLineOpacity
+  depthNodeOpacity
   depthNodeColor
   depthFogColor
+  enablePlanetarySystems
+  planetarySystemCount
+  planetaryMaxPlanets
+  planetaryOrbitMinRadius
+  planetaryOrbitMaxRadius
+  planetaryStarColor
+  planetaryPathOpacity
   headerHeight
   footerHeight
   headerInnerWidth

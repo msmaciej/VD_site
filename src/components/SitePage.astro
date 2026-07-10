@@ -7,6 +7,7 @@ import Layout from '../layouts/Layout.astro';
 import ArtCard from './ArtCard.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
+import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
 import { ui, type Lang } from '../i18n/ui.ts';
 import { themeColors, fontFamily, textStyle, socialIcon } from '../utils/siteHelpers.ts';
 
@@ -115,24 +116,27 @@ const animTextHover = settings.enableTextHover          !== false;
 // theme, not something that silently appears site-wide the first time this
 // code ships.
 const animDepthBg = settings.enableDepthBackground       === true;
+const animPlanetary = settings.enablePlanetarySystems    === true; // same off-by-default logic as animDepthBg
+const anyFixedBackground = animDepthBg || animPlanetary; // either one needs the same translucency + z-index treatment below
 
-// ── Depth-background translucency ─────────────────────────────────────────────
-// When the depth network is on, the header/footer/content backgrounds switch
-// from fully opaque to a translucent version of the same color, so the
-// moving background shows through instead of being hidden behind a solid
-// panel. Text itself stays at full opacity — only the background layer is
-// see-through — since fading the whole element (via CSS opacity) would wash
-// out the text too, not just reveal what's behind it.
+// ── Fixed-background translucency ───────────────────────────────────────────
+// When any fixed background layer (depth network, planetary systems) is on,
+// the header/footer/content backgrounds switch from fully opaque to a
+// translucent version of the same color, so the moving background shows
+// through instead of being hidden behind a solid panel. Text itself stays at
+// full opacity — only the background layer is see-through — since fading the
+// whole element (via CSS opacity) would wash out the text too, not just
+// reveal what's behind it.
 const hexToRgba = (hex: string, alpha: number) => {
   const clean = (hex || '#000000').replace('#', '');
   const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
   const num = parseInt(full, 16) || 0;
   return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
 };
-const headerFooterBg = animDepthBg
+const headerFooterBg = anyFixedBackground
   ? `background-color: ${hexToRgba(getBgColor(), 0.7)}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
   : `background-color: ${getBgColor()};`;
-const contentWrapperBg = animDepthBg
+const contentWrapperBg = anyFixedBackground
   ? `background-color: ${hexToRgba(getBgColor(), 0.82)}; position: relative; z-index: 1;`
   : `background-color: ${getBgColor()};`;
 // Every connector previously ran its own independent, continuously-looping
@@ -253,6 +257,20 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       fogColor={settings.depthFogColor || getBgColor()}
       nodeCount={settings.depthNodeCount || undefined}
       connectDistance={settings.depthConnectDistance || undefined}
+      lineOpacity={settings.depthLineOpacity ?? undefined}
+      nodeOpacity={settings.depthNodeOpacity ?? undefined}
+    />
+  )}
+
+  {animPlanetary && (
+    <PlanetarySystemsBackground
+      starColor={settings.planetaryStarColor || getTextColor()}
+      fogColor={settings.depthFogColor || getBgColor()}
+      systemCount={settings.planetarySystemCount ?? undefined}
+      maxPlanets={settings.planetaryMaxPlanets ?? undefined}
+      orbitMinRadius={settings.planetaryOrbitMinRadius ?? undefined}
+      orbitMaxRadius={settings.planetaryOrbitMaxRadius ?? undefined}
+      pathOpacity={settings.planetaryPathOpacity ?? undefined}
     />
   )}
 

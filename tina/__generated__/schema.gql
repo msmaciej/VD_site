@@ -494,8 +494,17 @@ type Settings implements Node & Document {
   enableDepthBackground: Boolean
   depthNodeCount: Float
   depthConnectDistance: Float
+  depthLineOpacity: Float
+  depthNodeOpacity: Float
   depthNodeColor: String
   depthFogColor: String
+  enablePlanetarySystems: Boolean
+  planetarySystemCount: Float
+  planetaryMaxPlanets: Float
+  planetaryOrbitMinRadius: Float
+  planetaryOrbitMaxRadius: Float
+  planetaryStarColor: String
+  planetaryPathOpacity: Float
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
@@ -566,8 +575,17 @@ input SettingsFilter {
   enableDepthBackground: BooleanFilter
   depthNodeCount: NumberFilter
   depthConnectDistance: NumberFilter
+  depthLineOpacity: NumberFilter
+  depthNodeOpacity: NumberFilter
   depthNodeColor: StringFilter
   depthFogColor: StringFilter
+  enablePlanetarySystems: BooleanFilter
+  planetarySystemCount: NumberFilter
+  planetaryMaxPlanets: NumberFilter
+  planetaryOrbitMinRadius: NumberFilter
+  planetaryOrbitMaxRadius: NumberFilter
+  planetaryStarColor: StringFilter
+  planetaryPathOpacity: NumberFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
@@ -862,8 +880,17 @@ input SettingsMutation {
   enableDepthBackground: Boolean
   depthNodeCount: Float
   depthConnectDistance: Float
+  depthLineOpacity: Float
+  depthNodeOpacity: Float
   depthNodeColor: String
   depthFogColor: String
+  enablePlanetarySystems: Boolean
+  planetarySystemCount: Float
+  planetaryMaxPlanets: Float
+  planetaryOrbitMinRadius: Float
+  planetaryOrbitMaxRadius: Float
+  planetaryStarColor: String
+  planetaryPathOpacity: Float
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String

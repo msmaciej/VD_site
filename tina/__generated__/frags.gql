@@ -183,8 +183,17 @@ fragment SettingsParts on Settings {
   enableDepthBackground
   depthNodeCount
   depthConnectDistance
+  depthLineOpacity
+  depthNodeOpacity
   depthNodeColor
   depthFogColor
+  enablePlanetarySystems
+  planetarySystemCount
+  planetaryMaxPlanets
+  planetaryOrbitMinRadius
+  planetaryOrbitMaxRadius
+  planetaryStarColor
+  planetaryPathOpacity
   headerHeight
   footerHeight
   headerInnerWidth
