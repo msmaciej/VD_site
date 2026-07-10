@@ -82,7 +82,8 @@
           "label": "Live"
         }
       ],
-      "dotSize": -1,
+      "dotsPerConnector": 3,
+      "dotSize": 2,
       "connectorGap": 5,
       "stepSpacing": 8,
       "enabled": true,

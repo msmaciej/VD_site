@@ -107,7 +107,7 @@ const jsonLd = {
 // this is opt-out from the CMS, not opt-in.
 const animLogo    = settings.enableLogoAnimation        !== false;
 const animDot     = settings.enableStatusDot            !== false;
-const animFlow    = settings.enableProcessFlowAnimation !== false;
+const animFlow    = settings.processFlow?.enabled !== false;
 const animCascade = settings.enableCascadeReveal        !== false;
 const animTextHover = settings.enableTextHover          !== false;
 // Unlike the other five toggles, this one defaults OFF ('none', not an
@@ -258,24 +258,24 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 
   {animDepthBg && (
     <DepthNetworkBackground
-      nodeColor={settings.depthNodeColor || getTextColor()}
-      fogColor={settings.depthFogColor || getBgColor()}
-      nodeCount={settings.depthNodeCount || undefined}
-      connectDistance={settings.depthConnectDistance || undefined}
-      lineOpacity={settings.depthLineOpacity ?? undefined}
-      nodeOpacity={settings.depthNodeOpacity ?? undefined}
+      nodeColor={settings.depthBackground?.nodeColor || getTextColor()}
+      fogColor={settings.depthBackground?.fogColor || getBgColor()}
+      nodeCount={settings.depthBackground?.nodeCount || undefined}
+      connectDistance={settings.depthBackground?.connectDistance || undefined}
+      lineOpacity={settings.depthBackground?.lineOpacity ?? undefined}
+      nodeOpacity={settings.depthBackground?.nodeOpacity ?? undefined}
     />
   )}
 
   {animPlanetary && (
     <PlanetarySystemsBackground
-      starColor={settings.planetaryStarColor || getTextColor()}
-      fogColor={settings.depthFogColor || getBgColor()}
-      systemCount={settings.planetarySystemCount ?? undefined}
-      maxPlanets={settings.planetaryMaxPlanets ?? undefined}
-      orbitMinRadius={settings.planetaryOrbitMinRadius ?? undefined}
-      orbitMaxRadius={settings.planetaryOrbitMaxRadius ?? undefined}
-      pathOpacity={settings.planetaryPathOpacity ?? undefined}
+      starColor={settings.planetarySystems?.starColor || getTextColor()}
+      fogColor={settings.depthBackground?.fogColor || getBgColor()}
+      systemCount={settings.planetarySystems?.systemCount ?? undefined}
+      maxPlanets={settings.planetarySystems?.maxPlanets ?? undefined}
+      orbitMinRadius={settings.planetarySystems?.orbitMinRadius ?? undefined}
+      orbitMaxRadius={settings.planetarySystems?.orbitMaxRadius ?? undefined}
+      pathOpacity={settings.planetarySystems?.pathOpacity ?? undefined}
     />
   )}
 

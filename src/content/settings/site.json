@@ -35,11 +35,15 @@
   "enableLogoAnimation": true,
   "enableTextHover": false,
   "backgroundStyle": "depth",
-  "depthLineOpacity": 0.21,
-  "depthNodeOpacity": 0.89,
-  "planetarySystemCount": 8,
-  "planetaryMaxPlanets": 5,
-  "planetaryPathOpacity": 0.55,
+  "depthBackground": {
+    "lineOpacity": 0.21,
+    "nodeOpacity": 0.89
+  },
+  "planetarySystems": {
+    "systemCount": 8,
+    "maxPlanets": 5,
+    "pathOpacity": 0.55
+  },
   "headerHeight": "52px",
   "footerHeight": "56px",
   "siteUrl": "https://vortexdeep.ch",

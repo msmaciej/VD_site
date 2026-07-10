@@ -461,6 +461,28 @@ type SettingsSocialLinks {
   url: String
 }
 
+type SettingsProcessFlow {
+  enabled: Boolean
+}
+
+type SettingsDepthBackground {
+  nodeCount: Float
+  connectDistance: Float
+  lineOpacity: Float
+  nodeOpacity: Float
+  nodeColor: String
+  fogColor: String
+}
+
+type SettingsPlanetarySystems {
+  systemCount: Float
+  maxPlanets: Float
+  orbitMinRadius: Float
+  orbitMaxRadius: Float
+  starColor: String
+  pathOpacity: Float
+}
+
 type Settings implements Node & Document {
   siteName: String
   siteNameFont: String
@@ -488,22 +510,13 @@ type Settings implements Node & Document {
   customBackgroundColor: String
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
-  enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
+  enableCheckPageAnimations: Boolean
   backgroundStyle: String
-  depthNodeCount: Float
-  depthConnectDistance: Float
-  depthLineOpacity: Float
-  depthNodeOpacity: Float
-  depthNodeColor: String
-  depthFogColor: String
-  planetarySystemCount: Float
-  planetaryMaxPlanets: Float
-  planetaryOrbitMinRadius: Float
-  planetaryOrbitMaxRadius: Float
-  planetaryStarColor: String
-  planetaryPathOpacity: Float
+  processFlow: SettingsProcessFlow
+  depthBackground: SettingsDepthBackground
+  planetarySystems: SettingsPlanetarySystems
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
@@ -532,6 +545,28 @@ input SettingsNavLinksFilter {
 input SettingsSocialLinksFilter {
   platform: StringFilter
   url: StringFilter
+}
+
+input SettingsProcessFlowFilter {
+  enabled: BooleanFilter
+}
+
+input SettingsDepthBackgroundFilter {
+  nodeCount: NumberFilter
+  connectDistance: NumberFilter
+  lineOpacity: NumberFilter
+  nodeOpacity: NumberFilter
+  nodeColor: StringFilter
+  fogColor: StringFilter
+}
+
+input SettingsPlanetarySystemsFilter {
+  systemCount: NumberFilter
+  maxPlanets: NumberFilter
+  orbitMinRadius: NumberFilter
+  orbitMaxRadius: NumberFilter
+  starColor: StringFilter
+  pathOpacity: NumberFilter
 }
 
 input ImageFilter {
@@ -568,22 +603,13 @@ input SettingsFilter {
   customBackgroundColor: StringFilter
   enableLogoAnimation: BooleanFilter
   enableStatusDot: BooleanFilter
-  enableProcessFlowAnimation: BooleanFilter
   enableCascadeReveal: BooleanFilter
   enableTextHover: BooleanFilter
+  enableCheckPageAnimations: BooleanFilter
   backgroundStyle: StringFilter
-  depthNodeCount: NumberFilter
-  depthConnectDistance: NumberFilter
-  depthLineOpacity: NumberFilter
-  depthNodeOpacity: NumberFilter
-  depthNodeColor: StringFilter
-  depthFogColor: StringFilter
-  planetarySystemCount: NumberFilter
-  planetaryMaxPlanets: NumberFilter
-  planetaryOrbitMinRadius: NumberFilter
-  planetaryOrbitMaxRadius: NumberFilter
-  planetaryStarColor: StringFilter
-  planetaryPathOpacity: NumberFilter
+  processFlow: SettingsProcessFlowFilter
+  depthBackground: SettingsDepthBackgroundFilter
+  planetarySystems: SettingsPlanetarySystemsFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
@@ -845,6 +871,28 @@ input SettingsSocialLinksMutation {
   url: String
 }
 
+input SettingsProcessFlowMutation {
+  enabled: Boolean
+}
+
+input SettingsDepthBackgroundMutation {
+  nodeCount: Float
+  connectDistance: Float
+  lineOpacity: Float
+  nodeOpacity: Float
+  nodeColor: String
+  fogColor: String
+}
+
+input SettingsPlanetarySystemsMutation {
+  systemCount: Float
+  maxPlanets: Float
+  orbitMinRadius: Float
+  orbitMaxRadius: Float
+  starColor: String
+  pathOpacity: Float
+}
+
 input SettingsMutation {
   siteName: String
   siteNameFont: String
@@ -872,22 +920,13 @@ input SettingsMutation {
   customBackgroundColor: String
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
-  enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
+  enableCheckPageAnimations: Boolean
   backgroundStyle: String
-  depthNodeCount: Float
-  depthConnectDistance: Float
-  depthLineOpacity: Float
-  depthNodeOpacity: Float
-  depthNodeColor: String
-  depthFogColor: String
-  planetarySystemCount: Float
-  planetaryMaxPlanets: Float
-  planetaryOrbitMinRadius: Float
-  planetaryOrbitMaxRadius: Float
-  planetaryStarColor: String
-  planetaryPathOpacity: Float
+  processFlow: SettingsProcessFlowMutation
+  depthBackground: SettingsDepthBackgroundMutation
+  planetarySystems: SettingsPlanetarySystemsMutation
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String

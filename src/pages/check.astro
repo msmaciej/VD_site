@@ -2,37 +2,112 @@
 // src/pages/check.astro  →  vortexdeep.ch/check
 import Layout from '../layouts/Layout.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-const theme = 'paper';
+import { themeColors, fontFamily, socialIcon } from '../utils/siteHelpers.ts';
+
+// Pull real Site Settings so this page mimics the rest of the site's header,
+// footer, and theme — same data source index.astro passes into
+// SitePage.astro — instead of a hardcoded 'paper' theme and a bare text
+// link. Note: settings.customBackgroundColor / settings.baseTextColor (the
+// per-field colour overrides SitePage supports on top of a theme preset)
+// are NOT applied here — this page uses the theme preset only, via
+// Layout.astro's existing var(--zen-bg) / var(--zen-text) / var(--zen-muted)
+// custom properties. Adding override support cleanly would mean redefining
+// those custom properties at :root, which risks fighting Astro's
+// define:vars scoping rather than a simple, safe addition — flagging as a
+// known gap rather than a silent one.
+const settingFiles = await Astro.glob('../content/settings/*.json');
+const settings = settingFiles[0]?.default || {};
+
+const currentTheme = settings.theme || 'light';
+const currentYear  = new Date().getFullYear();
+
+const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
+  ? settings.customFontName
+  : (settings.fontPreset || 'Inter');
+const activeFontFamily = fontFamily(activeFont);
+
+const headerHeight     = settings.headerHeight     || '52px';
+const footerHeight     = settings.footerHeight     || '44px';
+const headerInnerWidth = settings.headerInnerWidth || '680px';
+
+const homeUrl = '/';
+const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
+  label: link.label,
+  url:   link.url,
+}));
+
+// Fit Check's own header animations (logo ink-draw, breathing status dot,
+// page load-fade) are admin-configurable independently of the home page's
+// equivalent toggles, and default OFF — this is a conversion-focused funnel
+// page, and starts calm/instant by default rather than inheriting the home
+// page's animate-by-default behaviour. See tina/config.ts,
+// enableCheckPageAnimations.
+const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
 ---
 
-<Layout title="VortexDeep — Quick Operations Check" theme={theme} lang="en">
-  <style is:global define:vars={{ theme }}>
-    :root[data-theme="paper"] {
-      --zen-bg: #F9F7F2;
-      --zen-text: #0a0a0a;
-      --zen-muted: #737373;
-      --zen-accent: #0a0a0a;
-    }
-  </style>
+<Layout title="VortexDeep — Quick Operations Check" theme={currentTheme} lang="en">
+  <!-- ── FIXED HEADER — mirrors SitePage.astro's header for parity with the
+       rest of the site. See that file's header block if this needs to
+       change; the two aren't shared as a component (this page doesn't
+       route through SitePage.astro), so keep them in sync by hand. ── -->
+  <header class={`vd-fixed-header ${checkAnimationsEnabled ? 'vd-load-fade' : ''}`}
+          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+      <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+         style="text-decoration:none; color:inherit;">
+        {settings.showLogo && (
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+               style="color: var(--zen-text);"
+               class={`w-5 h-5 flex-shrink-0 ${checkAnimationsEnabled ? 'vd-logo' : ''}`}>
+            <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="100" cy="22"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="61"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="139" r="5" fill="currentColor"/>
+            <circle cx="100" cy="178" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="139" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="61"  r="5" fill="currentColor"/>
+            <polyline points="56,76 78,122 100,76"
+                      fill="none" stroke="currentColor" stroke-width="6"
+                      stroke-linecap="round" stroke-linejoin="miter"/>
+            <line x1="104" y1="76" x2="104" y2="122"
+                  stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+                  fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        )}
+        <span class="text-[10px] uppercase tracking-[0.4em]"
+              style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+          {settings.siteName || 'VortexDeep'}
+        </span>
+        {checkAnimationsEnabled && (
+          <span class="vd-status-dot" style="color: var(--zen-text);" aria-hidden="true"></span>
+        )}
+      </a>
+
+      <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
+        {resolvedNavLinks.map((link: any) => (
+          <a href={link.url}
+             class={`${settings.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
+             style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+            {link.label}
+          </a>
+        ))}
+        <LanguageSwitcher lang="en" slug="check" />
+      </nav>
+    </div>
+  </header>
 
   <!-- FIX 10: min-h-[100svh] avoids the iOS Safari 100vh-includes-chrome trap.
        justify-start on mobile keeps content anchored to the top so all 6 answer
        options are reachable without blind scrolling; justify-center kicks in at sm
-       (640px+) where there's room to centre. Padding reduced on mobile so the
-       subtitle + progress bar don't consume the viewport before the first question. -->
-  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6 pt-16 pb-12 sm:py-24"
-        style="background-color: var(--zen-bg); color: var(--zen-text);">
+       (640px+) where there's room to centre. Padding-top/bottom clear the fixed
+       header/footer above instead of the old fixed pt-16/pb-12 — header and
+       footer height are both admin-configurable in Site Settings, same as
+       every other page. -->
+  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6"
+        style={`background-color: var(--zen-bg); color: var(--zen-text); padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
     <div class="max-w-xl w-full mx-auto" id="vd-root">
-
-      <!-- Top bar: back link + language switcher -->
-      <div class="flex justify-between items-center mb-3" style="color: var(--zen-text);">
-        <a href="/"
-           class="text-[11px] uppercase tracking-[1.2em] opacity-60 hover:opacity-100 transition-opacity translate-x-[0.3em]"
-           style="text-decoration:none; color:inherit;">
-          VortexDeep
-        </a>
-        <LanguageSwitcher lang="en" slug="check" />
-      </div>
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-8 sm:mb-16 opacity-40 text-center">
         Quick Operations Check
@@ -201,6 +276,101 @@ const theme = 'paper';
 
     </div>
   </main>
+
+  <!-- ── FIXED FOOTER — mirrors SitePage.astro's footer ── -->
+  <footer class={`vd-fixed-footer ${checkAnimationsEnabled ? 'vd-load-fade' : ''}`}
+          style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
+    {settings.socialLinks?.map((social: any) => {
+      const { icon, round } = socialIcon(social.platform || '');
+      return (
+        <a href={social.url} target="_blank" rel="noopener noreferrer"
+           class={`vd-icon ${round ? 'round' : ''}`}
+           title={social.platform}
+           style="color: var(--zen-text);">
+          {icon}
+        </a>
+      );
+    })}
+    {settings.socialLinks?.length > 0 && (
+      <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
+    )}
+    <p class={`${settings.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
+       style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+      {settings.footerText
+        ? settings.footerText
+        : `© ${currentYear} ${settings.siteName || 'VortexDeep'}`}
+    </p>
+  </footer>
+
+  <style is:global>
+    /* ── Fixed header / footer chrome — mirrors SitePage.astro ── */
+    .vd-fixed-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .vd-fixed-header-inner {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 2rem);
+    }
+    .vd-fixed-footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 50;
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.2rem;
+    }
+    .vd-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px;
+      border: 1px solid currentColor;
+      font-size: 8px; font-weight: 600;
+      letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none;
+      border-radius: 3px; opacity: 0.35;
+      transition: opacity 0.25s ease;
+    }
+    .vd-icon:hover { opacity: 0.9; }
+    .vd-icon.round { border-radius: 50%; }
+
+    /* ── Logo ink-draw + breathing status dot + page load-fade — same
+       effects as SitePage.astro's "NEW 1" / "NEW 2" / .vd-load-fade,
+       duplicated here (this page doesn't route through SitePage.astro).
+       Only ever applied when checkAnimationsEnabled is true — see
+       enableCheckPageAnimations in tina/config.ts, defaults off. ── */
+    .vd-logo polygon,
+    .vd-logo polyline,
+    .vd-logo path {
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+      animation: vdDraw 1.3s ease forwards;
+    }
+    .vd-logo polyline,
+    .vd-logo path { animation-delay: 0.85s; }
+    .vd-logo circle {
+      opacity: 0;
+      animation: vdDot 0.35s ease forwards 1.25s;
+    }
+    @keyframes vdDraw { to { stroke-dashoffset: 0; } }
+    @keyframes vdDot  { to { opacity: 1; } }
+
+    .vd-status-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.3;
+      display: inline-block; margin-left: 8px;
+      animation: vdBreathe 3s ease-in-out infinite;
+    }
+    @keyframes vdBreathe {
+      0%, 100% { opacity: 0.25; transform: scale(1);   }
+      50%      { opacity: 0.85; transform: scale(1.5); }
+    }
+
+    .vd-load-fade { animation: vdLoad 1.8s cubic-bezier(0.4,0,0.2,1) forwards; }
+    @keyframes vdLoad {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+  </style>
 
   <style>
     .vd-ql { font-size:14px; font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 2rem; text-align:center; }

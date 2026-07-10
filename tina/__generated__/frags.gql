@@ -177,22 +177,32 @@ fragment SettingsParts on Settings {
   customBackgroundColor
   enableLogoAnimation
   enableStatusDot
-  enableProcessFlowAnimation
   enableCascadeReveal
   enableTextHover
+  enableCheckPageAnimations
   backgroundStyle
-  depthNodeCount
-  depthConnectDistance
-  depthLineOpacity
-  depthNodeOpacity
-  depthNodeColor
-  depthFogColor
-  planetarySystemCount
-  planetaryMaxPlanets
-  planetaryOrbitMinRadius
-  planetaryOrbitMaxRadius
-  planetaryStarColor
-  planetaryPathOpacity
+  processFlow {
+    __typename
+    enabled
+  }
+  depthBackground {
+    __typename
+    nodeCount
+    connectDistance
+    lineOpacity
+    nodeOpacity
+    nodeColor
+    fogColor
+  }
+  planetarySystems {
+    __typename
+    systemCount
+    maxPlanets
+    orbitMinRadius
+    orbitMaxRadius
+    starColor
+    pathOpacity
+  }
   headerHeight
   footerHeight
   headerInnerWidth

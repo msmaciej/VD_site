@@ -336,10 +336,15 @@ var config_default = defineConfig({
           { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
           { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
           // ── Animations ────────────────────────────────────────────────────
-          // Each defaults to ON when left unset (existing content with no
-          // value for these fields keeps animating exactly as before — this
-          // is opt-out, not opt-in, so nothing changes until someone
-          // deliberately flips one off).
+          // General toggles default to ON when left unset (existing content
+          // with no value for these fields keeps animating exactly as before
+          // — this is opt-out, not opt-in, so nothing changes until someone
+          // deliberately flips one off). backgroundStyle defaults to "none".
+          //
+          // The three background/flow-specific groups below render as
+          // collapsible nested panels in Tina, rather than a flat list of
+          // ~20 fields — each only matters when its feature is actually in
+          // use (backgroundStyle set to match, or Process Flow animation on).
           {
             type: "boolean",
             name: "enableLogoAnimation",
@@ -354,12 +359,6 @@ var config_default = defineConfig({
           },
           {
             type: "boolean",
-            name: "enableProcessFlowAnimation",
-            label: "Dots light up in sequence on Process Flow connectors",
-            description: "Off = connectors shown as plain static dots."
-          },
-          {
-            type: "boolean",
             name: "enableCascadeReveal",
             label: "Case Study fields reveal line-by-line",
             description: "Off = each field fades in as one block, same as other sections."
@@ -369,6 +368,12 @@ var config_default = defineConfig({
             name: "enableTextHover",
             label: "Text lines grow slightly on hover",
             description: "Off = body text and case-study lines have no hover effect."
+          },
+          {
+            type: "boolean",
+            name: "enableCheckPageAnimations",
+            label: "Fit Check page (/check): enable header animations",
+            description: "Controls the logo ink-draw, breathing status dot, and page load-fade on the Fit Check page only \u2014 independent of the equivalent toggles above, which only affect the home page. Off by default (opt-in, not opt-out like every other toggle here): Fit Check is a conversion-focused page, and starts calm/instant rather than inheriting the home page's animate-by-default behaviour."
           },
           {
             type: "string",
@@ -382,79 +387,109 @@ var config_default = defineConfig({
             ]
           },
           {
-            type: "number",
-            name: "depthNodeCount",
-            label: "Depth background: number of points",
-            description: "Default 90. Higher = denser field, more render cost."
+            type: "object",
+            name: "processFlow",
+            label: "Process Flow Animation",
+            description: "Per-block tuning (dot count, size, speed, spacing) lives on each Process Flow section itself, in the Pages collection \u2014 this only controls whether the sequence-lighting effect runs at all.",
+            fields: [
+              {
+                type: "boolean",
+                name: "enabled",
+                label: "Dots light up in sequence on Process Flow connectors",
+                description: "Off = connectors shown as plain static dots."
+              }
+            ]
           },
           {
-            type: "number",
-            name: "depthConnectDistance",
-            label: "Depth background: connection distance",
-            description: "Default 5.4. Higher = more lines drawn between points (denser web)."
+            type: "object",
+            name: "depthBackground",
+            label: "Depth Network Background",
+            description: "Only used when Background style above is set to 'Depth network'.",
+            fields: [
+              {
+                type: "number",
+                name: "nodeCount",
+                label: "Number of points",
+                description: "Default 90. Higher = denser field, more render cost."
+              },
+              {
+                type: "number",
+                name: "connectDistance",
+                label: "Connection distance",
+                description: "Default 5.4. Higher = more lines drawn between points (denser web)."
+              },
+              {
+                type: "number",
+                name: "lineOpacity",
+                label: "Line opacity (0\u20131)",
+                description: "Default 0.16. How visible the connecting lines are."
+              },
+              {
+                type: "number",
+                name: "nodeOpacity",
+                label: "Point opacity (0\u20131)",
+                description: "Default 0.75. How visible the points themselves are."
+              },
+              {
+                type: "string",
+                name: "nodeColor",
+                label: "Point colour override",
+                description: "Leave empty to auto-match the theme's text colour.",
+                ui: { component: "color" }
+              },
+              {
+                type: "string",
+                name: "fogColor",
+                label: "Fog colour override",
+                description: "Leave empty to auto-match the theme's background colour. Also used as the fog colour for Planetary Systems, if that's the active background instead.",
+                ui: { component: "color" }
+              }
+            ]
           },
           {
-            type: "number",
-            name: "depthLineOpacity",
-            label: "Depth background: line opacity (0\u20131)",
-            description: "Default 0.16. How visible the connecting lines are."
-          },
-          {
-            type: "number",
-            name: "depthNodeOpacity",
-            label: "Depth background: point opacity (0\u20131)",
-            description: "Default 0.75. How visible the points themselves are."
-          },
-          {
-            type: "string",
-            name: "depthNodeColor",
-            label: "Depth background: point colour override",
-            description: "Leave empty to auto-match the theme's text colour.",
-            ui: { component: "color" }
-          },
-          {
-            type: "string",
-            name: "depthFogColor",
-            label: "Depth background: fog colour override",
-            description: "Leave empty to auto-match the theme's background colour.",
-            ui: { component: "color" }
-          },
-          {
-            type: "number",
-            name: "planetarySystemCount",
-            label: "Planetary systems: number of systems",
-            description: "Default 4."
-          },
-          {
-            type: "number",
-            name: "planetaryMaxPlanets",
-            label: "Planetary systems: max planets per system",
-            description: "Default 4. Each system gets a random count from 1 up to this, for natural variety."
-          },
-          {
-            type: "number",
-            name: "planetaryOrbitMinRadius",
-            label: "Planetary systems: orbit distance, minimum (0\u20131)",
-            description: "Default 0.35. Fraction of the base orbit size \u2014 how close the nearest planet can sit to its star."
-          },
-          {
-            type: "number",
-            name: "planetaryOrbitMaxRadius",
-            label: "Planetary systems: orbit distance, maximum (0\u20131)",
-            description: "Default 1. How far the outermost planet can sit from its star."
-          },
-          {
-            type: "string",
-            name: "planetaryStarColor",
-            label: "Planetary systems: star colour override",
-            description: "Leave empty to auto-match the theme's text colour. Planets and orbit paths derive from this same colour at lower opacity.",
-            ui: { component: "color" }
-          },
-          {
-            type: "number",
-            name: "planetaryPathOpacity",
-            label: "Planetary systems: orbit path opacity (0\u20131)",
-            description: "Default 0.12. How visible the faint orbit rings are."
+            type: "object",
+            name: "planetarySystems",
+            label: "Planetary Systems Background",
+            description: "Only used when Background style above is set to 'Planetary systems'.",
+            fields: [
+              {
+                type: "number",
+                name: "systemCount",
+                label: "Number of systems",
+                description: "Default 4."
+              },
+              {
+                type: "number",
+                name: "maxPlanets",
+                label: "Max planets per system",
+                description: "Default 4. Each system gets a random count from 1 up to this, for natural variety."
+              },
+              {
+                type: "number",
+                name: "orbitMinRadius",
+                label: "Orbit distance, minimum (0\u20131)",
+                description: "Default 0.35. Fraction of the base orbit size \u2014 how close the nearest planet can sit to its star."
+              },
+              {
+                type: "number",
+                name: "orbitMaxRadius",
+                label: "Orbit distance, maximum (0\u20131)",
+                description: "Default 1. How far the outermost planet can sit from its star."
+              },
+              {
+                type: "string",
+                name: "starColor",
+                label: "Star colour override",
+                description: "Leave empty to auto-match the theme's text colour. Planets and orbit paths derive from this same colour at lower opacity.",
+                ui: { component: "color" }
+              },
+              {
+                type: "number",
+                name: "pathOpacity",
+                label: "Orbit path opacity (0\u20131)",
+                description: "Default 0.12. How visible the faint orbit rings are."
+              }
+            ]
           },
           // ── Layout dimensions ─────────────────────────────────────────────
           { type: "string", name: "headerHeight", label: "Header Height", options: [
