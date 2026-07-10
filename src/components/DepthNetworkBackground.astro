@@ -1,0 +1,161 @@
+---
+// src/components/DepthNetworkBackground.astro
+// Fixed, full-viewport Three.js scene: a field of point "nodes" drifting
+// slowly in 3D, with faint lines drawn between any two nodes close enough
+// together. Depth is real (a perspective camera + fog), not simulated —
+// distant nodes are naturally smaller and fade into the fog color, near
+// ones are brighter. Sits behind all page content; SitePage.astro is
+// responsible for making the section backgrounds transparent (or lightly
+// tinted) so this shows through.
+//
+// Rendered once per page — mount it high up (e.g. in SitePage.astro,
+// right after <Layout> opens) so it sits behind the fixed header/footer
+// and the scrolling content, all of which need a higher z-index than this.
+
+interface Props {
+  nodeColor?: string;       // hex, matches the page's text color so it adapts per theme
+  fogColor?: string;        // hex, matches the page's background color
+  nodeCount?: number;       // how many drifting points — admin-tunable via Site Settings
+  connectDistance?: number; // how close two points must be to draw a line between them — admin-tunable
+}
+const {
+  nodeColor = '#e0e2e8',
+  fogColor = '#0c0f14',
+  nodeCount = 90,
+  connectDistance = 5.4,
+} = Astro.props;
+---
+
+<canvas
+  id="vd-depth-bg"
+  data-node-color={nodeColor}
+  data-fog-color={fogColor}
+  data-node-count={nodeCount}
+  data-connect-distance={connectDistance}
+  aria-hidden="true"
+  style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"
+></canvas>
+
+<script>
+  import * as THREE from 'three';
+
+  const canvas = document.getElementById('vd-depth-bg') as HTMLCanvasElement | null;
+  if (canvas) {
+    const nodeColorHex = canvas.dataset.nodeColor || '#e0e2e8';
+    const fogColorHex  = canvas.dataset.fogColor  || '#0c0f14';
+    const NODE_COUNT = parseInt(canvas.dataset.nodeCount || '90', 10);
+    const CONNECT_DISTANCE = parseFloat(canvas.dataset.connectDistance || '5.4');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(new THREE.Color(fogColorHex).getHex(), 9, 26);
+
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 13;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // ── Nodes ──────────────────────────────────────────────────────────────
+    // Bounds scale with node count (cube root, so density stays roughly
+    // constant) — an admin raising "number of points" gets a denser-looking
+    // field without also needing to retune the volume it drifts within.
+    const baseBounds = { x: 9, y: 6.5, z: 9 };
+    const scale = Math.cbrt(NODE_COUNT / 90);
+    const BOUNDS = { x: baseBounds.x * scale, y: baseBounds.y * scale, z: baseBounds.z * scale };
+    const positions = new Float32Array(NODE_COUNT * 3);
+    const velocities: number[] = [];
+    for (let i = 0; i < NODE_COUNT; i++) {
+      positions[i * 3]     = (Math.random() * 2 - 1) * BOUNDS.x;
+      positions[i * 3 + 1] = (Math.random() * 2 - 1) * BOUNDS.y;
+      positions[i * 3 + 2] = (Math.random() * 2 - 1) * BOUNDS.z;
+      velocities.push((Math.random() - 0.5) * 0.006, (Math.random() - 0.5) * 0.006, (Math.random() - 0.5) * 0.006);
+    }
+
+    const nodeGeometry = new THREE.BufferGeometry();
+    nodeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const nodeMaterial = new THREE.PointsMaterial({
+      color: new THREE.Color(nodeColorHex),
+      size: 0.075,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: 0.75,
+    });
+    const points = new THREE.Points(nodeGeometry, nodeMaterial);
+    scene.add(points);
+
+    // ── Connecting lines ───────────────────────────────────────────────────
+    // Recomputed periodically (not every frame — the pairwise distance
+    // check is cheap, but no need to do it dozens of times/sec when the
+    // nodes are barely moving between frames).
+    let lineGeometry = new THREE.BufferGeometry();
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: new THREE.Color(nodeColorHex),
+      transparent: true,
+      opacity: 0.16,
+    });
+    let lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+
+    function rebuildLines() {
+      const linePositions: number[] = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+          const dx = positions[i * 3]     - positions[j * 3];
+          const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+          const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (dist < CONNECT_DISTANCE) {
+            linePositions.push(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+            linePositions.push(positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]);
+          }
+        }
+      }
+      scene.remove(lines);
+      lineGeometry.dispose();
+      lineGeometry = new THREE.BufferGeometry();
+      lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+      lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+      scene.add(lines);
+    }
+    rebuildLines();
+
+    // ── Animation ──────────────────────────────────────────────────────────
+    let frame = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (!reduceMotion) {
+        for (let i = 0; i < NODE_COUNT; i++) {
+          for (let axis = 0; axis < 3; axis++) {
+            const idx = i * 3 + axis;
+            positions[idx] += velocities[idx];
+            const bound = axis === 0 ? BOUNDS.x : axis === 1 ? BOUNDS.y : BOUNDS.z;
+            if (positions[idx] > bound || positions[idx] < -bound) velocities[idx] *= -1;
+          }
+        }
+        nodeGeometry.attributes.position.needsUpdate = true;
+
+        frame += 1;
+        if (frame % 8 === 0) rebuildLines();
+
+        // Slow camera drift, not node drift alone — reinforces the sense of
+        // depth (parallax) rather than just particles bobbing in place.
+        const t = Date.now() * 0.00004;
+        camera.position.x = Math.sin(t) * 2.2;
+        camera.position.y = Math.cos(t * 0.8) * 1.2;
+        camera.lookAt(0, 0, 0);
+      }
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+</script>

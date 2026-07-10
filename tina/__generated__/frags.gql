@@ -36,6 +36,13 @@ fragment PageParts on Page {
         fontSize
         fontWeight
       }
+      dotsPerConnector
+      dotSize
+      dotRestOpacity
+      dotPeakOpacity
+      flowSpeed
+      connectorGap
+      stepSpacing
       enabled
     }
     ... on PageBlocksCaseStudy {
@@ -100,6 +107,13 @@ fragment Page_deParts on Page_de {
         fontSize
         fontWeight
       }
+      dotsPerConnector
+      dotSize
+      dotRestOpacity
+      dotPeakOpacity
+      flowSpeed
+      connectorGap
+      stepSpacing
       enabled
     }
     ... on Page_deBlocksCaseStudy {
@@ -166,6 +180,11 @@ fragment SettingsParts on Settings {
   enableProcessFlowAnimation
   enableCascadeReveal
   enableTextHover
+  enableDepthBackground
+  depthNodeCount
+  depthConnectDistance
+  depthNodeColor
+  depthFogColor
   headerHeight
   footerHeight
   headerInnerWidth

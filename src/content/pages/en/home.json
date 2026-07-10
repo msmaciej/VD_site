@@ -6,6 +6,7 @@
       "titleFontWeight": "font-bold",
       "subTitle": "... | We turn | Repetitive tasks: | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | into | Managed monthly | Practical workflows | . | Human control | stays always | at the centre | .",
       "subTitleFontSize": "text-[13px]",
+      "showArt": false,
       "enabled": true,
       "_template": "section"
     },
@@ -82,6 +83,9 @@
           "label": "Live"
         }
       ],
+      "dotSize": 2,
+      "connectorGap": 5,
+      "stepSpacing": 8,
       "enabled": true,
       "_template": "processFlow"
     },

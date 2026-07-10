@@ -83,6 +83,49 @@ var pageTemplates = [
         ],
         ui: { itemProps: (item) => ({ label: item?.label || "Step" }) }
       },
+      // ── Connector dot animation ────────────────────────────────────────
+      {
+        type: "number",
+        name: "dotsPerConnector",
+        label: "Dots between each step",
+        description: "Default 4. Fewer dots = sparser, cleaner look; more = denser."
+      },
+      {
+        type: "number",
+        name: "dotSize",
+        label: "Dot size (px)",
+        description: "Default 3."
+      },
+      {
+        type: "number",
+        name: "dotRestOpacity",
+        label: "Resting dot opacity (0\u20131)",
+        description: "Default 0.14. Lower = lighter grey at rest."
+      },
+      {
+        type: "number",
+        name: "dotPeakOpacity",
+        label: "Lit dot opacity (0\u20131)",
+        description: "Default 0.9. How dark a dot gets as the flow passes through it."
+      },
+      {
+        type: "number",
+        name: "flowSpeed",
+        label: "Seconds per connector",
+        description: "Default 2. How long the flow takes to cross each connector \u2014 controls overall pacing."
+      },
+      {
+        type: "number",
+        name: "connectorGap",
+        label: "Gap between dots (px)",
+        description: "Default 8. Direct spacing between adjacent dots."
+      },
+      {
+        type: "number",
+        name: "stepSpacing",
+        label: "Space around each step label (px)",
+        description: "Default 12. Padding on the side facing the connector \u2014 the main driver of total distance between step texts (combined with the dot gap above)."
+      },
       { type: "boolean", name: "enabled", label: "Section Enabled" }
     ]
   },
@@ -312,8 +355,8 @@ var config_default = defineConfig({
           {
             type: "boolean",
             name: "enableProcessFlowAnimation",
-            label: "Traveling dot on Process Flow connectors",
-            description: "Off = connectors shown as plain static lines."
+            label: "Dots light up in sequence on Process Flow connectors",
+            description: "Off = connectors shown as plain static dots."
           },
           {
             type: "boolean",
@@ -326,6 +369,38 @@ var config_default = defineConfig({
             name: "enableTextHover",
             label: "Text lines grow slightly on hover",
             description: "Off = body text and case-study lines have no hover effect."
+          },
+          {
+            type: "boolean",
+            name: "enableDepthBackground",
+            label: "Animated depth-network background (experimental)",
+            description: "A field of slowly drifting connected points behind the whole page, rendered with three.js. Off by default \u2014 this is a bigger visual change than the others, turn on deliberately per theme. Requires 'three' installed (npm install three)."
+          },
+          {
+            type: "number",
+            name: "depthNodeCount",
+            label: "Depth background: number of points",
+            description: "Default 90. Higher = denser field, more render cost."
+          },
+          {
+            type: "number",
+            name: "depthConnectDistance",
+            label: "Depth background: connection distance",
+            description: "Default 5.4. Higher = more lines drawn between points (denser web)."
+          },
+          {
+            type: "string",
+            name: "depthNodeColor",
+            label: "Depth background: point colour override",
+            description: "Leave empty to auto-match the theme's text colour.",
+            ui: { component: "color" }
+          },
+          {
+            type: "string",
+            name: "depthFogColor",
+            label: "Depth background: fog colour override",
+            description: "Leave empty to auto-match the theme's background colour.",
+            ui: { component: "color" }
           },
           // ── Layout dimensions ─────────────────────────────────────────────
           { type: "string", name: "headerHeight", label: "Header Height", options: [

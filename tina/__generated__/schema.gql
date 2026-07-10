@@ -132,6 +132,13 @@ type PageBlocksProcessFlow {
   stepFontSize: String
   stepFontWeight: String
   steps: [PageBlocksProcessFlowSteps]
+  dotsPerConnector: Float
+  dotSize: Float
+  dotRestOpacity: Float
+  dotPeakOpacity: Float
+  flowSpeed: Float
+  connectorGap: Float
+  stepSpacing: Float
   enabled: Boolean
 }
 
@@ -204,6 +211,16 @@ input PageBlocksProcessFlowStepsFilter {
   fontWeight: StringFilter
 }
 
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
 input PageBlocksProcessFlowFilter {
   title: StringFilter
   titleFont: StringFilter
@@ -214,6 +231,13 @@ input PageBlocksProcessFlowFilter {
   stepFontSize: StringFilter
   stepFontWeight: StringFilter
   steps: PageBlocksProcessFlowStepsFilter
+  dotsPerConnector: NumberFilter
+  dotSize: NumberFilter
+  dotRestOpacity: NumberFilter
+  dotPeakOpacity: NumberFilter
+  flowSpeed: NumberFilter
+  connectorGap: NumberFilter
+  stepSpacing: NumberFilter
   enabled: BooleanFilter
 }
 
@@ -296,6 +320,13 @@ type Page_deBlocksProcessFlow {
   stepFontSize: String
   stepFontWeight: String
   steps: [Page_deBlocksProcessFlowSteps]
+  dotsPerConnector: Float
+  dotSize: Float
+  dotRestOpacity: Float
+  dotPeakOpacity: Float
+  flowSpeed: Float
+  connectorGap: Float
+  stepSpacing: Float
   enabled: Boolean
 }
 
@@ -366,6 +397,13 @@ input Page_deBlocksProcessFlowFilter {
   stepFontSize: StringFilter
   stepFontWeight: StringFilter
   steps: Page_deBlocksProcessFlowStepsFilter
+  dotsPerConnector: NumberFilter
+  dotSize: NumberFilter
+  dotRestOpacity: NumberFilter
+  dotPeakOpacity: NumberFilter
+  flowSpeed: NumberFilter
+  connectorGap: NumberFilter
+  stepSpacing: NumberFilter
   enabled: BooleanFilter
 }
 
@@ -453,6 +491,11 @@ type Settings implements Node & Document {
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
+  enableDepthBackground: Boolean
+  depthNodeCount: Float
+  depthConnectDistance: Float
+  depthNodeColor: String
+  depthFogColor: String
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String
@@ -520,6 +563,11 @@ input SettingsFilter {
   enableProcessFlowAnimation: BooleanFilter
   enableCascadeReveal: BooleanFilter
   enableTextHover: BooleanFilter
+  enableDepthBackground: BooleanFilter
+  depthNodeCount: NumberFilter
+  depthConnectDistance: NumberFilter
+  depthNodeColor: StringFilter
+  depthFogColor: StringFilter
   headerHeight: StringFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
@@ -559,16 +607,6 @@ type Art implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
 }
 
 input ArtFilter {
@@ -660,6 +698,13 @@ input PageBlocksProcessFlowMutation {
   stepFontSize: String
   stepFontWeight: String
   steps: [PageBlocksProcessFlowStepsMutation]
+  dotsPerConnector: Float
+  dotSize: Float
+  dotRestOpacity: Float
+  dotPeakOpacity: Float
+  flowSpeed: Float
+  connectorGap: Float
+  stepSpacing: Float
   enabled: Boolean
 }
 
@@ -731,6 +776,13 @@ input Page_deBlocksProcessFlowMutation {
   stepFontSize: String
   stepFontWeight: String
   steps: [Page_deBlocksProcessFlowStepsMutation]
+  dotsPerConnector: Float
+  dotSize: Float
+  dotRestOpacity: Float
+  dotPeakOpacity: Float
+  flowSpeed: Float
+  connectorGap: Float
+  stepSpacing: Float
   enabled: Boolean
 }
 
@@ -807,6 +859,11 @@ input SettingsMutation {
   enableProcessFlowAnimation: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
+  enableDepthBackground: Boolean
+  depthNodeCount: Float
+  depthConnectDistance: Float
+  depthNodeColor: String
+  depthFogColor: String
   headerHeight: String
   footerHeight: String
   headerInnerWidth: String

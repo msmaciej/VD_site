@@ -6,6 +6,7 @@
 import Layout from '../layouts/Layout.astro';
 import ArtCard from './ArtCard.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import { ui, type Lang } from '../i18n/ui.ts';
 import { themeColors, fontFamily, textStyle, socialIcon } from '../utils/siteHelpers.ts';
 
@@ -108,6 +109,32 @@ const animDot     = settings.enableStatusDot            !== false;
 const animFlow    = settings.enableProcessFlowAnimation !== false;
 const animCascade = settings.enableCascadeReveal        !== false;
 const animTextHover = settings.enableTextHover          !== false;
+// Unlike the other five toggles, this one defaults OFF (=== true, not
+// !== false) — it's a much bigger visual commitment than a quiet dot or a
+// hover nudge, and should be something someone deliberately turns on for a
+// theme, not something that silently appears site-wide the first time this
+// code ships.
+const animDepthBg = settings.enableDepthBackground       === true;
+
+// ── Depth-background translucency ─────────────────────────────────────────────
+// When the depth network is on, the header/footer/content backgrounds switch
+// from fully opaque to a translucent version of the same color, so the
+// moving background shows through instead of being hidden behind a solid
+// panel. Text itself stays at full opacity — only the background layer is
+// see-through — since fading the whole element (via CSS opacity) would wash
+// out the text too, not just reveal what's behind it.
+const hexToRgba = (hex: string, alpha: number) => {
+  const clean = (hex || '#000000').replace('#', '');
+  const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
+  const num = parseInt(full, 16) || 0;
+  return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
+};
+const headerFooterBg = animDepthBg
+  ? `background-color: ${hexToRgba(getBgColor(), 0.7)}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
+  : `background-color: ${getBgColor()};`;
+const contentWrapperBg = animDepthBg
+  ? `background-color: ${hexToRgba(getBgColor(), 0.82)}; position: relative; z-index: 1;`
+  : `background-color: ${getBgColor()};`;
 // Every connector previously ran its own independent, continuously-looping
 // comet — since they all loop on their own schedule, several were visibly
 // active at once ("dots everywhere"). Instead: all connectors in one
@@ -116,50 +143,61 @@ const animTextHover = settings.enableTextHover          !== false;
 // timeline — the rest of the time it's invisible — so only one dot is ever
 // visibly moving, handing off from connector to connector down the chain.
 // Pure CSS (no JS position measurement, no resize handling needed) because
-// each connector's dot still only ever moves within its own local box.
-const relaySlotDuration = 2; // seconds "owned" by each connector within the shared cycle — tune pacing here
+// each dot is fixed in place — only its opacity animates, nothing moves.
+const defaultFlowSpeed = 2;          // seconds "owned" by each connector, if a block doesn't override it
+const defaultDotsPerConnector = 4;   // how many fixed dots sit between each pair of steps, if not overridden
+const defaultDotSize = 3;            // px
+const defaultDotRestOpacity = 0.14;  // "light grey" resting look
+const defaultDotPeakOpacity = 0.85;  // "dark" look when the flow passes through
+const defaultConnectorGap = 8;       // px, direct spacing between adjacent dots
+const defaultStepSpacing = 12;       // px, padding on each label's connector-facing side
 
-function relayKeyframes(name: string, i: number, count: number, prop: 'left' | 'top') {
-  const from = '0%';
-  const to = 'calc(100% - 6px)';
-  const slot = 100 / count;
-  const base = i * slot;
-  const end = base + slot;
+// Generates the keyframes for ONE specific dot (connector i, dot k of
+// dotsN) within the block's shared master cycle. The dot itself never
+// moves — only its opacity rises to peakOpacity and back down again. Each
+// dot still peaks at its own evenly-spaced moment (same cascading hand-off
+// timing as before), but the rise/fall is deliberately wider than its own
+// slice of the cycle, so it overlaps with its neighbors on both sides — one
+// dot is already brightening before the previous one has fully dimmed.
+// That overlap is what turns this into a flowing wave passing through the
+// row instead of a strict relay of isolated flashes with dead air between
+// them.
+function dotPulseKeyframes(
+  name: string, i: number, k: number, count: number,
+  dotsN: number, restOpacity: number, peakOpacity: number,
+) {
+  const slot = 100 / count;                // this connector's share of the full cycle
+  const dotSlot = slot / dotsN;            // this dot's own share of the connector's slot
+  const mid = i * slot + k * dotSlot + dotSlot * 0.5; // this dot's peak moment — evenly spaced
 
-  // Position is only defined at the two window boundaries — CSS interpolates
-  // it smoothly across the ENTIRE window on its own, independent of however
-  // many opacity stops fall in between. Opacity gets its own separate curve:
-  // a single peak exactly at the window's midpoint, rising continuously from
-  // 0 into it and falling continuously back to 0 out of it — no flat "held"
-  // plateau, so full brightness lands precisely mid-move, not across a
-  // range. Because position and opacity are declared at different stops,
-  // they blend and overlap rather than happening in sequence — the dot is
-  // already moving while it brightens, and still moving as it dims.
-  const mid = base + slot * 0.5;
+  const spread = dotSlot * 1.7;            // wider than dotSlot on purpose — overlaps neighboring dots' windows
+  const riseStart = mid - spread / 2;
+  const fallEnd   = mid + spread / 2;
 
   const raw: [number, string][] = [
-    [0,    `opacity: 0;`],
-    [base, `${prop}: ${from}; opacity: 0;`],
-    [mid,  `opacity: 0.9;`],
-    [end,  `${prop}: ${to}; opacity: 0;`],
-    [100,  `opacity: 0;`],
+    [0,         `opacity: ${restOpacity};`],
+    [riseStart, `opacity: ${restOpacity};`],
+    [mid,       `opacity: ${peakOpacity};`],
+    [fallEnd,   `opacity: ${restOpacity};`],
+    [100,       `opacity: ${restOpacity};`],
   ];
 
-  // Map de-dupes identical percentage stops (e.g. connector 0's own "base"
-  // coincides with the fixed 0% bookend) — last write wins, values match.
+  // Map de-dupes identical percentage stops (e.g. the very first dot's own
+  // "base" coincides with the fixed 0% bookend) — last write wins, values
+  // match since both represent the same rest state.
   const stops = new Map<string, string>();
   raw
     .sort((a, b) => a[0] - b[0])
     .forEach(([pct, decl]) => {
       const key = `${Math.min(100, Math.max(0, pct)).toFixed(3)}%`;
-      stops.set(key, (stops.get(key) ? stops.get(key) + ' ' : '') + decl);
+      stops.set(key, decl);
     });
   const body = Array.from(stops.entries()).map(([pct, decl]) => `${pct} { ${decl} }`).join(' ');
   return `@keyframes ${name} { ${body} }`;
 }
 
 // Pre-pass over pageData: assign each processFlow block a stable id and
-// generate all of its connectors' keyframes up front, so the render pass
+// generate every connector's dots' keyframes up front, so the render pass
 // below can just reference them by name. blockUidMap uses object identity —
 // safe here since it's the same array being iterated both times.
 const blockUidMap = new Map<any, string>();
@@ -171,10 +209,14 @@ let relayCss = '';
       const uid = `pf${pfCounter++}`;
       blockUidMap.set(block, uid);
       const count = Math.max((block.steps?.length ?? 1) - 1, 0);
+      const dotsN = block.dotsPerConnector || defaultDotsPerConnector;
+      const rest  = block.dotRestOpacity ?? defaultDotRestOpacity;
+      const peak  = block.dotPeakOpacity ?? defaultDotPeakOpacity;
       if (count > 0 && animFlow) {
-        const prop = block.orientation === 'vertical' ? 'top' : 'left';
         for (let i = 0; i < count; i++) {
-          relayCss += relayKeyframes(`vdRelay_${uid}_${i}`, i, count, prop) + '\n';
+          for (let k = 0; k < dotsN; k++) {
+            relayCss += dotPulseKeyframes(`vdRelayDot_${uid}_${i}_${k}`, i, k, count, dotsN, rest, peak) + '\n';
+          }
         }
       }
     }
@@ -204,6 +246,15 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 >
   <link rel="stylesheet" href={allFontsUrl} slot="head" />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  {animDepthBg && (
+    <DepthNetworkBackground
+      nodeColor={settings.depthNodeColor || getTextColor()}
+      fogColor={settings.depthFogColor || getBgColor()}
+      nodeCount={settings.depthNodeCount || undefined}
+      connectDistance={settings.depthConnectDistance || undefined}
+    />
+  )}
 
   <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth }}>
     html, body { font-family: var(--activeFontFamily); }
@@ -348,44 +399,34 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       50%      { opacity: 0.85; transform: scale(1.5); }
     }
 
-    /* ── NEW 3: Process-flow — single relay dot ─────────────────────────────
-       The actual per-connector @keyframes (vdRelay_*) are generated in the
-       frontmatter above and injected as raw CSS just below this style block,
-       since their percentage breakpoints depend on step count — something
-       plain CSS custom properties can't parameterize. This class just holds
-       the shared visual + timing properties; animation-name and
-       animation-duration are set inline per connector. */
+    /* ── NEW 3: Process-flow — dots that light up as the flow passes ────────
+       Each connector between two steps is now a row of fixed dots (see
+       dotsPerConnector, set per-block in Tina) instead of a line with something moving along
+       it. The dots never move — only their opacity animates, from a resting
+       "light grey" look up to a "dark" peak and back down, one at a time in
+       sequence, generated per-dot in the frontmatter above and injected as
+       raw CSS just below this style block (percentage breakpoints depend on
+       step count, which plain CSS custom properties can't parameterize).
+       This class just holds the shared layout + visual properties. */
     .vd-connector {
-      position: relative; display: inline-block;
-      width: 48px; height: 2px; margin: 0 12px;
+      display: flex; align-items: center;
+      height: 8px; margin: 0 14px;
       vertical-align: middle; flex-shrink: 0;
     }
-    .vd-connector-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
-    .vd-connector-comet {
-      position: absolute; top: 50%; left: 0;
-      width: 6px; height: 6px; margin-top: -3px;
-      border-radius: 50%; background: currentColor;
-      opacity: 0;
-      animation-timing-function: cubic-bezier(0.45,0,0.2,1);
-      animation-iteration-count: infinite;
-    }
-
     .vd-connector-v {
-      position: relative; display: block;
-      width: 2px; height: 20px; margin: 4px auto;
+      display: flex; flex-direction: column; align-items: center;
+      width: 8px; margin: 6px auto;
     }
-    .vd-connector-v-line { position: absolute; inset: 0; background: currentColor; opacity: 0.15; }
-    .vd-connector-v-comet {
-      position: absolute; left: 50%; top: 0;
-      width: 6px; height: 6px; margin-left: -3px;
-      border-radius: 50%; background: currentColor;
-      opacity: 0;
-      animation-timing-function: cubic-bezier(0.45,0,0.2,1);
+    .vd-relay-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: currentColor;
+      opacity: 0.14;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       animation-iteration-count: infinite;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .vd-connector-comet, .vd-connector-v-comet { display: none; }
+      .vd-relay-dot { animation: none; opacity: 0.14; }
     }
 
     /* ── NEW 4: Cascading line reveal ──────────────────────────────────────
@@ -417,6 +458,13 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
     }
     .vd-hover-grow:hover { transform: scale(1.045); }
 
+    /* Guards against load-order flukes between this stylesheet and Tailwind's
+       compiled one — .block.vd-hover-grow (two classes) always outranks the
+       single-class .vd-hover-grow{display:inline-block} above regardless of
+       which stylesheet loads second, so title/subtitle line stacking can't
+       silently break. */
+    .block.vd-hover-grow { display: block; }
+
     .vd-line.vd-hover-grow { display: block; }
     .vd-visible .vd-line.vd-hover-grow:hover {
       transform: translateY(0) scale(1.045);
@@ -429,13 +477,13 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
     }
   </style>
 
-  <!-- Generated per-connector relay keyframes — see relayKeyframes() above.
+  <!-- Generated per-dot pulse keyframes — see dotPulseKeyframes() above.
        Raw CSS injected via set:html because the percentage breakpoints are
        computed from each block's step count at build time. -->
   <style is:global set:html={relayCss}></style>
 
   <!-- ── FIXED HEADER ── -->
-  <header class="vd-fixed-header vd-load-fade" style={`background-color: ${getBgColor()};`}>
+  <header class="vd-fixed-header vd-load-fade" style={headerFooterBg}>
     <div class="vd-fixed-header-inner">
       <!-- Wordmark / logo -->
       <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
@@ -484,7 +532,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
   </header>
 
   <!-- ── FIXED FOOTER ── -->
-  <footer class="vd-fixed-footer vd-load-fade" style={`background-color: ${getBgColor()};`}>
+  <footer class="vd-fixed-footer vd-load-fade" style={headerFooterBg}>
     {settings.socialLinks?.map((social: any) => {
       const { icon, round } = socialIcon(social.platform || '');
       return (
@@ -508,13 +556,13 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
   </footer>
 
   <!-- ── BACKGROUND WRAPPER ── -->
-  <div style={`background-color: ${getBgColor()};`}>
+  <div style={contentWrapperBg}>
 
     <!-- SCREEN 1: Hero -->
     <div class="vd-screen vd-load-fade">
       <div class="w-full max-w-xl text-center">
         {!settings.showSubSiteNameOnly && settings.siteName && (
-          <h1 class={`${settings.siteNameFontSize || 'text-3xl md:text-4xl'} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em]`}
+          <h1 class={`${settings.siteNameFontSize || 'text-3xl md:text-4xl'} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
               style={textStyle(getTextColor(), settings.siteNameFont)}>
             {settings.siteName}
           </h1>
@@ -523,7 +571,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
           <h2 class={`${settings.subSiteNameFontSize || 'text-[13px]'} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
               style={`${textStyle(getTextColor(), settings.subSiteNameFont)} opacity: 0.7;`}>
             {subSiteName.split('|').map((line: string) => (
-              <span class="block">{line.trim()}</span>
+              <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
             ))}
           </h2>
         )}
@@ -545,7 +593,11 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
         const isVertical = block.orientation === 'vertical';
         const relayUid = blockUidMap.get(block);
         const connectorCount = Math.max((block.steps?.length ?? 1) - 1, 0);
-        const relayDuration = relaySlotDuration * connectorCount;
+        const flowDotsN = block.dotsPerConnector || defaultDotsPerConnector;
+        const flowDotSize = block.dotSize || defaultDotSize;
+        const flowGap = block.connectorGap ?? defaultConnectorGap;
+        const flowStepSpacing = block.stepSpacing ?? defaultStepSpacing;
+        const relayDuration = (block.flowSpeed || defaultFlowSpeed) * connectorCount;
         return (
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
@@ -553,33 +605,31 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60 translate-x-[0.6em]`}
                     style={textStyle(getTextColor(), block.titleFont)}>
                   {block.title.split('|').map((line: string) => (
-                    <span class="block">{line.trim()}</span>
+                    <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                   ))}
                 </h2>
               )}
               <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
                 {block.steps?.map((step: any, i: number) => (
                   <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
-                    <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75 py-3`}
-                          style={textStyle(getTextColor(), step.font || block.stepFont)}>
+                    <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
+                          style={`${textStyle(getTextColor(), step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
                       {step.label}
                     </span>
                     {i < (block.steps?.length ?? 0) - 1 && (
                       isVertical ? (
-                        <span class="vd-connector-v" style={`color: ${getTextColor()};`} aria-hidden="true">
-                          <span class="vd-connector-v-line"></span>
-                          {animFlow && (
-                            <span class="vd-connector-v-comet"
-                                  style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
-                          )}
+                        <span class="vd-connector-v" style={`color: ${getTextColor()}; gap: ${flowGap}px;`} aria-hidden="true">
+                          {Array.from({ length: flowDotsN }).map((_, k) => (
+                            <span class="vd-relay-dot"
+                                  style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
+                          ))}
                         </span>
                       ) : (
-                        <span class="vd-connector" style={`color: ${getTextColor()};`} aria-hidden="true">
-                          <span class="vd-connector-line"></span>
-                          {animFlow && (
-                            <span class="vd-connector-comet"
-                                  style={`animation-name: vdRelay_${relayUid}_${i}; animation-duration: ${relayDuration}s;`}></span>
-                          )}
+                        <span class="vd-connector" style={`color: ${getTextColor()}; gap: ${flowGap}px;`} aria-hidden="true">
+                          {Array.from({ length: flowDotsN }).map((_, k) => (
+                            <span class="vd-relay-dot"
+                                  style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
+                          ))}
                         </span>
                       )
                     )}
@@ -602,7 +652,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 {t.caseStudyTag}
               </p>
 
-              <h2 class={`${block.titleFontSize || 'text-[13px]'} ${block.titleFontWeight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em]`}
+              <h2 class={`${block.titleFontSize || 'text-[13px]'} ${block.titleFontWeight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
                   style={textStyle(getTextColor(), block.titleFont)}>
                 {block.industry || 'Industry'}
               </h2>
@@ -687,7 +737,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60 translate-x-[0.6em]`}
                   style={textStyle(getTextColor(), block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
-                  <span class="block">{line.trim()}</span>
+                  <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
               </h2>
             )}
@@ -696,7 +746,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-thin'} uppercase tracking-[0.5em] mb-6 opacity-50`}
                   style={textStyle(getTextColor(), block.subTitleFont)}>
                 {block.subTitle.split('|').map((line: string) => (
-                  <span class="block">{line.trim()}</span>
+                  <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
               </h3>
             )}
@@ -769,6 +819,6 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 
   // Process-flow connectors are pure CSS now — one relay dot per connector,
   // sharing a single generated keyframe timeline per block (see
-  // relayKeyframes() in the frontmatter above). No animation script needed.
+  // dotPulseKeyframes() in the frontmatter above). No animation script needed.
 
 </script>
