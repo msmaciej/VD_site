@@ -1,5 +1,106 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
+
+// tina/fitcheck-schema.ts
+var bilingualString = (name, label, description) => [
+  { type: "string", name, label: `${label} (EN)`, description, ui: { component: "textarea" } },
+  { type: "string", name: `${name}_de`, label: `${label} (DE)`, description }
+];
+var roleQuestionFields = [
+  ...bilingualString("questionLabel", "Question text"),
+  ...bilingualString("businessLabel", "Option \u2014 business owner/manager  [value: business]"),
+  ...bilingualString("consultantLabel", "Option \u2014 consultant/agency  [value: consultant]"),
+  ...bilingualString("curiousLabel", "Option \u2014 just curious  [value: curious]")
+];
+var categoryKeys = [
+  { key: "comms", label: "Communication & Intake" },
+  { key: "sales", label: "Lead & Sales Pipeline" },
+  { key: "docs", label: "Document & Data Processing" },
+  { key: "ops", label: "Internal Operations & Approvals" },
+  { key: "reporting", label: "Reporting & Analytics" },
+  { key: "content", label: "Content & Marketing" },
+  { key: "several", label: "Several at once" }
+];
+var followupOptionFields = (n) => bilingualString(`option${n}`, `Follow-up option ${n}`);
+var categoryQuestionFields = [
+  ...bilingualString("questionLabel", "Q1 question text"),
+  ...categoryKeys.map(({ key, label }) => ({
+    type: "object",
+    name: key,
+    label: `Category \u2014 ${label}  [value: ${key}]`,
+    fields: [
+      ...bilingualString("buttonLabel", "Button text shown at Q1"),
+      {
+        type: "object",
+        name: "followup",
+        label: "Follow-up question (shown only if role = business)",
+        fields: [
+          ...bilingualString("questionLabel", "Follow-up question text"),
+          ...key === "several" ? [] : [
+            ...followupOptionFields(1),
+            ...followupOptionFields(2),
+            ...followupOptionFields(3),
+            ...followupOptionFields(4)
+          ]
+        ]
+      }
+    ]
+  }))
+];
+var processQuestionFields = [
+  ...bilingualString("questionLabel", "Q3 question text"),
+  ...bilingualString("noneLabel", "Option \u2014 no process  [value: none]"),
+  ...bilingualString("partialLabel", "Option \u2014 partial process  [value: partial]"),
+  ...bilingualString("fullLabel", "Option \u2014 full process  [value: full]")
+];
+var goalQuestionFields = [
+  ...bilingualString("questionLabel", "Q4 question text"),
+  ...bilingualString("solveLabel", "Option \u2014 solve it  [value: solve]"),
+  ...bilingualString("clarityLabel", "Option \u2014 get clarity  [value: clarity]"),
+  ...bilingualString("exploreLabel", "Option \u2014 explore  [value: explore]"),
+  ...bilingualString("compareLabel", "Option \u2014 compare  [value: compare]")
+];
+var shortCloseFields = [
+  ...bilingualString("heading", "Heading"),
+  ...bilingualString("body", "Body text"),
+  ...bilingualString("ctaLabel", "Button text")
+];
+var profileKeys = ["fireFight", "refine", "build", "optimize"];
+var profileFields = profileKeys.map((key) => ({
+  type: "object",
+  name: key,
+  label: `Profile \u2014 ${key}`,
+  fields: [
+    ...bilingualString("name", "Display name"),
+    ...bilingualString("tagline", "One-line tagline"),
+    ...bilingualString("description", "Result paragraph")
+  ]
+}));
+var resultSharedFields = [
+  ...bilingualString("disclaimer", "Disclaimer text (shown under every profile)"),
+  ...bilingualString("ctaLabel", "CTA button text")
+];
+var fitCheckCollection = {
+  name: "fitCheck",
+  label: "Fit Check",
+  path: "src/content/fitcheck",
+  format: "json",
+  ui: {
+    // Single fixed document, not a list — same UX as Site Settings.
+    allowedActions: { create: false, delete: false }
+  },
+  fields: [
+    { type: "object", name: "roleQuestion", label: "Q0 \u2014 Role", fields: roleQuestionFields },
+    { type: "object", name: "categoryQuestion", label: "Q1 \u2014 Category", fields: categoryQuestionFields },
+    { type: "object", name: "processQuestion", label: "Q3 \u2014 Process ownership", fields: processQuestionFields },
+    { type: "object", name: "goalQuestion", label: "Q4 \u2014 Goal / intent", fields: goalQuestionFields },
+    { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },
+    { type: "object", name: "profiles", label: "Result profiles", fields: profileFields },
+    { type: "object", name: "resultShared", label: "Result \u2014 shared disclaimer & CTA", fields: resultSharedFields }
+  ]
+};
+
+// tina/config.ts
 var fontTypeOptions = [
   { label: "Inherit global font", value: "" },
   { label: "Inter \u2014 Modern Sans", value: "Inter" },
@@ -558,6 +659,8 @@ var config_default = defineConfig({
           { type: "string", name: "contactPhone", label: "Contact Phone (optional, for Google schema)" }
         ]
       },
+      // ── FIT CHECK (/check, /de/check content) ────────────────────────────
+      fitCheckCollection,
       // ── ART GALLERY ───────────────────────────────────────────────────────
       {
         name: "art",

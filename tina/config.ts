@@ -1,4 +1,5 @@
 import { defineConfig } from "tinacms";
+import { fitCheckCollection } from "./fitcheck-schema";
 
 // ── Reusable option sets ──────────────────────────────────────────────────────
 
@@ -424,6 +425,9 @@ export default defineConfig({
           { type: "string", name: "contactPhone",   label: "Contact Phone (optional, for Google schema)" },
         ],
       },
+
+      // ── FIT CHECK (/check, /de/check content) ────────────────────────────
+      fitCheckCollection as any,
 
       // ── ART GALLERY ───────────────────────────────────────────────────────
       {

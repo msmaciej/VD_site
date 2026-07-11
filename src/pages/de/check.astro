@@ -36,6 +36,8 @@ const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
   url:   `/de${link.url}`,
 }));
 
+const contactEmail = settings.contactEmail || 'info@vortexdeep.ch';
+
 // Fit Check's own header animations (logo ink-draw, breathing status dot,
 // page load-fade) are admin-configurable independently of the home page's
 // equivalent toggles, and default OFF — this is a conversion-focused funnel
@@ -43,6 +45,43 @@ const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
 // page's animate-by-default behaviour. See tina/config.ts,
 // enableCheckPageAnimations.
 const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
+
+// ── Fit Check content (Tina-managed) ────────────────────────────────────────
+// All question/option copy below comes from src/content/fitcheck/config.json
+// (the _de suffixed fields), registered in Tina as the "fitCheck" collection
+// (tina/fitcheck-schema.ts). Only the Q2 "time cost" question has no Tina
+// field (out of scope for the content model) and stays hardcoded, same as
+// before.
+const fitCheckFiles = await Astro.glob('../../content/fitcheck/*.json');
+const fc = fitCheckFiles[0]?.default || {};
+
+const categoryKeysList = ['comms', 'sales', 'docs', 'ops', 'reporting', 'content', 'several'] as const;
+
+// Per-category follow-up question + options (DE), built at build time.
+// "several" has no options of its own — it reuses the other six categories'
+// buttonLabel_de text as its options (see tina/fitcheck-schema.ts).
+type FollowupOption = { value: string; label: string };
+type FollowupEntry = { question: string; options: FollowupOption[] };
+const followupData: Record<string, FollowupEntry> = {};
+for (const key of categoryKeysList) {
+  const cat = (fc.categoryQuestion && fc.categoryQuestion[key]) || {};
+  const fu = cat.followup || {};
+  let options: FollowupOption[];
+  if (key === 'several') {
+    options = categoryKeysList
+      .filter((k) => k !== 'several')
+      .map((k) => ({
+        value: k,
+        label: (fc.categoryQuestion && (fc.categoryQuestion[k]?.buttonLabel_de || fc.categoryQuestion[k]?.buttonLabel)) || k,
+      }));
+  } else {
+    options = [1, 2, 3, 4].map((n) => ({
+      value: `option${n}`,
+      label: fu[`option${n}_de`] || fu[`option${n}`] || '',
+    }));
+  }
+  followupData[key] = { question: fu.questionLabel_de || fu.questionLabel || '', options };
+}
 ---
 
 <Layout title="VortexDeep — Schnell-Check" theme={currentTheme} lang="de">
@@ -109,31 +148,34 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
       <div class="flex gap-2 mb-8 sm:mb-16" id="vd-progress"></div>
 
       <!-- F0: Rolle -->
-      <div class="vd-q" data-q="0">
-        <p class="vd-ql">Was trifft auf Sie am ehesten zu?</p>
+      <div class="vd-q" data-q="role">
+        <p class="vd-ql">{fc.roleQuestion?.questionLabel_de}</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="business">Geschäftsführer oder Inhaber – ich verantworte den laufenden Betrieb</button>
-          <button class="vd-opt" data-val="consultant">Berater oder Agentur – ich erkunde das für Kunden</button>
-          <button class="vd-opt" data-val="curious">Ich informiere mich über KI-Automatisierung – oder bin einfach neugierig</button>
+          <button class="vd-opt" data-val="business">{fc.roleQuestion?.businessLabel_de}</button>
+          <button class="vd-opt" data-val="consultant">{fc.roleQuestion?.consultantLabel_de}</button>
+          <button class="vd-opt" data-val="curious">{fc.roleQuestion?.curiousLabel_de}</button>
         </div>
       </div>
 
-      <!-- F1: Bereich — abgestimmt auf die 10 Automatisierungskategorien -->
-      <div class="vd-q hidden" data-q="1">
-        <p class="vd-ql">In welchem Bereich Ihres Betriebs fällt am meisten unnötige Zeit an?</p>
+      <!-- F1: Bereich — abgestimmt auf die Automatisierungskategorien -->
+      <div class="vd-q hidden" data-q="category">
+        <p class="vd-ql">{fc.categoryQuestion?.questionLabel_de}</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="comms">Eingehende Anfragen, Nachrichten oder Kundensupport-Fälle bearbeiten und beantworten</button>
-          <button class="vd-opt" data-val="sales">Leads nachfassen oder die Vertriebspipeline verwalten — Dinge fallen durchs Raster</button>
-          <button class="vd-opt" data-val="docs">Dokumente, Rechnungen, Verträge oder Formulare verarbeiten — lesen, extrahieren, neu erfassen</button>
-          <button class="vd-opt" data-val="ops">Interne Freigaben, Aufgabenverteilung, Onboarding-Abläufe oder Terminplanung</button>
-          <button class="vd-opt" data-val="reporting">Berichte oder Auswertungen aus verstreuten Datenquellen zusammenstellen</button>
-          <button class="vd-opt" data-val="content">Inhalte erstellen oder verbreiten — Social, Newsletter oder E-Commerce-Benachrichtigungen</button>
-          <button class="vd-opt" data-val="several">Mehreres davon gleichzeitig</button>
+          {categoryKeysList.map((k) => (
+            <button class="vd-opt" data-val={k}>{fc.categoryQuestion?.[k]?.buttonLabel_de}</button>
+          ))}
         </div>
       </div>
 
-      <!-- F2: Zeitaufwand -->
-      <div class="vd-q hidden" data-q="2">
+      <!-- F1b: Kategorie-Folgefrage — nur für "Geschäftsführer/Inhaber",
+           clientseitig aus den unten eingebetteten Daten gebaut. -->
+      <div class="vd-q hidden" data-q="followup">
+        <p class="vd-ql" id="vd-followup-question"></p>
+        <div class="flex flex-col gap-1" id="vd-followup-options"></div>
+      </div>
+
+      <!-- F2: Zeitaufwand — nicht Teil des Fit-Check-Contentmodells, bleibt statisch -->
+      <div class="vd-q hidden" data-q="time">
         <p class="vd-ql">Wie viele Stunden pro Woche bindet das in etwa?</p>
         <div class="flex flex-col gap-1">
           <button class="vd-opt" data-val="high">Mehr als 5 Stunden</button>
@@ -144,29 +186,38 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
       </div>
 
       <!-- F3: Prozessklarheit -->
-      <div class="vd-q hidden" data-q="3">
-        <p class="vd-ql">Gibt es dafür einen klaren Ablauf – oder hängt es davon ab, wer gerade Zeit hat?</p>
+      <div class="vd-q hidden" data-q="process">
+        <p class="vd-ql">{fc.processQuestion?.questionLabel_de}</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="none">Keinen richtigen Ablauf – wer Zeit hat, kümmert sich</button>
-          <button class="vd-opt" data-val="partial">Es gibt Regeln, aber in der Praxis läuft es trotzdem uneinheitlich</button>
-          <button class="vd-opt" data-val="full">Es gibt einen definierten Ablauf – wir müssen ihn nur schneller machen</button>
+          <button class="vd-opt" data-val="none">{fc.processQuestion?.noneLabel_de}</button>
+          <button class="vd-opt" data-val="partial">{fc.processQuestion?.partialLabel_de}</button>
+          <button class="vd-opt" data-val="full">{fc.processQuestion?.fullLabel_de}</button>
         </div>
       </div>
 
       <!-- F4: Ziel -->
-      <div class="vd-q hidden" data-q="4">
-        <p class="vd-ql">Was wäre für Sie ein gutes Ergebnis?</p>
+      <div class="vd-q hidden" data-q="goal">
+        <p class="vd-ql">{fc.goalQuestion?.questionLabel_de}</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="solve">Ein Ablauf, der mir das abnimmt – oder zumindest deutlich reduziert</button>
-          <button class="vd-opt" data-val="clarity">Mehr Überblick über das, was läuft – damit ich bessere Entscheidungen treffe</button>
-          <button class="vd-opt" data-val="explore">Erst verstehen, was überhaupt möglich ist – bevor ich mich auf etwas einlasse</button>
-          <button class="vd-opt" data-val="compare">Sehen, wie andere das angegangen sind</button>
+          <button class="vd-opt" data-val="solve">{fc.goalQuestion?.solveLabel_de}</button>
+          <button class="vd-opt" data-val="clarity">{fc.goalQuestion?.clarityLabel_de}</button>
+          <button class="vd-opt" data-val="explore">{fc.goalQuestion?.exploreLabel_de}</button>
+          <button class="vd-opt" data-val="compare">{fc.goalQuestion?.compareLabel_de}</button>
         </div>
       </div>
 
       <div class="flex justify-between items-center mt-12" id="vd-nav">
         <button id="vd-back" class="text-[10px] uppercase tracking-[0.3em] opacity-40 hover:opacity-80 transition-opacity" disabled>← Zurück</button>
-        <span id="vd-step" class="text-[10px] uppercase tracking-[0.3em] opacity-40">1 / 5</span>
+        <span id="vd-step" class="text-[10px] uppercase tracking-[0.3em] opacity-40">1 / 6</span>
+      </div>
+
+      <!-- KURZSCHLUSS — Rolle = Berater/Neugierig springen direkt hierher,
+           keine E-Mail-Abfrage, keine Auswertung, kein Ergebnisinhalt. -->
+      <div id="vd-shortclose" class="hidden text-center">
+        <h2 class="vd-rh">{fc.shortClose?.heading_de}</h2>
+        <p class="vd-rb">{fc.shortClose?.body_de}</p>
+        <a href={`mailto:${contactEmail}`} class="vd-soft-link">{fc.shortClose?.ctaLabel_de}</a>
+        <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
       <!-- GATE -->
@@ -179,12 +230,13 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
         </p>
         <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
           <input type="hidden" name="source" value="vortexdeep.ch/de schnell-check">
-          <input type="hidden" name="bucket"  id="gate-bucket">
-          <input type="hidden" name="role"    id="gate-role">
-          <input type="hidden" name="pain"    id="gate-pain">
-          <input type="hidden" name="time"    id="gate-time">
-          <input type="hidden" name="process" id="gate-process">
-          <input type="hidden" name="goal"    id="gate-goal">
+          <input type="hidden" name="lang"     value="de">
+          <input type="hidden" name="role"     id="gate-role">
+          <input type="hidden" name="category" id="gate-category">
+          <input type="hidden" name="followup" id="gate-followup">
+          <input type="hidden" name="time"     id="gate-time">
+          <input type="hidden" name="process"  id="gate-process">
+          <input type="hidden" name="goal"     id="gate-goal">
           <input type="hidden" name="form_load_time" id="gate-load-time">
           <input type="text" name="website_url" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="off"/>
           <label class="block">
@@ -228,42 +280,13 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
         </form>
       </div>
 
-      <!-- ERGEBNIS: Lead -->
-      <div class="vd-result hidden text-center" id="vd-res-lead">
-        <p class="vd-tag">Wahrscheinlich passend</p>
-        <h2 class="vd-rh">Das klingt nach genau der Situation, mit der wir regelmässig arbeiten.</h2>
-        <p class="vd-rb">
-          Echter operativer Aufwand, keine klare Zuständigkeit und ein konkretes Ziel –
-          das ist das Muster hinter den meisten unserer Projekte. Wir melden uns direkt bei Ihnen.
-        </p>
-        <p id="vd-lead-context" class="vd-rb" style="opacity:0.5; font-style:normal;"></p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
-        <br><button class="vd-restart mt-8">Nochmals starten</button>
-      </div>
-
-      <!-- ERGEBNIS: Warm -->
-      <div class="vd-result hidden text-center" id="vd-res-warm">
-        <p class="vd-tag">Einen näheren Blick wert</p>
-        <h2 class="vd-rh">Ihre Prozesse zu kennen ist ein gutes Zeichen — kein Ausschlusskriterium.</h2>
-        <p class="vd-rb">
-          Abläufe, die auf den ersten Blick wenig Zeit kosten, eignen sich oft gut für Automatisierung —
-          der Nutzen zeigt sich in Verlässlichkeit, weniger Fehlern oder freigewordener Aufmerksamkeit,
-          nicht nur in Stunden. Ein Discovery-Gespräch ist der richtige Weg, das sauber zu bewerten.
-          Wir haben Ihre Angaben und melden uns bei Ihnen.
-        </p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
-        <br><button class="vd-restart mt-8">Nochmals starten</button>
-      </div>
-
-      <!-- ERGEBNIS: Other -->
-      <div class="vd-result hidden text-center" id="vd-res-other">
-        <p class="vd-tag">Vielen Dank</p>
-        <h2 class="vd-rh">Am besten sehen Sie, wie wir arbeiten, auf LinkedIn.</h2>
-        <p class="vd-rb">
-          Dort teilen wir konkrete Fallstudien und echte Workflow-Beispiele –
-          den Einblick, den ein solcher Check nicht bieten kann.
-        </p>
-        <a href="https://www.linkedin.com/company/vortexdeep" class="vd-soft-link">LinkedIn folgen</a>
+      <!-- Ergebnis: wird nach dem Absenden aus der Server-Antwort befüllt. -->
+      <div class="vd-result hidden text-center" id="vd-result">
+        <h2 class="vd-rh" id="vd-result-name"></h2>
+        <p class="vd-rb" id="vd-result-tagline" style="opacity:0.75; font-style:normal;"></p>
+        <p class="vd-rb" id="vd-result-description"></p>
+        <p class="vd-rb" id="vd-result-disclaimer" style="opacity:0.5; font-style:normal;">{fc.resultShared?.disclaimer_de}</p>
+        <a href={`mailto:${contactEmail}`} class="vd-soft-link" id="vd-result-cta">{fc.resultShared?.ctaLabel_de}</a>
         <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
@@ -326,11 +349,6 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
     .vd-icon:hover { opacity: 0.9; }
     .vd-icon.round { border-radius: 50%; }
 
-    /* ── Logo ink-draw + breathing status dot + page load-fade — same
-       effects as SitePage.astro's "NEW 1" / "NEW 2" / .vd-load-fade,
-       duplicated here (this page doesn't route through SitePage.astro).
-       Only ever applied when checkAnimationsEnabled is true — see
-       enableCheckPageAnimations in tina/config.ts, defaults off. ── */
     .vd-logo polygon,
     .vd-logo polyline,
     .vd-logo path {
@@ -385,62 +403,120 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
     .hidden { display:none; }
   </style>
 
+  <!-- Per-category follow-up copy (DE), computed at build time from Tina
+       content. Public copy only — handed to the client script as data
+       instead of hardcoded markup, since the follow-up shown depends on
+       which category the visitor picks. -->
+  <script define:vars={{ followupData }}>
+    window.__VD_FOLLOWUP__ = followupData;
+  </script>
+
   <script>
-    const TOTAL = 5;
-    const answers: Record<number, string> = {};
-    let current = 0;
+    type FollowupOption = { value: string; label: string };
+    type FollowupEntry = { question: string; options: FollowupOption[] };
+    const FOLLOWUP: Record<string, FollowupEntry> = (window as any).__VD_FOLLOWUP__ || {};
+
+    const STEPS_BUSINESS = ['role', 'category', 'followup', 'time', 'process', 'goal'];
+    const answers: Record<string, string> = {};
+    let current = 'role';
+    const stepHistory: string[] = [];
 
     const progressWrap = document.getElementById('vd-progress')!;
-    for (let i = 0; i < TOTAL; i++) progressWrap.appendChild(document.createElement('span'));
-
     const backBtn = document.getElementById('vd-back') as HTMLButtonElement;
     const stepEl  = document.getElementById('vd-step')!;
     const nav     = document.getElementById('vd-nav')!;
     const qEls    = Array.from(document.querySelectorAll<HTMLElement>('.vd-q'));
 
-    function render() {
-      qEls.forEach(q => q.classList.toggle('hidden', Number(q.dataset.q) !== current));
-      progressWrap.querySelectorAll('span').forEach((s, i) => s.classList.toggle('done', i <= current));
-      stepEl.textContent = `${current + 1} / ${TOTAL}`;
-      backBtn.disabled = current === 0;
+    function renderProgress() {
+      progressWrap.innerHTML = '';
+      progressWrap.classList.remove('hidden');
+      STEPS_BUSINESS.forEach(() => progressWrap.appendChild(document.createElement('span')));
+      const idx = STEPS_BUSINESS.indexOf(current);
+      progressWrap.querySelectorAll('span').forEach((s, i) => s.classList.toggle('done', idx >= 0 && i <= idx));
     }
 
+    function renderStepChrome() {
+      const idx = STEPS_BUSINESS.indexOf(current);
+      stepEl.textContent = idx >= 0 ? `${idx + 1} / ${STEPS_BUSINESS.length}` : '';
+      backBtn.disabled = stepHistory.length === 0;
+    }
+
+    function showStep(step: string) {
+      current = step;
+      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== step));
+      renderProgress();
+      renderStepChrome();
+    }
+
+    function goTo(step: string) {
+      stepHistory.push(current);
+      showStep(step);
+    }
+
+    backBtn.addEventListener('click', () => {
+      if (!stepHistory.length) return;
+      const prev = stepHistory.pop()!;
+      current = prev;
+      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== prev));
+      renderProgress();
+      renderStepChrome();
+    });
+
+    function buildFollowup(category: string) {
+      const entry = FOLLOWUP[category];
+      const qEl = document.getElementById('vd-followup-question')!;
+      const optWrap = document.getElementById('vd-followup-options')!;
+      qEl.textContent = entry?.question || '';
+      optWrap.innerHTML = '';
+      (entry?.options || []).forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'vd-opt';
+        btn.dataset.val = opt.value;
+        btn.textContent = opt.label;
+        btn.addEventListener('click', () => selectOption('followup', btn));
+        optWrap.appendChild(btn);
+      });
+    }
+
+    function advance(fromStep: string) {
+      if (fromStep === 'role') {
+        if (answers.role === 'business') {
+          goTo('category');
+        } else {
+          showShortClose();
+        }
+        return;
+      }
+      if (fromStep === 'category') { buildFollowup(answers.category); goTo('followup'); return; }
+      if (fromStep === 'followup') { goTo('time'); return; }
+      if (fromStep === 'time')     { goTo('process'); return; }
+      if (fromStep === 'process')  { goTo('goal'); return; }
+      if (fromStep === 'goal')     { showGate(); return; }
+    }
+
+    function selectOption(step: string, btn: HTMLButtonElement) {
+      answers[step] = btn.dataset.val || '';
+      const parent = btn.closest('.vd-q')!;
+      parent.querySelectorAll('.vd-opt').forEach(o => o.classList.remove('selected'));
+      btn.classList.add('selected');
+      setTimeout(() => advance(step), 160);
+    }
+
+    // Static-option questions (role, category, time, process, goal) wire up
+    // directly; "followup" is built dynamically once a category is chosen.
     qEls.forEach(q => {
+      const step = q.dataset.q!;
+      if (step === 'followup') return;
       q.querySelectorAll<HTMLButtonElement>('.vd-opt').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = Number(q.dataset.q);
-          answers[idx] = btn.dataset.val || '';
-          q.querySelectorAll('.vd-opt').forEach(o => o.classList.remove('selected'));
-          btn.classList.add('selected');
-          setTimeout(() => {
-            if (idx < TOTAL - 1) { current = idx + 1; render(); }
-            else showGate();
-          }, 160);
-        });
+        btn.addEventListener('click', () => selectOption(step, btn));
       });
     });
 
-    backBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
-
-    // Schmerz-Werte: comms | sales | docs | ops | reporting | content | several
-    // Kategorien:
-    //   comms     → Kommunikation & Eingang + Kundenbetreuung & After-Sales
-    //   sales     → Lead- & Vertriebsprozesse
-    //   docs      → Dokumente & Daten + Finanzen & Verwaltung
-    //   ops       → Interne Abläufe & Freigaben + Terminplanung & Buchungen
-    //   reporting → Reporting & Analysen
-    //   content   → Content & Marketing + E-Commerce & Fulfilment
-    //   several   → mehrere Kategorien gleichzeitig (stärkstes Signal)
-    function calcBucket(): 'lead' | 'warm' | 'other' {
-      const role = answers[0], pain = answers[1], time = answers[2], process = answers[3], goal = answers[4];
-      if (role === 'consultant' || goal === 'compare' || role === 'curious') return 'other';
-      const hasRealTimeCost = time === 'high' || time === 'mid' || time === 'unsure';
-      const hasMultiPain   = pain === 'several';
-      const wantsOutcome   = goal === 'solve' || goal === 'clarity';
-      const processGap     = process !== 'full';
-      if (role === 'business' && (hasRealTimeCost || hasMultiPain) && processGap && wantsOutcome) return 'lead';
-      if (role === 'business') return 'warm';
-      return 'other';
+    function showShortClose() {
+      qEls.forEach(q => q.classList.add('hidden'));
+      nav.classList.add('hidden');
+      progressWrap.classList.add('hidden');
+      document.getElementById('vd-shortclose')!.classList.remove('hidden');
     }
 
     async function showGate() {
@@ -448,13 +524,12 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
       nav.classList.add('hidden');
       progressWrap.classList.add('hidden');
 
-      const bucket = calcBucket();
-      (document.getElementById('gate-bucket')  as HTMLInputElement).value = bucket;
-      (document.getElementById('gate-role')    as HTMLInputElement).value = answers[0] || '';
-      (document.getElementById('gate-pain')    as HTMLInputElement).value = answers[1] || '';
-      (document.getElementById('gate-time')    as HTMLInputElement).value = answers[2] || '';
-      (document.getElementById('gate-process') as HTMLInputElement).value = answers[3] || '';
-      (document.getElementById('gate-goal')    as HTMLInputElement).value = answers[4] || '';
+      (document.getElementById('gate-role')     as HTMLInputElement).value = answers.role || '';
+      (document.getElementById('gate-category') as HTMLInputElement).value = answers.category || '';
+      (document.getElementById('gate-followup') as HTMLInputElement).value = answers.followup || '';
+      (document.getElementById('gate-time')     as HTMLInputElement).value = answers.time || '';
+      (document.getElementById('gate-process')  as HTMLInputElement).value = answers.process || '';
+      (document.getElementById('gate-goal')     as HTMLInputElement).value = answers.goal || '';
       (document.getElementById('gate-load-time') as HTMLInputElement).value = String(Math.floor(Date.now() / 1000));
 
       try {
@@ -473,29 +548,17 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const errorEl = document.getElementById('vd-gate-error')!;
-      const bucket  = (document.getElementById('gate-bucket') as HTMLInputElement).value;
       const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
       btn.textContent = '...'; btn.disabled = true; errorEl.classList.add('hidden');
       try {
         const res = await fetch('/send-check.php', { method: 'POST', body: new FormData(form) });
         const data = await res.json();
-        if (data.status === 'ok') {
+        if (data.status === 'ok' && data.profile) {
           document.getElementById('vd-gate')!.classList.add('hidden');
-          document.getElementById('vd-res-' + bucket)!.classList.remove('hidden');
-          // Kategoriespezifische Zeile in Lead-Ergebnis einfügen
-          if (bucket === 'lead') {
-            const ctx: Record<string, string> = {
-              comms:     'Kommunikation und Anfragebearbeitung ist einer unserer aktivsten Bereiche — Klassifizierung, Weiterleitung und Antwortentwürfe.',
-              sales:     'Vertriebsautomatisierung passt gut zum phasenbasierten Ansatz — klarer Umfang, messbares Ergebnis ab Tag eins.',
-              docs:      'Dokumentenverarbeitung — Rechnungsextraktion, Vertragsanalyse, Formularerfassung — liefert oft die schnellsten Projektergebnisse.',
-              ops:       'Interne Workflow-Automatisierung — Freigaben, Onboarding, Terminplanung — reduziert Koordinationsaufwand nachhaltig.',
-              reporting: 'Automatisiertes Reporting funktioniert gut als Managed Service — einmal aufgebaut, läuft es und Sie erhalten monatlich den Output.',
-              content:   'Content- und E-Commerce-Automatisierung skaliert den Output, ohne Köpfe zu skalieren — genau der Hebel, den wir bauen.',
-              several:   'Mehrere Problembereiche gleichzeitig sind oft das klarste Zeichen für einen guten Fit — wir priorisieren gemeinsam in Phase 1.',
-            };
-            const ctxEl = document.getElementById('vd-lead-context');
-            if (ctxEl) ctxEl.textContent = ctx[answers[1]] || '';
-          }
+          (document.getElementById('vd-result-name') as HTMLElement).textContent = data.profile.name || '';
+          (document.getElementById('vd-result-tagline') as HTMLElement).textContent = data.profile.tagline || '';
+          (document.getElementById('vd-result-description') as HTMLElement).textContent = data.profile.description || '';
+          document.getElementById('vd-result')!.classList.remove('hidden');
         } else {
           errorEl.classList.remove('hidden');
           btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
@@ -511,6 +574,6 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
     });
 
     document.querySelectorAll('.vd-restart').forEach(btn => btn.addEventListener('click', () => window.location.reload()));
-    render();
+    showStep('role');
   </script>
 </Layout>

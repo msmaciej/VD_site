@@ -88,6 +88,8 @@ export type Query = {
   page_deConnection: Page_DeConnection;
   settings: Settings;
   settingsConnection: SettingsConnection;
+  fitCheck: FitCheck;
+  fitCheckConnection: FitCheckConnection;
   art: Art;
   artConnection: ArtConnection;
 };
@@ -159,6 +161,21 @@ export type QuerySettingsConnectionArgs = {
 };
 
 
+export type QueryFitCheckArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFitCheckConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FitCheckFilter>;
+};
+
+
 export type QueryArtArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -177,6 +194,7 @@ export type DocumentFilter = {
   page?: InputMaybe<PageFilter>;
   page_de?: InputMaybe<Page_DeFilter>;
   settings?: InputMaybe<SettingsFilter>;
+  fitCheck?: InputMaybe<FitCheckFilter>;
   art?: InputMaybe<ArtFilter>;
 };
 
@@ -217,7 +235,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Page | Page_De | Settings | Art | Folder;
+export type DocumentNode = Page | Page_De | Settings | FitCheck | Art | Folder;
 
 export type PageBlocksSection = {
   __typename?: 'PageBlocksSection';
@@ -782,6 +800,530 @@ export type SettingsConnection = Connection & {
   edges?: Maybe<Array<Maybe<SettingsConnectionEdges>>>;
 };
 
+export type FitCheckRoleQuestion = {
+  __typename?: 'FitCheckRoleQuestion';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  businessLabel?: Maybe<Scalars['String']['output']>;
+  businessLabel_de?: Maybe<Scalars['String']['output']>;
+  consultantLabel?: Maybe<Scalars['String']['output']>;
+  consultantLabel_de?: Maybe<Scalars['String']['output']>;
+  curiousLabel?: Maybe<Scalars['String']['output']>;
+  curiousLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionCommsFollowup = {
+  __typename?: 'FitCheckCategoryQuestionCommsFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionComms = {
+  __typename?: 'FitCheckCategoryQuestionComms';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionCommsFollowup>;
+};
+
+export type FitCheckCategoryQuestionSalesFollowup = {
+  __typename?: 'FitCheckCategoryQuestionSalesFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionSales = {
+  __typename?: 'FitCheckCategoryQuestionSales';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionSalesFollowup>;
+};
+
+export type FitCheckCategoryQuestionDocsFollowup = {
+  __typename?: 'FitCheckCategoryQuestionDocsFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionDocs = {
+  __typename?: 'FitCheckCategoryQuestionDocs';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionDocsFollowup>;
+};
+
+export type FitCheckCategoryQuestionOpsFollowup = {
+  __typename?: 'FitCheckCategoryQuestionOpsFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionOps = {
+  __typename?: 'FitCheckCategoryQuestionOps';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionOpsFollowup>;
+};
+
+export type FitCheckCategoryQuestionReportingFollowup = {
+  __typename?: 'FitCheckCategoryQuestionReportingFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionReporting = {
+  __typename?: 'FitCheckCategoryQuestionReporting';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionReportingFollowup>;
+};
+
+export type FitCheckCategoryQuestionContentFollowup = {
+  __typename?: 'FitCheckCategoryQuestionContentFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  option1?: Maybe<Scalars['String']['output']>;
+  option1_de?: Maybe<Scalars['String']['output']>;
+  option2?: Maybe<Scalars['String']['output']>;
+  option2_de?: Maybe<Scalars['String']['output']>;
+  option3?: Maybe<Scalars['String']['output']>;
+  option3_de?: Maybe<Scalars['String']['output']>;
+  option4?: Maybe<Scalars['String']['output']>;
+  option4_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionContent = {
+  __typename?: 'FitCheckCategoryQuestionContent';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionContentFollowup>;
+};
+
+export type FitCheckCategoryQuestionSeveralFollowup = {
+  __typename?: 'FitCheckCategoryQuestionSeveralFollowup';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckCategoryQuestionSeveral = {
+  __typename?: 'FitCheckCategoryQuestionSeveral';
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_de?: Maybe<Scalars['String']['output']>;
+  followup?: Maybe<FitCheckCategoryQuestionSeveralFollowup>;
+};
+
+export type FitCheckCategoryQuestion = {
+  __typename?: 'FitCheckCategoryQuestion';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  comms?: Maybe<FitCheckCategoryQuestionComms>;
+  sales?: Maybe<FitCheckCategoryQuestionSales>;
+  docs?: Maybe<FitCheckCategoryQuestionDocs>;
+  ops?: Maybe<FitCheckCategoryQuestionOps>;
+  reporting?: Maybe<FitCheckCategoryQuestionReporting>;
+  content?: Maybe<FitCheckCategoryQuestionContent>;
+  several?: Maybe<FitCheckCategoryQuestionSeveral>;
+};
+
+export type FitCheckProcessQuestion = {
+  __typename?: 'FitCheckProcessQuestion';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  noneLabel?: Maybe<Scalars['String']['output']>;
+  noneLabel_de?: Maybe<Scalars['String']['output']>;
+  partialLabel?: Maybe<Scalars['String']['output']>;
+  partialLabel_de?: Maybe<Scalars['String']['output']>;
+  fullLabel?: Maybe<Scalars['String']['output']>;
+  fullLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckGoalQuestion = {
+  __typename?: 'FitCheckGoalQuestion';
+  questionLabel?: Maybe<Scalars['String']['output']>;
+  questionLabel_de?: Maybe<Scalars['String']['output']>;
+  solveLabel?: Maybe<Scalars['String']['output']>;
+  solveLabel_de?: Maybe<Scalars['String']['output']>;
+  clarityLabel?: Maybe<Scalars['String']['output']>;
+  clarityLabel_de?: Maybe<Scalars['String']['output']>;
+  exploreLabel?: Maybe<Scalars['String']['output']>;
+  exploreLabel_de?: Maybe<Scalars['String']['output']>;
+  compareLabel?: Maybe<Scalars['String']['output']>;
+  compareLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckShortClose = {
+  __typename?: 'FitCheckShortClose';
+  heading?: Maybe<Scalars['String']['output']>;
+  heading_de?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  body_de?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  ctaLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckProfilesFireFight = {
+  __typename?: 'FitCheckProfilesFireFight';
+  name?: Maybe<Scalars['String']['output']>;
+  name_de?: Maybe<Scalars['String']['output']>;
+  tagline?: Maybe<Scalars['String']['output']>;
+  tagline_de?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  description_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckProfilesRefine = {
+  __typename?: 'FitCheckProfilesRefine';
+  name?: Maybe<Scalars['String']['output']>;
+  name_de?: Maybe<Scalars['String']['output']>;
+  tagline?: Maybe<Scalars['String']['output']>;
+  tagline_de?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  description_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckProfilesBuild = {
+  __typename?: 'FitCheckProfilesBuild';
+  name?: Maybe<Scalars['String']['output']>;
+  name_de?: Maybe<Scalars['String']['output']>;
+  tagline?: Maybe<Scalars['String']['output']>;
+  tagline_de?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  description_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckProfilesOptimize = {
+  __typename?: 'FitCheckProfilesOptimize';
+  name?: Maybe<Scalars['String']['output']>;
+  name_de?: Maybe<Scalars['String']['output']>;
+  tagline?: Maybe<Scalars['String']['output']>;
+  tagline_de?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  description_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheckProfiles = {
+  __typename?: 'FitCheckProfiles';
+  fireFight?: Maybe<FitCheckProfilesFireFight>;
+  refine?: Maybe<FitCheckProfilesRefine>;
+  build?: Maybe<FitCheckProfilesBuild>;
+  optimize?: Maybe<FitCheckProfilesOptimize>;
+};
+
+export type FitCheckResultShared = {
+  __typename?: 'FitCheckResultShared';
+  disclaimer?: Maybe<Scalars['String']['output']>;
+  disclaimer_de?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  ctaLabel_de?: Maybe<Scalars['String']['output']>;
+};
+
+export type FitCheck = Node & Document & {
+  __typename?: 'FitCheck';
+  roleQuestion?: Maybe<FitCheckRoleQuestion>;
+  categoryQuestion?: Maybe<FitCheckCategoryQuestion>;
+  processQuestion?: Maybe<FitCheckProcessQuestion>;
+  goalQuestion?: Maybe<FitCheckGoalQuestion>;
+  shortClose?: Maybe<FitCheckShortClose>;
+  profiles?: Maybe<FitCheckProfiles>;
+  resultShared?: Maybe<FitCheckResultShared>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type FitCheckRoleQuestionFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  businessLabel?: InputMaybe<StringFilter>;
+  businessLabel_de?: InputMaybe<StringFilter>;
+  consultantLabel?: InputMaybe<StringFilter>;
+  consultantLabel_de?: InputMaybe<StringFilter>;
+  curiousLabel?: InputMaybe<StringFilter>;
+  curiousLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionCommsFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionCommsFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionCommsFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionSalesFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionSalesFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionSalesFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionDocsFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionDocsFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionDocsFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionOpsFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionOpsFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionOpsFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionReportingFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionReportingFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionReportingFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionContentFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  option1?: InputMaybe<StringFilter>;
+  option1_de?: InputMaybe<StringFilter>;
+  option2?: InputMaybe<StringFilter>;
+  option2_de?: InputMaybe<StringFilter>;
+  option3?: InputMaybe<StringFilter>;
+  option3_de?: InputMaybe<StringFilter>;
+  option4?: InputMaybe<StringFilter>;
+  option4_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionContentFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionContentFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionSeveralFollowupFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckCategoryQuestionSeveralFilter = {
+  buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_de?: InputMaybe<StringFilter>;
+  followup?: InputMaybe<FitCheckCategoryQuestionSeveralFollowupFilter>;
+};
+
+export type FitCheckCategoryQuestionFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  comms?: InputMaybe<FitCheckCategoryQuestionCommsFilter>;
+  sales?: InputMaybe<FitCheckCategoryQuestionSalesFilter>;
+  docs?: InputMaybe<FitCheckCategoryQuestionDocsFilter>;
+  ops?: InputMaybe<FitCheckCategoryQuestionOpsFilter>;
+  reporting?: InputMaybe<FitCheckCategoryQuestionReportingFilter>;
+  content?: InputMaybe<FitCheckCategoryQuestionContentFilter>;
+  several?: InputMaybe<FitCheckCategoryQuestionSeveralFilter>;
+};
+
+export type FitCheckProcessQuestionFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  noneLabel?: InputMaybe<StringFilter>;
+  noneLabel_de?: InputMaybe<StringFilter>;
+  partialLabel?: InputMaybe<StringFilter>;
+  partialLabel_de?: InputMaybe<StringFilter>;
+  fullLabel?: InputMaybe<StringFilter>;
+  fullLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckGoalQuestionFilter = {
+  questionLabel?: InputMaybe<StringFilter>;
+  questionLabel_de?: InputMaybe<StringFilter>;
+  solveLabel?: InputMaybe<StringFilter>;
+  solveLabel_de?: InputMaybe<StringFilter>;
+  clarityLabel?: InputMaybe<StringFilter>;
+  clarityLabel_de?: InputMaybe<StringFilter>;
+  exploreLabel?: InputMaybe<StringFilter>;
+  exploreLabel_de?: InputMaybe<StringFilter>;
+  compareLabel?: InputMaybe<StringFilter>;
+  compareLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckShortCloseFilter = {
+  heading?: InputMaybe<StringFilter>;
+  heading_de?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  body_de?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  ctaLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckProfilesFireFightFilter = {
+  name?: InputMaybe<StringFilter>;
+  name_de?: InputMaybe<StringFilter>;
+  tagline?: InputMaybe<StringFilter>;
+  tagline_de?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  description_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckProfilesRefineFilter = {
+  name?: InputMaybe<StringFilter>;
+  name_de?: InputMaybe<StringFilter>;
+  tagline?: InputMaybe<StringFilter>;
+  tagline_de?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  description_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckProfilesBuildFilter = {
+  name?: InputMaybe<StringFilter>;
+  name_de?: InputMaybe<StringFilter>;
+  tagline?: InputMaybe<StringFilter>;
+  tagline_de?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  description_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckProfilesOptimizeFilter = {
+  name?: InputMaybe<StringFilter>;
+  name_de?: InputMaybe<StringFilter>;
+  tagline?: InputMaybe<StringFilter>;
+  tagline_de?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  description_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckProfilesFilter = {
+  fireFight?: InputMaybe<FitCheckProfilesFireFightFilter>;
+  refine?: InputMaybe<FitCheckProfilesRefineFilter>;
+  build?: InputMaybe<FitCheckProfilesBuildFilter>;
+  optimize?: InputMaybe<FitCheckProfilesOptimizeFilter>;
+};
+
+export type FitCheckResultSharedFilter = {
+  disclaimer?: InputMaybe<StringFilter>;
+  disclaimer_de?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  ctaLabel_de?: InputMaybe<StringFilter>;
+};
+
+export type FitCheckFilter = {
+  roleQuestion?: InputMaybe<FitCheckRoleQuestionFilter>;
+  categoryQuestion?: InputMaybe<FitCheckCategoryQuestionFilter>;
+  processQuestion?: InputMaybe<FitCheckProcessQuestionFilter>;
+  goalQuestion?: InputMaybe<FitCheckGoalQuestionFilter>;
+  shortClose?: InputMaybe<FitCheckShortCloseFilter>;
+  profiles?: InputMaybe<FitCheckProfilesFilter>;
+  resultShared?: InputMaybe<FitCheckResultSharedFilter>;
+};
+
+export type FitCheckConnectionEdges = {
+  __typename?: 'FitCheckConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<FitCheck>;
+};
+
+export type FitCheckConnection = Connection & {
+  __typename?: 'FitCheckConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<FitCheckConnectionEdges>>>;
+};
+
 export type Art = Node & Document & {
   __typename?: 'Art';
   title: Scalars['String']['output'];
@@ -834,6 +1376,8 @@ export type Mutation = {
   createPage_de: Page_De;
   updateSettings: Settings;
   createSettings: Settings;
+  updateFitCheck: FitCheck;
+  createFitCheck: FitCheck;
   updateArt: Art;
   createArt: Art;
 };
@@ -908,6 +1452,18 @@ export type MutationCreateSettingsArgs = {
 };
 
 
+export type MutationUpdateFitCheckArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FitCheckMutation;
+};
+
+
+export type MutationCreateFitCheckArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FitCheckMutation;
+};
+
+
 export type MutationUpdateArtArgs = {
   relativePath: Scalars['String']['input'];
   params: ArtMutation;
@@ -923,6 +1479,7 @@ export type DocumentUpdateMutation = {
   page?: InputMaybe<PageMutation>;
   page_de?: InputMaybe<Page_DeMutation>;
   settings?: InputMaybe<SettingsMutation>;
+  fitCheck?: InputMaybe<FitCheckMutation>;
   art?: InputMaybe<ArtMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -931,6 +1488,7 @@ export type DocumentMutation = {
   page?: InputMaybe<PageMutation>;
   page_de?: InputMaybe<Page_DeMutation>;
   settings?: InputMaybe<SettingsMutation>;
+  fitCheck?: InputMaybe<FitCheckMutation>;
   art?: InputMaybe<ArtMutation>;
 };
 
@@ -1173,6 +1731,247 @@ export type SettingsMutation = {
   contactPhone?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FitCheckRoleQuestionMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  businessLabel?: InputMaybe<Scalars['String']['input']>;
+  businessLabel_de?: InputMaybe<Scalars['String']['input']>;
+  consultantLabel?: InputMaybe<Scalars['String']['input']>;
+  consultantLabel_de?: InputMaybe<Scalars['String']['input']>;
+  curiousLabel?: InputMaybe<Scalars['String']['input']>;
+  curiousLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionCommsFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionCommsMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionCommsFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionSalesFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionSalesMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionSalesFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionDocsFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionDocsMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionDocsFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionOpsFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionOpsMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionOpsFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionReportingFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionReportingMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionReportingFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionContentFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  option1?: InputMaybe<Scalars['String']['input']>;
+  option1_de?: InputMaybe<Scalars['String']['input']>;
+  option2?: InputMaybe<Scalars['String']['input']>;
+  option2_de?: InputMaybe<Scalars['String']['input']>;
+  option3?: InputMaybe<Scalars['String']['input']>;
+  option3_de?: InputMaybe<Scalars['String']['input']>;
+  option4?: InputMaybe<Scalars['String']['input']>;
+  option4_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionContentMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionContentFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionSeveralFollowupMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckCategoryQuestionSeveralMutation = {
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_de?: InputMaybe<Scalars['String']['input']>;
+  followup?: InputMaybe<FitCheckCategoryQuestionSeveralFollowupMutation>;
+};
+
+export type FitCheckCategoryQuestionMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  comms?: InputMaybe<FitCheckCategoryQuestionCommsMutation>;
+  sales?: InputMaybe<FitCheckCategoryQuestionSalesMutation>;
+  docs?: InputMaybe<FitCheckCategoryQuestionDocsMutation>;
+  ops?: InputMaybe<FitCheckCategoryQuestionOpsMutation>;
+  reporting?: InputMaybe<FitCheckCategoryQuestionReportingMutation>;
+  content?: InputMaybe<FitCheckCategoryQuestionContentMutation>;
+  several?: InputMaybe<FitCheckCategoryQuestionSeveralMutation>;
+};
+
+export type FitCheckProcessQuestionMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  noneLabel?: InputMaybe<Scalars['String']['input']>;
+  noneLabel_de?: InputMaybe<Scalars['String']['input']>;
+  partialLabel?: InputMaybe<Scalars['String']['input']>;
+  partialLabel_de?: InputMaybe<Scalars['String']['input']>;
+  fullLabel?: InputMaybe<Scalars['String']['input']>;
+  fullLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckGoalQuestionMutation = {
+  questionLabel?: InputMaybe<Scalars['String']['input']>;
+  questionLabel_de?: InputMaybe<Scalars['String']['input']>;
+  solveLabel?: InputMaybe<Scalars['String']['input']>;
+  solveLabel_de?: InputMaybe<Scalars['String']['input']>;
+  clarityLabel?: InputMaybe<Scalars['String']['input']>;
+  clarityLabel_de?: InputMaybe<Scalars['String']['input']>;
+  exploreLabel?: InputMaybe<Scalars['String']['input']>;
+  exploreLabel_de?: InputMaybe<Scalars['String']['input']>;
+  compareLabel?: InputMaybe<Scalars['String']['input']>;
+  compareLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckShortCloseMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  heading_de?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  body_de?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckProfilesFireFightMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_de?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  tagline_de?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckProfilesRefineMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_de?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  tagline_de?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckProfilesBuildMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_de?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  tagline_de?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckProfilesOptimizeMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_de?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  tagline_de?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckProfilesMutation = {
+  fireFight?: InputMaybe<FitCheckProfilesFireFightMutation>;
+  refine?: InputMaybe<FitCheckProfilesRefineMutation>;
+  build?: InputMaybe<FitCheckProfilesBuildMutation>;
+  optimize?: InputMaybe<FitCheckProfilesOptimizeMutation>;
+};
+
+export type FitCheckResultSharedMutation = {
+  disclaimer?: InputMaybe<Scalars['String']['input']>;
+  disclaimer_de?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel_de?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FitCheckMutation = {
+  roleQuestion?: InputMaybe<FitCheckRoleQuestionMutation>;
+  categoryQuestion?: InputMaybe<FitCheckCategoryQuestionMutation>;
+  processQuestion?: InputMaybe<FitCheckProcessQuestionMutation>;
+  goalQuestion?: InputMaybe<FitCheckGoalQuestionMutation>;
+  shortClose?: InputMaybe<FitCheckShortCloseMutation>;
+  profiles?: InputMaybe<FitCheckProfilesMutation>;
+  resultShared?: InputMaybe<FitCheckResultSharedMutation>;
+};
+
 export type ArtMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   year?: InputMaybe<Scalars['String']['input']>;
@@ -1189,6 +1988,8 @@ export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typenam
 export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, email?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
 export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null, processFlow?: { __typename: 'SettingsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null };
+
+export type FitCheckPartsFragment = { __typename: 'FitCheck', roleQuestion?: { __typename: 'FitCheckRoleQuestion', questionLabel?: string | null, questionLabel_de?: string | null, businessLabel?: string | null, businessLabel_de?: string | null, consultantLabel?: string | null, consultantLabel_de?: string | null, curiousLabel?: string | null, curiousLabel_de?: string | null } | null, categoryQuestion?: { __typename: 'FitCheckCategoryQuestion', questionLabel?: string | null, questionLabel_de?: string | null, comms?: { __typename: 'FitCheckCategoryQuestionComms', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionCommsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, sales?: { __typename: 'FitCheckCategoryQuestionSales', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSalesFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, docs?: { __typename: 'FitCheckCategoryQuestionDocs', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionDocsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, ops?: { __typename: 'FitCheckCategoryQuestionOps', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionOpsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, reporting?: { __typename: 'FitCheckCategoryQuestionReporting', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionReportingFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, content?: { __typename: 'FitCheckCategoryQuestionContent', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionContentFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, several?: { __typename: 'FitCheckCategoryQuestionSeveral', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSeveralFollowup', questionLabel?: string | null, questionLabel_de?: string | null } | null } | null } | null, processQuestion?: { __typename: 'FitCheckProcessQuestion', questionLabel?: string | null, questionLabel_de?: string | null, noneLabel?: string | null, noneLabel_de?: string | null, partialLabel?: string | null, partialLabel_de?: string | null, fullLabel?: string | null, fullLabel_de?: string | null } | null, goalQuestion?: { __typename: 'FitCheckGoalQuestion', questionLabel?: string | null, questionLabel_de?: string | null, solveLabel?: string | null, solveLabel_de?: string | null, clarityLabel?: string | null, clarityLabel_de?: string | null, exploreLabel?: string | null, exploreLabel_de?: string | null, compareLabel?: string | null, compareLabel_de?: string | null } | null, shortClose?: { __typename: 'FitCheckShortClose', heading?: string | null, heading_de?: string | null, body?: string | null, body_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null, profiles?: { __typename: 'FitCheckProfiles', fireFight?: { __typename: 'FitCheckProfilesFireFight', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, refine?: { __typename: 'FitCheckProfilesRefine', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, build?: { __typename: 'FitCheckProfilesBuild', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, optimize?: { __typename: 'FitCheckProfilesOptimize', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null } | null, resultShared?: { __typename: 'FitCheckResultShared', disclaimer?: string | null, disclaimer_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null };
 
 export type ArtPartsFragment = { __typename: 'Art', title: string, year?: string | null, price?: number | null, image?: string | null, enabled?: boolean | null, showTitle?: boolean | null, showPrice?: boolean | null, showLine?: boolean | null };
 
@@ -1248,6 +2049,25 @@ export type SettingsConnectionQueryVariables = Exact<{
 
 
 export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null, processFlow?: { __typename: 'SettingsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null } | null> | null } };
+
+export type FitCheckQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type FitCheckQuery = { __typename?: 'Query', fitCheck: { __typename: 'FitCheck', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, roleQuestion?: { __typename: 'FitCheckRoleQuestion', questionLabel?: string | null, questionLabel_de?: string | null, businessLabel?: string | null, businessLabel_de?: string | null, consultantLabel?: string | null, consultantLabel_de?: string | null, curiousLabel?: string | null, curiousLabel_de?: string | null } | null, categoryQuestion?: { __typename: 'FitCheckCategoryQuestion', questionLabel?: string | null, questionLabel_de?: string | null, comms?: { __typename: 'FitCheckCategoryQuestionComms', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionCommsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, sales?: { __typename: 'FitCheckCategoryQuestionSales', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSalesFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, docs?: { __typename: 'FitCheckCategoryQuestionDocs', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionDocsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, ops?: { __typename: 'FitCheckCategoryQuestionOps', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionOpsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, reporting?: { __typename: 'FitCheckCategoryQuestionReporting', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionReportingFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, content?: { __typename: 'FitCheckCategoryQuestionContent', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionContentFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, several?: { __typename: 'FitCheckCategoryQuestionSeveral', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSeveralFollowup', questionLabel?: string | null, questionLabel_de?: string | null } | null } | null } | null, processQuestion?: { __typename: 'FitCheckProcessQuestion', questionLabel?: string | null, questionLabel_de?: string | null, noneLabel?: string | null, noneLabel_de?: string | null, partialLabel?: string | null, partialLabel_de?: string | null, fullLabel?: string | null, fullLabel_de?: string | null } | null, goalQuestion?: { __typename: 'FitCheckGoalQuestion', questionLabel?: string | null, questionLabel_de?: string | null, solveLabel?: string | null, solveLabel_de?: string | null, clarityLabel?: string | null, clarityLabel_de?: string | null, exploreLabel?: string | null, exploreLabel_de?: string | null, compareLabel?: string | null, compareLabel_de?: string | null } | null, shortClose?: { __typename: 'FitCheckShortClose', heading?: string | null, heading_de?: string | null, body?: string | null, body_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null, profiles?: { __typename: 'FitCheckProfiles', fireFight?: { __typename: 'FitCheckProfilesFireFight', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, refine?: { __typename: 'FitCheckProfilesRefine', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, build?: { __typename: 'FitCheckProfilesBuild', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, optimize?: { __typename: 'FitCheckProfilesOptimize', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null } | null, resultShared?: { __typename: 'FitCheckResultShared', disclaimer?: string | null, disclaimer_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null } };
+
+export type FitCheckConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FitCheckFilter>;
+}>;
+
+
+export type FitCheckConnectionQuery = { __typename?: 'Query', fitCheckConnection: { __typename?: 'FitCheckConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FitCheckConnectionEdges', cursor: string, node?: { __typename: 'FitCheck', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, roleQuestion?: { __typename: 'FitCheckRoleQuestion', questionLabel?: string | null, questionLabel_de?: string | null, businessLabel?: string | null, businessLabel_de?: string | null, consultantLabel?: string | null, consultantLabel_de?: string | null, curiousLabel?: string | null, curiousLabel_de?: string | null } | null, categoryQuestion?: { __typename: 'FitCheckCategoryQuestion', questionLabel?: string | null, questionLabel_de?: string | null, comms?: { __typename: 'FitCheckCategoryQuestionComms', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionCommsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, sales?: { __typename: 'FitCheckCategoryQuestionSales', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSalesFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, docs?: { __typename: 'FitCheckCategoryQuestionDocs', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionDocsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, ops?: { __typename: 'FitCheckCategoryQuestionOps', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionOpsFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, reporting?: { __typename: 'FitCheckCategoryQuestionReporting', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionReportingFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, content?: { __typename: 'FitCheckCategoryQuestionContent', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionContentFollowup', questionLabel?: string | null, questionLabel_de?: string | null, option1?: string | null, option1_de?: string | null, option2?: string | null, option2_de?: string | null, option3?: string | null, option3_de?: string | null, option4?: string | null, option4_de?: string | null } | null } | null, several?: { __typename: 'FitCheckCategoryQuestionSeveral', buttonLabel?: string | null, buttonLabel_de?: string | null, followup?: { __typename: 'FitCheckCategoryQuestionSeveralFollowup', questionLabel?: string | null, questionLabel_de?: string | null } | null } | null } | null, processQuestion?: { __typename: 'FitCheckProcessQuestion', questionLabel?: string | null, questionLabel_de?: string | null, noneLabel?: string | null, noneLabel_de?: string | null, partialLabel?: string | null, partialLabel_de?: string | null, fullLabel?: string | null, fullLabel_de?: string | null } | null, goalQuestion?: { __typename: 'FitCheckGoalQuestion', questionLabel?: string | null, questionLabel_de?: string | null, solveLabel?: string | null, solveLabel_de?: string | null, clarityLabel?: string | null, clarityLabel_de?: string | null, exploreLabel?: string | null, exploreLabel_de?: string | null, compareLabel?: string | null, compareLabel_de?: string | null } | null, shortClose?: { __typename: 'FitCheckShortClose', heading?: string | null, heading_de?: string | null, body?: string | null, body_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null, profiles?: { __typename: 'FitCheckProfiles', fireFight?: { __typename: 'FitCheckProfilesFireFight', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, refine?: { __typename: 'FitCheckProfilesRefine', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, build?: { __typename: 'FitCheckProfilesBuild', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null, optimize?: { __typename: 'FitCheckProfilesOptimize', name?: string | null, name_de?: string | null, tagline?: string | null, tagline_de?: string | null, description?: string | null, description_de?: string | null } | null } | null, resultShared?: { __typename: 'FitCheckResultShared', disclaimer?: string | null, disclaimer_de?: string | null, ctaLabel?: string | null, ctaLabel_de?: string | null } | null } | null } | null> | null } };
 
 export type ArtQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1492,6 +2312,224 @@ export const SettingsPartsFragmentDoc = gql`
   contactPhone
 }
     `;
+export const FitCheckPartsFragmentDoc = gql`
+    fragment FitCheckParts on FitCheck {
+  __typename
+  roleQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    businessLabel
+    businessLabel_de
+    consultantLabel
+    consultantLabel_de
+    curiousLabel
+    curiousLabel_de
+  }
+  categoryQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    comms {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    sales {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    docs {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    ops {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    reporting {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    content {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    several {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+      }
+    }
+  }
+  processQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    noneLabel
+    noneLabel_de
+    partialLabel
+    partialLabel_de
+    fullLabel
+    fullLabel_de
+  }
+  goalQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    solveLabel
+    solveLabel_de
+    clarityLabel
+    clarityLabel_de
+    exploreLabel
+    exploreLabel_de
+    compareLabel
+    compareLabel_de
+  }
+  shortClose {
+    __typename
+    heading
+    heading_de
+    body
+    body_de
+    ctaLabel
+    ctaLabel_de
+  }
+  profiles {
+    __typename
+    fireFight {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    refine {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    build {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    optimize {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+  }
+  resultShared {
+    __typename
+    disclaimer
+    disclaimer_de
+    ctaLabel
+    ctaLabel_de
+  }
+}
+    `;
 export const ArtPartsFragmentDoc = gql`
     fragment ArtParts on Art {
   __typename
@@ -1676,6 +2714,63 @@ export const SettingsConnectionDocument = gql`
   }
 }
     ${SettingsPartsFragmentDoc}`;
+export const FitCheckDocument = gql`
+    query fitCheck($relativePath: String!) {
+  fitCheck(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FitCheckParts
+  }
+}
+    ${FitCheckPartsFragmentDoc}`;
+export const FitCheckConnectionDocument = gql`
+    query fitCheckConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FitCheckFilter) {
+  fitCheckConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FitCheckParts
+      }
+    }
+  }
+}
+    ${FitCheckPartsFragmentDoc}`;
 export const ArtDocument = gql`
     query art($relativePath: String!) {
   art(relativePath: $relativePath) {
@@ -1753,6 +2848,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     settingsConnection(variables?: SettingsConnectionQueryVariables, options?: C): Promise<{data: SettingsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsConnectionQueryVariables, query: string}> {
         return requester<{data: SettingsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsConnectionQueryVariables, query: string}, SettingsConnectionQueryVariables>(SettingsConnectionDocument, variables, options);
+      },
+    fitCheck(variables: FitCheckQueryVariables, options?: C): Promise<{data: FitCheckQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FitCheckQueryVariables, query: string}> {
+        return requester<{data: FitCheckQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FitCheckQueryVariables, query: string}, FitCheckQueryVariables>(FitCheckDocument, variables, options);
+      },
+    fitCheckConnection(variables?: FitCheckConnectionQueryVariables, options?: C): Promise<{data: FitCheckConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FitCheckConnectionQueryVariables, query: string}> {
+        return requester<{data: FitCheckConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FitCheckConnectionQueryVariables, query: string}, FitCheckConnectionQueryVariables>(FitCheckConnectionDocument, variables, options);
       },
     art(variables: ArtQueryVariables, options?: C): Promise<{data: ArtQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ArtQueryVariables, query: string}> {
         return requester<{data: ArtQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ArtQueryVariables, query: string}, ArtQueryVariables>(ArtDocument, variables, options);

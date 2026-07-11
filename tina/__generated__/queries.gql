@@ -163,6 +163,61 @@ query settingsConnection($before: String, $after: String, $first: Float, $last: 
   }
 }
 
+query fitCheck($relativePath: String!) {
+  fitCheck(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FitCheckParts
+  }
+}
+
+query fitCheckConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FitCheckFilter) {
+  fitCheckConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FitCheckParts
+      }
+    }
+  }
+}
+
 query art($relativePath: String!) {
   art(relativePath: $relativePath) {
     ... on Document {

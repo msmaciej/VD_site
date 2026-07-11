@@ -60,6 +60,8 @@ type Query {
   page_deConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: Page_deFilter): Page_deConnection!
   settings(relativePath: String): Settings!
   settingsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SettingsFilter): SettingsConnection!
+  fitCheck(relativePath: String): FitCheck!
+  fitCheckConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FitCheckFilter): FitCheckConnection!
   art(relativePath: String): Art!
   artConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ArtFilter): ArtConnection!
 }
@@ -68,6 +70,7 @@ input DocumentFilter {
   page: PageFilter
   page_de: Page_deFilter
   settings: SettingsFilter
+  fitCheck: FitCheckFilter
   art: ArtFilter
 }
 
@@ -94,7 +97,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Page | Page_de | Settings | Art | Folder
+union DocumentNode = Page | Page_de | Settings | FitCheck | Art | Folder
 
 type PageBlocksSection {
   title: String
@@ -637,6 +640,502 @@ type SettingsConnection implements Connection {
   edges: [SettingsConnectionEdges]
 }
 
+type FitCheckRoleQuestion {
+  questionLabel: String
+  questionLabel_de: String
+  businessLabel: String
+  businessLabel_de: String
+  consultantLabel: String
+  consultantLabel_de: String
+  curiousLabel: String
+  curiousLabel_de: String
+}
+
+type FitCheckCategoryQuestionCommsFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionComms {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionCommsFollowup
+}
+
+type FitCheckCategoryQuestionSalesFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionSales {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionSalesFollowup
+}
+
+type FitCheckCategoryQuestionDocsFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionDocs {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionDocsFollowup
+}
+
+type FitCheckCategoryQuestionOpsFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionOps {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionOpsFollowup
+}
+
+type FitCheckCategoryQuestionReportingFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionReporting {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionReportingFollowup
+}
+
+type FitCheckCategoryQuestionContentFollowup {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+type FitCheckCategoryQuestionContent {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionContentFollowup
+}
+
+type FitCheckCategoryQuestionSeveralFollowup {
+  questionLabel: String
+  questionLabel_de: String
+}
+
+type FitCheckCategoryQuestionSeveral {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionSeveralFollowup
+}
+
+type FitCheckCategoryQuestion {
+  questionLabel: String
+  questionLabel_de: String
+  comms: FitCheckCategoryQuestionComms
+  sales: FitCheckCategoryQuestionSales
+  docs: FitCheckCategoryQuestionDocs
+  ops: FitCheckCategoryQuestionOps
+  reporting: FitCheckCategoryQuestionReporting
+  content: FitCheckCategoryQuestionContent
+  several: FitCheckCategoryQuestionSeveral
+}
+
+type FitCheckProcessQuestion {
+  questionLabel: String
+  questionLabel_de: String
+  noneLabel: String
+  noneLabel_de: String
+  partialLabel: String
+  partialLabel_de: String
+  fullLabel: String
+  fullLabel_de: String
+}
+
+type FitCheckGoalQuestion {
+  questionLabel: String
+  questionLabel_de: String
+  solveLabel: String
+  solveLabel_de: String
+  clarityLabel: String
+  clarityLabel_de: String
+  exploreLabel: String
+  exploreLabel_de: String
+  compareLabel: String
+  compareLabel_de: String
+}
+
+type FitCheckShortClose {
+  heading: String
+  heading_de: String
+  body: String
+  body_de: String
+  ctaLabel: String
+  ctaLabel_de: String
+}
+
+type FitCheckProfilesFireFight {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+type FitCheckProfilesRefine {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+type FitCheckProfilesBuild {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+type FitCheckProfilesOptimize {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+type FitCheckProfiles {
+  fireFight: FitCheckProfilesFireFight
+  refine: FitCheckProfilesRefine
+  build: FitCheckProfilesBuild
+  optimize: FitCheckProfilesOptimize
+}
+
+type FitCheckResultShared {
+  disclaimer: String
+  disclaimer_de: String
+  ctaLabel: String
+  ctaLabel_de: String
+}
+
+type FitCheck implements Node & Document {
+  roleQuestion: FitCheckRoleQuestion
+  categoryQuestion: FitCheckCategoryQuestion
+  processQuestion: FitCheckProcessQuestion
+  goalQuestion: FitCheckGoalQuestion
+  shortClose: FitCheckShortClose
+  profiles: FitCheckProfiles
+  resultShared: FitCheckResultShared
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input FitCheckRoleQuestionFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  businessLabel: StringFilter
+  businessLabel_de: StringFilter
+  consultantLabel: StringFilter
+  consultantLabel_de: StringFilter
+  curiousLabel: StringFilter
+  curiousLabel_de: StringFilter
+}
+
+input FitCheckCategoryQuestionCommsFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionCommsFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionCommsFollowupFilter
+}
+
+input FitCheckCategoryQuestionSalesFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionSalesFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionSalesFollowupFilter
+}
+
+input FitCheckCategoryQuestionDocsFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionDocsFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionDocsFollowupFilter
+}
+
+input FitCheckCategoryQuestionOpsFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionOpsFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionOpsFollowupFilter
+}
+
+input FitCheckCategoryQuestionReportingFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionReportingFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionReportingFollowupFilter
+}
+
+input FitCheckCategoryQuestionContentFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  option1: StringFilter
+  option1_de: StringFilter
+  option2: StringFilter
+  option2_de: StringFilter
+  option3: StringFilter
+  option3_de: StringFilter
+  option4: StringFilter
+  option4_de: StringFilter
+}
+
+input FitCheckCategoryQuestionContentFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionContentFollowupFilter
+}
+
+input FitCheckCategoryQuestionSeveralFollowupFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+}
+
+input FitCheckCategoryQuestionSeveralFilter {
+  buttonLabel: StringFilter
+  buttonLabel_de: StringFilter
+  followup: FitCheckCategoryQuestionSeveralFollowupFilter
+}
+
+input FitCheckCategoryQuestionFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  comms: FitCheckCategoryQuestionCommsFilter
+  sales: FitCheckCategoryQuestionSalesFilter
+  docs: FitCheckCategoryQuestionDocsFilter
+  ops: FitCheckCategoryQuestionOpsFilter
+  reporting: FitCheckCategoryQuestionReportingFilter
+  content: FitCheckCategoryQuestionContentFilter
+  several: FitCheckCategoryQuestionSeveralFilter
+}
+
+input FitCheckProcessQuestionFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  noneLabel: StringFilter
+  noneLabel_de: StringFilter
+  partialLabel: StringFilter
+  partialLabel_de: StringFilter
+  fullLabel: StringFilter
+  fullLabel_de: StringFilter
+}
+
+input FitCheckGoalQuestionFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  solveLabel: StringFilter
+  solveLabel_de: StringFilter
+  clarityLabel: StringFilter
+  clarityLabel_de: StringFilter
+  exploreLabel: StringFilter
+  exploreLabel_de: StringFilter
+  compareLabel: StringFilter
+  compareLabel_de: StringFilter
+}
+
+input FitCheckShortCloseFilter {
+  heading: StringFilter
+  heading_de: StringFilter
+  body: StringFilter
+  body_de: StringFilter
+  ctaLabel: StringFilter
+  ctaLabel_de: StringFilter
+}
+
+input FitCheckProfilesFireFightFilter {
+  name: StringFilter
+  name_de: StringFilter
+  tagline: StringFilter
+  tagline_de: StringFilter
+  description: StringFilter
+  description_de: StringFilter
+}
+
+input FitCheckProfilesRefineFilter {
+  name: StringFilter
+  name_de: StringFilter
+  tagline: StringFilter
+  tagline_de: StringFilter
+  description: StringFilter
+  description_de: StringFilter
+}
+
+input FitCheckProfilesBuildFilter {
+  name: StringFilter
+  name_de: StringFilter
+  tagline: StringFilter
+  tagline_de: StringFilter
+  description: StringFilter
+  description_de: StringFilter
+}
+
+input FitCheckProfilesOptimizeFilter {
+  name: StringFilter
+  name_de: StringFilter
+  tagline: StringFilter
+  tagline_de: StringFilter
+  description: StringFilter
+  description_de: StringFilter
+}
+
+input FitCheckProfilesFilter {
+  fireFight: FitCheckProfilesFireFightFilter
+  refine: FitCheckProfilesRefineFilter
+  build: FitCheckProfilesBuildFilter
+  optimize: FitCheckProfilesOptimizeFilter
+}
+
+input FitCheckResultSharedFilter {
+  disclaimer: StringFilter
+  disclaimer_de: StringFilter
+  ctaLabel: StringFilter
+  ctaLabel_de: StringFilter
+}
+
+input FitCheckFilter {
+  roleQuestion: FitCheckRoleQuestionFilter
+  categoryQuestion: FitCheckCategoryQuestionFilter
+  processQuestion: FitCheckProcessQuestionFilter
+  goalQuestion: FitCheckGoalQuestionFilter
+  shortClose: FitCheckShortCloseFilter
+  profiles: FitCheckProfilesFilter
+  resultShared: FitCheckResultSharedFilter
+}
+
+type FitCheckConnectionEdges {
+  cursor: String!
+  node: FitCheck
+}
+
+type FitCheckConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [FitCheckConnectionEdges]
+}
+
 type Art implements Node & Document {
   title: String!
   year: String
@@ -685,6 +1184,8 @@ type Mutation {
   createPage_de(relativePath: String!, params: Page_deMutation!): Page_de!
   updateSettings(relativePath: String!, params: SettingsMutation!): Settings!
   createSettings(relativePath: String!, params: SettingsMutation!): Settings!
+  updateFitCheck(relativePath: String!, params: FitCheckMutation!): FitCheck!
+  createFitCheck(relativePath: String!, params: FitCheckMutation!): FitCheck!
   updateArt(relativePath: String!, params: ArtMutation!): Art!
   createArt(relativePath: String!, params: ArtMutation!): Art!
 }
@@ -693,6 +1194,7 @@ input DocumentUpdateMutation {
   page: PageMutation
   page_de: Page_deMutation
   settings: SettingsMutation
+  fitCheck: FitCheckMutation
   art: ArtMutation
   relativePath: String
 }
@@ -701,6 +1203,7 @@ input DocumentMutation {
   page: PageMutation
   page_de: Page_deMutation
   settings: SettingsMutation
+  fitCheck: FitCheckMutation
   art: ArtMutation
 }
 
@@ -941,6 +1444,247 @@ input SettingsMutation {
   addressPostal: String
   contactEmail: String
   contactPhone: String
+}
+
+input FitCheckRoleQuestionMutation {
+  questionLabel: String
+  questionLabel_de: String
+  businessLabel: String
+  businessLabel_de: String
+  consultantLabel: String
+  consultantLabel_de: String
+  curiousLabel: String
+  curiousLabel_de: String
+}
+
+input FitCheckCategoryQuestionCommsFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionCommsMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionCommsFollowupMutation
+}
+
+input FitCheckCategoryQuestionSalesFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionSalesMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionSalesFollowupMutation
+}
+
+input FitCheckCategoryQuestionDocsFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionDocsMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionDocsFollowupMutation
+}
+
+input FitCheckCategoryQuestionOpsFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionOpsMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionOpsFollowupMutation
+}
+
+input FitCheckCategoryQuestionReportingFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionReportingMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionReportingFollowupMutation
+}
+
+input FitCheckCategoryQuestionContentFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+  option1: String
+  option1_de: String
+  option2: String
+  option2_de: String
+  option3: String
+  option3_de: String
+  option4: String
+  option4_de: String
+}
+
+input FitCheckCategoryQuestionContentMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionContentFollowupMutation
+}
+
+input FitCheckCategoryQuestionSeveralFollowupMutation {
+  questionLabel: String
+  questionLabel_de: String
+}
+
+input FitCheckCategoryQuestionSeveralMutation {
+  buttonLabel: String
+  buttonLabel_de: String
+  followup: FitCheckCategoryQuestionSeveralFollowupMutation
+}
+
+input FitCheckCategoryQuestionMutation {
+  questionLabel: String
+  questionLabel_de: String
+  comms: FitCheckCategoryQuestionCommsMutation
+  sales: FitCheckCategoryQuestionSalesMutation
+  docs: FitCheckCategoryQuestionDocsMutation
+  ops: FitCheckCategoryQuestionOpsMutation
+  reporting: FitCheckCategoryQuestionReportingMutation
+  content: FitCheckCategoryQuestionContentMutation
+  several: FitCheckCategoryQuestionSeveralMutation
+}
+
+input FitCheckProcessQuestionMutation {
+  questionLabel: String
+  questionLabel_de: String
+  noneLabel: String
+  noneLabel_de: String
+  partialLabel: String
+  partialLabel_de: String
+  fullLabel: String
+  fullLabel_de: String
+}
+
+input FitCheckGoalQuestionMutation {
+  questionLabel: String
+  questionLabel_de: String
+  solveLabel: String
+  solveLabel_de: String
+  clarityLabel: String
+  clarityLabel_de: String
+  exploreLabel: String
+  exploreLabel_de: String
+  compareLabel: String
+  compareLabel_de: String
+}
+
+input FitCheckShortCloseMutation {
+  heading: String
+  heading_de: String
+  body: String
+  body_de: String
+  ctaLabel: String
+  ctaLabel_de: String
+}
+
+input FitCheckProfilesFireFightMutation {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+input FitCheckProfilesRefineMutation {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+input FitCheckProfilesBuildMutation {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+input FitCheckProfilesOptimizeMutation {
+  name: String
+  name_de: String
+  tagline: String
+  tagline_de: String
+  description: String
+  description_de: String
+}
+
+input FitCheckProfilesMutation {
+  fireFight: FitCheckProfilesFireFightMutation
+  refine: FitCheckProfilesRefineMutation
+  build: FitCheckProfilesBuildMutation
+  optimize: FitCheckProfilesOptimizeMutation
+}
+
+input FitCheckResultSharedMutation {
+  disclaimer: String
+  disclaimer_de: String
+  ctaLabel: String
+  ctaLabel_de: String
+}
+
+input FitCheckMutation {
+  roleQuestion: FitCheckRoleQuestionMutation
+  categoryQuestion: FitCheckCategoryQuestionMutation
+  processQuestion: FitCheckProcessQuestionMutation
+  goalQuestion: FitCheckGoalQuestionMutation
+  shortClose: FitCheckShortCloseMutation
+  profiles: FitCheckProfilesMutation
+  resultShared: FitCheckResultSharedMutation
 }
 
 input ArtMutation {

@@ -219,6 +219,223 @@ fragment SettingsParts on Settings {
   contactPhone
 }
 
+fragment FitCheckParts on FitCheck {
+  __typename
+  roleQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    businessLabel
+    businessLabel_de
+    consultantLabel
+    consultantLabel_de
+    curiousLabel
+    curiousLabel_de
+  }
+  categoryQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    comms {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    sales {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    docs {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    ops {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    reporting {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    content {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+        option1
+        option1_de
+        option2
+        option2_de
+        option3
+        option3_de
+        option4
+        option4_de
+      }
+    }
+    several {
+      __typename
+      buttonLabel
+      buttonLabel_de
+      followup {
+        __typename
+        questionLabel
+        questionLabel_de
+      }
+    }
+  }
+  processQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    noneLabel
+    noneLabel_de
+    partialLabel
+    partialLabel_de
+    fullLabel
+    fullLabel_de
+  }
+  goalQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    solveLabel
+    solveLabel_de
+    clarityLabel
+    clarityLabel_de
+    exploreLabel
+    exploreLabel_de
+    compareLabel
+    compareLabel_de
+  }
+  shortClose {
+    __typename
+    heading
+    heading_de
+    body
+    body_de
+    ctaLabel
+    ctaLabel_de
+  }
+  profiles {
+    __typename
+    fireFight {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    refine {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    build {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+    optimize {
+      __typename
+      name
+      name_de
+      tagline
+      tagline_de
+      description
+      description_de
+    }
+  }
+  resultShared {
+    __typename
+    disclaimer
+    disclaimer_de
+    ctaLabel
+    ctaLabel_de
+  }
+}
+
 fragment ArtParts on Art {
   __typename
   title
