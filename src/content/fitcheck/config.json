@@ -1,0 +1,190 @@
+{
+  "roleQuestion": {
+    "questionLabel": "What best describes you right now?",
+    "questionLabel_de": "Was trifft auf Sie am ehesten zu?",
+    "businessLabel": "Business owner or manager handling day-to-day operations",
+    "businessLabel_de": "Geschäftsführer oder Inhaber – ich verantworte den laufenden Betrieb",
+    "consultantLabel": "Consultant or agency exploring this for clients",
+    "consultantLabel_de": "Berater oder Agentur – ich erkunde das für Kunden",
+    "curiousLabel": "Researching AI automation generally / just curious",
+    "curiousLabel_de": "Ich informiere mich über KI-Automatisierung – oder bin einfach neugierig"
+  },
+  "categoryQuestion": {
+    "questionLabel": "Which area of your operations absorbs the most unnecessary time right now?",
+    "questionLabel_de": "In welchem Bereich Ihres Betriebs fällt am meisten unnötige Zeit an?",
+    "comms": {
+      "buttonLabel": "Handling incoming inquiries, messages, or customer support requests",
+      "buttonLabel_de": "Eingehende Anfragen, Nachrichten oder Kundensupport-Fälle bearbeiten und beantworten",
+      "followup": {
+        "questionLabel": "What's driving the workload?",
+        "questionLabel_de": "Was verursacht in erster Linie den Aufwand?",
+        "option1": "High volume — many inquiries daily, mostly repetitive",
+        "option1_de": "Hohes Volumen — viele Anfragen täglich, meist repetitiv",
+        "option2": "Mixed volume, but replies take long to draft or research",
+        "option2_de": "Volumen ist gemischt, aber Antworten brauchen Zeit zum Formulieren oder Recherchieren",
+        "option3": "Support tickets specifically — triage, prioritization, or escalation",
+        "option3_de": "Support-Tickets im Speziellen — Triage, Priorisierung oder Eskalation",
+        "option4": "Multiple channels (email, chat, social) that don't talk to each other",
+        "option4_de": "Mehrere Kanäle (E-Mail, Chat, Social Media), die nicht miteinander verbunden sind"
+      }
+    },
+    "sales": {
+      "buttonLabel": "Following up with leads or managing the sales pipeline — things fall through the cracks",
+      "buttonLabel_de": "Leads nachfassen oder die Vertriebspipeline verwalten — Dinge fallen durchs Raster",
+      "followup": {
+        "questionLabel": "Where's the pipeline actually breaking down?",
+        "questionLabel_de": "Wo bricht die Pipeline tatsächlich ab?",
+        "option1": "Leads aren't followed up fast enough, or at all",
+        "option1_de": "Leads werden nicht schnell genug oder gar nicht nachverfolgt",
+        "option2": "No consistent way to score or prioritize leads",
+        "option2_de": "Es gibt keine einheitliche Bewertung oder Priorisierung von Leads",
+        "option3": "CRM data is incomplete or out of date",
+        "option3_de": "CRM-Daten sind unvollständig oder veraltet",
+        "option4": "Handoffs between stages (lead → deal → customer) get lost",
+        "option4_de": "Übergaben zwischen den Phasen (Lead → Deal → Kunde) gehen verloren"
+      }
+    },
+    "docs": {
+      "buttonLabel": "Processing documents, invoices, contracts, or forms — reading, extracting, re-entering data",
+      "buttonLabel_de": "Dokumente, Rechnungen, Verträge oder Formulare verarbeiten — lesen, extrahieren, neu erfassen",
+      "followup": {
+        "questionLabel": "What's the volume and type?",
+        "questionLabel_de": "Wie hoch ist das Volumen, und um welche Art von Dokumenten handelt es sich?",
+        "option1": "Invoices — more than 50 per week",
+        "option1_de": "Rechnungen — mehr als 50 pro Woche",
+        "option2": "Invoices — fewer than 50 per week",
+        "option2_de": "Rechnungen — weniger als 50 pro Woche",
+        "option3": "Contracts or forms — occasional, but each takes real time to review",
+        "option3_de": "Verträge oder Formulare — selten, aber jedes braucht viel Zeit zur Prüfung",
+        "option4": "A mix of document types, all still handled manually",
+        "option4_de": "Eine Mischung verschiedener Dokumenttypen, alle noch manuell bearbeitet"
+      }
+    },
+    "ops": {
+      "buttonLabel": "Internal approvals, task routing, onboarding sequences, or scheduling",
+      "buttonLabel_de": "Interne Freigaben, Aufgabenverteilung, Onboarding-Abläufe oder Terminplanung",
+      "followup": {
+        "questionLabel": "Which of these costs the most time?",
+        "questionLabel_de": "Was kostet am meisten Zeit?",
+        "option1": "Approval routing — who signs off, and when",
+        "option1_de": "Freigabe-Prozesse — wer unterschreibt, und wann",
+        "option2": "Onboarding new employees or clients",
+        "option2_de": "Onboarding neuer Mitarbeiter oder Kunden",
+        "option3": "Assigning or tracking internal tasks",
+        "option3_de": "Zuweisung oder Nachverfolgung interner Aufgaben",
+        "option4": "Scheduling and calendar coordination",
+        "option4_de": "Terminplanung und Kalenderkoordination"
+      }
+    },
+    "reporting": {
+      "buttonLabel": "Pulling together reports or aggregating data from multiple sources",
+      "buttonLabel_de": "Berichte oder Auswertungen aus verstreuten Datenquellen zusammenstellen",
+      "followup": {
+        "questionLabel": "How are these reports built today?",
+        "questionLabel_de": "Wie werden diese Berichte heute erstellt?",
+        "option1": "Manually, from multiple spreadsheets or systems, every time",
+        "option1_de": "Manuell, aus mehreren Tabellen oder Systemen, jedes Mal neu",
+        "option2": "Mostly automatic, but still need manual review or cleanup",
+        "option2_de": "Grösstenteils automatisch, aber trotzdem manuelle Kontrolle oder Bereinigung nötig",
+        "option3": "We don't have regular reports — decisions get made without solid data",
+        "option3_de": "Wir haben keine regelmässigen Berichte — Entscheidungen werden ohne verlässliche Daten getroffen",
+        "option4": "Reports exist, but nobody has time to act on what they show",
+        "option4_de": "Berichte existieren, aber niemand hat Zeit, danach zu handeln"
+      }
+    },
+    "content": {
+      "buttonLabel": "Creating or distributing content — social posts, newsletters, or e-commerce flows",
+      "buttonLabel_de": "Inhalte erstellen oder verbreiten — Social, Newsletter oder E-Commerce-Benachrichtigungen",
+      "followup": {
+        "questionLabel": "What takes the most effort?",
+        "questionLabel_de": "Was kostet den grössten Aufwand?",
+        "option1": "Writing or repurposing content across channels",
+        "option1_de": "Inhalte schreiben oder für verschiedene Kanäle aufbereiten",
+        "option2": "Scheduling and publishing consistently",
+        "option2_de": "Regelmässige Planung und Veröffentlichung",
+        "option3": "E-commerce specific — order updates, stock alerts, cart follow-ups",
+        "option3_de": "E-Commerce-spezifisch — Bestellstatus, Lagerbestand-Hinweise, Warenkorb-Erinnerungen",
+        "option4": "Keeping a consistent voice and quality while producing more",
+        "option4_de": "Einheitliche Stimme und Qualität halten, während mehr produziert wird"
+      }
+    },
+    "several": {
+      "buttonLabel": "Several of these at once",
+      "buttonLabel_de": "Mehreres davon gleichzeitig",
+      "followup": {
+        "questionLabel": "Which one would you tackle first?",
+        "questionLabel_de": "Welchen Bereich würden Sie zuerst angehen?"
+      }
+    }
+  },
+  "processQuestion": {
+    "questionLabel": "Is there a clear process for this, or does it depend on who's available?",
+    "questionLabel_de": "Gibt es dafür einen klaren Ablauf – oder hängt es davon ab, wer gerade Zeit hat?",
+    "noneLabel": "No real process — whoever has time handles it",
+    "noneLabel_de": "Keinen richtigen Ablauf – wer Zeit hat, kümmert sich",
+    "partialLabel": "Some rules exist but it's still inconsistent",
+    "partialLabel_de": "Es gibt Regeln, aber in der Praxis läuft es trotzdem uneinheitlich",
+    "fullLabel": "There's a defined process — we just need it to run faster",
+    "fullLabel_de": "Es gibt einen definierten Ablauf – wir müssen ihn nur schneller machen"
+  },
+  "goalQuestion": {
+    "questionLabel": "What would a useful outcome look like for you?",
+    "questionLabel_de": "Was wäre für Sie ein gutes Ergebnis?",
+    "solveLabel": "A practical workflow that takes this off my plate — or at least reduces it",
+    "solveLabel_de": "Ein Ablauf, der mir das abnimmt – oder zumindest deutlich reduziert",
+    "clarityLabel": "More visibility into what's happening, so I can make better decisions",
+    "clarityLabel_de": "Mehr Überblick über das, was läuft – damit ich bessere Entscheidungen treffe",
+    "exploreLabel": "A general sense of what's possible before committing to anything",
+    "exploreLabel_de": "Erst verstehen, was überhaupt möglich ist – bevor ich mich auf etwas einlasse",
+    "compareLabel": "Understanding how others have approached this",
+    "compareLabel_de": "Sehen, wie andere das angegangen sind"
+  },
+  "shortClose": {
+    "heading": "Thanks for your interest",
+    "heading_de": "Vielen Dank für Ihr Interesse",
+    "body": "This quick check is built for businesses assessing their own operations, so we've kept it short for you. If you'd like to talk automation — as a consultant exploring it for clients, or just to learn more — feel free to reach out directly.",
+    "body_de": "Dieser kurze Check ist für Unternehmen gedacht, die ihren eigenen Betrieb einschätzen möchten – deshalb halten wir es für Sie kurz. Wenn Sie über Automatisierung sprechen möchten – als Berater für Kunden, oder einfach um mehr zu erfahren – melden Sie sich gerne direkt.",
+    "ctaLabel": "Get in touch",
+    "ctaLabel_de": "Kontakt aufnehmen"
+  },
+  "profiles": {
+    "fireFight": {
+      "name": "FireFight",
+      "name_de": "FireFight",
+      "tagline": "You're spending real hours firefighting, with no clear process to fall back on.",
+      "tagline_de": "Sie investieren im Moment echte Stunden ins Feuerlöschen – ohne klaren Ablauf im Hintergrund.",
+      "description": "Right now, this work eats a real chunk of your week — and without a defined process, it likely falls on whoever has time, which makes it inconsistent as well as slow. This is usually the fastest area to see a return from automating, because the fix doesn't require redesigning how you work — it just needs the parts that already repeat to stop needing a person.",
+      "description_de": "Dieser Bereich kostet aktuell einen spürbaren Teil Ihrer Woche – und da kein definierter Ablauf existiert, übernimmt es meist, wer gerade Zeit hat. Das macht es zusätzlich uneinheitlich. Das ist in der Regel der Bereich, in dem sich Automatisierung am schnellsten auszahlt, denn es braucht keine grundlegende Neugestaltung – nur die bereits wiederkehrenden Schritte müssen nicht mehr manuell erledigt werden."
+    },
+    "refine": {
+      "name": "Refine",
+      "name_de": "Refine",
+      "tagline": "You already have a process — it's just not fast enough.",
+      "tagline_de": "Sie haben bereits einen Ablauf – er ist nur noch nicht schnell genug.",
+      "description": "You've done the harder work already: there's a defined way this gets done. The cost now is mostly speed and consistency, not structure. That's usually a more contained automation project than it looks — the logic already exists, it just needs to run without someone executing it by hand every time.",
+      "description_de": "Die schwierigere Arbeit ist bereits getan: Es gibt einen definierten Ablauf. Der Aufwand liegt jetzt vor allem bei Geschwindigkeit und Konsistenz, nicht bei der Struktur. Das ist meist ein überschaubareres Automatisierungsprojekt, als es aussieht – die Logik existiert bereits, sie muss nur nicht mehr jedes Mal von Hand ausgeführt werden."
+    },
+    "build": {
+      "name": "Build",
+      "name_de": "Build",
+      "tagline": "The time cost is manageable for now — but there's no real process underneath it.",
+      "tagline_de": "Der Zeitaufwand ist im Moment überschaubar – aber es fehlt ein echter Ablauf dahinter.",
+      "description": "This isn't costing you many hours yet, which is exactly why it's easy to leave as-is. But without a defined process, it tends to get worse as volume grows, not better. Worth thinking about before it becomes the next FireFight.",
+      "description_de": "Aktuell kostet das noch nicht viele Stunden, was es leicht macht, es einfach so zu belassen. Ohne definierten Ablauf wird es mit wachsendem Volumen aber eher schlimmer als besser. Das lohnt sich, bevor daraus das nächste FireFight wird."
+    },
+    "optimize": {
+      "name": "Optimize",
+      "name_de": "Optimize",
+      "tagline": "This is already working reasonably well.",
+      "tagline_de": "Das läuft bereits vergleichsweise gut.",
+      "description": "You have both a defined process and a manageable time cost — this is closer to fine-tuning than fixing. Automation here is about removing friction and freeing up the last bit of manual effort, not solving a broken workflow.",
+      "description_de": "Sie haben sowohl einen definierten Ablauf als auch einen überschaubaren Zeitaufwand – hier geht es eher um Feinschliff als um Reparatur. Automatisierung bedeutet hier, Reibung zu reduzieren und den letzten manuellen Aufwand abzubauen, nicht einen kaputten Prozess zu retten."
+    }
+  },
+  "resultShared": {
+    "disclaimer": "This result is based on a handful of quick answers — a useful starting point, not a full diagnosis. If something here doesn't quite match your situation, or you'd like a clearer picture, a short conversation is the fastest way to get one.",
+    "disclaimer_de": "Dieses Ergebnis basiert auf wenigen kurzen Antworten – ein hilfreicher erster Anhaltspunkt, keine vollständige Diagnose. Falls etwas hier nicht ganz zu Ihrer Situation passt, oder Sie ein klareres Bild wünschen, ist ein kurzes Gespräch der schnellste Weg dazu.",
+    "ctaLabel": "Let's talk it through",
+    "ctaLabel_de": "Lassen Sie uns kurz darüber sprechen"
+  }
+}
