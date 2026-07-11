@@ -169,10 +169,20 @@ for (const key of categoryKeysList) {
 
       <!-- F1b: Kategorie-Folgefrage — nur für "Geschäftsführer/Inhaber",
            clientseitig aus den unten eingebetteten Daten gebaut. -->
-      <div class="vd-q hidden" data-q="followup">
-        <p class="vd-ql" id="vd-followup-question"></p>
-        <div class="flex flex-col gap-1" id="vd-followup-options"></div>
-      </div>
+      <!-- Statisch pro Kategorie gerendert (nicht per Client-JS gebaut), damit
+           Astros gescopte .vd-opt/.vd-ql-Styles tatsächlich greifen — per
+           document.createElement erzeugte Elemente erhalten Astros
+           data-astro-cid-Attribut nie, das war der Bug hier. -->
+      {categoryKeysList.map((k) => (
+        <div class="vd-q hidden" data-q={`followup-${k}`}>
+          <p class="vd-ql">{followupData[k].question}</p>
+          <div class="flex flex-col gap-1">
+            {followupData[k].options.map((opt) => (
+              <button class="vd-opt" data-val={opt.value}>{opt.label}</button>
+            ))}
+          </div>
+        </div>
+      ))}
 
       <!-- F2: Zeitaufwand — nicht Teil des Fit-Check-Contentmodells, bleibt statisch -->
       <div class="vd-q hidden" data-q="time">
@@ -403,19 +413,7 @@ for (const key of categoryKeysList) {
     .hidden { display:none; }
   </style>
 
-  <!-- Per-category follow-up copy (DE), computed at build time from Tina
-       content. Public copy only — handed to the client script as data
-       instead of hardcoded markup, since the follow-up shown depends on
-       which category the visitor picks. -->
-  <script define:vars={{ followupData }}>
-    window.__VD_FOLLOWUP__ = followupData;
-  </script>
-
   <script>
-    type FollowupOption = { value: string; label: string };
-    type FollowupEntry = { question: string; options: FollowupOption[] };
-    const FOLLOWUP: Record<string, FollowupEntry> = (window as any).__VD_FOLLOWUP__ || {};
-
     const STEPS_BUSINESS = ['role', 'category', 'followup', 'time', 'process', 'goal'];
     const answers: Record<string, string> = {};
     let current = 'role';
@@ -426,6 +424,16 @@ for (const key of categoryKeysList) {
     const stepEl  = document.getElementById('vd-step')!;
     const nav     = document.getElementById('vd-nav')!;
     const qEls    = Array.from(document.querySelectorAll<HTMLElement>('.vd-q'));
+
+    // "followup" ist ein logischer Schritt (für Fortschritt/Zurück-Button),
+    // hat aber 7 vorgerenderte DOM-Blöcke (einer pro Kategorie, statisch zur
+    // Build-Zeit erzeugt — siehe .map() oben —, damit Astros gescopte Styles
+    // greifen, anders als bei client-seitig gebautem DOM). Diese Funktion
+    // bildet den logischen Schritt auf den tatsächlich sichtbaren ab.
+    function domKeyFor(step: string): string {
+      if (step === 'followup') return `followup-${answers.category}`;
+      return step;
+    }
 
     function renderProgress() {
       progressWrap.innerHTML = '';
@@ -443,7 +451,8 @@ for (const key of categoryKeysList) {
 
     function showStep(step: string) {
       current = step;
-      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== step));
+      const domKey = domKeyFor(step);
+      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== domKey));
       renderProgress();
       renderStepChrome();
     }
@@ -457,26 +466,11 @@ for (const key of categoryKeysList) {
       if (!stepHistory.length) return;
       const prev = stepHistory.pop()!;
       current = prev;
-      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== prev));
+      const domKey = domKeyFor(prev);
+      qEls.forEach(q => q.classList.toggle('hidden', q.dataset.q !== domKey));
       renderProgress();
       renderStepChrome();
     });
-
-    function buildFollowup(category: string) {
-      const entry = FOLLOWUP[category];
-      const qEl = document.getElementById('vd-followup-question')!;
-      const optWrap = document.getElementById('vd-followup-options')!;
-      qEl.textContent = entry?.question || '';
-      optWrap.innerHTML = '';
-      (entry?.options || []).forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'vd-opt';
-        btn.dataset.val = opt.value;
-        btn.textContent = opt.label;
-        btn.addEventListener('click', () => selectOption('followup', btn));
-        optWrap.appendChild(btn);
-      });
-    }
 
     function advance(fromStep: string) {
       if (fromStep === 'role') {
@@ -487,7 +481,7 @@ for (const key of categoryKeysList) {
         }
         return;
       }
-      if (fromStep === 'category') { buildFollowup(answers.category); goTo('followup'); return; }
+      if (fromStep === 'category') { goTo('followup'); return; }
       if (fromStep === 'followup') { goTo('time'); return; }
       if (fromStep === 'time')     { goTo('process'); return; }
       if (fromStep === 'process')  { goTo('goal'); return; }
@@ -502,11 +496,12 @@ for (const key of categoryKeysList) {
       setTimeout(() => advance(step), 160);
     }
 
-    // Static-option questions (role, category, time, process, goal) wire up
-    // directly; "followup" is built dynamically once a category is chosen.
+    // Jede Frage — inklusive aller 7 kategoriespezifischen Folgefrage-Blöcke —
+    // ist bereits im HTML vorgerendert, daher kann jeder Options-Button hier
+    // direkt verdrahtet werden; nichts wird client-seitig gebaut.
     qEls.forEach(q => {
-      const step = q.dataset.q!;
-      if (step === 'followup') return;
+      const domKey = q.dataset.q!;
+      const step = domKey.startsWith('followup-') ? 'followup' : domKey;
       q.querySelectorAll<HTMLButtonElement>('.vd-opt').forEach(btn => {
         btn.addEventListener('click', () => selectOption(step, btn));
       });
