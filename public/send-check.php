@@ -11,10 +11,12 @@
  * Build/Optimize) are both computed here, server-side, from the RAW answers
  * submitted by the client. The client never computes or transmits either
  * value — it only sends role/category/followup/time/process/goal. This
- * response returns ONLY the single matched profile's public-facing text
- * (name/tagline/description). The other three profiles, the bucket label,
- * and any internal methodology name are never included in the JSON response
- * and must stay that way.
+ * response returns ONLY the matched profile's tagline and description — the
+ * FireFight/Refine/Build/Optimize NAME itself is deliberately never included
+ * either, by design decision: that naming stays internal-only, never shown
+ * to a visitor even for their own match. The other three profiles' text,
+ * the bucket label, and any internal methodology name are never included in
+ * the JSON response and must stay that way.
  *
  * CONTENT SYNC NOTE:
  * $PROFILES below is a hand-maintained duplicate of the "profiles" section
@@ -30,23 +32,34 @@
  */
 $recipient = "info@vortexdeep.ch";
 
-// ── Bot protection layer 1: Honeypot ─────────────────────────────────────────
-// Bots fill in hidden fields. Real users never see this field.
-if (!empty($_POST['website_url'])) {
-    // Silent fake success — don't tell the bot it was blocked
-    header('Content-Type: application/json');
-    echo json_encode(["status" => "ok"]);
-    exit;
+// ── Bot signals: honeypot + timing ───────────────────────────────────────────
+// These are FLAGS, not hard blocks. A hidden honeypot field can get filled by
+// a browser's own autofill (this happened in testing — Chrome filled it even
+// though it's off-screen and autocomplete="off"), and a fast, autofill-assisted
+// real visitor can beat a fixed time threshold. Either used to hard-block and
+// silently fake a success with no email sent — which meant a real lead's
+// submission could vanish with no error and no notification to the team.
+// The actual spam gates are the session-based math captcha, the DNS-validated
+// email check, and the content filter below — all still hard requirements.
+// A submission that only trips these two soft signals still goes through and
+// still emails the team, just flagged, so nothing real gets silently lost.
+$suspicious = false;
+$suspicious_reasons = [];
+
+// Honeypot: bots fill every field, including ones a human never sees.
+if (!empty($_POST['hp_field_9x2'])) {
+    $suspicious = true;
+    $suspicious_reasons[] = 'honeypot field was filled';
 }
 
-// ── Bot protection layer 2: Time trap ────────────────────────────────────────
-// Real humans take more than 4 seconds to fill a form. Bots submit instantly.
+// Timing: genuine bots usually submit near-instantly. Lowered from a hard
+// 4s block to a 2s flag threshold specifically because autofill can make a
+// real visitor's fill-and-submit time very short.
 $load_time  = (int)($_POST['form_load_time'] ?? 0);
 $time_taken = time() - $load_time;
-if ($load_time === 0 || $time_taken < 4) {
-    header('Content-Type: application/json');
-    echo json_encode(["status" => "ok"]); // Silent fake success
-    exit;
+if ($load_time === 0 || $time_taken < 2) {
+    $suspicious = true;
+    $suspicious_reasons[] = 'submitted unusually fast (' . $time_taken . 's)';
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -54,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit("Method not allowed");
 }
 
-// ── Bot protection layer 3: Math challenge (session-based) ───────────────────
+// ── Bot protection: Math challenge (session-based) — hard requirement ────────
 session_start();
 $math_answer = intval($_POST['math_answer'] ?? -1);
 $correct_sum = isset($_SESSION['vd_math_sum']) ? intval($_SESSION['vd_math_sum']) : -999;
@@ -68,16 +81,16 @@ if ($math_answer !== $correct_sum || $correct_sum === -999) {
 // Clear session immediately — prevents replay attacks
 unset($_SESSION['vd_math_sum']);
 
-// ── Bot protection layer 4: Content filtering ─────────────────────────────────
-// Block URLs in the note field, and gibberish (very long unbroken strings)
+// ── Bot signal: content in the optional "note" field ──────────────────────────
+// A URL or one long unbroken string in the note is more often a real client
+// pasting their own site/tool link than a bot — flag it, don't drop it.
 $temp_note = $_POST['note'] ?? '';
 if (
     preg_match('/https?:\/\/|www\./i', $temp_note) ||
     preg_match('/[a-zA-Z]{35,}/', $temp_note)
 ) {
-    header('Content-Type: application/json');
-    echo json_encode(["status" => "ok"]); // Silent fake success
-    exit;
+    $suspicious = true;
+    $suspicious_reasons[] = 'note field contains a URL or unbroken long string';
 }
 
 // ── Sanitise ──────────────────────────────────────────────────────────────────
@@ -174,7 +187,7 @@ $PROFILES = [
         'optimize' => [
             'name' => 'Optimize',
             'tagline' => "This is already working reasonably well.",
-            'description' => "You have both a defined process and a manageable time cost — this is closer to fine-tuning than fixing. Automation here is about removing friction and freeing up the last bit of manual effort, not solving a broken workflow.",
+            'description' => "You have both a defined process and a manageable time cost — this is closer to fine-tuning than fixing. Automation here is about removing friction and freeing up the last bit of manual effort, not solving a broken workflow. Even solid setups like this usually still have room for effective automation — small frictions worth removing, processes worth tightening, and time, money, or other resources worth freeing up that are easy to overlook when things already work.",
         ],
     ],
     'de' => [
@@ -196,7 +209,7 @@ $PROFILES = [
         'optimize' => [
             'name' => 'Optimize',
             'tagline' => "Das läuft bereits vergleichsweise gut.",
-            'description' => "Sie haben sowohl einen definierten Ablauf als auch einen überschaubaren Zeitaufwand – hier geht es eher um Feinschliff als um Reparatur. Automatisierung bedeutet hier, Reibung zu reduzieren und den letzten manuellen Aufwand abzubauen, nicht einen kaputten Prozess zu retten.",
+            'description' => "Sie haben sowohl einen definierten Ablauf als auch einen überschaubaren Zeitaufwand – hier geht es eher um Feinschliff als um Reparatur. Automatisierung bedeutet hier, Reibung zu reduzieren und den letzten manuellen Aufwand abzubauen, nicht einen kaputten Prozess zu retten. Auch bei einer so soliden Ausgangslage gibt es meist noch Raum für sinnvolle Automatisierung – kleine Reibungspunkte, die sich beseitigen lassen, Abläufe, die sich weiter verschlanken lassen, sowie Zeit, Geld oder andere Ressourcen, die sich freisetzen lassen und bei bereits funktionierenden Prozessen leicht übersehen werden.",
         ],
     ],
 ];
@@ -210,6 +223,9 @@ $subjects = [
     "other" => "○ Interest noted — VortexDeep Fit Check",
 ];
 $subject = $subjects[$bucket] ?? "New submission — VortexDeep Fit Check";
+if ($suspicious) {
+    $subject = "⚠ " . $subject; // flagged, not blocked — still reaches the inbox
+}
 
 $category_labels = [
     "comms"     => "Inquiries, messages & customer support",
@@ -245,9 +261,43 @@ function label($map, $key) {
     return isset($map[$key]) ? $map[$key] : $key;
 }
 
+// ── Human-readable glossary + full matrix diagram for the internal email ─────
+// This is the ONE place all four quadrants and both bucket meanings are ever
+// written out together — safe here because this email never leaves this
+// script and never reaches a browser. Exists so BUCKET/PROFILE aren't just
+// bare jargon in the inbox.
+$bucket_glossary = "lead = strongest fit (real time cost, process gap, wants a practical outcome)  |  "
+                  . "warm = business but a softer fit (e.g. process already fairly solid, or just exploring/comparing)  |  "
+                  . "other = not a business decision-maker — these never reach this email; they see a short thank-you on the page instead";
+
+function build_matrix_diagram($profileKey) {
+    $cells = [
+        'fireFight' => 'FireFight — urgent time cost,     no/partial process',
+        'refine'    => 'Refine     — urgent time cost,     full process',
+        'build'     => 'Build      — manageable time cost, no/partial process',
+        'optimize'  => 'Optimize   — manageable time cost, full process',
+    ];
+    $lines = [];
+    foreach ($cells as $key => $desc) {
+        $marker = ($key === $profileKey) ? '>>> ' : '    ';
+        $tag    = ($key === $profileKey) ? '   <-- THIS SUBMISSION' : '';
+        $lines[] = $marker . $desc . $tag;
+    }
+    return implode("\n", $lines);
+}
+
 $body = "BUCKET:  $bucket\n"
       . "PROFILE: " . $profile['name'] . " [$profileKey]\n"
-      . "Source: $source\n\n"
+      . "Source: $source\n"
+      . ($suspicious ? "FLAGGED: " . implode('; ', $suspicious_reasons) . " (not blocked — verify before replying)\n" : "")
+      . "\n"
+
+      . "--- What BUCKET means ---\n"
+      . $bucket_glossary . "\n\n"
+
+      . "--- Full matrix — where this submission lands ---\n"
+      . "(rows: time cost, urgent = high or hard-to-say/spread-across-team; columns: whether a defined process exists)\n"
+      . build_matrix_diagram($profileKey) . "\n\n"
 
       . "--- Contact ---\n"
       . "Email:   $email\n"
@@ -284,12 +334,13 @@ $sent = mail($recipient, $subject, $body, $headers);
 
 header('Content-Type: application/json');
 if ($sent) {
-    // Only the ONE matched profile's public-facing text goes back to the
-    // browser. No bucket, no other profiles, no methodology name.
+    // Only the ONE matched profile's tagline + description go back to the
+    // browser. No name/label (the FireFight/Refine/Build/Optimize naming
+    // stays fully internal — never sent to any visitor, not even for their
+    // own match), no bucket, no other profiles, no methodology name.
     echo json_encode([
         "status" => "ok",
         "profile" => [
-            "name"        => $profile['name'],
             "tagline"     => $profile['tagline'],
             "description" => $profile['description'],
         ],

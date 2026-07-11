@@ -248,7 +248,7 @@ for (const key of categoryKeysList) {
           <input type="hidden" name="process"  id="gate-process">
           <input type="hidden" name="goal"     id="gate-goal">
           <input type="hidden" name="form_load_time" id="gate-load-time">
-          <input type="text" name="website_url" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="off"/>
+          <input type="text" name="hp_field_9x2" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="off" aria-hidden="true"/>
           <label class="block">
             <span class="vd-fl">E-Mail</span>
             <input name="email" type="email" required class="vd-input" placeholder="ihre@email.com"/>
@@ -282,6 +282,9 @@ for (const key of categoryKeysList) {
           <p id="vd-gate-error" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
             Falsche Antwort oder ungültige E-Mail – bitte nochmal versuchen.
           </p>
+          <p id="vd-gate-error-fallback" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
+            Falls das weiterhin passiert, schreiben Sie uns direkt an <a href={`mailto:${contactEmail}`} class="vd-soft-link" style="text-transform:none; letter-spacing:normal;">{contactEmail}</a>.
+          </p>
           <button type="submit"
                   class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
                   style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
@@ -290,10 +293,12 @@ for (const key of categoryKeysList) {
         </form>
       </div>
 
-      <!-- Ergebnis: wird nach dem Absenden aus der Server-Antwort befüllt. -->
+      <!-- Ergebnis: wird nach dem Absenden aus der Server-Antwort befüllt.
+           Kein Profilname/Label wird hier angezeigt oder übertragen — nur
+           Tagline und Beschreibung für das eigene Ergebnis. -->
       <div class="vd-result hidden text-center" id="vd-result">
-        <h2 class="vd-rh" id="vd-result-name"></h2>
-        <p class="vd-rb" id="vd-result-tagline" style="opacity:0.75; font-style:normal;"></p>
+        <p class="vd-tag">Ihr Ergebnis</p>
+        <h2 class="vd-rh" id="vd-result-tagline"></h2>
         <p class="vd-rb" id="vd-result-description"></p>
         <p class="vd-rb" id="vd-result-disclaimer" style="opacity:0.5; font-style:normal;">{fc.resultShared?.disclaimer_de}</p>
         <a href={`mailto:${contactEmail}`} class="vd-soft-link" id="vd-result-cta">{fc.resultShared?.ctaLabel_de}</a>
@@ -543,19 +548,34 @@ for (const key of categoryKeysList) {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const errorEl = document.getElementById('vd-gate-error')!;
+      const fallbackEl = document.getElementById('vd-gate-error-fallback')!;
       const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-      btn.textContent = '...'; btn.disabled = true; errorEl.classList.add('hidden');
+      btn.textContent = '...'; btn.disabled = true;
+      errorEl.classList.add('hidden');
+      fallbackEl.classList.add('hidden');
       try {
         const res = await fetch('/send-check.php', { method: 'POST', body: new FormData(form) });
         const data = await res.json();
         if (data.status === 'ok' && data.profile) {
           document.getElementById('vd-gate')!.classList.add('hidden');
-          (document.getElementById('vd-result-name') as HTMLElement).textContent = data.profile.name || '';
           (document.getElementById('vd-result-tagline') as HTMLElement).textContent = data.profile.tagline || '';
           (document.getElementById('vd-result-description') as HTMLElement).textContent = data.profile.description || '';
           document.getElementById('vd-result')!.classList.remove('hidden');
         } else {
+          // Unterschiedliche, ehrliche Meldung je Fehlergrund — ein
+          // Mailserver-Problem ist nicht die Schuld der Besucherin, und "Ihre
+          // Rechnung war falsch" zu sagen, wenn das nicht stimmt, führt nur
+          // zu sinnlosen Versuchen.
+          const messages: Record<string, string> = {
+            security_check: 'Falsche Antwort – bitte nochmal versuchen.',
+            invalid_email:  'Diese E-Mail-Adresse scheint ungültig zu sein – bitte prüfen und nochmal versuchen.',
+            mail_failed:    'Beim Versenden ist auf unserer Seite etwas schiefgelaufen – bitte nochmal versuchen, oder unten direkt schreiben.',
+          };
+          errorEl.textContent = messages[data.reason] || 'Etwas ist schiefgelaufen – bitte nochmal versuchen, oder unten direkt schreiben.';
           errorEl.classList.remove('hidden');
+          if (data.reason === 'mail_failed' || !data.reason) {
+            fallbackEl.classList.remove('hidden');
+          }
           btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
           const mathRes = await fetch('/get-math.php');
           const mathData = await mathRes.json();
@@ -564,7 +584,10 @@ for (const key of categoryKeysList) {
           (form.querySelector('input[name="math_answer"]') as HTMLInputElement).value = '';
         }
       } catch (_) {
-        errorEl.classList.remove('hidden'); btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
+        errorEl.textContent = 'Etwas ist schiefgelaufen – bitte nochmal versuchen, oder unten direkt schreiben.';
+        errorEl.classList.remove('hidden');
+        fallbackEl.classList.remove('hidden');
+        btn.textContent = 'Mein Ergebnis sehen'; btn.disabled = false;
       }
     });
 
