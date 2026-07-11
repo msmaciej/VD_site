@@ -299,6 +299,11 @@ $body = "BUCKET:  $bucket\n"
       . "(rows: time cost, urgent = high or hard-to-say/spread-across-team; columns: whether a defined process exists)\n"
       . build_matrix_diagram($profileKey) . "\n\n"
 
+      . "--- What the client saw on screen ---\n"
+      . "(exact text — no profile name/label was shown to them, just this)\n"
+      . $profile['tagline'] . "\n"
+      . $profile['description'] . "\n\n"
+
       . "--- Contact ---\n"
       . "Email:   $email\n"
       . "Name:    $name\n"
