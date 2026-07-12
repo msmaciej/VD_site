@@ -7,6 +7,24 @@ interface Props {
   ogImage?:     string;
   siteUrl?:     string;
   lang?:        'en' | 'de';
+  // ── Visitor theme toggle (sun/moon) ─────────────────────────────────────
+  // autoBg/autoText: the *effective* rendered colors for the "Current"
+  // state — i.e. already resolved past any customBackgroundColor/
+  // baseTextColor override in Site Settings, not just the theme preset's
+  // own fixed values. Optional: pages that don't pass these (e.g. a page
+  // that only cares about the theme preset, not per-field overrides) fall
+  // back to the preset's own static --zen-bg/--zen-text below, unchanged
+  // from how this worked before the toggle existed.
+  // themeToggleEnabled: mirrors Site Settings' "enableThemeToggle" — gates
+  // the FOUC-prevention script below so a disabled toggle never applies a
+  // visitor's stale saved choice from a previous visit.
+  autoBg?:            string;
+  autoText?:           string;
+  // autoFamily: 'light' | 'dark' classification of the Current state
+  // (see themeFamily() in siteHelpers.ts) — the click-cycle script needs
+  // this to know which forced state to visit first.
+  autoFamily?:         'light' | 'dark';
+  themeToggleEnabled?: boolean;
 }
 const {
   title,
@@ -15,6 +33,10 @@ const {
   ogImage     = '',
   siteUrl     = 'https://vortexdeep.ch',
   lang        = 'en',
+  autoBg,
+  autoText,
+  autoFamily,
+  themeToggleEnabled = false,
 } = Astro.props;
 
 const canonical   = `${siteUrl}${Astro.url.pathname}`;
@@ -45,10 +67,25 @@ const themeColorMap: Record<string, string> = {
   sand:  '#f5f0e8',
   deep:  '#0c0f14',
 };
-const themeColor = themeColorMap[theme] || '#ffffff';
+const themeColor = autoBg || themeColorMap[theme] || '#ffffff';
+
+// ── Auto-state CSS override ───────────────────────────────────────────────
+// The static :root[data-theme="X"] blocks below give every preset its own
+// --zen-bg/--zen-text. That's correct for the two FORCED toggle states
+// (literal light/dark — deliberately ignore any custom color, see Tina
+// field description) but not for "Current", which should reflect any
+// customBackgroundColor/baseTextColor override too. Rather than fight CSS
+// specificity, this renders a second rule for the *same* attribute selector
+// as the current preset, placed after it in source order — same
+// specificity, later wins, so it cleanly overrides only the two properties
+// that can actually be customized, and only when a page actually passes
+// them in.
+const autoOverrideCss = (autoBg || autoText)
+  ? `:root[data-theme="${theme}"]{${autoBg ? `--zen-bg:${autoBg};` : ''}${autoText ? `--zen-text:${autoText};` : ''}}`
+  : '';
 ---
 <!doctype html>
-<html lang={lang} data-theme={theme}>
+<html lang={lang} data-theme={theme} data-auto-theme={theme} data-auto-family={autoFamily} data-theme-toggle={themeToggleEnabled ? 'true' : 'false'}>
   <head>
     <meta charset="UTF-8" />
     <!-- FIX 2: initial-scale=1 prevents mobile browsers zooming in/out on load -->
@@ -126,6 +163,67 @@ const themeColor = themeColorMap[theme] || '#ffffff';
         }
       }
     </style>
+    {autoOverrideCss && <style set:html={autoOverrideCss}></style>}
+
+    <!-- ── Theme toggle: FOUC-prevention ──────────────────────────────────────
+         Must run before first paint. Reads any saved visitor choice and, if
+         present, applies it immediately — otherwise the page would flash the
+         admin's "Current" theme for a frame before JS caught up. Only ever
+         reads/writes when the admin has the toggle switched on; if a visitor
+         saved a forced choice on an earlier visit and the admin has since
+         turned the toggle off, that stored choice is simply never read here,
+         so the page shows "Current" as if the visitor had never toggled. -->
+    <script is:inline define:vars={{ toggleEnabled: themeToggleEnabled === true }}>
+      if (toggleEnabled) {
+        try {
+          var vdSaved = localStorage.getItem('vd-theme-choice');
+          if (vdSaved === 'light' || vdSaved === 'dark') {
+            document.documentElement.setAttribute('data-theme', vdSaved);
+            document.documentElement.setAttribute('data-theme-forced', vdSaved);
+          }
+        } catch (e) {}
+      }
+    </script>
+
+    <!-- ── Theme toggle: click handling ─────────────────────────────────────
+         One button (data-vd-theme-cycle) steps through a fixed 3-position
+         cycle each click: Current (Auto) → forced state opposite Current's
+         own family → forced state matching Current's family → back to
+         Auto. E.g. Current = deep (dark family): Auto → forced-light →
+         forced-dark → Auto. Delegated on document so it works regardless
+         of which page template renders the button. Dispatches
+         vd-theme-change so live-rendered elements (e.g. the particle
+         background canvas) can react without a reload. -->
+    <script is:inline>
+      function vdNextThemeState(current, family) {
+        // current: null (Auto) | 'light' | 'dark'  — family: 'light' | 'dark'
+        var opposite = family === 'light' ? 'dark' : 'light';
+        if (current === null) return opposite;
+        if (current === opposite) return family;
+        return null;
+      }
+      function vdApplyTheme(mode) {
+        var html = document.documentElement;
+        if (mode) {
+          html.setAttribute('data-theme', mode);
+          html.setAttribute('data-theme-forced', mode);
+          try { localStorage.setItem('vd-theme-choice', mode); } catch (e) {}
+        } else {
+          html.setAttribute('data-theme', html.dataset.autoTheme || 'light');
+          html.removeAttribute('data-theme-forced');
+          try { localStorage.removeItem('vd-theme-choice'); } catch (e) {}
+        }
+        window.dispatchEvent(new CustomEvent('vd-theme-change', { detail: { mode: mode || 'auto' } }));
+      }
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-vd-theme-cycle]');
+        if (!btn) return;
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme-forced'); // null | 'light' | 'dark'
+        var family = html.dataset.autoFamily || 'light';
+        vdApplyTheme(vdNextThemeState(current, family));
+      });
+    </script>
   </head>
   <body>
     <slot />

@@ -13,6 +13,26 @@ export const themeColors: Record<string, { bg: string; text: string }> = {
   deep:  { bg: '#0c0f14',  text: '#e0e2e8' },
 };
 
+/**
+ * Classifies a background colour as belonging to the "light" or "dark"
+ * family, using actual relative luminance rather than a hardcoded name
+ * lookup. This is what makes the sun/moon toggle icon correct even when
+ * admin has typed a custom background colour into Tina (customBackgroundColor)
+ * rather than just picking one of the 8 named presets — the icon reflects
+ * what's actually rendered, not the preset label.
+ */
+export const themeFamily = (bgHex: string): 'light' | 'dark' => {
+  const clean = (bgHex || '#ffffff').replace('#', '');
+  const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
+  const num = parseInt(full, 16) || 0xffffff;
+  const r = ((num >> 16) & 255) / 255;
+  const g = ((num >> 8) & 255) / 255;
+  const b = (num & 255) / 255;
+  // Standard relative-luminance weighting (sRGB, ITU-R BT.709).
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 0.5 ? 'light' : 'dark';
+};
+
 /** Returns a CSS font-family string from a preset name. */
 export const fontFamily = (name: string): string => {
   const map: Record<string, string> = {

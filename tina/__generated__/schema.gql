@@ -167,7 +167,17 @@ type PageBlocksCaseStudy {
   enabled: Boolean
 }
 
-union PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy
+type PageBlocksTestimonial {
+  quote: String
+  attributionName: String
+  attributionOrg: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
+union PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy | PageBlocksTestimonial
 
 type Page implements Node & Document {
   blocks: [PageBlocks]
@@ -266,10 +276,21 @@ input PageBlocksCaseStudyFilter {
   enabled: BooleanFilter
 }
 
+input PageBlocksTestimonialFilter {
+  quote: StringFilter
+  attributionName: StringFilter
+  attributionOrg: StringFilter
+  quoteFontSize: StringFilter
+  quoteFontWeight: StringFilter
+  metaFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
 input PageBlocksFilter {
   section: PageBlocksSectionFilter
   processFlow: PageBlocksProcessFlowFilter
   caseStudy: PageBlocksCaseStudyFilter
+  testimonial: PageBlocksTestimonialFilter
 }
 
 input PageFilter {
@@ -355,7 +376,17 @@ type Page_deBlocksCaseStudy {
   enabled: Boolean
 }
 
-union Page_deBlocks = Page_deBlocksSection | Page_deBlocksProcessFlow | Page_deBlocksCaseStudy
+type Page_deBlocksTestimonial {
+  quote: String
+  attributionName: String
+  attributionOrg: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
+union Page_deBlocks = Page_deBlocksSection | Page_deBlocksProcessFlow | Page_deBlocksCaseStudy | Page_deBlocksTestimonial
 
 type Page_de implements Node & Document {
   blocks: [Page_deBlocks]
@@ -432,10 +463,21 @@ input Page_deBlocksCaseStudyFilter {
   enabled: BooleanFilter
 }
 
+input Page_deBlocksTestimonialFilter {
+  quote: StringFilter
+  attributionName: StringFilter
+  attributionOrg: StringFilter
+  quoteFontSize: StringFilter
+  quoteFontWeight: StringFilter
+  metaFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
 input Page_deBlocksFilter {
   section: Page_deBlocksSectionFilter
   processFlow: Page_deBlocksProcessFlowFilter
   caseStudy: Page_deBlocksCaseStudyFilter
+  testimonial: Page_deBlocksTestimonialFilter
 }
 
 input Page_deFilter {
@@ -511,6 +553,7 @@ type Settings implements Node & Document {
   theme: String
   baseTextColor: String
   customBackgroundColor: String
+  enableThemeToggle: Boolean
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
   enableCascadeReveal: Boolean
@@ -604,6 +647,7 @@ input SettingsFilter {
   theme: StringFilter
   baseTextColor: StringFilter
   customBackgroundColor: StringFilter
+  enableThemeToggle: BooleanFilter
   enableLogoAnimation: BooleanFilter
   enableStatusDot: BooleanFilter
   enableCascadeReveal: BooleanFilter
@@ -1275,10 +1319,21 @@ input PageBlocksCaseStudyMutation {
   enabled: Boolean
 }
 
+input PageBlocksTestimonialMutation {
+  quote: String
+  attributionName: String
+  attributionOrg: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
 input PageBlocksMutation {
   section: PageBlocksSectionMutation
   processFlow: PageBlocksProcessFlowMutation
   caseStudy: PageBlocksCaseStudyMutation
+  testimonial: PageBlocksTestimonialMutation
 }
 
 input PageMutation {
@@ -1353,10 +1408,21 @@ input Page_deBlocksCaseStudyMutation {
   enabled: Boolean
 }
 
+input Page_deBlocksTestimonialMutation {
+  quote: String
+  attributionName: String
+  attributionOrg: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  metaFontSize: String
+  enabled: Boolean
+}
+
 input Page_deBlocksMutation {
   section: Page_deBlocksSectionMutation
   processFlow: Page_deBlocksProcessFlowMutation
   caseStudy: Page_deBlocksCaseStudyMutation
+  testimonial: Page_deBlocksTestimonialMutation
 }
 
 input Page_deMutation {
@@ -1421,6 +1487,7 @@ input SettingsMutation {
   theme: String
   baseTextColor: String
   customBackgroundColor: String
+  enableThemeToggle: Boolean
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
   enableCascadeReveal: Boolean

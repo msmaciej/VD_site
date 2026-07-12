@@ -66,6 +66,15 @@ fragment PageParts on Page {
       metaFontSize
       enabled
     }
+    ... on PageBlocksTestimonial {
+      quote
+      attributionName
+      attributionOrg
+      quoteFontSize
+      quoteFontWeight
+      metaFontSize
+      enabled
+    }
   }
 }
 
@@ -137,6 +146,15 @@ fragment Page_deParts on Page_de {
       metaFontSize
       enabled
     }
+    ... on Page_deBlocksTestimonial {
+      quote
+      attributionName
+      attributionOrg
+      quoteFontSize
+      quoteFontWeight
+      metaFontSize
+      enabled
+    }
   }
 }
 
@@ -175,6 +193,7 @@ fragment SettingsParts on Settings {
   theme
   baseTextColor
   customBackgroundColor
+  enableThemeToggle
   enableLogoAnimation
   enableStatusDot
   enableCascadeReveal

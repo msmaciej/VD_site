@@ -9,7 +9,7 @@ import LanguageSwitcher from './LanguageSwitcher.astro';
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
 import { ui, type Lang } from '../i18n/ui.ts';
-import { themeColors, fontFamily, textStyle, socialIcon } from '../utils/siteHelpers.ts';
+import { themeColors, themeFamily, fontFamily, textStyle, socialIcon } from '../utils/siteHelpers.ts';
 
 interface Props {
   lang:     Lang;
@@ -43,6 +43,22 @@ const getTextColor = (customColor?: string) => {
   if (!base) return themeColors[currentTheme]?.text || '#0a0a0a';
   return base;
 };
+
+// zenText/zenBg: plain CSS-variable references for the many inline
+// `style="color: ..."` spots below. Unlike getTextColor()/getBgColor()
+// (which resolve to a literal hex, still needed for Three.js canvas props
+// and the color-mix() translucency below), these let the DOM keep
+// responding when the visitor toggles the theme client-side, since
+// var(--zen-text) re-reads whatever --zen-text currently resolves to
+// rather than freezing a value at build time.
+const zenText = 'var(--zen-text)';
+const zenBg   = 'var(--zen-bg)';
+
+// ── Theme toggle (sun/moon) ───────────────────────────────────────────────
+const themeToggleEnabled = settings.enableThemeToggle === true;
+// Classified from the *effective* background (custom override included, via
+// getBgColor()) rather than the preset name — see themeFamily()'s doc comment.
+const autoFamily = themeFamily(getBgColor());
 
 // ── Layout dimensions ─────────────────────────────────────────────────────────
 const headerHeight     = settings.headerHeight     || '52px';
@@ -132,6 +148,8 @@ const anyFixedBackground = animDepthBg || animPlanetary; // either one needs the
 // full opacity — only the background layer is see-through — since fading the
 // whole element (via CSS opacity) would wash out the text too, not just
 // reveal what's behind it.
+// Kept for the Three.js canvas props further down, which need a literal hex,
+// not a CSS variable — WebGL can't parse color-mix()/var() strings.
 const hexToRgba = (hex: string, alpha: number) => {
   const clean = (hex || '#000000').replace('#', '');
   const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
@@ -139,11 +157,11 @@ const hexToRgba = (hex: string, alpha: number) => {
   return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
 };
 const headerFooterBg = anyFixedBackground
-  ? `background-color: ${hexToRgba(getBgColor(), 0.7)}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
-  : `background-color: ${getBgColor()};`;
+  ? `background-color: color-mix(in srgb, ${zenBg} 70%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
+  : `background-color: ${zenBg};`;
 const contentWrapperBg = anyFixedBackground
-  ? `background-color: ${hexToRgba(getBgColor(), 0.82)}; position: relative; z-index: 1;`
-  : `background-color: ${getBgColor()};`;
+  ? `background-color: color-mix(in srgb, ${zenBg} 82%, transparent); position: relative; z-index: 1;`
+  : `background-color: ${zenBg};`;
 // Every connector previously ran its own independent, continuously-looping
 // comet — since they all loop on their own schedule, several were visibly
 // active at once ("dots everywhere"). Instead: all connectors in one
@@ -252,6 +270,10 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
   description={metaDescription}
   ogImage={settings.ogImage || ''}
   siteUrl={settings.siteUrl || 'https://vortexdeep.ch'}
+  autoBg={getBgColor()}
+  autoText={getTextColor()}
+  autoFamily={autoFamily}
+  themeToggleEnabled={themeToggleEnabled}
 >
   <link rel="stylesheet" href={allFontsUrl} slot="head" />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
@@ -264,6 +286,10 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       connectDistance={settings.depthBackground?.connectDistance || undefined}
       lineOpacity={settings.depthBackground?.lineOpacity ?? undefined}
       nodeOpacity={settings.depthBackground?.nodeOpacity ?? undefined}
+      lightNodeColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkNodeColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
     />
   )}
 
@@ -276,6 +302,10 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       orbitMinRadius={settings.planetarySystems?.orbitMinRadius ?? undefined}
       orbitMaxRadius={settings.planetarySystems?.orbitMaxRadius ?? undefined}
       pathOpacity={settings.planetarySystems?.pathOpacity ?? undefined}
+      lightStarColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkStarColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
     />
   )}
 
@@ -337,6 +367,45 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
     }
     .vd-icon:hover { opacity: 0.9; }
     .vd-icon.round { border-radius: 50%; }
+
+    /* ── Theme toggle (sun/moon, single morphing icon) ─────────────────────
+       One button, two stacked SVGs. Exactly one is visible at a time,
+       decided purely by attributes on <html> (no JS needed to redraw —
+       the click script in Layout.astro only ever flips those attributes):
+         • No [data-theme-forced]  → "Current" (Auto). Shows whichever icon
+           is OPPOSITE Current's own family — e.g. Current = deep (dark) ⇒
+           shows the sun — at a light, clearly-inactive opacity. This is
+           also exactly the icon the first click will activate.
+         • [data-theme-forced="light"] → sun shown solid (selected).
+         • [data-theme-forced="dark"]  → moon shown solid (selected).
+       Both icons always occupy the same box (position: absolute) so the
+       transition between them reads as one icon morphing into the other,
+       rather than two separate elements. */
+    .vd-theme-btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; padding: 0; border: none; background: none;
+      cursor: pointer;
+    }
+    .vd-theme-icon {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.4) rotate(-70deg);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .vd-theme-icon svg { width: 100%; height: 100%; }
+
+    /* Auto: opposite-of-current icon, dimmed — an invitation, not a selection */
+    html:not([data-theme-forced])[data-auto-family="dark"]  .vd-theme-icon-sun  { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced])[data-auto-family="light"] .vd-theme-icon-moon { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    /* Scoped to :not([data-theme-forced]) on purpose — once a choice is
+       forced, the selected icon is already solid and should stay solid on
+       hover, not dip back down toward the dimmed resting opacity. */
+    html:not([data-theme-forced]) .vd-theme-btn:hover .vd-theme-icon { opacity: 0.62; }
+
+    /* Forced: selected icon, fully solid, unaffected by hover */
+    html[data-theme-forced="light"] .vd-theme-icon-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+    html[data-theme-forced="dark"]  .vd-theme-icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
 
     /* ── Snap sections ── */
     .vd-screen {
@@ -512,7 +581,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
         {settings.showLogo && (
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-               style={`color: ${getTextColor()};`}
+               style={`color: ${zenText};`}
                class={`w-5 h-5 flex-shrink-0 ${animLogo ? 'vd-logo' : ''}`}>
             <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
                      fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
@@ -532,24 +601,41 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
           </svg>
         )}
         <span class="text-[10px] uppercase tracking-[0.4em]"
-              style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
+              style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
           {settings.siteName || 'VortexDeep'}
         </span>
         {animDot && (
-          <span class="vd-status-dot" style={`color: ${getTextColor()};`} aria-hidden="true"></span>
+          <span class="vd-status-dot" style={`color: ${zenText};`} aria-hidden="true"></span>
         )}
       </a>
 
       <!-- Nav links + language switcher -->
-      <nav class="flex gap-6 items-center" style={`color: ${getTextColor()};`}>
+      <nav class="flex gap-6 items-center" style={`color: ${zenText};`}>
         {resolvedNavLinks.map((link: any) => (
           <a href={link.url}
              class={`${settings.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
-             style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
+             style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
             {link.label}
           </a>
         ))}
         <LanguageSwitcher lang={lang} slug="" />
+        {themeToggleEnabled && (
+          <button type="button" data-vd-theme-cycle
+                  class="vd-theme-btn" style={`color: ${zenText};`}
+                  aria-label={lang === 'de' ? 'Hell-/Dunkelansicht wechseln' : 'Switch light/dark view'}>
+            <span class="vd-theme-icon vd-theme-icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="12" cy="12" r="4.2"/>
+                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/>
+              </svg>
+            </span>
+            <span class="vd-theme-icon vd-theme-icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.7 6.7 0 0 0 10.7 10.7Z"/>
+              </svg>
+            </span>
+          </button>
+        )}
       </nav>
     </div>
   </header>
@@ -562,16 +648,16 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
         <a href={social.url} target="_blank" rel="noopener noreferrer"
            class={`vd-icon ${round ? 'round' : ''}`}
            title={social.platform}
-           style={`color: ${getTextColor()};`}>
+           style={`color: ${zenText};`}>
           {icon}
         </a>
       );
     })}
     {settings.socialLinks?.length > 0 && (
-      <span class="opacity-20 text-[9px]" style={`color: ${getTextColor()};`}>·</span>
+      <span class="opacity-20 text-[9px]" style={`color: ${zenText};`}>·</span>
     )}
     <p class={`${settings.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
-       style={`color: ${getTextColor()}; font-family: ${fontFamily(activeFont)};`}>
+       style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
       {settings.footerText
         ? settings.footerText
         : `© ${currentYear} ${settings.siteName || 'VortexDeep'}`}
@@ -586,20 +672,20 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       <div class="w-full max-w-xl text-center">
         {!settings.showSubSiteNameOnly && settings.siteName && (
           <h1 class={`${settings.siteNameFontSize || 'text-3xl md:text-4xl'} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
-              style={textStyle(getTextColor(), settings.siteNameFont)}>
+              style={textStyle(zenText, settings.siteNameFont)}>
             {settings.siteName}
           </h1>
         )}
         {subSiteName && (
           <h2 class={`${settings.subSiteNameFontSize || 'text-[13px]'} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
-              style={`${textStyle(getTextColor(), settings.subSiteNameFont)} opacity: 0.7;`}>
+              style={`${textStyle(zenText, settings.subSiteNameFont)} opacity: 0.7;`}>
             {subSiteName.split('|').map((line: string) => (
               <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
             ))}
           </h2>
         )}
       </div>
-      <div class="vd-hint" style={`color: ${getTextColor()};`}>
+      <div class="vd-hint" style={`color: ${zenText};`}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="1.2">
           <path d="M12 5v14M5 12l7 7 7-7"/>
@@ -626,7 +712,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
             <div class="w-full max-w-2xl text-center">
               {block.title && (
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60 translate-x-[0.6em]`}
-                    style={textStyle(getTextColor(), block.titleFont)}>
+                    style={textStyle(zenText, block.titleFont)}>
                   {block.title.split('|').map((line: string) => (
                     <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                   ))}
@@ -636,19 +722,19 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 {block.steps?.map((step: any, i: number) => (
                   <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
                     <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
-                          style={`${textStyle(getTextColor(), step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
+                          style={`${textStyle(zenText, step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
                       {step.label}
                     </span>
                     {i < (block.steps?.length ?? 0) - 1 && (
                       isVertical ? (
-                        <span class="vd-connector-v" style={`color: ${getTextColor()}; gap: ${flowGap}px;`} aria-hidden="true">
+                        <span class="vd-connector-v" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
                           {Array.from({ length: flowDotsN }).map((_, k) => (
                             <span class="vd-relay-dot"
                                   style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
                           ))}
                         </span>
                       ) : (
-                        <span class="vd-connector" style={`color: ${getTextColor()}; gap: ${flowGap}px;`} aria-hidden="true">
+                        <span class="vd-connector" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
                           {Array.from({ length: flowDotsN }).map((_, k) => (
                             <span class="vd-relay-dot"
                                   style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
@@ -671,19 +757,19 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
             <div class="w-full max-w-2xl text-center">
 
               <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.3em] opacity-40 mb-2 translate-x-[0.15em]`}
-                 style={textStyle(getTextColor(), block.metaFont)}>
+                 style={textStyle(zenText, block.metaFont)}>
                 {t.caseStudyTag}
               </p>
 
               <h2 class={`${block.titleFontSize || 'text-[13px]'} ${block.titleFontWeight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
-                  style={textStyle(getTextColor(), block.titleFont)}>
+                  style={textStyle(zenText, block.titleFont)}>
                 {block.industry || 'Industry'}
               </h2>
 
               {block.location && (
                 <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 translate-x-[0.125em]
                   mb-6 md:mb-12`}
-                   style={textStyle(getTextColor(), block.metaFont)}>
+                   style={textStyle(zenText, block.metaFont)}>
                   {block.location}
                 </p>
               )}
@@ -694,9 +780,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 {block.challenge && (
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
-                       style={textStyle(getTextColor(), block.labelFont)}>{t.challenge}</p>
+                       style={textStyle(zenText, block.labelFont)}>{t.challenge}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(getTextColor(), block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.challenge).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -707,9 +793,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 {block.built && (
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
-                       style={textStyle(getTextColor(), block.labelFont)}>{t.built}</p>
+                       style={textStyle(zenText, block.labelFont)}>{t.built}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(getTextColor(), block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.built).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -720,9 +806,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                 {block.result && (
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
-                       style={textStyle(getTextColor(), block.labelFont)}>{t.result}</p>
+                       style={textStyle(zenText, block.labelFont)}>{t.result}</p>
                     <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(getTextColor(), block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.result).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -734,17 +820,47 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               <div class="flex justify-center gap-10 opacity-30">
                 {block.package && (
                   <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
-                     style={textStyle(getTextColor(), block.metaFont)}>
+                     style={textStyle(zenText, block.metaFont)}>
                     {t.packageLabel}: {block.package}
                   </p>
                 )}
                 {block.timeline && (
                   <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
-                     style={textStyle(getTextColor(), block.metaFont)}>
+                     style={textStyle(zenText, block.metaFont)}>
                     {t.timelineLabel}: {block.timeline}
                   </p>
                 )}
               </div>
+
+            </div>
+          </div>
+        );
+      }
+
+      if (block._template === 'testimonial') {
+        const attribution = [block.attributionName, block.attributionOrg].filter(Boolean).join(' — ');
+        return (
+          <div class="vd-screen vd-reveal">
+            <div class="w-full max-w-2xl text-center">
+
+              <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.3em] opacity-40 mb-6 translate-x-[0.15em]`}
+                 style={`color: ${zenText};`}>
+                {t.testimonialTag}
+              </p>
+
+              {block.quote && (
+                <blockquote class={`${block.quoteFontSize || 'text-[15px]'} ${block.quoteFontWeight || 'font-thin'} leading-relaxed opacity-80 mb-6 ${animTextHover ? 'vd-hover-grow' : ''}`}
+                     style={textStyle(zenText)}>
+                  “{block.quote}”
+                </blockquote>
+              )}
+
+              {attribution && (
+                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-40`}
+                   style={`color: ${zenText};`}>
+                  {attribution}
+                </p>
+              )}
 
             </div>
           </div>
@@ -758,7 +874,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 
             {block.title && (
               <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60 translate-x-[0.6em]`}
-                  style={textStyle(getTextColor(), block.titleFont)}>
+                  style={textStyle(zenText, block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
@@ -767,7 +883,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 
             {block.subTitle && (
               <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-thin'} uppercase tracking-[0.5em] mb-6 opacity-50`}
-                  style={textStyle(getTextColor(), block.subTitleFont)}>
+                  style={textStyle(zenText, block.subTitleFont)}>
                 {block.subTitle.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
@@ -787,7 +903,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
               <div class="flex justify-center mt-10">
                 <a href={`mailto:${block.email}`}
                    class="opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px] translate-x-[0.075em]"
-                   style={`color: ${getTextColor()};`}>
+                   style={`color: ${zenText};`}>
                   {block.email}
                 </a>
               </div>

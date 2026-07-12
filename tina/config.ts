@@ -145,6 +145,23 @@ const pageTemplates = [
       { type: "boolean", name: "enabled",         label: "Section Enabled" },
     ],
   },
+  {
+    name: "testimonial",
+    label: "Testimonial",
+    ui: {
+      itemProps: (item: any) => ({ label: item?.attributionOrg ? `Testimonial — ${item.attributionOrg}` : "Testimonial" }),
+    },
+    fields: [
+      { type: "string",  name: "quote",           label: "Quote", ui: { component: "textarea" } },
+      { type: "string",  name: "attributionName", label: "Attribution — Name",
+        description: "e.g. Management — avoid a full personal name unless the client has approved it" },
+      { type: "string",  name: "attributionOrg",  label: "Attribution — Organization" },
+      { type: "string",  name: "quoteFontSize",   label: "Quote — Size",   options: fontSizeOptions },
+      { type: "string",  name: "quoteFontWeight", label: "Quote — Weight", options: fontWeightOptions },
+      { type: "string",  name: "metaFontSize",    label: "Attribution — Size", options: fontSizeOptions },
+      { type: "boolean", name: "enabled",         label: "Section Enabled" },
+    ],
+  },
 ] as const;
 
 // ── Collection fields list ────────────────────────────────────────────────────
@@ -294,6 +311,9 @@ export default defineConfig({
           ]},
           { type: "string",  name: "baseTextColor",         label: "Global Text Colour",       ui: { component: "color" } },
           { type: "string",  name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
+          { type: "boolean", name: "enableThemeToggle",
+            label: "Show visitor light/dark toggle (sun/moon icon)",
+            description: "When on, visitors see a sun/moon icon in the header. It always starts showing your Theme setting above (\"Current\"), correctly iconed as sun or moon depending on how light or dark that theme actually reads. A visitor can click through to a fixed plain white or fixed plain black view and back — those two fixed views never use your custom colours above, only your Theme setting does. Their choice is remembered for their next visit; turning this off here always shows everyone your Theme setting again, regardless of anything a visitor previously chose." },
 
           // ── Animations ────────────────────────────────────────────────────
           // General toggles default to ON when left unset (existing content

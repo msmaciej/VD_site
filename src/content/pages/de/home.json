@@ -90,10 +90,10 @@
       "_template": "processFlow"
     },
     {
-      "industry": "Internationaler Handel -",
+      "industry": "Internationaler Handel",
       "location": "Schweiz",
       "package": "Basic + KI-Triage",
-      "timeline": "3 Wochen bis Go-live",
+      "timeline": "2 Wochen bis Go-live",
       "challenge": "Ein hohes Volumen eingehender E-Mails – Leads, technische Fragen und irrelevante Nachrichten – erforderte täglich manuelles Lesen, Einordnen und Weiterleiten. Uneinheitliche Bearbeitung und übersehene Nachrichten waren ein dauerhaftes Problem.",
       "built": "KI-Klassifizierung aller eingehenden E-Mails in umsetzbare Kategorien. Automatische CRM-Erfassung. Vorbereitung von Antwortentwürfen für relevante Anfragen. Menschliche Prüfung und Freigabe vor jeder ausgehenden Antwort.",
       "result": "Keine übersehenen oder falsch zugeordneten E-Mails mehr. Weniger manueller Aufwand für das Team. Menschliche Entscheidung bei jeder Antwort erhalten. Operative Verlässlichkeit ab dem ersten Tag nach Go-live.",
@@ -102,8 +102,18 @@
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "caseStudy"
+    },
+    {
+      "quote": "VortexDeep hat unseren Posteingang komplett verändert. Durch die Eliminierung der manuellen Sortierung und die Integration einer intelligenten Triage direkt in unsere Systeme haben sie ab dem ersten Tag vollständige operative Verlässlichkeit geliefert, ohne die persönliche Note zu opfern, die unsere Kundschaft erwartet.",
+      "attributionName": "Geschäftsleitung",
+      "attributionOrg": "MG Redshift",
+      "quoteFontSize": "text-[13px]",
+      "quoteFontWeight": "font-thin",
+      "metaFontSize": "text-[9px]",
+      "enabled": true,
+      "_template": "testimonial"
     },
     {
       "industry": "Professional Services -",

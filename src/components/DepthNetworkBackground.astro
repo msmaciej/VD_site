@@ -19,6 +19,14 @@ interface Props {
   connectDistance?: number; // how close two points must be to draw a line between them — admin-tunable
   lineOpacity?: number;     // 0–1 — how visible the connecting lines are — admin-tunable
   nodeOpacity?: number;     // 0–1 — how visible the points themselves are — admin-tunable
+  // Theme toggle: the two FIXED literal palettes the visitor toggle snaps
+  // to (see Layout.astro / SitePage.astro). Optional — pages that never
+  // pass these simply never get a live recolor listener attached below,
+  // so this stays a no-op when the toggle feature is off.
+  lightNodeColor?: string;
+  lightFogColor?:  string;
+  darkNodeColor?:  string;
+  darkFogColor?:   string;
 }
 const {
   nodeColor = '#e0e2e8',
@@ -27,6 +35,10 @@ const {
   connectDistance = 5.4,
   lineOpacity = 0.16,
   nodeOpacity = 0.75,
+  lightNodeColor,
+  lightFogColor,
+  darkNodeColor,
+  darkFogColor,
 } = Astro.props;
 ---
 
@@ -38,6 +50,10 @@ const {
   data-connect-distance={connectDistance}
   data-line-opacity={lineOpacity}
   data-node-opacity={nodeOpacity}
+  data-light-node-color={lightNodeColor}
+  data-light-fog-color={lightFogColor}
+  data-dark-node-color={darkNodeColor}
+  data-dark-fog-color={darkFogColor}
   aria-hidden="true"
   style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"
 ></canvas>
@@ -137,6 +153,32 @@ const {
         scene.add(lines);
       }
       rebuildLines();
+
+      // ── Theme toggle: live recolor ────────────────────────────────────────
+      // The toggle (Layout.astro) can't reach into a running WebGL scene via
+      // CSS variables — color-mix()/var() strings mean nothing to Three.js,
+      // it needs real numbers. So it dispatches a plain DOM event instead,
+      // and this listens for it directly. 'auto' reverts to the colors this
+      // canvas was actually initialized with (nodeColorHex/fogColorHex,
+      // i.e. whatever "Current" resolved to at build time); 'light'/'dark'
+      // use the two fixed palettes passed in as props, ignoring any custom
+      // color override — matching the clean-snap behavior of the CSS side.
+      window.addEventListener('vd-theme-change', ((e: CustomEvent) => {
+        const mode = e.detail?.mode;
+        const targetNode = mode === 'light' ? canvas.dataset.lightNodeColor
+                          : mode === 'dark'  ? canvas.dataset.darkNodeColor
+                          : nodeColorHex;
+        const targetFog  = mode === 'light' ? canvas.dataset.lightFogColor
+                          : mode === 'dark'  ? canvas.dataset.darkFogColor
+                          : fogColorHex;
+        if (targetNode) {
+          nodeMaterial.color.set(targetNode);
+          lineMaterial.color.set(targetNode);
+        }
+        if (targetFog && scene.fog) {
+          (scene.fog as InstanceType<typeof THREE.Fog>).color.set(targetFog);
+        }
+      }) as EventListener);
 
       // ── Animation ──────────────────────────────────────────────────────────
       let frame = 0;

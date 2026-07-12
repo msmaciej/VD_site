@@ -91,10 +91,10 @@
       "_template": "processFlow"
     },
     {
-      "industry": "International Trade -",
+      "industry": "International Trade",
       "location": "Switzerland",
       "package": "Basic + AI Triage",
-      "timeline": "3 weeks to go-live",
+      "timeline": "2 weeks to go-live",
       "challenge": "High volume of mixed inbound email inquiries — leads, technical questions, and noise — required manual reading, classification, and routing daily. Inconsistent handling and missed messages were a recurring problem.",
       "built": "AI classification of all inbound email into actionable categories. Automatic CRM logging. Draft response preparation for relevant inquiries. Human review and approval preserved on every outbound action.",
       "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. Operational consistency achieved from day one of go-live.",
@@ -103,8 +103,18 @@
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "caseStudy"
+    },
+    {
+      "quote": "VortexDeep transformed our inbound operations. By eliminating manual sorting and integrating intelligent triage directly into our systems, they delivered complete operational consistency from day one without sacrificing the human touch required for our clientele.",
+      "attributionName": "Management",
+      "attributionOrg": "MG Redshift",
+      "quoteFontSize": "text-[13px]",
+      "quoteFontWeight": "font-thin",
+      "metaFontSize": "text-[9px]",
+      "enabled": true,
+      "_template": "testimonial"
     },
     {
       "industry": "Professional Services -",

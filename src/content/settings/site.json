@@ -30,6 +30,7 @@
   "fontPreset": "Space Mono",
   "showLogo": true,
   "theme": "deep",
+  "enableThemeToggle": true,
   "baseTextColor": "",
   "customBackgroundColor": "",
   "enableLogoAnimation": true,

@@ -13,6 +13,8 @@ export const ui: Record<Lang, Record<string, string>> = {
     result:        'Result',
     packageLabel:  'Package',
     timelineLabel: 'Timeline',
+    // Testimonial block
+    testimonialTag: 'Client Feedback',
   },
   de: {
     // Case study block
@@ -22,5 +24,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     result:        'Ergebnis',
     packageLabel:  'Paket',
     timelineLabel: 'Zeitplan',
+    // Testimonial block
+    testimonialTag: 'Kundenstimme',
   },
 };

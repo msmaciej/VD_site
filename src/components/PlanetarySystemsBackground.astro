@@ -18,6 +18,13 @@ interface Props {
   orbitMinRadius?: number; // 0–1, fraction of a base orbit unit — inner edge of where orbits can start
   orbitMaxRadius?: number; // 0–1, fraction of a base orbit unit — outer edge
   pathOpacity?: number;    // 0–1 — how visible the faint orbit rings are
+  // Theme toggle: the two FIXED literal palettes the visitor toggle snaps
+  // to (see Layout.astro / SitePage.astro). Optional, same as in
+  // DepthNetworkBackground.astro.
+  lightStarColor?: string;
+  lightFogColor?:  string;
+  darkStarColor?:  string;
+  darkFogColor?:   string;
 }
 const {
   starColor = '#e0e2e8',
@@ -27,6 +34,10 @@ const {
   orbitMinRadius = 0.35,
   orbitMaxRadius = 1,
   pathOpacity = 0.12,
+  lightStarColor,
+  lightFogColor,
+  darkStarColor,
+  darkFogColor,
 } = Astro.props;
 ---
 
@@ -39,6 +50,10 @@ const {
   data-orbit-min={orbitMinRadius}
   data-orbit-max={orbitMaxRadius}
   data-path-opacity={pathOpacity}
+  data-light-star-color={lightStarColor}
+  data-light-fog-color={lightFogColor}
+  data-dark-star-color={darkStarColor}
+  data-dark-fog-color={darkFogColor}
   aria-hidden="true"
   style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"
 ></canvas>
@@ -173,6 +188,26 @@ const {
       }
 
       const systems: System[] = Array.from({ length: SYSTEM_COUNT }, makeSystem);
+
+      // ── Theme toggle: live recolor ────────────────────────────────────────
+      // Same mechanism as DepthNetworkBackground.astro — see its comment.
+      window.addEventListener('vd-theme-change', ((e: CustomEvent) => {
+        const mode = e.detail?.mode;
+        const targetStar = mode === 'light' ? canvas.dataset.lightStarColor
+                          : mode === 'dark'  ? canvas.dataset.darkStarColor
+                          : starColorHex;
+        const targetFog  = mode === 'light' ? canvas.dataset.lightFogColor
+                          : mode === 'dark'  ? canvas.dataset.darkFogColor
+                          : fogColorHex;
+        if (targetStar) {
+          starMaterial.color.set(targetStar);
+          planetMaterial.color.set(targetStar);
+          pathMaterial.color.set(targetStar);
+        }
+        if (targetFog && scene.fog) {
+          (scene.fog as InstanceType<typeof THREE.Fog>).color.set(targetFog);
+        }
+      }) as EventListener);
 
       function animate() {
         requestAnimationFrame(animate);
