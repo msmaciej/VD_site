@@ -873,7 +873,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
           <div class="w-full max-w-2xl text-center">
 
             {block.title && (
-              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-8 opacity-60 translate-x-[0.6em]`}
+              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-normal'} mb-4 opacity-90`}
                   style={textStyle(zenText, block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
@@ -882,7 +882,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
             )}
 
             {block.subTitle && (
-              <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-thin'} uppercase tracking-[0.5em] mb-6 opacity-50`}
+              <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-60`}
                   style={textStyle(zenText, block.subTitleFont)}>
                 {block.subTitle.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
@@ -891,7 +891,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
             )}
 
             {block.content && (
-              <div class={`${block.fontSize || 'text-[11px]'} ${block.fontWeight || 'font-thin'} opacity-80 leading-relaxed`}
+              <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-left`}
                    style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
                 {block.content.split('|').map((line: string) => (
                   <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line.trim()}</p>

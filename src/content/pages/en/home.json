@@ -1,14 +1,18 @@
 {
   "blocks": [
     {
-      "title": "What | We Do?",
+      "title": "What We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | We turn | Repetitive tasks: | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | into | Managed monthly | Practical workflows | . | Human control | stays always | at the centre | .",
-      "subTitleFontSize": "text-[13px]",
+      "subTitle": "For small and mid-sized companies in Kanton Zürich",
+      "subTitleFontSize": "text-[11px]",
       "showArt": false,
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "subTitleFontWeight": "font-normal",
+      "content": "We take the repetitive work off your team — the tasks that eat hours out of every week. | Concretely: inbound email inquiries, invoices and documents, quotes, reporting. We build an AI-assisted workflow for it, and we keep running it for you. | You approve every step. Nothing goes out without your sign-off.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal"
     },
     {
       "title": "- What? | We Do -",
@@ -20,23 +24,28 @@
       "_template": "section"
     },
     {
-      "title": "- Where We Apply the Framework -",
+      "title": "Problems We Solve",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ".  | Communication & Intake | .  | Lead & Sales Pipeline | .  | Document & Data Processing | .  | Content & Marketing | .  | Internal Operations | .  | Reporting & Analytics | .  | Finance & Admin | .  | Scheduling & Booking | .  | Customer Support | .  | E-commerce & Fulfilment | . ",
+      "subTitle": "",
       "subTitleFontSize": "text-[13px]",
-      "content": "The same six-phase methodology applies across all areas.",
-      "enabled": false,
-      "_template": "section"
+      "content": "Inquiries arrive by email all day, and someone has to read, sort and route every one. | Invoice and document data gets re-typed by hand into your accounting system. | Quotes get written in the evening, after the working day is over. | The CRM is never quite current, because updating it is someone's least favourite job. | Reports get assembled manually, the same way, every single month.",
+      "enabled": true,
+      "_template": "section",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal"
     },
     {
-      "title": "How | It Works?",
+      "title": "How It Works",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Phase-delivery | .. | Sign-off | at every step | . | Nothing goes live | without your | approval | .",
+      "subTitle": "",
       "subTitleFontSize": "text-[13px]",
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "content": "You don't buy software. We take one process that is costing you hours, build an AI-assisted workflow around it, and then run it for you month to month. | We start with one process — not with your whole company. | You approve every step. Nothing runs autonomously. | Your data stays in your systems, and we tell you exactly where it goes. | We work alongside your existing systems and your IT — we don't replace them. | You can stop at the end of any month. No lock-in.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal"
     },
     {
       "title": "- How? | It Works -",
@@ -129,7 +138,7 @@
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "caseStudy"
     },
     {

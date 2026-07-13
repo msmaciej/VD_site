@@ -6,7 +6,7 @@
   "siteName": "VortexDeep",
   "siteNameFont": "",
   "siteNameFontSize": "text-lg md:text-xl",
-  "subSiteName": "Practical | AI automation | for small business | . | ZH | Switzerland",
+  "subSiteName": "Practical | AI automation | for small and mid-sized companies | . | ZH | Switzerland",
   "subSiteName_de": "Praktische | KI-Automatisierung | für KMU | . | ZH | Schweiz",
   "subSiteNameFontSize": "text-[13px]",
   "subSiteNameFontWeight": "font-normal",
@@ -48,14 +48,14 @@
   "headerHeight": "52px",
   "footerHeight": "56px",
   "siteUrl": "https://vortexdeep.ch",
-  "metaTitle": "VortexDeep — AI Automation for Small Business in Zürich",
+  "metaTitle": "VortexDeep — AI Automation for SMEs in Zürich",
   "metaTitle_de": "VortexDeep — KI-Automatisierung für KMU in Zürich",
-  "metaDescription": "AI automation for small businesses in Zürich. From inquiry handling and document processing to sales pipelines, reporting, and finance admin. Phase-gated delivery, managed monthly. Human control at the centre.",
+  "metaDescription": "AI automation for small and mid-sized companies in Zürich. From inquiry handling and document processing to reporting — built, then run for you. You approve every step.",
   "metaDescription_de": "KI-Automatisierung für KMU in Zürich. Von Anfragebearbeitung und Dokumentenverarbeitung bis zu Vertriebsprozessen, Reporting und Finanzverwaltung. Phasenbasierte Lieferung, monatlich betreut. Mensch im Mittelpunkt.",
   "ogImage": "/uploads/_VortexDeep-background-LI.png",
   "addressStreet": "",
   "addressCity": "Zürich",
   "addressPostal": "",
   "contactEmail": "info@vortexdeep.ch",
-  "contactPhone": ""
+  "contactPhone": "+41 77 259 8865"
 }
