@@ -23,6 +23,7 @@ fragment PageParts on Page {
           label
         }
       }
+      meta
       email
       phone
       showArt
@@ -34,6 +35,10 @@ fragment PageParts on Page {
       titleFont
       titleFontSize
       titleFontWeight
+      subTitle
+      subTitleFont
+      subTitleFontSize
+      subTitleFontWeight
       orientation
       stepFont
       stepFontSize
@@ -118,6 +123,7 @@ fragment Page_deParts on Page_de {
           label
         }
       }
+      meta
       email
       phone
       showArt
@@ -129,6 +135,10 @@ fragment Page_deParts on Page_de {
       titleFont
       titleFontSize
       titleFontWeight
+      subTitle
+      subTitleFont
+      subTitleFontSize
+      subTitleFontWeight
       orientation
       stepFont
       stepFontSize

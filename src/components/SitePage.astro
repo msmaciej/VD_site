@@ -495,6 +495,9 @@ const contentLines = (text: string) =>
           screen, so if the accordion grows, the screen re-centres and the title
           and closing line visibly lurch. min-height freezes the composition: the
           dots and labels stay exactly where they are, and only the sub-areas move. */
+    /* All groups start closed. min-height keeps the reserved space empty from
+       first paint, so opening any group moves only the sub-areas — the title,
+       the dots and the labels never shift. */
     .vd-acc { min-height: 264px; }
     .vd-acc-item { padding: 3px 0; }
     .vd-acc-head {
@@ -825,14 +828,37 @@ const contentLines = (text: string) =>
         return (
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
+              {/* mb-12 suits a title sitting directly above the drawn steps — they need
+                  the air. With a sub-title between them, that same gap runs 16px wider than
+                  the title/sub-title pair on every section screen, and the inconsistency is
+                  visible. Match the sections whenever a sub-title is present. */}
               {block.title && (
-                <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] mb-12 opacity-60 translate-x-[0.6em]`}
+                <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-60 translate-x-[0.6em]`}
                     style={textStyle(zenText, block.titleFont)}>
                   {block.title.split('|').map((line: string) => (
                     <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                   ))}
                 </h2>
               )}
+              {/* Sits between the title and the drawn steps, exactly where a section's
+                  sub-title sits — so a process flow can say what it is FOR before it
+                  shows what it IS. Dot-only segments render as drawn dividers, same
+                  as everywhere else. */}
+              {block.subTitle && (
+                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-10 opacity-70`}
+                    style={textStyle(zenText, block.subTitleFont)}>
+                  {contentLines(block.subTitle).map(({ line, dots }) => (
+                    dots > 0 ? (
+                      <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                        {Array.from({ length: dots }).map(() => <span></span>)}
+                      </span>
+                    ) : (
+                      <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line}</span>
+                    )
+                  ))}
+                </h3>
+              )}
+
               <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
                 {block.steps?.map((step: any, i: number) => (
                   <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
@@ -1056,7 +1082,7 @@ const contentLines = (text: string) =>
             {block.groups?.length > 0 && (
               <div class="vd-acc max-w-md mx-auto mb-8" data-vd-acc>
                 {block.groups.map((g: any, i: number) => (
-                  <div class="vd-acc-item" data-vd-acc-item data-open={i === 0 ? 'true' : 'false'}>
+                  <div class="vd-acc-item" data-vd-acc-item data-open="false">
                     <button type="button" class="vd-acc-head" data-vd-acc-head style={`color: ${zenText};`}>
                       <span class="vd-acc-dot" aria-hidden="true"></span>
                       <span class={`vd-acc-label ${block.subTitleFontSize || 'text-[13px]'}`}>{g.label}</span>
@@ -1086,6 +1112,16 @@ const contentLines = (text: string) =>
                   )
                 ))}
               </div>
+            )}
+
+            {/* Meta line — location, or a signature if one is ever wanted. Sized with
+                the contact links (11px, tracked, low opacity), not with the body copy,
+                so it reads as a footer to the screen rather than as a claim on it. */}
+            {block.meta && (
+              <p class="text-[11px] uppercase tracking-[0.25em] opacity-40 mt-10 translate-x-[0.125em]"
+                 style={`color: ${zenText};`}>
+                {block.meta}
+              </p>
             )}
 
             {(block.email || block.phone) && (

@@ -12,12 +12,25 @@ const fontTypeOptions = [
   { label: "Newsreader — Editorial Serif", value: "Newsreader" },
 ];
 
+// This scale came from the art-gallery template, where every string on the page
+// was a LABEL — tracked capitals at 9–13px, scanned rather than read. It topped
+// out at 18px because nothing was ever a sentence. Now that real prose lives in
+// `content`, the reading sizes have to exist: 16–19px is where body copy is
+// comfortable, and a light-weight mono on a dark background reads a notch
+// smaller than its px value suggests, so bias upward rather than down.
 const fontSizeOptions = [
-  { label: "XS — 9px",  value: "text-[9px]"  },
-  { label: "S  — 11px (recommended)", value: "text-[11px]" },
-  { label: "M  — 13px", value: "text-[13px]" },
-  { label: "L  — 15px", value: "text-[15px]" },
-  { label: "XL — 18px", value: "text-lg"     },
+  { label: "9px  — meta / attribution", value: "text-[9px]"  },
+  { label: "11px — labels, tracked caps", value: "text-[11px]" },
+  { label: "13px — small label / step", value: "text-[13px]" },
+  { label: "15px — small body", value: "text-[15px]" },
+  { label: "17px — body (recommended)", value: "text-[17px]" },
+  { label: "19px — large body", value: "text-[19px]" },
+  { label: "22px — statement", value: "text-[22px]" },
+  { label: "26px — display", value: "text-[26px]" },
+  // Kept because existing content still references it (two retired blocks use it
+  // as a title size). Dropping an in-use value from the options list leaves the
+  // Tina select blank on those blocks, and a blank select can clear itself on save.
+  { label: "18px — legacy (text-lg)", value: "text-lg" },
 ];
 
 const fontWeightOptions = [
@@ -67,6 +80,8 @@ const pageTemplates = [
           },
         ],
       },
+      { type: "string",  name: "meta",    label: "Meta line (optional)",
+        description: "Small, quiet line under the body — location, signature. Sized with the contact links, not the body copy." },
       { type: "string",  name: "email",   label: "Contact Email (optional)" },
       { type: "string",  name: "phone",   label: "Contact Phone (optional)",
         description: "Renders as a tap-to-call link. Leave empty until a company number exists — do not publish a private mobile." },
@@ -90,6 +105,11 @@ const pageTemplates = [
       { type: "string", name: "titleFont",       label: "Title — Font",   options: fontTypeOptions },
       { type: "string", name: "titleFontSize",   label: "Title — Size",   options: fontSizeOptions },
       { type: "string", name: "titleFontWeight", label: "Title — Weight", options: fontWeightOptions },
+      { type: "string", name: "subTitle",         label: "Sub-title (above the steps)",
+        description: "Says what the flow is FOR. Use | for line breaks; a segment of only dots renders as a drawn divider." },
+      { type: "string", name: "subTitleFont",     label: "Sub-title — Font",   options: fontTypeOptions },
+      { type: "string", name: "subTitleFontSize", label: "Sub-title — Size",   options: fontSizeOptions },
+      { type: "string", name: "subTitleFontWeight", label: "Sub-title — Weight", options: fontWeightOptions },
       { type: "string", name: "orientation",     label: "Arrow Direction", options: [
         { label: "Vertical ↓  (stacked)",  value: "vertical"   },
         { label: "Horizontal → (inline)",  value: "horizontal" },

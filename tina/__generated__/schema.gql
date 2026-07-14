@@ -122,6 +122,7 @@ type PageBlocksSection {
   fontSize: String
   fontWeight: String
   groups: [PageBlocksSectionGroups]
+  meta: String
   email: String
   phone: String
   showArt: Boolean
@@ -141,6 +142,10 @@ type PageBlocksProcessFlow {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
   orientation: String
   stepFont: String
   stepFontSize: String
@@ -238,6 +243,7 @@ input PageBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   groups: PageBlocksSectionGroupsFilter
+  meta: StringFilter
   email: StringFilter
   phone: StringFilter
   showArt: BooleanFilter
@@ -267,6 +273,10 @@ input PageBlocksProcessFlowFilter {
   titleFont: StringFilter
   titleFontSize: StringFilter
   titleFontWeight: StringFilter
+  subTitle: StringFilter
+  subTitleFont: StringFilter
+  subTitleFontSize: StringFilter
+  subTitleFontWeight: StringFilter
   orientation: StringFilter
   stepFont: StringFilter
   stepFontSize: StringFilter
@@ -365,6 +375,7 @@ type Page_deBlocksSection {
   fontSize: String
   fontWeight: String
   groups: [Page_deBlocksSectionGroups]
+  meta: String
   email: String
   phone: String
   showArt: Boolean
@@ -384,6 +395,10 @@ type Page_deBlocksProcessFlow {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
   orientation: String
   stepFont: String
   stepFontSize: String
@@ -469,6 +484,7 @@ input Page_deBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   groups: Page_deBlocksSectionGroupsFilter
+  meta: StringFilter
   email: StringFilter
   phone: StringFilter
   showArt: BooleanFilter
@@ -488,6 +504,10 @@ input Page_deBlocksProcessFlowFilter {
   titleFont: StringFilter
   titleFontSize: StringFilter
   titleFontWeight: StringFilter
+  subTitle: StringFilter
+  subTitleFont: StringFilter
+  subTitleFontSize: StringFilter
+  subTitleFontWeight: StringFilter
   orientation: StringFilter
   stepFont: StringFilter
   stepFontSize: StringFilter
@@ -1342,6 +1362,7 @@ input PageBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   groups: [PageBlocksSectionGroupsMutation]
+  meta: String
   email: String
   phone: String
   showArt: Boolean
@@ -1361,6 +1382,10 @@ input PageBlocksProcessFlowMutation {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
   orientation: String
   stepFont: String
   stepFontSize: String
@@ -1448,6 +1473,7 @@ input Page_deBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   groups: [Page_deBlocksSectionGroupsMutation]
+  meta: String
   email: String
   phone: String
   showArt: Boolean
@@ -1467,6 +1493,10 @@ input Page_deBlocksProcessFlowMutation {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  subTitle: String
+  subTitleFont: String
+  subTitleFontSize: String
+  subTitleFontWeight: String
   orientation: String
   stepFont: String
   stepFontSize: String

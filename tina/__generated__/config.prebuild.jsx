@@ -110,11 +110,18 @@ var fontTypeOptions = [
   { label: "Newsreader \u2014 Editorial Serif", value: "Newsreader" }
 ];
 var fontSizeOptions = [
-  { label: "XS \u2014 9px", value: "text-[9px]" },
-  { label: "S  \u2014 11px (recommended)", value: "text-[11px]" },
-  { label: "M  \u2014 13px", value: "text-[13px]" },
-  { label: "L  \u2014 15px", value: "text-[15px]" },
-  { label: "XL \u2014 18px", value: "text-lg" }
+  { label: "9px  \u2014 meta / attribution", value: "text-[9px]" },
+  { label: "11px \u2014 labels, tracked caps", value: "text-[11px]" },
+  { label: "13px \u2014 small label / step", value: "text-[13px]" },
+  { label: "15px \u2014 small body", value: "text-[15px]" },
+  { label: "17px \u2014 body (recommended)", value: "text-[17px]" },
+  { label: "19px \u2014 large body", value: "text-[19px]" },
+  { label: "22px \u2014 statement", value: "text-[22px]" },
+  { label: "26px \u2014 display", value: "text-[26px]" },
+  // Kept because existing content still references it (two retired blocks use it
+  // as a title size). Dropping an in-use value from the options list leaves the
+  // Tina select blank on those blocks, and a blank select can clear itself on save.
+  { label: "18px \u2014 legacy (text-lg)", value: "text-lg" }
 ];
 var fontWeightOptions = [
   { label: "Thin (100)", value: "font-thin" },
@@ -163,6 +170,12 @@ var pageTemplates = [
           }
         ]
       },
+      {
+        type: "string",
+        name: "meta",
+        label: "Meta line (optional)",
+        description: "Small, quiet line under the body \u2014 location, signature. Sized with the contact links, not the body copy."
+      },
       { type: "string", name: "email", label: "Contact Email (optional)" },
       {
         type: "string",
@@ -190,6 +203,15 @@ var pageTemplates = [
       { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
       { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
       { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
+      {
+        type: "string",
+        name: "subTitle",
+        label: "Sub-title (above the steps)",
+        description: "Says what the flow is FOR. Use | for line breaks; a segment of only dots renders as a drawn divider."
+      },
+      { type: "string", name: "subTitleFont", label: "Sub-title \u2014 Font", options: fontTypeOptions },
+      { type: "string", name: "subTitleFontSize", label: "Sub-title \u2014 Size", options: fontSizeOptions },
+      { type: "string", name: "subTitleFontWeight", label: "Sub-title \u2014 Weight", options: fontWeightOptions },
       { type: "string", name: "orientation", label: "Arrow Direction", options: [
         { label: "Vertical \u2193  (stacked)", value: "vertical" },
         { label: "Horizontal \u2192 (inline)", value: "horizontal" }
