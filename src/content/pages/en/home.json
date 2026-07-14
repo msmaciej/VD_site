@@ -4,15 +4,15 @@
       "title": "What We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "For small and mid-sized companies in Kanton Zürich",
+      "subTitle": "",
       "subTitleFontSize": "text-[11px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "... | We turn repetitive operational tasks into practical AI-assisted workflows. | .. | Built for your business. Managed monthly. | . | Human control stays at the centre. | .",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
       "showArt": false,
       "enabled": true,
-      "_template": "section",
-      "subTitleFontWeight": "font-normal",
-      "content": "We take the repetitive work off your team — the tasks that eat hours out of every week. | Concretely: inbound email inquiries, invoices and documents, quotes, reporting. We build an AI-assisted workflow for it, and we keep running it for you. | You approve every step. Nothing goes out without your sign-off.",
-      "fontSize": "text-[15px]",
-      "fontWeight": "font-normal"
+      "_template": "section"
     },
     {
       "title": "- What? | We Do -",
@@ -27,13 +27,14 @@
       "title": "Problems We Solve",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "",
+      "subTitle": ". | Communication & Intake | . | Lead & Sales Pipeline | . | Document & Data Processing | . | Content & Marketing | . | Internal Operations | . | Reporting & Analytics | . | Finance & Admin | . | Scheduling & Booking | . | Customer Support | . | E-commerce & Fulfilment | .",
       "subTitleFontSize": "text-[13px]",
-      "content": "Inquiries arrive by email all day, and someone has to read, sort and route every one. | Invoice and document data gets re-typed by hand into your accounting system. | Quotes get written in the evening, after the working day is over. | The CRM is never quite current, because updating it is someone's least favourite job. | Reports get assembled manually, the same way, every single month.",
-      "enabled": true,
-      "_template": "section",
+      "subTitleFontWeight": "font-normal",
+      "content": "Quotes get written in the evening, after the working day is over. | . | The same six-phase methodology applies across all areas.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal"
+      "fontWeight": "font-normal",
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "How It Works",
@@ -41,11 +42,11 @@
       "titleFontWeight": "font-bold",
       "subTitle": "",
       "subTitleFontSize": "text-[13px]",
-      "enabled": true,
-      "_template": "section",
-      "content": "You don't buy software. We take one process that is costing you hours, build an AI-assisted workflow around it, and then run it for you month to month. | We start with one process — not with your whole company. | You approve every step. Nothing runs autonomously. | Your data stays in your systems, and we tell you exactly where it goes. | We work alongside your existing systems and your IT — we don't replace them. | You can stop at the end of any month. No lock-in.",
+      "content": "... | Phase-gated delivery. | .. | Written sign-off at every step. | . | Nothing goes live without your approval. | . | We start with one process, not your whole company.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal"
+      "fontWeight": "font-normal",
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "- How? | It Works -",
@@ -73,24 +74,12 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        {
-          "label": "Discovery"
-        },
-        {
-          "label": "Scope"
-        },
-        {
-          "label": "Solution"
-        },
-        {
-          "label": "Build"
-        },
-        {
-          "label": "Validation"
-        },
-        {
-          "label": "Live"
-        }
+        { "label": "Discovery" },
+        { "label": "Scope" },
+        { "label": "Solution" },
+        { "label": "Build" },
+        { "label": "Validation" },
+        { "label": "Live" }
       ],
       "dotsPerConnector": 3,
       "dotSize": 2,
@@ -101,12 +90,13 @@
     },
     {
       "industry": "International Trade",
+      "client": "",
       "location": "Switzerland",
       "package": "Basic + AI Triage",
       "timeline": "2 weeks to go-live",
       "challenge": "High volume of mixed inbound email inquiries — leads, technical questions, and noise — required manual reading, classification, and routing daily. Inconsistent handling and missed messages were a recurring problem.",
-      "built": "AI classification of all inbound email into actionable categories. Automatic CRM logging. Draft response preparation for relevant inquiries. Human review and approval preserved on every outbound action.",
-      "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. Operational consistency achieved from day one of go-live.",
+      "built": "AI classification of all inbound email into actionable categories. Automatic CRM logging. Draft replies prepared for relevant inquiries. Human review and approval on every outbound action.",
+      "result": "Zero emails missed or misrouted. Staff time freed from manual sorting. Human decision retained on every reply. Consistent handling from day one.",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
@@ -116,30 +106,72 @@
       "_template": "caseStudy"
     },
     {
-      "quote": "VortexDeep transformed our inbound operations. By eliminating manual sorting and integrating intelligent triage directly into our systems, they delivered complete operational consistency from day one without sacrificing the human touch required for our clientele.",
-      "attributionName": "Management",
+      "quote": "Nothing gets lost now, and nothing goes out that I haven't seen.",
+      "attributionName": "",
       "attributionOrg": "MG Redshift",
-      "quoteFontSize": "text-[13px]",
-      "quoteFontWeight": "font-thin",
-      "metaFontSize": "text-[9px]",
-      "enabled": true,
+      "quoteFontSize": "text-[15px]",
+      "quoteFontWeight": "font-normal",
+      "metaFontSize": "text-[11px]",
+      "enabled": false,
       "_template": "testimonial"
     },
     {
-      "industry": "Professional Services -",
+      "industry": "Treuhand",
+      "client": "",
       "location": "Switzerland",
       "package": "Document Processing",
       "timeline": "4 weeks to go-live",
-      "challenge": "Incoming supplier invoices and client contracts arrived in varying formats — PDF, scanned paper, email attachments. Each required manual reading, data extraction, and re-entry into the accounting system. The process absorbed 6–8 hours per week and produced consistent data-entry errors.",
+      "challenge": "Incoming supplier invoices and client contracts arrived in varying formats — PDF, scanned paper, email attachments. Each required manual reading, data extraction, and re-entry into the accounting system. The process absorbed 6–8 hours per week and produced recurring data-entry errors.",
       "built": "Automated extraction of key data fields from incoming documents. Validation against supplier master records. Structured output prepared for accounting system import. Human review triggered only on exceptions and anomalies — not on every document.",
-      "result": "Weekly processing time reduced from 6–8 hours to under one hour. Data entry errors near-eliminated. Staff attention redirected from data transfer to decisions. Consistent output from go-live day one.",
+      "result": "Weekly processing time reduced from 6–8 hours to under one hour. Data entry errors near-eliminated. Staff attention redirected from data transfer to decisions.",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "caseStudy"
+    },
+    {
+      "title": "Who You're Dealing With",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "",
+      "subTitleFontSize": "text-[11px]",
+      "content": "... | I spent years selling things I couldn't stand behind. VortexDeep is what I built instead. | .. | I build it. I run it. I answer the phone. | . | Your data stays in your systems. We work alongside your IT — we don't replace it. | . | You can stop at the end of any month. No lock-in. | . | Write, and we'll arrange a call.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
+      "email": "info@vortexdeep.ch",
+      "phone": "",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "The Fit Check",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-thin",
+      "orientation": "vertical",
+      "stepFontSize": "text-[13px]",
+      "stepFontWeight": "font-thin",
+      "steps": [
+        { "label": "Your role" },
+        { "label": "Your area" },
+        { "label": "Today" },
+        { "label": "Your goal" },
+        { "label": "Your profile" },
+        { "label": "My reply" }
+      ],
+      "dotsPerConnector": 3,
+      "dotSize": 2,
+      "connectorGap": 5,
+      "stepSpacing": 8,
+      "content": "Four questions. About two minutes. | . | You get one of four profiles, and a recommendation you can act on — with or without me. | . | Its purpose is to tell you honestly whether this is for you.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
+      "ctaLabel": "Start the Fit Check",
+      "ctaUrl": "/check",
+      "enabled": true,
+      "_template": "processFlow"
     },
     {
       "title": "Contact",

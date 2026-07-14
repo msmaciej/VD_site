@@ -54,6 +54,8 @@ const pageTemplates = [
       { type: "string",  name: "fontWeight", label: "Body — Weight", options: fontWeightOptions },
 
       { type: "string",  name: "email",   label: "Contact Email (optional)" },
+      { type: "string",  name: "phone",   label: "Contact Phone (optional)",
+        description: "Renders as a tap-to-call link. Leave empty until a company number exists — do not publish a private mobile." },
       { type: "boolean", name: "showArt", label: "Activate Art Gallery?" },
       { type: "string",  name: "columns", label: "Gallery columns", options: [
         { label: "2 Columns", value: "grid-cols-2" },
@@ -106,6 +108,17 @@ const pageTemplates = [
         description: "Default 8. Direct spacing between adjacent dots." },
       { type: "number", name: "stepSpacing", label: "Space around each step label (px)",
         description: "Default 12. Padding on the side facing the connector — the main driver of total distance between step texts (combined with the dot gap above)." },
+
+      { type: "string", name: "content", label: "Explainer text (use | for line breaks)",
+        description: "Optional. Sits under the drawn steps. A segment made only of dots (... / .. / .) renders as a drawn dot divider.",
+        ui: { component: "textarea" } },
+      { type: "string", name: "fontSize",   label: "Explainer — Size",   options: fontSizeOptions },
+      { type: "string", name: "fontWeight", label: "Explainer — Weight", options: fontWeightOptions },
+      { type: "string", name: "ctaLabel", label: "Button label (optional)",
+        description: "e.g. Start the Fit Check. Leave empty for no button." },
+      { type: "string", name: "ctaUrl", label: "Button link (optional)",
+        description: "e.g. /check — the /de prefix is added automatically on the German page." },
+
       { type: "boolean", name: "enabled", label: "Section Enabled" },
     ],
   },
@@ -117,7 +130,9 @@ const pageTemplates = [
     },
     fields: [
       { type: "string",  name: "industry",  label: "Industry / Sector",
-        description: "e.g. International Trade — never use client name" },
+        description: "e.g. International Trade" },
+      { type: "string",  name: "client",    label: "Client name (optional)",
+        description: "Only fill this in once the client has explicitly approved being named. Empty = anonymous case study, as before." },
       { type: "string",  name: "location",  label: "Location", description: "e.g. Switzerland" },
       { type: "string",  name: "package",   label: "Package Used",
         description: "e.g. Basic + AI Triage" },

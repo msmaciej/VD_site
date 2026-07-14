@@ -113,6 +113,7 @@ type PageBlocksSection {
   fontSize: String
   fontWeight: String
   email: String
+  phone: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -142,11 +143,17 @@ type PageBlocksProcessFlow {
   flowSpeed: Float
   connectorGap: Float
   stepSpacing: Float
+  content: String
+  fontSize: String
+  fontWeight: String
+  ctaLabel: String
+  ctaUrl: String
   enabled: Boolean
 }
 
 type PageBlocksCaseStudy {
   industry: String
+  client: String
   location: String
   package: String
   timeline: String
@@ -212,6 +219,7 @@ input PageBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   email: StringFilter
+  phone: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -251,11 +259,17 @@ input PageBlocksProcessFlowFilter {
   flowSpeed: NumberFilter
   connectorGap: NumberFilter
   stepSpacing: NumberFilter
+  content: StringFilter
+  fontSize: StringFilter
+  fontWeight: StringFilter
+  ctaLabel: StringFilter
+  ctaUrl: StringFilter
   enabled: BooleanFilter
 }
 
 input PageBlocksCaseStudyFilter {
   industry: StringFilter
+  client: StringFilter
   location: StringFilter
   package: StringFilter
   timeline: StringFilter
@@ -322,6 +336,7 @@ type Page_deBlocksSection {
   fontSize: String
   fontWeight: String
   email: String
+  phone: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -351,11 +366,17 @@ type Page_deBlocksProcessFlow {
   flowSpeed: Float
   connectorGap: Float
   stepSpacing: Float
+  content: String
+  fontSize: String
+  fontWeight: String
+  ctaLabel: String
+  ctaUrl: String
   enabled: Boolean
 }
 
 type Page_deBlocksCaseStudy {
   industry: String
+  client: String
   location: String
   package: String
   timeline: String
@@ -409,6 +430,7 @@ input Page_deBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   email: StringFilter
+  phone: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -438,11 +460,17 @@ input Page_deBlocksProcessFlowFilter {
   flowSpeed: NumberFilter
   connectorGap: NumberFilter
   stepSpacing: NumberFilter
+  content: StringFilter
+  fontSize: StringFilter
+  fontWeight: StringFilter
+  ctaLabel: StringFilter
+  ctaUrl: StringFilter
   enabled: BooleanFilter
 }
 
 input Page_deBlocksCaseStudyFilter {
   industry: StringFilter
+  client: StringFilter
   location: StringFilter
   package: StringFilter
   timeline: StringFilter
@@ -1265,6 +1293,7 @@ input PageBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   email: String
+  phone: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -1294,11 +1323,17 @@ input PageBlocksProcessFlowMutation {
   flowSpeed: Float
   connectorGap: Float
   stepSpacing: Float
+  content: String
+  fontSize: String
+  fontWeight: String
+  ctaLabel: String
+  ctaUrl: String
   enabled: Boolean
 }
 
 input PageBlocksCaseStudyMutation {
   industry: String
+  client: String
   location: String
   package: String
   timeline: String
@@ -1354,6 +1389,7 @@ input Page_deBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   email: String
+  phone: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -1383,11 +1419,17 @@ input Page_deBlocksProcessFlowMutation {
   flowSpeed: Float
   connectorGap: Float
   stepSpacing: Float
+  content: String
+  fontSize: String
+  fontWeight: String
+  ctaLabel: String
+  ctaUrl: String
   enabled: Boolean
 }
 
 input Page_deBlocksCaseStudyMutation {
   industry: String
+  client: String
   location: String
   package: String
   timeline: String

@@ -1,11 +1,15 @@
 {
   "blocks": [
     {
-      "title": "Was | wir tun?",
+      "title": "Was wir tun",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Wir wandeln | Repetitive Aufgaben: | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Content | Betrieb | .. | in | Monatlich betreute | Praktische Workflows | . | Menschliche Kontrolle | bleibt immer | im Mittelpunkt | .",
-      "subTitleFontSize": "text-[13px]",
+      "subTitle": "",
+      "subTitleFontSize": "text-[11px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "... | Wir verwandeln wiederkehrende Aufgaben in praktische, KI-gestützte Abläufe. | .. | Auf Ihr Unternehmen zugeschnitten. Monatlich betreut. | . | Die Kontrolle bleibt beim Menschen. | .",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
       "enabled": true,
       "_template": "section"
     },
@@ -19,21 +23,27 @@
       "_template": "section"
     },
     {
-      "title": "- Wo wir die Methodik einsetzen",
+      "title": "Wo wir ansetzen",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ".  | Kommunikation & Eingang | .  | Lead- & Vertriebsprozesse | .  | Dokumente & Daten | .  | Content & Marketing | .  | Interne Abläufe & Freigaben | .  | Reporting & Analysen | .  | Finanzen & Verwaltung | .  | Terminplanung & Buchungen | .  | Kundenbetreuung & After-Sales | .  | E-Commerce & Fulfilment | . ",
+      "subTitle": ". | Kommunikation & Eingang | . | Lead- & Vertriebsprozesse | . | Dokumente & Daten | . | Content & Marketing | . | Interne Abläufe & Freigaben | . | Reporting & Analysen | . | Finanzen & Verwaltung | . | Terminplanung & Buchungen | . | Kundenbetreuung & After-Sales | . | E-Commerce & Fulfilment | .",
       "subTitleFontSize": "text-[13px]",
-      "content": "Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
-      "enabled": false,
+      "subTitleFontWeight": "font-normal",
+      "content": "Offerten werden abends geschrieben, wenn der Arbeitstag längst vorbei ist. | . | Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
+      "enabled": true,
       "_template": "section"
     },
     {
-      "title": "Wie | es funktioniert?",
+      "title": "Wie es funktioniert",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "... | Phasenweise Umsetzung | .. | Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
+      "subTitle": "",
       "subTitleFontSize": "text-[13px]",
+      "content": "... | Phasenbasierte Umsetzung. | .. | Schriftliche Freigabe bei jedem Schritt. | . | Nichts geht live ohne Ihre Zustimmung. | . | Wir beginnen mit einem Prozess, nicht mit Ihrem ganzen Unternehmen.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
       "enabled": true,
       "_template": "section"
     },
@@ -63,24 +73,12 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        {
-          "label": "Discovery"
-        },
-        {
-          "label": "Umfang"
-        },
-        {
-          "label": "Lösungsplan"
-        },
-        {
-          "label": "Aufbau"
-        },
-        {
-          "label": "Validierung"
-        },
-        {
-          "label": "Live"
-        }
+        { "label": "Discovery" },
+        { "label": "Umfang" },
+        { "label": "Lösungsplan" },
+        { "label": "Aufbau" },
+        { "label": "Validierung" },
+        { "label": "Live" }
       ],
       "dotsPerConnector": 3,
       "dotSize": 2,
@@ -91,12 +89,13 @@
     },
     {
       "industry": "Internationaler Handel",
+      "client": "",
       "location": "Schweiz",
       "package": "Basic + KI-Triage",
       "timeline": "2 Wochen bis Go-live",
       "challenge": "Ein hohes Volumen eingehender E-Mails – Leads, technische Fragen und irrelevante Nachrichten – erforderte täglich manuelles Lesen, Einordnen und Weiterleiten. Uneinheitliche Bearbeitung und übersehene Nachrichten waren ein dauerhaftes Problem.",
-      "built": "KI-Klassifizierung aller eingehenden E-Mails in umsetzbare Kategorien. Automatische CRM-Erfassung. Vorbereitung von Antwortentwürfen für relevante Anfragen. Menschliche Prüfung und Freigabe vor jeder ausgehenden Antwort.",
-      "result": "Keine übersehenen oder falsch zugeordneten E-Mails mehr. Weniger manueller Aufwand für das Team. Menschliche Entscheidung bei jeder Antwort erhalten. Operative Verlässlichkeit ab dem ersten Tag nach Go-live.",
+      "built": "KI-Klassifizierung aller eingehenden E-Mails in umsetzbare Kategorien. Automatische CRM-Erfassung. Antwortentwürfe für relevante Anfragen. Menschliche Prüfung und Freigabe vor jeder ausgehenden Antwort.",
+      "result": "Keine übersehenen oder falsch zugeordneten E-Mails mehr. Weniger manueller Aufwand für das Team. Menschliche Entscheidung bei jeder Antwort. Einheitliche Bearbeitung ab dem ersten Tag.",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
@@ -106,23 +105,24 @@
       "_template": "caseStudy"
     },
     {
-      "quote": "VortexDeep hat unseren Posteingang komplett verändert. Durch die Eliminierung der manuellen Sortierung und die Integration einer intelligenten Triage direkt in unsere Systeme haben sie ab dem ersten Tag vollständige operative Verlässlichkeit geliefert, ohne die persönliche Note zu opfern, die unsere Kundschaft erwartet.",
-      "attributionName": "Geschäftsleitung",
+      "quote": "Es geht nichts mehr verloren — und nichts raus, was ich nicht gesehen habe.",
+      "attributionName": "",
       "attributionOrg": "MG Redshift",
-      "quoteFontSize": "text-[13px]",
-      "quoteFontWeight": "font-thin",
-      "metaFontSize": "text-[9px]",
-      "enabled": true,
+      "quoteFontSize": "text-[15px]",
+      "quoteFontWeight": "font-normal",
+      "metaFontSize": "text-[11px]",
+      "enabled": false,
       "_template": "testimonial"
     },
     {
-      "industry": "Professional Services -",
+      "industry": "Treuhand",
+      "client": "",
       "location": "Schweiz",
       "package": "Dokumentenverarbeitung",
       "timeline": "4 Wochen bis Go-live",
       "challenge": "Eingehende Lieferantenrechnungen und Kundenverträge trafen in unterschiedlichen Formaten ein — PDF, eingescannte Unterlagen, E-Mail-Anhänge. Jedes Dokument erforderte manuelles Lesen, Datenextraktion und erneute Eingabe ins Buchhaltungssystem. Der Prozess beanspruchte 6 bis 8 Stunden pro Woche und verursachte regelmässig Eingabefehler.",
-      "built": "Automatisierte Extraktion relevanter Datenfelder aus eingehenden Dokumenten. Abgleich mit Stammdaten der Lieferanten. Strukturierter Output für den Import ins Buchhaltungssystem. Menschliche Prüfung wird nur bei Ausnahmen und Auffälligkeiten ausgelöst — nicht bei jedem Dokument.",
-      "result": "Wöchentlicher Aufwand von 6 bis 8 Stunden auf unter eine Stunde reduziert. Dateneingabefehler nahezu eliminiert. Mitarbeiter-Aufmerksamkeit von Datentransfer auf Entscheidungen verlagert. Einheitliche Ergebnisse ab dem ersten Tag nach Go-live.",
+      "built": "Automatisierte Extraktion relevanter Datenfelder aus eingehenden Dokumenten. Abgleich mit Stammdaten der Lieferanten. Strukturierter Output für den Import ins Buchhaltungssystem. Menschliche Prüfung nur bei Ausnahmen und Auffälligkeiten — nicht bei jedem Dokument.",
+      "result": "Wöchentlicher Aufwand von 6 bis 8 Stunden auf unter eine Stunde reduziert. Dateneingabefehler nahezu eliminiert. Statt Daten zu übertragen, entscheiden die Mitarbeitenden.",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
@@ -130,6 +130,47 @@
       "metaFontSize": "text-[13px]",
       "enabled": false,
       "_template": "caseStudy"
+    },
+    {
+      "title": "Mit wem Sie es zu tun haben",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "",
+      "subTitleFontSize": "text-[11px]",
+      "content": "... | Ich habe jahrelang Dinge verkauft, hinter denen ich nicht stehen konnte. VortexDeep ist das, was ich stattdessen aufgebaut habe. | .. | Ich baue es. Ich betreibe es. Ich gehe ans Telefon. | . | Ihre Daten bleiben in Ihren Systemen. Wir arbeiten neben Ihrer IT — wir ersetzen sie nicht. | . | Sie können auf Ende jedes Monats kündigen. Keine Bindung. | . | Schreiben Sie mir, dann telefonieren wir.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
+      "email": "info@vortexdeep.ch",
+      "phone": "",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "Der Fit-Check",
+      "titleFontSize": "text-[13px]",
+      "titleFontWeight": "font-thin",
+      "orientation": "vertical",
+      "stepFontSize": "text-[13px]",
+      "stepFontWeight": "font-thin",
+      "steps": [
+        { "label": "Ihre Rolle" },
+        { "label": "Ihr Bereich" },
+        { "label": "Heute" },
+        { "label": "Ihr Ziel" },
+        { "label": "Ihr Profil" },
+        { "label": "Meine Antwort" }
+      ],
+      "dotsPerConnector": 3,
+      "dotSize": 2,
+      "connectorGap": 5,
+      "stepSpacing": 8,
+      "content": "Vier Fragen. Etwa zwei Minuten. | . | Sie erhalten eines von vier Profilen — und eine Empfehlung, mit der Sie arbeiten können. Mit mir oder ohne mich. | . | Er soll Ihnen ehrlich sagen, ob das hier zu Ihnen passt.",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-normal",
+      "ctaLabel": "Fit-Check starten",
+      "ctaUrl": "/check",
+      "enabled": true,
+      "_template": "processFlow"
     },
     {
       "title": "Kontakt",

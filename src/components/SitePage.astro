@@ -261,6 +261,32 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
     text: line.trim(),
     delay: animCascade ? `${(startDelay + i * step).toFixed(2)}s` : `${startDelay.toFixed(2)}s`,
   }));
+
+// ── Dot dividers ──────────────────────────────────────────────────────────────
+// The `...` / `..` / `.` marks authored into the copy are not punctuation and
+// they are not typos — they are the same motif as the depth-network background
+// and the processFlow connectors. They were only ever *typed* because there was
+// nowhere to draw them. Here they get drawn.
+//
+// Any '|'-delimited segment consisting solely of dots (and whitespace) is
+// lifted out of the reading flow and rendered as a row of small centred
+// circles instead of as a <p>. The authored count is preserved as rhythm:
+// ... opens a screen, .. separates groups, . closes. Vertical margin scales
+// with the count, so a one-dot separator inside a ten-item list stays tight
+// while a three-dot opener still breathes.
+const DOT_ONLY = /^[.\s·]+$/;
+const dotCount = (line: string) => (line.match(/[.·]/g) || []).length;
+const dotGapY: Record<number, string> = { 1: '0.9rem', 2: '1.4rem', 3: '1.9rem' };
+
+// Splits a '|'-delimited string into typed lines, tagging each segment as
+// either a dot divider (with its count) or real text, so every caller renders
+// the two the same way.
+const contentLines = (text: string) =>
+  text.split('|').map((raw: string) => {
+    const line = raw.trim();
+    const dots = DOT_ONLY.test(line) && line.length > 0 ? dotCount(line) : 0;
+    return { line, dots };
+  });
 ---
 
 <Layout
@@ -439,6 +465,39 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
       transition-delay: 0.15s;
     }
     .vd-reveal.vd-visible { opacity:1; transform:translateY(0); }
+
+    /* ── Dot dividers ──────────────────────────────────────────────────────
+       Drawn version of the ... / .. / . marks in the copy. Sized and faded to
+       match the resting state of the processFlow connector dots and the nodes
+       in the depth-network background, so the three read as one family. */
+    .vd-dots {
+      display: flex; justify-content: center; align-items: center;
+      gap: 7px;
+    }
+    .vd-dots span {
+      display: block;
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.32;
+    }
+
+    /* ── Inline CTA ── */
+    .vd-cta {
+      display: inline-block;
+      border: 1px solid currentColor;
+      border-color: color-mix(in srgb, currentColor 30%, transparent);
+      padding: 0.85rem 1.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      opacity: 0.75;
+      transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1),
+                  border-color 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vd-cta:hover {
+      opacity: 1;
+      border-color: color-mix(in srgb, currentColor 60%, transparent);
+    }
 
     /* ── Scroll hint ── */
     .vd-hint {
@@ -679,8 +738,14 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
         {subSiteName && (
           <h2 class={`${settings.subSiteNameFontSize || 'text-[13px]'} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
               style={`${textStyle(zenText, settings.subSiteNameFont)} opacity: 0.7;`}>
-            {subSiteName.split('|').map((line: string) => (
-              <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
+            {contentLines(subSiteName).map(({ line, dots }) => (
+              dots > 0 ? (
+                <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                  {Array.from({ length: dots }).map(() => <span></span>)}
+                </span>
+              ) : (
+                <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line}</span>
+              )
             ))}
           </h2>
         )}
@@ -745,6 +810,35 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                   </div>
                 ))}
               </div>
+
+              {/* Optional explainer + CTA. Lets a processFlow block do more than
+                  draw steps — it can also say what the steps are for and hand the
+                  visitor the door. Used by the Fit Check screen; the Our Process
+                  block leaves both fields empty and renders exactly as before. */}
+              {block.content && (
+                <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
+                     style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
+                  {contentLines(block.content).map(({ line, dots }) => (
+                    dots > 0 ? (
+                      <div class="vd-dots" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                        {Array.from({ length: dots }).map(() => <span></span>)}
+                      </div>
+                    ) : (
+                      <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line}</p>
+                    )
+                  ))}
+                </div>
+              )}
+
+              {block.ctaLabel && block.ctaUrl && (
+                <div class="flex justify-center mt-10">
+                  <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
+                     class="vd-cta text-[11px]"
+                     style={`color: ${zenText};`}>
+                    {block.ctaLabel}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -765,6 +859,16 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
                   style={textStyle(zenText, block.titleFont)}>
                 {block.industry || 'Industry'}
               </h2>
+
+              {/* Optional, and deliberately opt-in: a case study only names the
+                  client when the client has said yes. Empty = anonymous, exactly
+                  as before. */}
+              {block.client && (
+                <p class={`${block.labelFontSize || 'text-[11px]'} uppercase tracking-[0.25em] opacity-55 mb-1 translate-x-[0.125em]`}
+                   style={textStyle(zenText, block.metaFont)}>
+                  {block.client}
+                </p>
+              )}
 
               {block.location && (
                 <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 translate-x-[0.125em]
@@ -873,7 +977,7 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
           <div class="w-full max-w-2xl text-center">
 
             {block.title && (
-              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-normal'} mb-4 opacity-90`}
+              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-normal'} uppercase tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
                   style={textStyle(zenText, block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
@@ -882,30 +986,54 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
             )}
 
             {block.subTitle && (
-              <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-60`}
+              <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
                   style={textStyle(zenText, block.subTitleFont)}>
-                {block.subTitle.split('|').map((line: string) => (
-                  <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
+                {contentLines(block.subTitle).map(({ line, dots }) => (
+                  dots > 0 ? (
+                    <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                      {Array.from({ length: dots }).map(() => <span></span>)}
+                    </span>
+                  ) : (
+                    <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line}</span>
+                  )
                 ))}
               </h3>
             )}
 
             {block.content && (
-              <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-left`}
+              <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
                    style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
-                {block.content.split('|').map((line: string) => (
-                  <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line.trim()}</p>
+                {contentLines(block.content).map(({ line, dots }) => (
+                  dots > 0 ? (
+                    <div class="vd-dots" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                      {Array.from({ length: dots }).map(() => <span></span>)}
+                    </div>
+                  ) : (
+                    <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line}</p>
+                  )
                 ))}
               </div>
             )}
 
-            {block.email && (
-              <div class="flex justify-center mt-10">
-                <a href={`mailto:${block.email}`}
-                   class="opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px] translate-x-[0.075em]"
-                   style={`color: ${zenText};`}>
-                  {block.email}
-                </a>
+            {(block.email || block.phone) && (
+              <div class="flex justify-center items-center gap-6 mt-10">
+                {block.email && (
+                  <a href={`mailto:${block.email}`}
+                     class="opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px] translate-x-[0.075em]"
+                     style={`color: ${zenText};`}>
+                    {block.email}
+                  </a>
+                )}
+                {block.email && block.phone && (
+                  <span class="vd-dots" aria-hidden="true" style={`color: ${zenText};`}><span></span></span>
+                )}
+                {block.phone && (
+                  <a href={`tel:${block.phone.replace(/[^+0-9]/g, '')}`}
+                     class="opacity-60 hover:opacity-100 transition-opacity tracking-[0.15em] text-[11px] translate-x-[0.075em]"
+                     style={`color: ${zenText};`}>
+                    {block.phone}
+                  </a>
+                )}
               </div>
             )}
 

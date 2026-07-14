@@ -20,7 +20,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     // Case study block
     caseStudyTag:  'Fallstudie',
     challenge:     'Herausforderung',
-    built:         'Was gebaut wurde',
+    built:         'Was umgesetzt wurde',
     result:        'Ergebnis',
     packageLabel:  'Paket',
     timelineLabel: 'Zeitplan',

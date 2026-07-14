@@ -16,6 +16,7 @@ fragment PageParts on Page {
       fontSize
       fontWeight
       email
+      phone
       showArt
       columns
       enabled
@@ -43,10 +44,16 @@ fragment PageParts on Page {
       flowSpeed
       connectorGap
       stepSpacing
+      content
+      fontSize
+      fontWeight
+      ctaLabel
+      ctaUrl
       enabled
     }
     ... on PageBlocksCaseStudy {
       industry
+      client
       location
       package
       timeline
@@ -96,6 +103,7 @@ fragment Page_deParts on Page_de {
       fontSize
       fontWeight
       email
+      phone
       showArt
       columns
       enabled
@@ -123,10 +131,16 @@ fragment Page_deParts on Page_de {
       flowSpeed
       connectorGap
       stepSpacing
+      content
+      fontSize
+      fontWeight
+      ctaLabel
+      ctaUrl
       enabled
     }
     ... on Page_deBlocksCaseStudy {
       industry
+      client
       location
       package
       timeline
