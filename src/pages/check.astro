@@ -146,20 +146,13 @@ for (const key of categoryKeysList) {
        footer height are both admin-configurable in Site Settings, same as
        every other page. -->
   <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6"
-        style={`background-color: var(--zen-bg); color: var(--zen-text); padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
+        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
     <div class="max-w-xl w-full mx-auto" id="vd-root">
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
         The Fit Check
       </p>
 
-      <div class="vd-intro">
-        <p>Six questions. About two minutes.</p>
-        <span class="vd-idot" aria-hidden="true"></span>
-        <p>You leave an email address at the end. Then you get your result, and a recommendation you can act on.</p>
-        <span class="vd-idot" aria-hidden="true"></span>
-        <p>It tells you whether this is for you.</p>
-      </div>
 
       <div class="flex justify-center gap-3 mb-3" id="vd-progress"></div>
       <p id="vd-stepname" class="text-[10px] uppercase tracking-[0.3em] opacity-35 text-center mb-10 sm:mb-16"></p>
@@ -439,10 +432,6 @@ for (const key of categoryKeysList) {
        Replaces six 1px hairlines at 0.3 opacity — present in the DOM, invisible on screen. */
     #vd-progress span { width:7px; height:7px; border-radius:50%; background:var(--zen-text); opacity:0.22; transition:opacity 0.3s ease; }
     #vd-progress span.done { opacity:0.9; }
-    .vd-intro { text-align:center; max-width:34rem; margin:0 auto 2.5rem; }
-    .vd-intro p { font-size:13px; font-weight:300; line-height:1.8; opacity:0.75; margin:0; }
-    .vd-intro p:first-child { opacity:0.9; }
-    .vd-idot { display:block; width:3px; height:3px; border-radius:50%; background:var(--zen-text); opacity:0.32; margin:0.85rem auto; }
     .hidden { display:none; }
   </style>
 
@@ -553,7 +542,6 @@ for (const key of categoryKeysList) {
       qEls.forEach(q => q.classList.add('hidden'));
       nav.classList.add('hidden');
       progressWrap.classList.add('hidden');
-      document.querySelector('.vd-intro')?.classList.add('hidden');
       document.getElementById('vd-stepname')?.classList.add('hidden');
       document.getElementById('vd-shortclose')!.classList.remove('hidden');
     }
@@ -562,7 +550,6 @@ for (const key of categoryKeysList) {
       qEls.forEach(q => q.classList.add('hidden'));
       nav.classList.add('hidden');
       progressWrap.classList.add('hidden');
-      document.querySelector('.vd-intro')?.classList.add('hidden');
       document.getElementById('vd-stepname')?.classList.add('hidden');
 
       (document.getElementById('gate-role')     as HTMLInputElement).value = answers.role || '';
