@@ -276,7 +276,9 @@ const streamLines = (text: string, startDelay = 0.25, step = 0.14) =>
 // while a three-dot opener still breathes.
 const DOT_ONLY = /^[.\s·]+$/;
 const dotCount = (line: string) => (line.match(/[.·]/g) || []).length;
-const dotGapY: Record<number, string> = { 1: '0.9rem', 2: '1.4rem', 3: '1.9rem' };
+// No gap map. A dot row is a LINE — it occupies exactly one line of the rhythm,
+// like any other line, whatever the dot count. The count says something about the
+// copy (... opens, .. separates, . closes); it says nothing about spacing.
 
 // Splits a '|'-delimited string into typed lines, tagging each segment as
 // either a dot divider (with its count) or real text, so every caller renders
@@ -287,6 +289,29 @@ const contentLines = (text: string) =>
     const dots = DOT_ONLY.test(line) && line.length > 0 ? dotCount(line) : 0;
     return { line, dots };
   });
+
+// Groups a '|'-delimited string into paragraphs. Consecutive text segments become
+// LINES inside one paragraph — natural leading, no margin, because a pipe is a line
+// break, exactly as authored. A dot-only segment closes the paragraph and renders as
+// a drawn divider with generous margin. So: pipes break lines, dots break thought.
+// Previously every pipe emitted its own <p class="mb-3">, so a line break in `content`
+// opened a 12px gap while the identical break in `subTitle` did not — which is why the
+// same sentence looked airy in one field and compact in the other.
+const contentGroups = (text: string) => {
+  const out: Array<{ kind: 'text'; lines: string[] } | { kind: 'dots'; n: number }> = [];
+  let run: string[] = [];
+  for (const { line, dots } of contentLines(text)) {
+    if (dots > 0) {
+      if (run.length) { out.push({ kind: 'text', lines: run }); run = []; }
+      out.push({ kind: 'dots', n: dots });
+    } else if (line) {
+      run.push(line);
+    }
+  }
+  if (run.length) out.push({ kind: 'text', lines: run });
+  return out;
+};
+
 ---
 
 <Layout
@@ -473,6 +498,10 @@ const contentLines = (text: string) =>
     .vd-dots {
       display: flex; justify-content: center; align-items: center;
       gap: 7px;
+      /* One line tall, matching leading-relaxed on the surrounding text, so a dot
+         row sits in the rhythm exactly where a line of text would — no margin, no
+         gap, regardless of how many dots it holds. */
+      height: 1.625em;
     }
     .vd-dots span {
       display: block;
@@ -495,9 +524,6 @@ const contentLines = (text: string) =>
           screen, so if the accordion grows, the screen re-centres and the title
           and closing line visibly lurch. min-height freezes the composition: the
           dots and labels stay exactly where they are, and only the sub-areas move. */
-    /* All groups start closed. min-height keeps the reserved space empty from
-       first paint, so opening any group moves only the sub-areas — the title,
-       the dots and the labels never shift. */
     .vd-acc { min-height: 264px; }
     .vd-acc-item { padding: 3px 0; }
     .vd-acc-head {
@@ -793,7 +819,7 @@ const contentLines = (text: string) =>
               style={`${textStyle(zenText, settings.subSiteNameFont)} opacity: 0.7;`}>
             {contentLines(subSiteName).map(({ line, dots }) => (
               dots > 0 ? (
-                <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                <span class="vd-dots block" aria-hidden="true">
                   {Array.from({ length: dots }).map(() => <span></span>)}
                 </span>
               ) : (
@@ -828,10 +854,6 @@ const contentLines = (text: string) =>
         return (
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
-              {/* mb-12 suits a title sitting directly above the drawn steps — they need
-                  the air. With a sub-title between them, that same gap runs 16px wider than
-                  the title/sub-title pair on every section screen, and the inconsistency is
-                  visible. Match the sections whenever a sub-title is present. */}
               {block.title && (
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-60 translate-x-[0.6em]`}
                     style={textStyle(zenText, block.titleFont)}>
@@ -841,15 +863,14 @@ const contentLines = (text: string) =>
                 </h2>
               )}
               {/* Sits between the title and the drawn steps, exactly where a section's
-                  sub-title sits — so a process flow can say what it is FOR before it
-                  shows what it IS. Dot-only segments render as drawn dividers, same
-                  as everywhere else. */}
+                  sub-title sits — so a process flow can say what it is FOR before it shows
+                  what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {block.subTitle && (
                 <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-10 opacity-70`}
                     style={textStyle(zenText, block.subTitleFont)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
-                      <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                      <span class="vd-dots block" aria-hidden="true">
                         {Array.from({ length: dots }).map(() => <span></span>)}
                       </span>
                     ) : (
@@ -894,15 +915,19 @@ const contentLines = (text: string) =>
               {block.content && (
                 <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
                      style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
-                  {contentLines(block.content).map(({ line, dots }) => (
-                    dots > 0 ? (
-                      <div class="vd-dots" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
-                        {Array.from({ length: dots }).map(() => <span></span>)}
-                      </div>
-                    ) : (
-                      <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line}</p>
-                    )
-                  ))}
+                  {contentGroups(block.content).map((g) => (
+                  g.kind === 'dots' ? (
+                    <div class="vd-dots" aria-hidden="true">
+                      {Array.from({ length: g.n }).map(() => <span></span>)}
+                    </div>
+                  ) : (
+                    <p class="mb-0">
+                      {g.lines.map((l) => (
+                        <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
+                      ))}
+                    </p>
+                  )
+                ))}
                 </div>
               )}
 
@@ -1066,7 +1091,7 @@ const contentLines = (text: string) =>
                   style={textStyle(zenText, block.subTitleFont)}>
                 {contentLines(block.subTitle).map(({ line, dots }) => (
                   dots > 0 ? (
-                    <span class="vd-dots block" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
+                    <span class="vd-dots block" aria-hidden="true">
                       {Array.from({ length: dots }).map(() => <span></span>)}
                     </span>
                   ) : (
@@ -1102,26 +1127,20 @@ const contentLines = (text: string) =>
             {block.content && (
               <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
                    style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
-                {contentLines(block.content).map(({ line, dots }) => (
-                  dots > 0 ? (
-                    <div class="vd-dots" style={`margin: ${dotGapY[dots] || '0.9rem'} 0;`} aria-hidden="true">
-                      {Array.from({ length: dots }).map(() => <span></span>)}
+                {contentGroups(block.content).map((g) => (
+                  g.kind === 'dots' ? (
+                    <div class="vd-dots" aria-hidden="true">
+                      {Array.from({ length: g.n }).map(() => <span></span>)}
                     </div>
                   ) : (
-                    <p class={`mb-3 ${animTextHover ? 'vd-hover-grow' : ''}`}>{line}</p>
+                    <p class="mb-0">
+                      {g.lines.map((l) => (
+                        <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
+                      ))}
+                    </p>
                   )
                 ))}
               </div>
-            )}
-
-            {/* Meta line — location, or a signature if one is ever wanted. Sized with
-                the contact links (11px, tracked, low opacity), not with the body copy,
-                so it reads as a footer to the screen rather than as a claim on it. */}
-            {block.meta && (
-              <p class="text-[11px] uppercase tracking-[0.25em] opacity-40 mt-10 translate-x-[0.125em]"
-                 style={`color: ${zenText};`}>
-                {block.meta}
-              </p>
             )}
 
             {(block.email || block.phone) && (
