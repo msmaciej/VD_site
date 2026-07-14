@@ -31,7 +31,7 @@ const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
 
 const activeFontFamily = fontFamily(activeFont);
 
-const allFontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap";
+const allFontsUrl = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap";
 
 // ── Colour helpers ────────────────────────────────────────────────────────────
 const getBgColor = () => {
@@ -480,6 +480,56 @@ const contentLines = (text: string) =>
       border-radius: 50%;
       background: currentColor;
       opacity: 0.32;
+    }
+
+    /* ── Folding groups ──────────────────────────────────────────────────────
+       Three things this has to get right, all of which are easy to get wrong:
+
+       1. overflow:hidden on the folding body. The 0fr→1fr grid trick only clips
+          if the row actually clips — without it the sub-items paint outside the
+          collapsed row for the length of the transition, which reads as a flicker.
+       2. No padding change on the animating element. Padding that only exists in
+          the open state jumps discretely at both ends of the transition; it lives
+          on an inner wrapper instead, inside the clip.
+       3. Reserved height on the whole group. This sits on a flex-centred 100svh
+          screen, so if the accordion grows, the screen re-centres and the title
+          and closing line visibly lurch. min-height freezes the composition: the
+          dots and labels stay exactly where they are, and only the sub-areas move. */
+    .vd-acc { min-height: 264px; }
+    .vd-acc-item { padding: 3px 0; }
+    .vd-acc-head {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; background: none; border: none; cursor: pointer;
+      font-family: inherit; padding: 7px 0;
+    }
+    .vd-acc-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; opacity: 0.28;
+      transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+    }
+    .vd-acc-label {
+      text-transform: uppercase; letter-spacing: 0.22em;
+      opacity: 0.5; transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vd-acc-head:hover .vd-acc-label { opacity: 0.85; }
+    .vd-acc-item[data-open="true"] .vd-acc-dot   { opacity: 0.9; }
+    .vd-acc-item[data-open="true"] .vd-acc-label { opacity: 0.95; }
+    .vd-acc-body {
+      display: grid; grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows 0.55s cubic-bezier(0.4,0,0.2,1),
+                  opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+      opacity: 0;
+    }
+    .vd-acc-item[data-open="true"] .vd-acc-body { grid-template-rows: 1fr; opacity: 1; }
+    .vd-acc-inner { min-height: 0; overflow: hidden; padding-top: 8px; }
+    .vd-acc-sub {
+      display: block; text-transform: uppercase; letter-spacing: 0.14em;
+      opacity: 0.42; padding: 3px 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vd-acc-body { transition: none; }
     }
 
     /* ── Inline CTA ── */
@@ -1000,6 +1050,29 @@ const contentLines = (text: string) =>
               </h3>
             )}
 
+            {/* Folding groups. Ten flat labels is a wall; four is a map. The open
+                marker is the same dot as everything else on the site — no chevrons,
+                no plus signs, no borders. Exactly one group is open at a time. */}
+            {block.groups?.length > 0 && (
+              <div class="vd-acc max-w-md mx-auto mb-8" data-vd-acc>
+                {block.groups.map((g: any, i: number) => (
+                  <div class="vd-acc-item" data-vd-acc-item data-open={i === 0 ? 'true' : 'false'}>
+                    <button type="button" class="vd-acc-head" data-vd-acc-head style={`color: ${zenText};`}>
+                      <span class="vd-acc-dot" aria-hidden="true"></span>
+                      <span class={`vd-acc-label ${block.subTitleFontSize || 'text-[13px]'}`}>{g.label}</span>
+                    </button>
+                    <div class="vd-acc-body" data-vd-acc-body>
+                      <div class="vd-acc-inner">
+                        {g.items?.map((it: any) => (
+                          <span class="vd-acc-sub text-[11px]" style={`color: ${zenText};`}>{it.label}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {block.content && (
               <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
                    style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
@@ -1058,6 +1131,21 @@ const contentLines = (text: string) =>
 </Layout>
 
 <script>
+  // Folding groups: clicking a head opens it and folds whichever was open.
+  // Deliberately not a <details> element — those come with a disclosure triangle
+  // and a browser-default animation, and both are foreign to this design.
+  document.querySelectorAll('[data-vd-acc]').forEach((acc) => {
+    const items = Array.from(acc.querySelectorAll('[data-vd-acc-item]'));
+    items.forEach((item) => {
+      const head = item.querySelector('[data-vd-acc-head]');
+      head?.addEventListener('click', () => {
+        const wasOpen = item.getAttribute('data-open') === 'true';
+        items.forEach((o) => o.setAttribute('data-open', 'false'));
+        item.setAttribute('data-open', wasOpen ? 'false' : 'true');
+      });
+    });
+  });
+
   // Original reveal animation — fires when 40% of a section is visible after snap
   const observer = new IntersectionObserver(
     (entries) => {

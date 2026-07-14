@@ -4,12 +4,12 @@
       "title": "What We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "",
-      "subTitleFontSize": "text-[11px]",
+      "subTitle": "We turn repetitive operational tasks | into practical AI-assisted workflows | ..",
+      "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "... | We turn repetitive operational tasks into practical AI-assisted workflows. | .. | Built for your business. Managed monthly. | . | Human control stays at the centre. | .",
+      "content": "Built for your business | . | Managed monthly | . | Human control stays at the centre | .",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "showArt": false,
       "enabled": true,
       "_template": "section"
@@ -27,12 +27,64 @@
       "title": "Problems We Solve",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ". | Communication & Intake | . | Lead & Sales Pipeline | . | Document & Data Processing | . | Content & Marketing | . | Internal Operations | . | Reporting & Analytics | . | Finance & Admin | . | Scheduling & Booking | . | Customer Support | . | E-commerce & Fulfilment | .",
+      "subTitle": "The same six-phase methodology | applies across all areas | ..",
       "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Quotes get written in the evening, after the working day is over. | . | The same six-phase methodology applies across all areas.",
+      "content": "",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
+      "groups": [
+        {
+          "label": "Communication & Customers",
+          "items": [
+            {
+              "label": "Communication & Intake"
+            },
+            {
+              "label": "Customer Support"
+            },
+            {
+              "label": "Scheduling & Booking"
+            }
+          ]
+        },
+        {
+          "label": "Sales & Growth",
+          "items": [
+            {
+              "label": "Lead & Sales Pipeline"
+            },
+            {
+              "label": "Content & Marketing"
+            },
+            {
+              "label": "E-commerce & Fulfilment"
+            }
+          ]
+        },
+        {
+          "label": "Documents & Finance",
+          "items": [
+            {
+              "label": "Document & Data Processing"
+            },
+            {
+              "label": "Finance & Admin"
+            }
+          ]
+        },
+        {
+          "label": "Operations & Insight",
+          "items": [
+            {
+              "label": "Internal Operations"
+            },
+            {
+              "label": "Reporting & Analytics"
+            }
+          ]
+        }
+      ],
       "enabled": true,
       "_template": "section"
     },
@@ -40,11 +92,11 @@
       "title": "How It Works",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "",
+      "subTitle": "...",
       "subTitleFontSize": "text-[13px]",
-      "content": "... | Phase-gated delivery. | .. | Written sign-off at every step. | . | Nothing goes live without your approval. | . | We start with one process, not your whole company.",
+      "content": "Phase-gated delivery | .. | Written sign-off | at every step | . | Nothing goes live | without your approval | . | We start with the one process | that is costing you hours | .",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "enabled": true,
       "_template": "section"
     },
@@ -74,17 +126,32 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Discovery" },
-        { "label": "Scope" },
-        { "label": "Solution" },
-        { "label": "Build" },
-        { "label": "Validation" },
-        { "label": "Live" }
+        {
+          "label": "Discovery"
+        },
+        {
+          "label": "Scope"
+        },
+        {
+          "label": "Solution"
+        },
+        {
+          "label": "Build"
+        },
+        {
+          "label": "Validation"
+        },
+        {
+          "label": "Live"
+        }
       ],
       "dotsPerConnector": 3,
       "dotSize": 2,
       "connectorGap": 5,
       "stepSpacing": 8,
+      "content": "This is how your process gets fixed | Six phases. You sign off on each one.",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-light",
       "enabled": true,
       "_template": "processFlow"
     },
@@ -100,6 +167,7 @@
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
+      "bodyFontWeight": "font-light",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": true,
@@ -127,6 +195,7 @@
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "bodyFontSize": "text-[13px]",
+      "bodyFontWeight": "font-light",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": false,
@@ -136,11 +205,11 @@
       "title": "Who You're Dealing With",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "",
+      "subTitle": "...",
       "subTitleFontSize": "text-[11px]",
-      "content": "... | I spent years selling things I couldn't stand behind. VortexDeep is what I built instead. | .. | I build it. I run it. I answer the phone. | . | Your data stays in your systems. We work alongside your IT — we don't replace it. | . | You can stop at the end of any month. No lock-in. | . | Write, and we'll arrange a call.",
+      "content": "I spent years selling things I couldn't stand behind | VortexDeep is what I built instead. | .. | I build it. I run it. I answer the phone. | . | Your data stays in your systems. We work alongside your IT — we don't replace it. | . | Stop at the end of any month. No lock-in. | . | Write, and we'll arrange a call.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "email": "info@vortexdeep.ch",
       "phone": "",
       "enabled": true,
@@ -154,20 +223,32 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Your role" },
-        { "label": "Your area" },
-        { "label": "Today" },
-        { "label": "Your goal" },
-        { "label": "Your profile" },
-        { "label": "My reply" }
+        {
+          "label": "Your role"
+        },
+        {
+          "label": "Your area"
+        },
+        {
+          "label": "Where you are today"
+        },
+        {
+          "label": "Your goal"
+        },
+        {
+          "label": "Your profile"
+        },
+        {
+          "label": "My reply"
+        }
       ],
-      "dotsPerConnector": 3,
-      "dotSize": 2,
+      "dotsPerConnector": 2,
+      "dotSize": 1,
       "connectorGap": 5,
-      "stepSpacing": 8,
-      "content": "Four questions. About two minutes. | . | You get one of four profiles, and a recommendation you can act on — with or without me. | . | Its purpose is to tell you honestly whether this is for you.",
+      "stepSpacing": 5,
+      "content": "You answer six questions | Fit-Check lasts about one or two minutes | At the end you provide an email address | Then your see result | and a recommendation you can act on",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "ctaLabel": "Start the Fit Check",
       "ctaUrl": "/check",
       "enabled": true,

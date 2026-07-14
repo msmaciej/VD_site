@@ -99,6 +99,15 @@ type Collection {
 
 union DocumentNode = Page | Page_de | Settings | FitCheck | Art | Folder
 
+type PageBlocksSectionGroupsItems {
+  label: String
+}
+
+type PageBlocksSectionGroups {
+  label: String
+  items: [PageBlocksSectionGroupsItems]
+}
+
 type PageBlocksSection {
   title: String
   titleFont: String
@@ -112,6 +121,7 @@ type PageBlocksSection {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  groups: [PageBlocksSectionGroups]
   email: String
   phone: String
   showArt: Boolean
@@ -200,6 +210,15 @@ input StringFilter {
   in: [String]
 }
 
+input PageBlocksSectionGroupsItemsFilter {
+  label: StringFilter
+}
+
+input PageBlocksSectionGroupsFilter {
+  label: StringFilter
+  items: PageBlocksSectionGroupsItemsFilter
+}
+
 input BooleanFilter {
   eq: Boolean
   exists: Boolean
@@ -218,6 +237,7 @@ input PageBlocksSectionFilter {
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  groups: PageBlocksSectionGroupsFilter
   email: StringFilter
   phone: StringFilter
   showArt: BooleanFilter
@@ -322,6 +342,15 @@ type PageConnection implements Connection {
   edges: [PageConnectionEdges]
 }
 
+type Page_deBlocksSectionGroupsItems {
+  label: String
+}
+
+type Page_deBlocksSectionGroups {
+  label: String
+  items: [Page_deBlocksSectionGroupsItems]
+}
+
 type Page_deBlocksSection {
   title: String
   titleFont: String
@@ -335,6 +364,7 @@ type Page_deBlocksSection {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  groups: [Page_deBlocksSectionGroups]
   email: String
   phone: String
   showArt: Boolean
@@ -416,6 +446,15 @@ type Page_de implements Node & Document {
   _values: JSON!
 }
 
+input Page_deBlocksSectionGroupsItemsFilter {
+  label: StringFilter
+}
+
+input Page_deBlocksSectionGroupsFilter {
+  label: StringFilter
+  items: Page_deBlocksSectionGroupsItemsFilter
+}
+
 input Page_deBlocksSectionFilter {
   title: StringFilter
   titleFont: StringFilter
@@ -429,6 +468,7 @@ input Page_deBlocksSectionFilter {
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  groups: Page_deBlocksSectionGroupsFilter
   email: StringFilter
   phone: StringFilter
   showArt: BooleanFilter
@@ -1279,6 +1319,15 @@ input DocumentMutation {
   art: ArtMutation
 }
 
+input PageBlocksSectionGroupsItemsMutation {
+  label: String
+}
+
+input PageBlocksSectionGroupsMutation {
+  label: String
+  items: [PageBlocksSectionGroupsItemsMutation]
+}
+
 input PageBlocksSectionMutation {
   title: String
   titleFont: String
@@ -1292,6 +1341,7 @@ input PageBlocksSectionMutation {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  groups: [PageBlocksSectionGroupsMutation]
   email: String
   phone: String
   showArt: Boolean
@@ -1375,6 +1425,15 @@ input PageMutation {
   blocks: [PageBlocksMutation]
 }
 
+input Page_deBlocksSectionGroupsItemsMutation {
+  label: String
+}
+
+input Page_deBlocksSectionGroupsMutation {
+  label: String
+  items: [Page_deBlocksSectionGroupsItemsMutation]
+}
+
 input Page_deBlocksSectionMutation {
   title: String
   titleFont: String
@@ -1388,6 +1447,7 @@ input Page_deBlocksSectionMutation {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  groups: [Page_deBlocksSectionGroupsMutation]
   email: String
   phone: String
   showArt: Boolean

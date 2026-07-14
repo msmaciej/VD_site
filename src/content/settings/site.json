@@ -7,7 +7,7 @@
   "siteNameFont": "",
   "siteNameFontSize": "text-lg md:text-xl",
   "subSiteName": "Practical | AI automation | for small and mid-sized companies | . | From Zürich | Worldwide",
-  "subSiteName_de": "Praktische | KI-Automatisierung | für KMU | . | ZH | Schweiz",
+  "subSiteName_de": "Praktische | KI-Automatisierung | für KMU | . | Aus Zürich | Weltweit",
   "subSiteNameFontSize": "text-[13px]",
   "subSiteNameFontWeight": "font-normal",
   "subSiteNameTracking": "tracking-[1.2em]",
@@ -27,7 +27,7 @@
       "url": "https://www.facebook.com/profile.php?id=61591436130103"
     }
   ],
-  "fontPreset": "Space Mono",
+  "fontPreset": "IBM Plex Mono",
   "showLogo": true,
   "theme": "deep",
   "enableThemeToggle": true,

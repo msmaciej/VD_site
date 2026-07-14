@@ -39,6 +39,10 @@ export const fontFamily = (name: string): string => {
     'Inter':       "'Inter', sans-serif",
     'Lora':        "'Lora', serif",
     'Space Mono':  "'Space Mono', monospace",
+    // Space Mono ships only 400 and 700 — every other weight in the CMS dropdown
+    // silently rounds to one of those two. IBM Plex Mono carries 100–700, so the
+    // weight controls actually do something.
+    'IBM Plex Mono': "'IBM Plex Mono', monospace",
     'Newsreader':  "'Newsreader', serif",
   };
   return map[name] || `'${name}', sans-serif`;

@@ -105,7 +105,8 @@ var fontTypeOptions = [
   { label: "Inherit global font", value: "" },
   { label: "Inter \u2014 Modern Sans", value: "Inter" },
   { label: "Lora \u2014 Elegant Serif", value: "Lora" },
-  { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
+  { label: "IBM Plex Mono \u2014 Monospace (7 weights)", value: "IBM Plex Mono" },
+  { label: "Space Mono \u2014 Monospace (only 400 + 700)", value: "Space Mono" },
   { label: "Newsreader \u2014 Editorial Serif", value: "Newsreader" }
 ];
 var fontSizeOptions = [
@@ -143,6 +144,25 @@ var pageTemplates = [
       { type: "string", name: "bodyFont", label: "Body \u2014 Font", options: fontTypeOptions },
       { type: "string", name: "fontSize", label: "Body \u2014 Size", options: fontSizeOptions },
       { type: "string", name: "fontWeight", label: "Body \u2014 Weight", options: fontWeightOptions },
+      {
+        type: "object",
+        list: true,
+        name: "groups",
+        label: "Folding groups (optional)",
+        description: "Higher-order areas shown on screen. Click one and its sub-areas unfold; the previously open one folds. Use INSTEAD of a long sub-title list.",
+        ui: { itemProps: (item) => ({ label: item?.label || "Group" }) },
+        fields: [
+          { type: "string", name: "label", label: "Group label" },
+          {
+            type: "object",
+            list: true,
+            name: "items",
+            label: "Sub-areas",
+            ui: { itemProps: (item) => ({ label: item?.label || "Sub-area" }) },
+            fields: [{ type: "string", name: "label", label: "Sub-area label" }]
+          }
+        ]
+      },
       { type: "string", name: "email", label: "Contact Email (optional)" },
       {
         type: "string",

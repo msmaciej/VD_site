@@ -7,7 +7,8 @@ const fontTypeOptions = [
   { label: "Inherit global font", value: "" },
   { label: "Inter — Modern Sans", value: "Inter" },
   { label: "Lora — Elegant Serif", value: "Lora" },
-  { label: "Space Mono — Monospace", value: "Space Mono" },
+  { label: "IBM Plex Mono — Monospace (7 weights)", value: "IBM Plex Mono" },
+  { label: "Space Mono — Monospace (only 400 + 700)", value: "Space Mono" },
   { label: "Newsreader — Editorial Serif", value: "Newsreader" },
 ];
 
@@ -53,6 +54,19 @@ const pageTemplates = [
       { type: "string",  name: "fontSize",   label: "Body — Size",   options: fontSizeOptions },
       { type: "string",  name: "fontWeight", label: "Body — Weight", options: fontWeightOptions },
 
+      {
+        type: "object", list: true, name: "groups", label: "Folding groups (optional)",
+        description: "Higher-order areas shown on screen. Click one and its sub-areas unfold; the previously open one folds. Use INSTEAD of a long sub-title list.",
+        ui: { itemProps: (item: any) => ({ label: item?.label || "Group" }) },
+        fields: [
+          { type: "string", name: "label", label: "Group label" },
+          {
+            type: "object", list: true, name: "items", label: "Sub-areas",
+            ui: { itemProps: (item: any) => ({ label: item?.label || "Sub-area" }) },
+            fields: [{ type: "string", name: "label", label: "Sub-area label" }],
+          },
+        ],
+      },
       { type: "string",  name: "email",   label: "Contact Email (optional)" },
       { type: "string",  name: "phone",   label: "Contact Phone (optional)",
         description: "Renders as a tap-to-call link. Leave empty until a company number exists — do not publish a private mobile." },

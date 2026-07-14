@@ -149,11 +149,20 @@ for (const key of categoryKeysList) {
         style={`background-color: var(--zen-bg); color: var(--zen-text); padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
     <div class="max-w-xl w-full mx-auto" id="vd-root">
 
-      <p class="text-[10px] uppercase tracking-[0.4em] mb-8 sm:mb-16 opacity-40 text-center">
-        Quick Operations Check
+      <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
+        The Fit Check
       </p>
 
-      <div class="flex gap-2 mb-8 sm:mb-16" id="vd-progress"></div>
+      <div class="vd-intro">
+        <p>Six questions. About two minutes.</p>
+        <span class="vd-idot" aria-hidden="true"></span>
+        <p>You leave an email address at the end. Then you get your result: one of four profiles, and a recommendation you can act on.</p>
+        <span class="vd-idot" aria-hidden="true"></span>
+        <p>It tells you whether this is for you.</p>
+      </div>
+
+      <div class="flex justify-center gap-3 mb-3" id="vd-progress"></div>
+      <p id="vd-stepname" class="text-[10px] uppercase tracking-[0.3em] opacity-35 text-center mb-10 sm:mb-16"></p>
 
       <!-- Q0: Role -->
       <div class="vd-q" data-q="role">
@@ -426,8 +435,14 @@ for (const key of categoryKeysList) {
     .vd-soft-link:hover { opacity:1; }
     .vd-restart { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; background:none; border:none; cursor:pointer; font-family:inherit; color:var(--zen-text); }
     .vd-restart:hover { opacity:0.9; }
-    #vd-progress span { height:1px; flex:1; background:var(--zen-muted); opacity:0.3; transition:opacity 0.3s ease, background 0.3s ease; }
-    #vd-progress span.done { opacity:1; background:var(--zen-text); }
+    /* Progress: the same dot motif as the background network and the process flow.
+       Replaces six 1px hairlines at 0.3 opacity — present in the DOM, invisible on screen. */
+    #vd-progress span { width:7px; height:7px; border-radius:50%; background:var(--zen-text); opacity:0.22; transition:opacity 0.3s ease; }
+    #vd-progress span.done { opacity:0.9; }
+    .vd-intro { text-align:center; max-width:34rem; margin:0 auto 2.5rem; }
+    .vd-intro p { font-size:13px; font-weight:300; line-height:1.8; opacity:0.75; margin:0; }
+    .vd-intro p:first-child { opacity:0.9; }
+    .vd-idot { display:block; width:3px; height:3px; border-radius:50%; background:var(--zen-text); opacity:0.32; margin:0.85rem auto; }
     .hidden { display:none; }
   </style>
 
@@ -461,9 +476,18 @@ for (const key of categoryKeysList) {
       progressWrap.querySelectorAll('span').forEach((s, i) => s.classList.toggle('done', idx >= 0 && i <= idx));
     }
 
+    // A bare "3 / 6" gives an index. Someone mid-questionnaire wants two other
+    // things: what this step is, and how much is left.
+    const STEP_NAMES: Record<string, string> = { role: 'Your role', category: 'Your area', followup: "What's driving it", time: 'The hours', process: 'Where you are today', goal: 'Your goal' };
+
     function renderStepChrome() {
       const idx = STEPS_BUSINESS.indexOf(current);
-      stepEl.textContent = idx >= 0 ? `${idx + 1} / ${STEPS_BUSINESS.length}` : '';
+      const nameEl = document.getElementById('vd-stepname');
+      if (nameEl) {
+        nameEl.textContent = idx >= 0 ? `${idx + 1} / ${STEPS_BUSINESS.length} · ${STEP_NAMES[current] || ''}` : '';
+      }
+      const left = idx >= 0 ? STEPS_BUSINESS.length - idx - 1 : 0;
+      stepEl.textContent = idx < 0 ? '' : (left === 0 ? 'Last question' : `${left} more`);
       backBtn.disabled = stepHistory.length === 0;
     }
 
@@ -529,6 +553,8 @@ for (const key of categoryKeysList) {
       qEls.forEach(q => q.classList.add('hidden'));
       nav.classList.add('hidden');
       progressWrap.classList.add('hidden');
+      document.querySelector('.vd-intro')?.classList.add('hidden');
+      document.getElementById('vd-stepname')?.classList.add('hidden');
       document.getElementById('vd-shortclose')!.classList.remove('hidden');
     }
 
@@ -536,6 +562,8 @@ for (const key of categoryKeysList) {
       qEls.forEach(q => q.classList.add('hidden'));
       nav.classList.add('hidden');
       progressWrap.classList.add('hidden');
+      document.querySelector('.vd-intro')?.classList.add('hidden');
+      document.getElementById('vd-stepname')?.classList.add('hidden');
 
       (document.getElementById('gate-role')     as HTMLInputElement).value = answers.role || '';
       (document.getElementById('gate-category') as HTMLInputElement).value = answers.category || '';

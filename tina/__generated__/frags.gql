@@ -15,6 +15,14 @@ fragment PageParts on Page {
       bodyFont
       fontSize
       fontWeight
+      groups {
+        __typename
+        label
+        items {
+          __typename
+          label
+        }
+      }
       email
       phone
       showArt
@@ -102,6 +110,14 @@ fragment Page_deParts on Page_de {
       bodyFont
       fontSize
       fontWeight
+      groups {
+        __typename
+        label
+        items {
+          __typename
+          label
+        }
+      }
       email
       phone
       showArt

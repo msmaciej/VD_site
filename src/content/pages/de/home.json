@@ -9,7 +9,7 @@
       "subTitleFontWeight": "font-normal",
       "content": "... | Wir verwandeln wiederkehrende Aufgaben in praktische, KI-gestützte Abläufe. | .. | Auf Ihr Unternehmen zugeschnitten. Monatlich betreut. | . | Die Kontrolle bleibt beim Menschen. | .",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "enabled": true,
       "_template": "section"
     },
@@ -26,14 +26,66 @@
       "title": "Wo wir ansetzen",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": ". | Kommunikation & Eingang | . | Lead- & Vertriebsprozesse | . | Dokumente & Daten | . | Content & Marketing | . | Interne Abläufe & Freigaben | . | Reporting & Analysen | . | Finanzen & Verwaltung | . | Terminplanung & Buchungen | . | Kundenbetreuung & After-Sales | . | E-Commerce & Fulfilment | .",
+      "subTitle": "",
       "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Offerten werden abends geschrieben, wenn der Arbeitstag längst vorbei ist. | . | Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
+      "content": "Dieselbe sechsphasige Methodik gilt in allen Bereichen.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "groups": [
+        {
+          "label": "Kommunikation & Kunden",
+          "items": [
+            {
+              "label": "Kommunikation & Eingang"
+            },
+            {
+              "label": "Kundenbetreuung & After-Sales"
+            },
+            {
+              "label": "Terminplanung & Buchungen"
+            }
+          ]
+        },
+        {
+          "label": "Vertrieb & Wachstum",
+          "items": [
+            {
+              "label": "Lead- & Vertriebsprozesse"
+            },
+            {
+              "label": "Content & Marketing"
+            },
+            {
+              "label": "E-Commerce & Fulfilment"
+            }
+          ]
+        },
+        {
+          "label": "Dokumente & Finanzen",
+          "items": [
+            {
+              "label": "Dokumente & Daten"
+            },
+            {
+              "label": "Finanzen & Verwaltung"
+            }
+          ]
+        },
+        {
+          "label": "Abläufe & Auswertung",
+          "items": [
+            {
+              "label": "Interne Abläufe & Freigaben"
+            },
+            {
+              "label": "Reporting & Analysen"
+            }
+          ]
+        }
+      ]
     },
     {
       "title": "Wie es funktioniert",
@@ -41,9 +93,9 @@
       "titleFontWeight": "font-bold",
       "subTitle": "",
       "subTitleFontSize": "text-[13px]",
-      "content": "... | Phasenbasierte Umsetzung. | .. | Schriftliche Freigabe bei jedem Schritt. | . | Nichts geht live ohne Ihre Zustimmung. | . | Wir beginnen mit einem Prozess, nicht mit Ihrem ganzen Unternehmen.",
+      "content": "... | Phasenbasierte Umsetzung. | .. | Schriftliche Freigabe bei jedem Schritt. | . | Nichts geht live ohne Ihre Zustimmung. | . | Wir beginnen mit dem einen Prozess, der Sie Stunden kostet.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "enabled": true,
       "_template": "section"
     },
@@ -73,19 +125,34 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Discovery" },
-        { "label": "Umfang" },
-        { "label": "Lösungsplan" },
-        { "label": "Aufbau" },
-        { "label": "Validierung" },
-        { "label": "Live" }
+        {
+          "label": "Discovery"
+        },
+        {
+          "label": "Umfang"
+        },
+        {
+          "label": "Lösungsplan"
+        },
+        {
+          "label": "Aufbau"
+        },
+        {
+          "label": "Validierung"
+        },
+        {
+          "label": "Live"
+        }
       ],
       "dotsPerConnector": 3,
       "dotSize": 2,
       "connectorGap": 5,
       "stepSpacing": 8,
       "enabled": true,
-      "_template": "processFlow"
+      "_template": "processFlow",
+      "content": "So wird Ihr Prozess umgesetzt. | . | Sechs Phasen. Sie geben jede einzeln frei.",
+      "fontSize": "text-[13px]",
+      "fontWeight": "font-light"
     },
     {
       "industry": "Internationaler Handel",
@@ -102,7 +169,8 @@
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": true,
-      "_template": "caseStudy"
+      "_template": "caseStudy",
+      "bodyFontWeight": "font-light"
     },
     {
       "quote": "Es geht nichts mehr verloren — und nichts raus, was ich nicht gesehen habe.",
@@ -129,7 +197,8 @@
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
       "enabled": false,
-      "_template": "caseStudy"
+      "_template": "caseStudy",
+      "bodyFontWeight": "font-light"
     },
     {
       "title": "Mit wem Sie es zu tun haben",
@@ -139,7 +208,7 @@
       "subTitleFontSize": "text-[11px]",
       "content": "... | Ich habe jahrelang Dinge verkauft, hinter denen ich nicht stehen konnte. VortexDeep ist das, was ich stattdessen aufgebaut habe. | .. | Ich baue es. Ich betreibe es. Ich gehe ans Telefon. | . | Ihre Daten bleiben in Ihren Systemen. Wir arbeiten neben Ihrer IT — wir ersetzen sie nicht. | . | Sie können auf Ende jedes Monats kündigen. Keine Bindung. | . | Schreiben Sie mir, dann telefonieren wir.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "email": "info@vortexdeep.ch",
       "phone": "",
       "enabled": true,
@@ -153,20 +222,32 @@
       "stepFontSize": "text-[13px]",
       "stepFontWeight": "font-thin",
       "steps": [
-        { "label": "Ihre Rolle" },
-        { "label": "Ihr Bereich" },
-        { "label": "Heute" },
-        { "label": "Ihr Ziel" },
-        { "label": "Ihr Profil" },
-        { "label": "Meine Antwort" }
+        {
+          "label": "Ihre Rolle"
+        },
+        {
+          "label": "Ihr Bereich"
+        },
+        {
+          "label": "Ihr Stand heute"
+        },
+        {
+          "label": "Ihr Ziel"
+        },
+        {
+          "label": "Ihr Profil"
+        },
+        {
+          "label": "Meine Antwort"
+        }
       ],
       "dotsPerConnector": 3,
       "dotSize": 2,
       "connectorGap": 5,
       "stepSpacing": 8,
-      "content": "Vier Fragen. Etwa zwei Minuten. | . | Sie erhalten eines von vier Profilen — und eine Empfehlung, mit der Sie arbeiten können. Mit mir oder ohne mich. | . | Er soll Ihnen ehrlich sagen, ob das hier zu Ihnen passt.",
+      "content": "Sechs Fragen. Etwa zwei Minuten. | . | Am Ende eine E-Mail-Adresse. Dann Ihr Ergebnis. | . | Eines von vier Profilen und eine Empfehlung, mit der Sie arbeiten können.",
       "fontSize": "text-[15px]",
-      "fontWeight": "font-normal",
+      "fontWeight": "font-light",
       "ctaLabel": "Fit-Check starten",
       "ctaUrl": "/check",
       "enabled": true,
