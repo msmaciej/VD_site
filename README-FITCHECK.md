@@ -197,6 +197,36 @@ team email, but it does **not** feed either the profile or the bucket.
 
 ## 6. Editing — quick reference
 
+### Before you change a question: know the blast radius
+
+Every change falls into one of three tiers. Identify the tier *first* — it tells
+you how careful to be before you open a file, and whether the visitor's result
+can be affected at all.
+
+1. **Wording only** (any question label, any answer label, any result copy) —
+   Tina + rebuild. **Cannot** affect scoring. Safe by construction. This is the
+   large majority of edits.
+
+2. **Time or Process — options/values** — these two questions are the *only*
+   ones wired into the profile matrix (`calc_profile_key`, the 2×2 in §2).
+   Rewording their labels is still tier 1 and safe. But **adding, removing, or
+   re-mapping one of their answer options** is the one case that reaches the
+   visitor's result — treat it as a deliberate process: check the 2×2, then
+   update `calc_profile_key()` in `send-check.php` to handle the new value.
+
+3. **Role / Category / Follow-up / Goal — options/values** — these **never**
+   touch the profile the visitor sees. At most they affect the internal
+   **bucket** (`calc_bucket`) and the lead email. So glance at `calc_bucket()`
+   if you change their options, but the on-screen result is untouched either way
+   — lower stakes than tier 2.
+
+**The one rule to remember:** *only Time and Process feed the 2×2.* Everything
+else is either pure copy (tier 1, safe) or bucket-only (tier 3, internal). If a
+change doesn't touch Time or Process options, it cannot change what a visitor
+sees as their result.
+
+### By change type
+
 - **Change any question or answer wording (incl. Q2 time):** Tina → the
   relevant question → rebuild → upload `dist/`.
 - **Change profile result copy:** Tina → *Result profiles* → rebuild → upload
