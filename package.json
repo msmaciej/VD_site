@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "admin": "tinacms dev -c \"astro dev\"",
-    "build": "astro build",
+    "build": "node scripts/gen-fitcheck-profiles.mjs && astro build",
     "start": "astro dev",
     "preview": "astro preview",
     "astro": "astro",

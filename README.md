@@ -4,6 +4,8 @@ Marketing site for **VortexDeep**: practical AI automation for small businesses 
 
 Bilingual (DE / EN), statically generated, content-managed through TinaCMS, deployed as a plain folder of files to Hostpoint.
 
+**Documentation:** this file (build, deploy, content model, structure) · [README-FITCHECK.md](README-FITCHECK.md) (Fit Check questions, scoring & pipeline) · [README-ANIMATIONS.md](README-ANIMATIONS.md) (every animation toggle & tunable).
+
 ---
 
 ## 1. Design philosophy
@@ -51,7 +53,7 @@ npm install
 |---|---|
 | `npm run dev` | Local site at `http://localhost:4321` (no CMS). |
 | `npm run admin` | Site **plus** the Tina admin dashboard at `http://localhost:4321/admin`. **Use this to edit content.** |
-| `npm run build` | Compiles the site into `dist/`. **This is the deploy artifact.** |
+| `npm run build` | Regenerates the fit-check profile include, then compiles the site into `dist/`. **This is the deploy artifact.** |
 | `npm run preview` | Serves the built `dist/` locally. |
 | `npm run tree` | Regenerates `site-tree.txt`. |
 | `npm run clean` | Deletes the generated Tina files and restarts the dashboard. |
@@ -96,7 +98,7 @@ Global: site name and subtitle (EN + DE), header/footer layout and heights, nav 
 
 ### Fit Check — `src/content/fitcheck/config.json`
 
-All question and answer copy for the `/check` (`/de/check`) tool, in both languages, plus the four result profiles (FireFight / Refine / Build / Optimize). Schema lives in `tina/fitcheck-schema.ts`.
+All question and answer copy for the `/check` (`/de/check`) tool, in both languages — every question (role, category + follow-up, time cost, process, goal) is label-editable here — plus the four result profiles (FireFight / Refine / Build / Optimize). Schema lives in `tina/fitcheck-schema.ts`. This file is the **single source of truth** for the profile copy: `send-check.php` consumes a generated include built from it, so it is never edited by hand in two places. See [README-FITCHECK.md](README-FITCHECK.md).
 
 ### Art gallery — `src/content/art/*.json`
 
@@ -117,7 +119,9 @@ A short guided assessment: role → pain category → follow-up → time cost �
 
 **Do not move scoring to the client.** By design, the browser sends only raw answers. The internal bucket (lead / warm / other) and the profile *names* (FireFight / Refine / Build / Optimize) are never sent to the visitor — only the matching tagline and description text. Keep it that way.
 
-**Content sync warning:** the `$PROFILES` array inside `send-check.php` is a **hand-maintained duplicate** of the `profiles` section of `src/content/fitcheck/config.json`. The duplication is deliberate (PHP runs independently of the Astro build), but it means **editing profile text in Tina requires editing `send-check.php` to match.**
+**Profile copy is single-source.** The profile text is **not** duplicated in `send-check.php` any more. It lives once in the `profiles` section of `src/content/fitcheck/config.json` (edited in Tina). At build time, `scripts/gen-fitcheck-profiles.mjs` (the first step of `npm run build`) generates `public/fitcheck-profiles.gen.php` from it, which `send-check.php` then `require`s. So editing profile text in Tina and rebuilding is enough — there is nothing to mirror by hand, and the page and the PHP cannot drift apart. If `config.json` is incomplete the build fails loudly rather than shipping blank copy.
+
+> **Full details** — the six questions, the label-editable / value-fixed split, the exact Time × Process scoring matrix, the bucket logic, the generator pipeline and the guards — are documented in **[README-FITCHECK.md](README-FITCHECK.md)**.
 
 ---
 
@@ -130,6 +134,8 @@ VD_site/
 ├── tina/
 │   ├── config.ts              # Tina schema: blocks, pages (EN/DE), settings, art
 │   └── fitcheck-schema.ts     # Tina schema: fit-check questions & profiles
+├── scripts/
+│   └── gen-fitcheck-profiles.mjs  # build-time: config.json → PHP profile include
 ├── src/
 │   ├── content/               # ← all editable content (JSON)
 │   │   ├── pages/en/home.json
@@ -153,8 +159,10 @@ VD_site/
 │       ├── de/index.astro     # DE home
 │       └── de/check.astro     # DE fit check
 ├── public/
+│   ├── .htaccess              # denies direct access to the generated include
 │   ├── get-math.php           # bot-gate challenge
 │   ├── send-check.php         # fit-check handler + server-side scoring
+│   ├── fitcheck-profiles.gen.php  # GENERATED profile copy (do not edit)
 │   ├── images/, uploads/      # logos, backgrounds, Tina media
 │   ├── robots.txt
 │   └── sitemap.xml
@@ -180,7 +188,6 @@ VD_site/
 
 1. `npm run admin`
 2. Edit content at `http://localhost:4321/admin` (or edit the JSON in `src/content/` directly).
-3. If you changed fit-check **profile text**, mirror it into `$PROFILES` in `public/send-check.php`.
-4. `npm run build`
-5. Upload the contents of `dist/` to Hostpoint.
-6. Commit — including `dist/`.
+3. `npm run build` — this also regenerates `public/fitcheck-profiles.gen.php` from the fit-check config, so profile-text edits made in Tina take effect automatically. No manual PHP editing.
+4. Upload the contents of `dist/` to Hostpoint.
+5. Commit — including `dist/`.
