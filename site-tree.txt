@@ -74,7 +74,6 @@
 ./public/favicon.svg
 ./package-lock.json
 ./package.json
-./ANIMATIONS.md
 ./scripts
 ./scripts/gen-fitcheck-profiles.mjs
 ./_VortexDeep-fit-matrix-internal.svg
@@ -93,7 +92,6 @@
 ./src/content/pages
 ./src/content/pages/de
 ./src/content/pages/en
-./src/content/categories
 ./src/utils
 ./src/utils/siteHelpers.ts
 ./src/components
