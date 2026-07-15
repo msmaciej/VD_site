@@ -87,17 +87,6 @@ var resultSharedFields = [
   ...bilingualString("disclaimer", "Disclaimer text (shown under every profile)"),
   ...bilingualString("ctaLabel", "CTA button text")
 ];
-var confirmPageFields = [
-  ...bilingualString("emailSubject", "Verification email \u2014 subject"),
-  ...bilingualString("emailBody", "Verification email \u2014 body ({{LINK}} = the link; ' | ' = new paragraph)"),
-  ...bilingualString("confirmHeading", "Confirm page \u2014 heading"),
-  ...bilingualString("confirmBody", "Confirm page \u2014 body"),
-  ...bilingualString("confirmButton", "Confirm page \u2014 button"),
-  ...bilingualString("resultTag", "Reveal page \u2014 small label above the result"),
-  ...bilingualString("expiredHeading", "Expired-link page \u2014 heading"),
-  ...bilingualString("expiredBody", "Expired-link page \u2014 body"),
-  ...bilingualString("backLabel", "Expired-link page \u2014 back-to-check link")
-];
 var fitCheckCollection = {
   name: "fitCheck",
   label: "Fit Check",
@@ -115,8 +104,7 @@ var fitCheckCollection = {
     { type: "object", name: "goalQuestion", label: "Q4 \u2014 Goal / intent", fields: goalQuestionFields },
     { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },
     { type: "object", name: "profiles", label: "Result profiles", fields: profileFields },
-    { type: "object", name: "resultShared", label: "Result \u2014 shared disclaimer & CTA", fields: resultSharedFields },
-    { type: "object", name: "confirmPage", label: "Confirmation email & confirm page", fields: confirmPageFields }
+    { type: "object", name: "resultShared", label: "Result \u2014 shared disclaimer & CTA", fields: resultSharedFields }
   ]
 };
 
