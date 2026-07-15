@@ -1,59 +1,8 @@
 .
-./z-old-nodejs-install-screenshot
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.16.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.32.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.11.48.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.34.02.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.07.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.59.36.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.59.28.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.19.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.58.40.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.40.47.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.54.24.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.38.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.09.03.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.12.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.55.11.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.08.01.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.01.39.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.09.06.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.08.04.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.54.08.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.18.56.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.59.43.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.05.57.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.25.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.32.00.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.40.58.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.30.37.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.23.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.12.03.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.31.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.21.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.33.59.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.54.29.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.23.57.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.01.54.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 19.05.07.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.18.49.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.54.02.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.41.16.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.34.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.13.51.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 15.51.40.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.46.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.12.12.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 20.23.06.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 18.30.40.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.36.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.19.23.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.24.15.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 16.31.21.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.57.png
-./z-old-nodejs-install-screenshot/Screenshot 2026-03-29 at 17.19.43.png
+./_VortexDeep-background-LI.png
 ./tina
 ./tina/tina-lock.json
+./tina/fitcheck-schema.ts
 ./tina/__generated__
 ./tina/__generated__/static-media.json
 ./tina/__generated__/queries.gql
@@ -67,18 +16,70 @@
 ./tina/__generated__/schema.gql
 ./tina/config.ts
 ./site-tree.txt
+./dist
+./dist/get-math.php
+./dist/index.html
+./dist/images
+./dist/images/bg-deep.png
+./dist/images/vd-logo-512.png
+./dist/images/favicon-64.png
+./dist/images/vd-logo-dark.svg
+./dist/images/vd-logo-mono-512.png
+./dist/images/vd-logo-color.svg
+./dist/admin
+./dist/admin/index.html
+./dist/uploads
+./dist/uploads/_VortexDeep-background-LI.png
+./dist/send-check.php
+./dist/_astro
+./dist/_astro/hoisted.Cvb8yGkP.js
+./dist/_astro/three.module.CQ_LhNOD.js
+./dist/_astro/check.BS2l2YwZ.css
+./dist/_astro/index.Dp_xSBMU.css
+./dist/_astro/hoisted.ChHnaKkA.js
+./dist/_astro/hoisted.BzAJ_AAq.js
+./dist/de
+./dist/de/index.html
+./dist/de/check
+./dist/de/check/index.html
+./dist/sitemap.xml
+./dist/robots.txt
+./dist/check
+./dist/check/index.html
+./dist/fitcheck-profiles.gen.php
+./dist/favicon.svg
+./README-FITCHECK.md
 ./node_modules
 ./astro.config.mjs
 ./README.md
 ./tailwind.config.mjs
+./_VortexDeep_Personas_Canvas.md
 ./public
+./public/get-math.php
+./public/images
+./public/images/bg-deep.png
+./public/images/vd-logo-512.png
+./public/images/favicon-64.png
+./public/images/vd-logo-dark.svg
+./public/images/vd-logo-mono-512.png
+./public/images/vd-logo-color.svg
 ./public/admin
 ./public/admin/index.html
+./public/uploads
+./public/uploads/_VortexDeep-background-LI.png
+./public/send-check.php
+./public/sitemap.xml
+./public/robots.txt
+./public/fitcheck-profiles.gen.php
+./public/favicon.svg
 ./package-lock.json
 ./package.json
-./z-old
-./z-old/index_260329_01.astro
-./z-old/index_260329_02.astro
+./ANIMATIONS.md
+./scripts
+./scripts/gen-fitcheck-profiles.mjs
+./_VortexDeep-fit-matrix-internal.svg
+./_VortexDeep-fit-matrix-internal.png
+./README-ANIMATIONS.md
 ./src
 ./src/env.d.ts
 ./src/content
@@ -87,12 +88,28 @@
 ./src/content/art
 ./src/content/art/fragment-02.json
 ./src/content/art/fragment-01.json
+./src/content/fitcheck
+./src/content/fitcheck/config.json
 ./src/content/pages
-./src/content/pages/home.json
+./src/content/pages/de
+./src/content/pages/en
+./src/content/categories
+./src/utils
+./src/utils/siteHelpers.ts
 ./src/components
+./src/components/SitePage.astro
 ./src/components/Hero.astro
+./src/components/DepthNetworkBackground.astro
+./src/components/LanguageSwitcher.astro
+./src/components/PlanetarySystemsBackground.astro
 ./src/components/ArtCard.astro
 ./src/layouts
 ./src/layouts/Layout.astro
+./src/i18n
+./src/i18n/ui.ts
 ./src/pages
 ./src/pages/index.astro
+./src/pages/de
+./src/pages/de/index.astro
+./src/pages/de/check.astro
+./src/pages/check.astro
