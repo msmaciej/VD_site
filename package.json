@@ -9,7 +9,7 @@
     "start": "astro dev",
     "preview": "astro preview",
     "astro": "astro",
-    "tree": "find . -maxdepth 4 -not -path '*/.*' -not -path '*/node_modules/*' -not -path './.astro*' > site-tree.txt",
+    "tree": "find . -maxdepth 4 -not -path '*/.*' -not -path './node_modules' -not -path './node_modules/*' -not -path './dist' -not -path './dist/*' -not -path './.astro*' | sort > site-tree.txt",
     "clean": "rm -rf .tina/__generated__ && npm run admin"
   },
   "dependencies": {
