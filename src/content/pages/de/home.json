@@ -253,7 +253,7 @@
       "dotSize": 1,
       "connectorGap": 5,
       "stepSpacing": 5,
-      "content": "Am Ende hinterlassen Sie eine E-Mail-Adresse. | Dann sehen Sie Ihr Ergebnis und eine Empfehlung, mit der Sie arbeiten können.",
+      "content": "Am Ende hinterlassen Sie eine E-Mail-Adresse. | Wir senden Ihnen einen Link – Sie öffnen ihn, und Ihr Ergebnis erscheint, mit einer Empfehlung, mit der Sie arbeiten können.",
       "fontSize": "text-[15px]",
       "fontWeight": "font-normal",
       "ctaLabel": "Fit-Check starten",

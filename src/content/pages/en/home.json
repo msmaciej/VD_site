@@ -254,7 +254,7 @@
       "dotSize": 1,
       "connectorGap": 5,
       "stepSpacing": 5,
-      "content": "At the end you leave an email address. | Then you see your result, and a recommendation you can act on.",
+      "content": "At the end you leave an email address. | We email you a link — open it and your result appears, with a recommendation you can act on.",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "ctaLabel": "Start the Fit Check",

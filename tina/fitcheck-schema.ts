@@ -139,6 +139,24 @@ const resultSharedFields = [
   ...bilingualString("ctaLabel", "CTA button text"),
 ];
 
+// ── Confirmation email + confirm page (verify-then-reveal) ─────────────────────
+// The result is no longer shown the instant the email is typed. After the gate,
+// the visitor is emailed a one-time link; opening it and tapping confirm reveals
+// the result (on confirm.php) and notifies the team. These strings drive that
+// email and that page. emailBody MUST contain the {{LINK}} placeholder — the
+// build fails otherwise. " | " in emailBody becomes a blank line.
+const confirmPageFields = [
+  ...bilingualString("emailSubject", "Verification email — subject"),
+  ...bilingualString("emailBody", "Verification email — body ({{LINK}} = the link; ' | ' = new paragraph)"),
+  ...bilingualString("confirmHeading", "Confirm page — heading"),
+  ...bilingualString("confirmBody", "Confirm page — body"),
+  ...bilingualString("confirmButton", "Confirm page — button"),
+  ...bilingualString("resultTag", "Reveal page — small label above the result"),
+  ...bilingualString("expiredHeading", "Expired-link page — heading"),
+  ...bilingualString("expiredBody", "Expired-link page — body"),
+  ...bilingualString("backLabel", "Expired-link page — back-to-check link"),
+];
+
 export const fitCheckCollection = {
 
   name: "fitCheck",
@@ -158,5 +176,6 @@ export const fitCheckCollection = {
     { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },
     { type: "object", name: "profiles", label: "Result profiles", fields: profileFields },
     { type: "object", name: "resultShared", label: "Result — shared disclaimer & CTA", fields: resultSharedFields },
+    { type: "object", name: "confirmPage", label: "Confirmation email & confirm page", fields: confirmPageFields },
   ],
 };

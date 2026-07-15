@@ -506,6 +506,27 @@ fragment FitCheckParts on FitCheck {
     ctaLabel
     ctaLabel_de
   }
+  confirmPage {
+    __typename
+    emailSubject
+    emailSubject_de
+    emailBody
+    emailBody_de
+    confirmHeading
+    confirmHeading_de
+    confirmBody
+    confirmBody_de
+    confirmButton
+    confirmButton_de
+    resultTag
+    resultTag_de
+    expiredHeading
+    expiredHeading_de
+    expiredBody
+    expiredBody_de
+    backLabel
+    backLabel_de
+  }
 }
 
 fragment ArtParts on Art {

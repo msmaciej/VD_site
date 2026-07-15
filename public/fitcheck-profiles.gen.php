@@ -9,7 +9,7 @@
  *
  * Any edit you make here is overwritten on the next build. Change the copy
  * in config.json / Tina instead.
- * Generated: 2026-07-15T07:48:45.094Z
+ * Generated: 2026-07-15T10:31:23.996Z
  */
 
 $PROFILES = [
@@ -57,4 +57,48 @@ $PROFILES = [
             'description' => 'Sie haben sowohl einen definierten Ablauf als auch einen überschaubaren Zeitaufwand – hier geht es eher um Feinschliff als um Reparatur. Automatisierung bedeutet hier, Reibung zu reduzieren und den letzten manuellen Aufwand abzubauen, nicht einen kaputten Prozess zu retten. Auch bei einer so soliden Ausgangslage gibt es meist noch Raum für sinnvolle Automatisierung – kleine Reibungspunkte, die sich beseitigen lassen, Abläufe, die sich weiter verschlanken lassen, sowie Zeit, Geld oder andere Ressourcen, die sich freisetzen lassen und bei bereits funktionierenden Prozessen leicht übersehen werden.',
         ],
     ],
+];
+
+$RESULT_SHARED = [
+    'en' => [
+        'disclaimer' => 'This result is based on a handful of quick answers — a useful starting point, not a full diagnosis. If something here doesn\'t quite match your situation, or you\'d like a clearer picture, a short conversation is the fastest way to get one.',
+        'ctaLabel' => 'Let\'s talk it through',
+    ],
+    'de' => [
+        'disclaimer' => 'Dieses Ergebnis basiert auf wenigen kurzen Antworten – ein hilfreicher erster Anhaltspunkt, keine vollständige Diagnose. Falls etwas hier nicht ganz zu Ihrer Situation passt, oder Sie ein klareres Bild wünschen, ist ein kurzes Gespräch der schnellste Weg dazu.',
+        'ctaLabel' => 'Lassen Sie uns kurz darüber sprechen',
+    ],
+];
+
+$CONFIRM_UI = [
+    'en' => [
+        'emailSubject' => 'Your VortexDeep Fit Check result',
+        'emailBody' => 'You\'ve finished the Fit Check. | To see your result, confirm this is your address by opening the link below: | {{LINK}} | The link stays valid for 30 minutes. If you didn\'t run the Fit Check, you can ignore this email — nothing further will happen.',
+        'confirmHeading' => 'One tap to confirm',
+        'confirmBody' => 'One tap confirms the address is yours. Your result then appears right here.',
+        'confirmButton' => 'See my result',
+        'resultTag' => 'Your result',
+        'expiredHeading' => 'This link has expired',
+        'expiredBody' => 'Fit Check links stay valid for 30 minutes. Start the check again to get a fresh one.',
+        'backLabel' => 'Back to the Fit Check',
+    ],
+    'de' => [
+        'emailSubject' => 'Ihr VortexDeep Fit-Check-Ergebnis',
+        'emailBody' => 'Sie haben den Fit Check abgeschlossen. | Um Ihr Ergebnis zu sehen, bestätigen Sie über den folgenden Link, dass dies Ihre Adresse ist: | {{LINK}} | Der Link gilt 30 Minuten. Falls Sie den Fit Check nicht gemacht haben, können Sie diese E-Mail ignorieren – es passiert nichts weiter.',
+        'confirmHeading' => 'Noch eine Bestätigung',
+        'confirmBody' => 'Ein Klick bestätigt, dass die Adresse Ihnen gehört. Danach erscheint hier Ihr Ergebnis.',
+        'confirmButton' => 'Mein Ergebnis sehen',
+        'resultTag' => 'Ihr Ergebnis',
+        'expiredHeading' => 'Dieser Link ist abgelaufen',
+        'expiredBody' => 'Fit-Check-Links gelten 30 Minuten. Starten Sie den Check neu, um einen frischen Link zu erhalten.',
+        'backLabel' => 'Zurück zum Fit Check',
+    ],
+];
+
+$FITCHECK_THEME = [
+    'bg' => '#0c0f14',
+    'text' => '#e0e2e8',
+    'muted' => '#6e7a8a',
+    'accent' => '#8aa4c0',
+    'font' => '\'IBM Plex Mono\', monospace',
 ];

@@ -110,6 +110,99 @@ for (const key of PROFILE_KEYS) {
   }
 }
 
+// ── resultShared (disclaimer + CTA, shown on the reveal page) ───────────────
+// confirm.php can't read Astro content, so the disclaimer/CTA it shows must be
+// generated into the PHP include too — same single source (config.json), no
+// drift with what the check pages promise.
+const RS_FIELDS = { disclaimer: 'disclaimer', ctaLabel: 'ctaLabel' };
+const resultShared = { en: {}, de: {} };
+{
+  const rs = config.resultShared;
+  if (!rs || typeof rs !== 'object') fail('config.json has no "resultShared" object.');
+  for (const lang of ['en', 'de']) {
+    for (const [php, base] of Object.entries(RS_FIELDS)) {
+      const jsonField = lang === 'de' ? `${base}_de` : base;
+      const val = rs[jsonField];
+      if (typeof val !== 'string' || val.trim() === '') {
+        fail(`resultShared.${jsonField} is missing/empty (needed for ${lang}.${php}).`);
+      }
+      resultShared[lang][php] = val;
+    }
+  }
+}
+
+// ── confirmPage (verification email + confirm.php chrome) ────────────────────
+const CP_FIELDS = [
+  'emailSubject', 'emailBody', 'confirmHeading', 'confirmBody', 'confirmButton',
+  'resultTag', 'expiredHeading', 'expiredBody', 'backLabel',
+];
+const confirmUi = { en: {}, de: {} };
+{
+  const cp = config.confirmPage;
+  if (!cp || typeof cp !== 'object') fail('config.json has no "confirmPage" object.');
+  for (const lang of ['en', 'de']) {
+    for (const base of CP_FIELDS) {
+      const jsonField = lang === 'de' ? `${base}_de` : base;
+      const val = cp[jsonField];
+      if (typeof val !== 'string' || val.trim() === '') {
+        fail(`confirmPage.${jsonField} is missing/empty (needed for ${lang}.${base}).`);
+      }
+      confirmUi[lang][base] = val;
+    }
+    if (!confirmUi[lang].emailBody.includes('{{LINK}}')) {
+      fail(`confirmPage.emailBody${lang === 'de' ? '_de' : ''} must contain the {{LINK}} placeholder.`);
+    }
+  }
+}
+
+// ── Theme palette + font — so the standalone confirm.php matches the live site
+//    without hand-syncing. Read from Site Settings; mapped from the same preset
+//    tables the site itself uses (Layout.astro / siteHelpers.ts). ─────────────
+const THEME_PRESETS = {
+  light: { bg: '#ffffff', text: '#0a0a0a', muted: '#737373', accent: '#000000' },
+  dark:  { bg: '#000000', text: '#f5f5f5', muted: '#a3a3a3', accent: '#ffffff' },
+  paper: { bg: '#F9F7F2', text: '#0a0a0a', muted: '#737373', accent: '#0a0a0a' },
+  stone: { bg: '#f0ede8', text: '#2c2a28', muted: '#7a6e65', accent: '#7a6e65' },
+  mist:  { bg: '#eef0f2', text: '#1e2428', muted: '#5a7080', accent: '#5a7080' },
+  ink:   { bg: '#141414', text: '#e8e4de', muted: '#8c7355', accent: '#8c7355' },
+  sand:  { bg: '#f5f0e8', text: '#2a2520', muted: '#9a8060', accent: '#9a8060' },
+  deep:  { bg: '#0c0f14', text: '#e0e2e8', muted: '#6e7a8a', accent: '#8aa4c0' },
+};
+const FONT_MAP = {
+  'Inter': "'Inter', sans-serif",
+  'Lora': "'Lora', serif",
+  'Space Mono': "'Space Mono', monospace",
+  'IBM Plex Mono': "'IBM Plex Mono', monospace",
+  'Newsreader': "'Newsreader', serif",
+};
+let theme = { ...THEME_PRESETS.deep, font: FONT_MAP['IBM Plex Mono'] };
+try {
+  const settings = JSON.parse(
+    readFileSync(resolve(REPO_ROOT, 'src/content/settings/site.json'), 'utf8')
+  );
+  const preset = THEME_PRESETS[settings.theme] || THEME_PRESETS.deep;
+  const font = FONT_MAP[settings.fontPreset] || FONT_MAP['IBM Plex Mono'];
+  theme = { ...preset, font };
+} catch (e) {
+  console.warn(`[gen-fitcheck-profiles] could not read site settings, using deep/IBM Plex Mono: ${e.message}`);
+}
+
+// ── Ensure a signing secret exists (never committed; deploy-only) ────────────
+// send-check.php / confirm.php need public/fitcheck-secret.php at runtime. It is
+// gitignored, so a fresh clone won't have one — create it here so `npm run
+// build` always produces a deployable set. Existing secret is left untouched.
+{
+  const secretPath = resolve(REPO_ROOT, 'public/fitcheck-secret.php');
+  let exists = true;
+  try { readFileSync(secretPath); } catch { exists = false; }
+  if (!exists) {
+    const bytes = (await import('node:crypto')).randomBytes(48).toString('hex');
+    const php = `<?php\n// GENERATED signing key — do not commit. Rotate by replacing the string.\n$VD_HMAC_SECRET = '${bytes}';\n`;
+    writeFileSync(secretPath, php, 'utf8');
+    console.log('[gen-fitcheck-profiles] created public/fitcheck-secret.php (new signing key)');
+  }
+}
+
 // ── Emit the PHP include ─────────────────────────────────────────────────────
 const stamp = new Date().toISOString();
 const lines = [];
@@ -143,9 +236,33 @@ for (const lang of ['en', 'de']) {
 lines.push('];');
 lines.push('');
 
+// Helper: emit a { en:{k:v...}, de:{k:v...} } string map as a PHP array.
+function emitLangMap(varName, obj) {
+  lines.push(`$${varName} = [`);
+  for (const lang of ['en', 'de']) {
+    lines.push(`    '${lang}' => [`);
+    for (const [k, v] of Object.entries(obj[lang])) {
+      lines.push(`        '${k}' => ${phpSingleQuote(v)},`);
+    }
+    lines.push('    ],');
+  }
+  lines.push('];');
+  lines.push('');
+}
+
+emitLangMap('RESULT_SHARED', resultShared);
+emitLangMap('CONFIRM_UI', confirmUi);
+
+lines.push('$FITCHECK_THEME = [');
+for (const k of ['bg', 'text', 'muted', 'accent', 'font']) {
+  lines.push(`    '${k}' => ${phpSingleQuote(theme[k])},`);
+}
+lines.push('];');
+lines.push('');
+
 writeFileSync(OUT_PATH, lines.join('\n'), 'utf8');
 
 const n = PROFILE_KEYS.length * 2;
 console.log(
-  `[gen-fitcheck-profiles] OK — wrote ${n} profile entries (en+de) to ${OUT_PATH}`
+  `[gen-fitcheck-profiles] OK — wrote ${n} profile entries + resultShared + confirmUi + theme (en+de) to ${OUT_PATH}`
 );

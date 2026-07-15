@@ -198,5 +198,25 @@
     "disclaimer_de": "Dieses Ergebnis basiert auf wenigen kurzen Antworten – ein hilfreicher erster Anhaltspunkt, keine vollständige Diagnose. Falls etwas hier nicht ganz zu Ihrer Situation passt, oder Sie ein klareres Bild wünschen, ist ein kurzes Gespräch der schnellste Weg dazu.",
     "ctaLabel": "Let's talk it through",
     "ctaLabel_de": "Lassen Sie uns kurz darüber sprechen"
+  },
+  "confirmPage": {
+    "emailSubject": "Your VortexDeep Fit Check result",
+    "emailSubject_de": "Ihr VortexDeep Fit-Check-Ergebnis",
+    "emailBody": "You've finished the Fit Check. | To see your result, confirm this is your address by opening the link below: | {{LINK}} | The link stays valid for 30 minutes. If you didn't run the Fit Check, you can ignore this email — nothing further will happen.",
+    "emailBody_de": "Sie haben den Fit Check abgeschlossen. | Um Ihr Ergebnis zu sehen, bestätigen Sie über den folgenden Link, dass dies Ihre Adresse ist: | {{LINK}} | Der Link gilt 30 Minuten. Falls Sie den Fit Check nicht gemacht haben, können Sie diese E-Mail ignorieren – es passiert nichts weiter.",
+    "confirmHeading": "One tap to confirm",
+    "confirmHeading_de": "Noch eine Bestätigung",
+    "confirmBody": "One tap confirms the address is yours. Your result then appears right here.",
+    "confirmBody_de": "Ein Klick bestätigt, dass die Adresse Ihnen gehört. Danach erscheint hier Ihr Ergebnis.",
+    "confirmButton": "See my result",
+    "confirmButton_de": "Mein Ergebnis sehen",
+    "resultTag": "Your result",
+    "resultTag_de": "Ihr Ergebnis",
+    "expiredHeading": "This link has expired",
+    "expiredHeading_de": "Dieser Link ist abgelaufen",
+    "expiredBody": "Fit Check links stay valid for 30 minutes. Start the check again to get a fresh one.",
+    "expiredBody_de": "Fit-Check-Links gelten 30 Minuten. Starten Sie den Check neu, um einen frischen Link zu erhalten.",
+    "backLabel": "Back to the Fit Check",
+    "backLabel_de": "Zurück zum Fit Check"
   }
 }

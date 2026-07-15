@@ -1016,6 +1016,27 @@ type FitCheckResultShared {
   ctaLabel_de: String
 }
 
+type FitCheckConfirmPage {
+  emailSubject: String
+  emailSubject_de: String
+  emailBody: String
+  emailBody_de: String
+  confirmHeading: String
+  confirmHeading_de: String
+  confirmBody: String
+  confirmBody_de: String
+  confirmButton: String
+  confirmButton_de: String
+  resultTag: String
+  resultTag_de: String
+  expiredHeading: String
+  expiredHeading_de: String
+  expiredBody: String
+  expiredBody_de: String
+  backLabel: String
+  backLabel_de: String
+}
+
 type FitCheck implements Node & Document {
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
@@ -1025,6 +1046,7 @@ type FitCheck implements Node & Document {
   shortClose: FitCheckShortClose
   profiles: FitCheckProfiles
   resultShared: FitCheckResultShared
+  confirmPage: FitCheckConfirmPage
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -1274,6 +1296,27 @@ input FitCheckResultSharedFilter {
   ctaLabel_de: StringFilter
 }
 
+input FitCheckConfirmPageFilter {
+  emailSubject: StringFilter
+  emailSubject_de: StringFilter
+  emailBody: StringFilter
+  emailBody_de: StringFilter
+  confirmHeading: StringFilter
+  confirmHeading_de: StringFilter
+  confirmBody: StringFilter
+  confirmBody_de: StringFilter
+  confirmButton: StringFilter
+  confirmButton_de: StringFilter
+  resultTag: StringFilter
+  resultTag_de: StringFilter
+  expiredHeading: StringFilter
+  expiredHeading_de: StringFilter
+  expiredBody: StringFilter
+  expiredBody_de: StringFilter
+  backLabel: StringFilter
+  backLabel_de: StringFilter
+}
+
 input FitCheckFilter {
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
@@ -1283,6 +1326,7 @@ input FitCheckFilter {
   shortClose: FitCheckShortCloseFilter
   profiles: FitCheckProfilesFilter
   resultShared: FitCheckResultSharedFilter
+  confirmPage: FitCheckConfirmPageFilter
 }
 
 type FitCheckConnectionEdges {
@@ -1917,6 +1961,27 @@ input FitCheckResultSharedMutation {
   ctaLabel_de: String
 }
 
+input FitCheckConfirmPageMutation {
+  emailSubject: String
+  emailSubject_de: String
+  emailBody: String
+  emailBody_de: String
+  confirmHeading: String
+  confirmHeading_de: String
+  confirmBody: String
+  confirmBody_de: String
+  confirmButton: String
+  confirmButton_de: String
+  resultTag: String
+  resultTag_de: String
+  expiredHeading: String
+  expiredHeading_de: String
+  expiredBody: String
+  expiredBody_de: String
+  backLabel: String
+  backLabel_de: String
+}
+
 input FitCheckMutation {
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation
@@ -1926,6 +1991,7 @@ input FitCheckMutation {
   shortClose: FitCheckShortCloseMutation
   profiles: FitCheckProfilesMutation
   resultShared: FitCheckResultSharedMutation
+  confirmPage: FitCheckConfirmPageMutation
 }
 
 input ArtMutation {

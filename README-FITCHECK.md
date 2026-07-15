@@ -16,6 +16,39 @@ build/deploy story see [README.md](README.md).
 
 ---
 
+## 0. The flow — verify, then reveal
+
+The result is **not** shown the instant the visitor types an email. There are two
+stages, so that the address has to be real *and* actually belong to the visitor
+before any result appears or any lead reaches the inbox:
+
+1. **Submit** (`send-check.php`). The gate validates the submission (math
+   challenge, email format, a DNS check on the domain, honeypot/timing signals),
+   then emails the **visitor** a one-time link. It shows a *"check your inbox"*
+   panel — no result, and the team is **not** emailed yet.
+2. **Confirm** (`confirm.php`). Opening the emailed link shows a single
+   *"see my result"* button; pressing it reveals the matched result **and** sends
+   the qualified-lead email to the team. Only now — because only a real inbox
+   owner can click a link sent to that address.
+
+This runs with **no session store and no database**. The link carries a compact,
+HMAC-signed, self-expiring token (30 minutes) holding the already-validated
+answers and contact details — the signed token *is* the state (see
+`fitcheck-lib.php`). A visitor cannot alter it; nobody can forge one without the
+server's signing key.
+
+Two deliberate details:
+
+- The confirm link renders a *button* on GET and only reveals/notifies on the
+  button's POST. This defeats corporate mail link-scanners, which pre-fetch
+  links (a GET) — a scanner can't press the button, so it can't confirm on the
+  human's behalf.
+- The math challenge stays a hard requirement at submit precisely because this
+  endpoint now emails a visitor-supplied address; it's what stops the form being
+  driven as a mass-mailer.
+
+---
+
 ## 1. The questions the visitor sees
 
 Six screens, in order. Five are numbered questions (Q0–Q4); the follow-up is a
@@ -54,7 +87,7 @@ on the page from Tina without any risk to the scoring.
 
 ## 2. How the result is scored
 
-Two independent calculations happen in `public/send-check.php`. **Only two of
+Two independent calculations happen in `public/fitcheck-lib.php` (called by `confirm.php` at reveal). **Only two of
 the questions decide the visitor's result.**
 
 ### 2a. The profile — `calc_profile_key($time, $process)`
@@ -97,22 +130,32 @@ differ.
 
 ### What the visitor gets back
 
+At **submit**, the browser only learns the link is on its way:
+
 ```json
-{ "status": "ok", "profile": { "tagline": "…", "description": "…" } }
+{ "status": "sent" }
 ```
 
-The matched profile's tagline and description only. **No profile name, no
-bucket, no other profiles, no matrix.** The FireFight/Refine/Build/Optimize
-naming is internal even for the visitor's own match.
+The actual result is rendered server-side by `confirm.php` after the visitor
+opens the emailed link and presses the button — as a small HTML page showing the
+matched profile's **tagline and description only**. **No profile name, no
+bucket, no other profiles, no matrix** ever reaches the browser, at either stage.
+The FireFight/Refine/Build/Optimize naming is internal even for the visitor's own
+match. (`confirm.php` styles itself from the site's current theme + font, both
+emitted into the generated include at build time, so it matches `/check` without
+hand-syncing.)
 
 ### What the team gets
 
-A plain-text email to `info@vortexdeep.ch` with the bucket, the profile name +
-key, a glossary, a full matrix diagram (`build_matrix_diagram()` marks the
-matched cell with `>>>`), the exact text the visitor saw, the contact details,
-and all answers in both human-readable and machine-readable form. This email is
-the one place all four quadrants and both bucket meanings are ever written out
-together — safe, because it never leaves the script.
+A plain-text email to `info@vortexdeep.ch` — sent by **`confirm.php`**, i.e. only
+after the address is confirmed — with the bucket, the profile name + key, a
+glossary, a full matrix diagram (`vd_build_matrix_diagram()` marks the matched
+cell with `>>>`), a `Confirmed: yes` line, the exact text the visitor saw, the
+contact details, and all answers in both human-readable and machine-readable
+form. Soft bot signals from the original submission travel in the token and, if
+present, prefix the subject with `⚠` and add a `FLAGGED:` line — flagged, never
+blocked. This email is the one place all four quadrants and both bucket meanings
+are ever written out together — safe, because it never leaves the script.
 
 ---
 
@@ -188,10 +231,13 @@ team email, but it does **not** feed either the profile or the bucket.
 | `tina/fitcheck-schema.ts` | Tina schema. Defines which labels are editable; encodes the fixed values as field names. |
 | `src/pages/check.astro`, `src/pages/de/check.astro` | The questionnaire UI. Reads labels from config; `data-val` values hardcoded. |
 | `scripts/gen-fitcheck-profiles.mjs` | Build-time generator: config.json → PHP include. Fails the build on incomplete config. |
-| `public/fitcheck-profiles.gen.php` | **Generated** PHP include (do not edit). `$PROFILES` for both languages. |
-| `public/send-check.php` | Form handler + bot gates + **server-side scoring** + lead email. `require`s the generated include. |
+| `public/fitcheck-profiles.gen.php` | **Generated** PHP include (do not edit). `$PROFILES` + `$RESULT_SHARED` + `$CONFIRM_UI` + `$FITCHECK_THEME`, both languages. |
+| `public/fitcheck-lib.php` | Shared library `require_once`'d by both endpoints: HMAC token sign/verify, **server-side scoring** (`vd_calc_profile_key` / `vd_calc_bucket`), label maps, internal-email builder. One copy → no drift between stages. |
+| `public/send-check.php` | **Stage 1** — bot gates + validation, signs a token, emails the visitor the confirmation link, returns `{"status":"sent"}`. No reveal, no team email. |
+| `public/confirm.php` | **Stage 2** — verifies the link (GET → button; POST → reveal + team email), scores, renders the matched result. |
+| `public/fitcheck-secret.php` | HMAC signing key. **Gitignored — never committed** (the repo is public). Auto-created by the generator if absent; **must** ship in the deploy set. |
 | `public/get-math.php` | Session-based arithmetic bot gate issued before submit. |
-| `public/.htaccess` | Denies direct web access to the generated include (defence in depth). |
+| `public/.htaccess` | Denies direct web access to the three server-side includes (`*-profiles.gen.php`, `fitcheck-lib.php`, `fitcheck-secret.php`). |
 
 ---
 
@@ -212,7 +258,7 @@ can be affected at all.
    Rewording their labels is still tier 1 and safe. But **adding, removing, or
    re-mapping one of their answer options** is the one case that reaches the
    visitor's result — treat it as a deliberate process: check the 2×2, then
-   update `calc_profile_key()` in `send-check.php` to handle the new value.
+   update `vd_calc_profile_key()` in `fitcheck-lib.php` to handle the new value.
 
 3. **Role / Category / Follow-up / Goal — options/values** — these **never**
    touch the profile the visitor sees. At most they affect the internal
@@ -232,10 +278,77 @@ sees as their result.
 - **Change profile result copy:** Tina → *Result profiles* → rebuild → upload
   `dist/`. (No PHP edit — that's the whole point.)
 - **Change which answers map to which profile / bucket:** edit
-  `calc_profile_key()` / `calc_bucket()` in `public/send-check.php`. This is a
+  `vd_calc_profile_key()` / `vd_calc_bucket()` in `public/fitcheck-lib.php`. This is a
   deliberate code change, on purpose — the scoring matrix is intentionally *not*
   CMS-editable.
 - **Add a new answer option to a question:** add the value in
   `check.astro`/`de/check.astro` (`data-val`) **and** the label field in
   `tina/fitcheck-schema.ts` + `config.json`, and handle the new value in the
   scoring functions if it should affect scoring.
+
+---
+
+## 7. Deploying & data protection
+
+**Deploy set.** Upload the built `dist/` to the web root. Everything the two
+stages need is already there because Astro copies `public/*` verbatim —
+including the dotfile `.htaccess` and `fitcheck-secret.php`. If you deploy by
+hand-picking files, don't forget those two.
+
+**The signing key (`fitcheck-secret.php`).** It is deliberately **gitignored**,
+because the GitHub repo is public and a leaked key would let anyone forge a
+"confirmation" (reveal a result without owning the address, and trigger a team
+email with arbitrary contents). `npm run build` auto-creates one if it's missing,
+so a fresh clone still produces a deployable `dist/`. Rotating it is safe: replace
+the string and redeploy — the only effect is that any confirmation links already
+in flight (≤30 min old) stop verifying. If you build on a *different* machine, a
+*different* key is generated there; deploy the whole `dist/` from one machine so
+the key on the server is internally consistent.
+
+**Email deliverability — the one thing to check before launch.** Before, `mail()`
+only ever wrote to the internal `info@` inbox, so sender authentication barely
+mattered. Now it also emails **external visitor inboxes** (the confirmation
+link), which makes authentication for `vortexdeep.ch` the biggest deliverability
+risk: if the mail isn't authenticated, a share of it lands in spam, the visitor
+never clicks the link, and the whole verify-then-reveal flow silently breaks.
+Three DNS-level standards prove the mail really came from us — **SPF** (which
+servers may send as the domain), **DKIM** (a cryptographic signature on each
+message), and **DMARC** (what receivers should do when SPF/DKIM fail). These are
+DNS/mail-host settings, **not** code.
+
+Because the domain *and* the hosting are both at **Hostpoint**, two of the three
+are typically handled already, and the check is light:
+
+- **SPF** — auto-generated and added for domains registered in the Hostpoint
+  Control Panel. Already present unless the DNS is managed externally (in which
+  case add Hostpoint's SPF, `redirect=spf.mail.hostpoint.ch`, at that provider).
+- **DMARC** — Hostpoint applies a policy by default (**Quarantine**: failing
+  mail goes to spam). Fine as a starting point; tighten to *Reject* later only if
+  desired. Changed in the Control Panel; `None` isn't offered.
+- **DKIM** — the one worth actively verifying, as it wasn't always on by default.
+  Enable it in the Control Panel: **E-mail & Cloud Office → Display Cloud Office
+  groups → select the group for the domain → Enhanced protection → Activate
+  DKIM**. If Hostpoint also manages the DNS, that's the whole job; if the DNS is
+  external, copy the DKIM records shown on that page into the external DNS zone.
+
+**Pre-launch step:** in the Hostpoint Control Panel confirm DKIM is *active* (and
+SPF/DMARC present) under *E-mail & Cloud Office → Enhanced protection*, then send
+one real Fit Check submission and confirm the link email lands in the **inbox,
+not spam**, at a Gmail *and* an Outlook address. A "DKIM record checker" tool
+verifies the signature independently. Official refs:
+`support.hostpoint.ch/en/technical/e-mail/e-mail-security/activate-dkim-for-externally-managed-domains`
+and `hostpoint.ch/en/blog/e-mail-security-with-dkim-and-dmarc/`.
+
+**Data protection (Swiss revDSG).** This design intentionally stores **no new
+personal data**. There is still no database. The visitor's email lands in the
+`info@` inbox exactly as before — that inbox is the only place it's retained. No
+IP addresses, fingerprints, or hashes are logged or stored; the anti-abuse layer
+is limited to the storage-free signals (math challenge, honeypot, timing, DNS
+check) plus the fact that an unconfirmed address simply never becomes a lead. So
+the confirm-then-reveal change *reduces* junk in the inbox without expanding the
+retention footprint.
+
+**One harmless edge.** Because the scheme is storage-free, pressing the confirm
+button twice within the 30-minute window can send the team two notification
+emails. That's the deliberate trade for having no session/DB; it's a duplicate,
+nothing more.
