@@ -137,9 +137,14 @@ for (const key of categoryKeysList) {
     </div>
   </header>
 
-  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6"
-        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
-    <div class="max-w-xl w-full mx-auto" id="vd-root">
+  <!-- Vertikale Platzierung über `my-auto` am inneren Block (nicht justify-*):
+       zentriert bei genug Platz (Intro/kurze Schritte wie jede andere Seite),
+       fällt bei zu hohem Schritt auf oben-bündig + scrollbar zurück, ohne den
+       oberen Rand abzuschneiden. Padding lässt Header/Footer frei inkl.
+       iOS-Safe-Area unten. -->
+  <main class="min-h-[100svh] flex flex-col items-center px-6"
+        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 24px);`}>
+    <div class="max-w-xl w-full mx-auto my-auto" id="vd-root">
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
         Der Fit-Check

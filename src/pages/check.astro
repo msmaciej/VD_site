@@ -139,16 +139,19 @@ for (const key of categoryKeysList) {
     </div>
   </header>
 
-  <!-- FIX 10: min-h-[100svh] avoids the iOS Safari 100vh-includes-chrome trap.
-       justify-start on mobile keeps content anchored to the top so all answer
-       options are reachable without blind scrolling; justify-center kicks in at sm
-       (640px+) where there's room to centre. Padding-top/bottom clear the fixed
-       header/footer above instead of the old fixed pt-16/pb-12 — header and
-       footer height are both admin-configurable in Site Settings, same as
-       every other page. -->
-  <main class="min-h-[100svh] flex flex-col items-center justify-start sm:justify-center px-6"
-        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + 24px);`}>
-    <div class="max-w-xl w-full mx-auto" id="vd-root">
+  <!-- min-h-[100svh] avoids the iOS Safari 100vh-includes-chrome trap. Vertical
+       placement is handled by `my-auto` on the inner block below, NOT by
+       justify-* here: auto margins centre the content when there's room (so the
+       intro and short steps sit centred like every other page), but collapse to
+       0 and let content flow from the top — fully scrollable, never clipped —
+       when a step is taller than the viewport (so all answer options stay
+       reachable). justify-content:center would clip the top of a too-tall step;
+       my-auto does not. Padding clears the fixed header/footer, both
+       admin-configurable in Site Settings, and includes the iOS safe-area inset
+       at the bottom so the footer never overlaps the home-indicator bar. -->
+  <main class="min-h-[100svh] flex flex-col items-center px-6"
+        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 24px);`}>
+    <div class="max-w-xl w-full mx-auto my-auto" id="vd-root">
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
         The Fit Check
