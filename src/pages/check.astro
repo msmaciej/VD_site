@@ -49,8 +49,9 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
 // ── Fit Check content (Tina-managed) ────────────────────────────────────────
 // All question/option copy below comes from src/content/fitcheck/config.json,
 // registered in Tina as the "fitCheck" collection (tina/fitcheck-schema.ts).
-// Only the Q2 "time cost" question has no Tina field (out of scope for the
-// content model) and stays hardcoded, same as before.
+// Every question — including Q2 "time cost" — now reads its labels from Tina.
+// Only the option VALUES (data-val="high" etc.) stay hardcoded, because the
+// server-side scoring keys off them; the visible labels are all CMS-editable.
 const fitCheckFiles = await Astro.glob('../content/fitcheck/*.json');
 const fc = fitCheckFiles[0]?.default || {};
 
@@ -194,14 +195,17 @@ for (const key of categoryKeysList) {
         </div>
       ))}
 
-      <!-- Q2: Time cost — not part of the Fit Check content model, stays static -->
+      <!-- Q2: Time cost — labels from Tina (fc.timeQuestion); the data-val
+           values (high/mid/low/unsure) stay hardcoded because the scoring
+           keys off them. Same label-editable / value-fixed split as every
+           other question. -->
       <div class="vd-q hidden" data-q="time">
-        <p class="vd-ql">Roughly how many hours a week does this kind of work absorb?</p>
+        <p class="vd-ql">{fc.timeQuestion?.questionLabel}</p>
         <div class="flex flex-col gap-1">
-          <button class="vd-opt" data-val="high">More than 5 hours</button>
-          <button class="vd-opt" data-val="mid">1–5 hours</button>
-          <button class="vd-opt" data-val="low">Less than an hour</button>
-          <button class="vd-opt" data-val="unsure">Hard to say — it's spread across the team</button>
+          <button class="vd-opt" data-val="high">{fc.timeQuestion?.highLabel}</button>
+          <button class="vd-opt" data-val="mid">{fc.timeQuestion?.midLabel}</button>
+          <button class="vd-opt" data-val="low">{fc.timeQuestion?.lowLabel}</button>
+          <button class="vd-opt" data-val="unsure">{fc.timeQuestion?.unsureLabel}</button>
         </div>
       </div>
 

@@ -920,6 +920,19 @@ type FitCheckCategoryQuestion {
   several: FitCheckCategoryQuestionSeveral
 }
 
+type FitCheckTimeQuestion {
+  questionLabel: String
+  questionLabel_de: String
+  highLabel: String
+  highLabel_de: String
+  midLabel: String
+  midLabel_de: String
+  lowLabel: String
+  lowLabel_de: String
+  unsureLabel: String
+  unsureLabel_de: String
+}
+
 type FitCheckProcessQuestion {
   questionLabel: String
   questionLabel_de: String
@@ -1006,6 +1019,7 @@ type FitCheckResultShared {
 type FitCheck implements Node & Document {
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
+  timeQuestion: FitCheckTimeQuestion
   processQuestion: FitCheckProcessQuestion
   goalQuestion: FitCheckGoalQuestion
   shortClose: FitCheckShortClose
@@ -1164,6 +1178,19 @@ input FitCheckCategoryQuestionFilter {
   several: FitCheckCategoryQuestionSeveralFilter
 }
 
+input FitCheckTimeQuestionFilter {
+  questionLabel: StringFilter
+  questionLabel_de: StringFilter
+  highLabel: StringFilter
+  highLabel_de: StringFilter
+  midLabel: StringFilter
+  midLabel_de: StringFilter
+  lowLabel: StringFilter
+  lowLabel_de: StringFilter
+  unsureLabel: StringFilter
+  unsureLabel_de: StringFilter
+}
+
 input FitCheckProcessQuestionFilter {
   questionLabel: StringFilter
   questionLabel_de: StringFilter
@@ -1250,6 +1277,7 @@ input FitCheckResultSharedFilter {
 input FitCheckFilter {
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
+  timeQuestion: FitCheckTimeQuestionFilter
   processQuestion: FitCheckProcessQuestionFilter
   goalQuestion: FitCheckGoalQuestionFilter
   shortClose: FitCheckShortCloseFilter
@@ -1793,6 +1821,19 @@ input FitCheckCategoryQuestionMutation {
   several: FitCheckCategoryQuestionSeveralMutation
 }
 
+input FitCheckTimeQuestionMutation {
+  questionLabel: String
+  questionLabel_de: String
+  highLabel: String
+  highLabel_de: String
+  midLabel: String
+  midLabel_de: String
+  lowLabel: String
+  lowLabel_de: String
+  unsureLabel: String
+  unsureLabel_de: String
+}
+
 input FitCheckProcessQuestionMutation {
   questionLabel: String
   questionLabel_de: String
@@ -1879,6 +1920,7 @@ input FitCheckResultSharedMutation {
 input FitCheckMutation {
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation
+  timeQuestion: FitCheckTimeQuestionMutation
   processQuestion: FitCheckProcessQuestionMutation
   goalQuestion: FitCheckGoalQuestionMutation
   shortClose: FitCheckShortCloseMutation

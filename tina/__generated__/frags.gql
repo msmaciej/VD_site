@@ -414,6 +414,19 @@ fragment FitCheckParts on FitCheck {
       }
     }
   }
+  timeQuestion {
+    __typename
+    questionLabel
+    questionLabel_de
+    highLabel
+    highLabel_de
+    midLabel
+    midLabel_de
+    lowLabel
+    lowLabel_de
+    unsureLabel
+    unsureLabel_de
+  }
   processQuestion {
     __typename
     questionLabel

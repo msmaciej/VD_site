@@ -4,12 +4,13 @@
 //
 // DESIGN PRINCIPLE — read before editing this file:
 // Every option's underlying VALUE (business / consultant / curious, comms / sales /
-// docs / ops / reporting / content / several, none / partial / full, solve / clarity /
-// explore / compare) is fixed as a field NAME below — never stored as editable text.
-// calcBucket() and the category-follow-up matching in check.astro key off these exact
-// values. Only the LABEL (what the visitor reads) is editable in Tina. This means
-// someone can rewrite every question and answer on the page from the CMS without any
-// risk of silently breaking the scoring logic or the category matching.
+// docs / ops / reporting / content / several, high / mid / low / unsure, none /
+// partial / full, solve / clarity / explore / compare) is fixed as a field NAME
+// below — never stored as editable text.
+// calcBucket(), calcProfileKey(), and the category-follow-up matching in check.astro
+// key off these exact values. Only the LABEL (what the visitor reads) is editable in
+// Tina. This means someone can rewrite every question and answer on the page from the
+// CMS without any risk of silently breaking the scoring logic or the category matching.
 //
 // Bilingual pattern follows the existing "settings" collection convention already used
 // elsewhere in this repo: one shared document, EN fields plain, DE fields suffixed _de.
@@ -71,6 +72,18 @@ const categoryQuestionFields = [
       },
     ],
   })),
+];
+
+// ── Q2 — Time cost ──────────────────────────────────────────────────────────────
+// value: high | mid | low | unsure   (drives calcProfileKey + calcBucket)
+// Only the labels are editable here; the values above stay hardcoded in
+// check.astro exactly like every other question, so the scoring can't break.
+const timeQuestionFields = [
+  ...bilingualString("questionLabel", "Q2 question text"),
+  ...bilingualString("highLabel", "Option — more than 5h/week  [value: high]"),
+  ...bilingualString("midLabel", "Option — 1–5h/week  [value: mid]"),
+  ...bilingualString("lowLabel", "Option — under 1h/week  [value: low]"),
+  ...bilingualString("unsureLabel", "Option — spread across team  [value: unsure]"),
 ];
 
 // ── Q3 — Process ownership ──────────────────────────────────────────────────────
@@ -139,6 +152,7 @@ export const fitCheckCollection = {
   fields: [
     { type: "object", name: "roleQuestion", label: "Q0 — Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 — Category", fields: categoryQuestionFields },
+    { type: "object", name: "timeQuestion", label: "Q2 — Time cost", fields: timeQuestionFields },
     { type: "object", name: "processQuestion", label: "Q3 — Process ownership", fields: processQuestionFields },
     { type: "object", name: "goalQuestion", label: "Q4 — Goal / intent", fields: goalQuestionFields },
     { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },

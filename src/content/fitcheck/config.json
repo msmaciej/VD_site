@@ -117,6 +117,18 @@
       }
     }
   },
+  "timeQuestion": {
+    "questionLabel": "Roughly how many hours a week does this kind of work absorb?",
+    "questionLabel_de": "Wie viele Stunden pro Woche bindet das in etwa?",
+    "highLabel": "More than 5 hours",
+    "highLabel_de": "Mehr als 5 Stunden",
+    "midLabel": "1–5 hours",
+    "midLabel_de": "1 bis 5 Stunden",
+    "lowLabel": "Less than an hour",
+    "lowLabel_de": "Weniger als eine Stunde",
+    "unsureLabel": "Hard to say — it's spread across the team",
+    "unsureLabel_de": "Schwer zu sagen – es verteilt sich quer durchs Team"
+  },
   "processQuestion": {
     "questionLabel": "Is there a clear process for this, or does it depend on who's available?",
     "questionLabel_de": "Gibt es dafür einen klaren Ablauf – oder hängt es davon ab, wer gerade Zeit hat?",

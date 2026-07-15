@@ -47,6 +47,13 @@ var categoryQuestionFields = [
     ]
   }))
 ];
+var timeQuestionFields = [
+  ...bilingualString("questionLabel", "Q2 question text"),
+  ...bilingualString("highLabel", "Option \u2014 more than 5h/week  [value: high]"),
+  ...bilingualString("midLabel", "Option \u2014 1\u20135h/week  [value: mid]"),
+  ...bilingualString("lowLabel", "Option \u2014 under 1h/week  [value: low]"),
+  ...bilingualString("unsureLabel", "Option \u2014 spread across team  [value: unsure]")
+];
 var processQuestionFields = [
   ...bilingualString("questionLabel", "Q3 question text"),
   ...bilingualString("noneLabel", "Option \u2014 no process  [value: none]"),
@@ -92,6 +99,7 @@ var fitCheckCollection = {
   fields: [
     { type: "object", name: "roleQuestion", label: "Q0 \u2014 Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 \u2014 Category", fields: categoryQuestionFields },
+    { type: "object", name: "timeQuestion", label: "Q2 \u2014 Time cost", fields: timeQuestionFields },
     { type: "object", name: "processQuestion", label: "Q3 \u2014 Process ownership", fields: processQuestionFields },
     { type: "object", name: "goalQuestion", label: "Q4 \u2014 Goal / intent", fields: goalQuestionFields },
     { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },
