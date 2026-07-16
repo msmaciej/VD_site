@@ -608,6 +608,16 @@ const contentGroups = (text: string) => {
       justify-content: flex-start;
       scroll-snap-stop: normal;
     }
+
+    /* Tall process-flow sections (e.g. the Fit Check: title + six steps +
+       explainer + CTA) can exceed a small phone's viewport. Let them grow and
+       centre-or-top-flow via my-auto on the inner block, so the title never
+       spills up into the section above. Longer German copy made this worse. */
+    .vd-screen--flow {
+      height: auto; min-height: 100svh;
+      justify-content: flex-start;
+      scroll-snap-stop: normal;
+    }
     @media (prefers-reduced-motion: reduce) {
       .vd-acc-body { transition: none; }
     }
@@ -903,8 +913,8 @@ const contentGroups = (text: string) => {
         const flowStepSpacing = block.stepSpacing ?? defaultStepSpacing;
         const relayDuration = (block.flowSpeed || defaultFlowSpeed) * connectorCount;
         return (
-          <div class="vd-screen vd-reveal">
-            <div class="w-full max-w-2xl text-center">
+          <div class="vd-screen vd-reveal vd-screen--flow">
+            <div class="w-full max-w-2xl text-center my-auto">
               {block.title && (
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
                     style={textStyle(zenText, block.titleFont)}>
