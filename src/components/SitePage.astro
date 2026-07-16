@@ -557,6 +557,57 @@ const contentGroups = (text: string) => {
       display: block; text-transform: uppercase; letter-spacing: 0.14em;
       opacity: 0.42; padding: 3px 0;
     }
+    /* ── Nested fold-out (Problems We Solve): group -> sub-topic names ->
+       one description at a time. Keeps each open state small so the panel
+       stays near one screen and never spills into the panel above. ── */
+    .vd-acc-head { position: relative; scroll-margin-top: calc(var(--headerHeight) + 24px); }
+    .vd-acc-close {
+      position: absolute; right: 2px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; line-height: 1; opacity: 0; color: var(--zen-muted, currentColor);
+      transition: opacity 0.3s; pointer-events: none;
+    }
+    .vd-acc-item[data-open="true"] .vd-acc-close { opacity: 0.55; }
+    .vd-acc-intro {
+      text-transform: none; letter-spacing: normal;
+      font-size: 12px; line-height: 1.55; opacity: 0.6;
+      max-width: 28rem; margin: 0 auto 12px; text-align: center;
+    }
+    .vd-acc-subs { border-top: 1px solid color-mix(in srgb, currentColor 10%, transparent); margin-top: 4px; }
+    .vd-acc-sub-item { border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent); }
+    .vd-acc-sub-item--static { padding: 11px 0; }
+    .vd-acc-sub-head {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; background: none; border: none; cursor: pointer;
+      font-family: inherit; padding: 11px 0;
+    }
+    .vd-acc-sub-dot {
+      width: 4px; height: 4px; border-radius: 50%; background: currentColor;
+      opacity: 0.25; transition: opacity 0.35s; flex-shrink: 0;
+    }
+    .vd-acc-sub-head:hover .vd-acc-sub { opacity: 0.82; }
+    .vd-acc-sub-item[data-open="true"] .vd-acc-sub-dot { opacity: 0.85; }
+    .vd-acc-sub-item[data-open="true"] .vd-acc-sub { opacity: 0.9; }
+    .vd-acc-sub-body {
+      display: grid; grid-template-rows: 0fr; overflow: hidden; opacity: 0;
+      transition: grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+    }
+    .vd-acc-sub-item[data-open="true"] .vd-acc-sub-body { grid-template-rows: 1fr; opacity: 1; }
+    .vd-acc-sub-inner { min-height: 0; overflow: hidden; padding: 0 0 12px; }
+    .vd-acc-copy {
+      text-transform: none; letter-spacing: normal;
+      font-size: 12px; line-height: 1.6; opacity: 0.58;
+      max-width: 27rem; margin: 5px auto 0; text-align: center;
+    }
+    .vd-acc-handled { opacity: 0.78; margin-top: 6px; }
+
+    /* The groups section grows and top-aligns so an open fold-out flows
+       DOWNWARD, never up into the panel above. It stays a snap target, so
+       closing a group settles back on the Problems We Solve panel. */
+    .vd-screen--groups {
+      height: auto; min-height: 100svh;
+      justify-content: flex-start;
+      scroll-snap-stop: normal;
+    }
     @media (prefers-reduced-motion: reduce) {
       .vd-acc-body { transition: none; }
     }
@@ -1074,7 +1125,7 @@ const contentGroups = (text: string) => {
 
       // ── Standard content section ──────────────────────────────────────────
       return (
-        <div class="vd-screen vd-reveal">
+        <div class={`vd-screen vd-reveal ${block.groups?.length ? 'vd-screen--groups' : ''}`}>
           <div class="w-full max-w-2xl text-center">
 
             {block.title && (
@@ -1111,12 +1162,40 @@ const contentGroups = (text: string) => {
                     <button type="button" class="vd-acc-head" data-vd-acc-head style={`color: ${zenText};`}>
                       <span class="vd-acc-dot" aria-hidden="true"></span>
                       <span class={`vd-acc-label ${block.subTitleFontSize || 'text-[13px]'}`}>{g.label}</span>
+                      <span class="vd-acc-close" aria-hidden="true">{'\u00d7'}</span>
                     </button>
                     <div class="vd-acc-body" data-vd-acc-body>
                       <div class="vd-acc-inner">
-                        {g.items?.map((it: any) => (
-                          <span class="vd-acc-sub text-[11px]" style={`color: ${zenText};`}>{it.label}</span>
-                        ))}
+                        {g.intro && block.showGroupIntros !== false && g.showIntro !== false && (
+                          <p class="vd-acc-intro" style={`color: ${zenText};`}>{g.intro}</p>
+                        )}
+                        <div class="vd-acc-subs">
+                          {g.items?.map((it: any) => {
+                            const expandable = (it.problem || it.handled) && block.showItemCopy !== false && it.showCopy !== false;
+                            return expandable ? (
+                              <div class="vd-acc-sub-item" data-vd-sub data-open="false">
+                                <button type="button" class="vd-acc-sub-head" data-vd-sub-head style={`color: ${zenText};`}>
+                                  <span class="vd-acc-sub-dot" aria-hidden="true"></span>
+                                  <span class="vd-acc-sub">{it.label}</span>
+                                </button>
+                                <div class="vd-acc-sub-body" data-vd-sub-body>
+                                  <div class="vd-acc-sub-inner">
+                                    {it.problem && (
+                                      <p class="vd-acc-copy vd-acc-problem" style={`color: ${zenText};`}>{it.problem}</p>
+                                    )}
+                                    {it.handled && (
+                                      <p class="vd-acc-copy vd-acc-handled" style={`color: ${zenText};`}>{it.handled}</p>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <div class="vd-acc-sub-item vd-acc-sub-item--static">
+                                <span class="vd-acc-sub" style={`color: ${zenText};`}>{it.label}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1190,13 +1269,38 @@ const contentGroups = (text: string) => {
   // Deliberately not a <details> element — those come with a disclosure triangle
   // and a browser-default animation, and both are foreign to this design.
   document.querySelectorAll('[data-vd-acc]').forEach((acc) => {
+    const section = acc.closest('.vd-screen');
     const items = Array.from(acc.querySelectorAll('[data-vd-acc-item]'));
+    const closeAllSubs = () =>
+      acc.querySelectorAll('[data-vd-sub]').forEach((s) => s.setAttribute('data-open', 'false'));
+
     items.forEach((item) => {
       const head = item.querySelector('[data-vd-acc-head]');
       head?.addEventListener('click', () => {
         const wasOpen = item.getAttribute('data-open') === 'true';
         items.forEach((o) => o.setAttribute('data-open', 'false'));
-        item.setAttribute('data-open', wasOpen ? 'false' : 'true');
+        closeAllSubs();
+        if (wasOpen) {
+          // Closing a group returns to the top of the Problems We Solve panel,
+          // never the panel above or below.
+          section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          item.setAttribute('data-open', 'true');
+          // Anchor the opened group's header near the top so its content
+          // unfolds downward rather than pushing up into the panel above.
+          setTimeout(() => head.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+        }
+      });
+
+      // Second level: sub-topics, one open at a time within the group.
+      item.querySelectorAll('[data-vd-sub]').forEach((sub) => {
+        const shead = sub.querySelector('[data-vd-sub-head]');
+        shead?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const wasOpen = sub.getAttribute('data-open') === 'true';
+          item.querySelectorAll('[data-vd-sub]').forEach((o) => o.setAttribute('data-open', 'false'));
+          sub.setAttribute('data-open', wasOpen ? 'false' : 'true');
+        });
       });
     });
   });

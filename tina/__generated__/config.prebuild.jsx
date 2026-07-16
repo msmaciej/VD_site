@@ -87,6 +87,17 @@ var resultSharedFields = [
   ...bilingualString("disclaimer", "Disclaimer text (shown under every profile)"),
   ...bilingualString("ctaLabel", "CTA button text")
 ];
+var confirmPageFields = [
+  ...bilingualString("emailSubject", "Verification email \u2014 subject"),
+  ...bilingualString("emailBody", "Verification email \u2014 body ({{LINK}} = the link; ' | ' = new paragraph)"),
+  ...bilingualString("confirmHeading", "Confirm page \u2014 heading"),
+  ...bilingualString("confirmBody", "Confirm page \u2014 body"),
+  ...bilingualString("confirmButton", "Confirm page \u2014 button"),
+  ...bilingualString("resultTag", "Reveal page \u2014 small label above the result"),
+  ...bilingualString("expiredHeading", "Expired-link page \u2014 heading"),
+  ...bilingualString("expiredBody", "Expired-link page \u2014 body"),
+  ...bilingualString("backLabel", "Expired-link page \u2014 back-to-check link")
+];
 var fitCheckCollection = {
   name: "fitCheck",
   label: "Fit Check",
@@ -104,7 +115,8 @@ var fitCheckCollection = {
     { type: "object", name: "goalQuestion", label: "Q4 \u2014 Goal / intent", fields: goalQuestionFields },
     { type: "object", name: "shortClose", label: "Short close (role = consultant/curious)", fields: shortCloseFields },
     { type: "object", name: "profiles", label: "Result profiles", fields: profileFields },
-    { type: "object", name: "resultShared", label: "Result \u2014 shared disclaimer & CTA", fields: resultSharedFields }
+    { type: "object", name: "resultShared", label: "Result \u2014 shared disclaimer & CTA", fields: resultSharedFields },
+    { type: "object", name: "confirmPage", label: "Confirmation email & confirm page", fields: confirmPageFields }
   ]
 };
 
@@ -169,14 +181,59 @@ var pageTemplates = [
         fields: [
           { type: "string", name: "label", label: "Group label" },
           {
+            type: "string",
+            name: "intro",
+            label: "Group description (one line, optional)",
+            description: "Shown under the group name when it opens.",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "boolean",
+            name: "showIntro",
+            label: "Show this group's description",
+            description: "Off = hide just this group's description, keep its name. (Needs the master 'Show group descriptions' on.)"
+          },
+          {
             type: "object",
             list: true,
             name: "items",
             label: "Sub-areas",
             ui: { itemProps: (item) => ({ label: item?.label || "Sub-area" }) },
-            fields: [{ type: "string", name: "label", label: "Sub-area label" }]
+            fields: [
+              { type: "string", name: "label", label: "Sub-area label" },
+              {
+                type: "string",
+                name: "problem",
+                label: "Problem (1-2 sentences, optional)",
+                ui: { component: "textarea" }
+              },
+              {
+                type: "string",
+                name: "handled",
+                label: "What we do + what stays with you (optional)",
+                ui: { component: "textarea" }
+              },
+              {
+                type: "boolean",
+                name: "showCopy",
+                label: "Show this sub-area's description",
+                description: "Off = show just the name. Use to keep 2-3 flagship items per group and leave the rest as names. (Needs the master 'Show sub-area descriptions' on.)"
+              }
+            ]
           }
         ]
+      },
+      {
+        type: "boolean",
+        name: "showGroupIntros",
+        label: "Show group descriptions (master)",
+        description: "Master switch for the one-line description under each group name."
+      },
+      {
+        type: "boolean",
+        name: "showItemCopy",
+        label: "Show sub-area descriptions (master)",
+        description: "Master switch for the problem / what-we-do text under each sub-area."
       },
       {
         type: "string",

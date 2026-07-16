@@ -101,10 +101,15 @@ union DocumentNode = Page | Page_de | Settings | FitCheck | Art | Folder
 
 type PageBlocksSectionGroupsItems {
   label: String
+  problem: String
+  handled: String
+  showCopy: Boolean
 }
 
 type PageBlocksSectionGroups {
   label: String
+  intro: String
+  showIntro: Boolean
   items: [PageBlocksSectionGroupsItems]
 }
 
@@ -122,6 +127,8 @@ type PageBlocksSection {
   fontSize: String
   fontWeight: String
   groups: [PageBlocksSectionGroups]
+  showGroupIntros: Boolean
+  showItemCopy: Boolean
   meta: String
   email: String
   phone: String
@@ -215,18 +222,23 @@ input StringFilter {
   in: [String]
 }
 
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
+}
+
 input PageBlocksSectionGroupsItemsFilter {
   label: StringFilter
+  problem: StringFilter
+  handled: StringFilter
+  showCopy: BooleanFilter
 }
 
 input PageBlocksSectionGroupsFilter {
   label: StringFilter
+  intro: StringFilter
+  showIntro: BooleanFilter
   items: PageBlocksSectionGroupsItemsFilter
-}
-
-input BooleanFilter {
-  eq: Boolean
-  exists: Boolean
 }
 
 input PageBlocksSectionFilter {
@@ -243,6 +255,8 @@ input PageBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   groups: PageBlocksSectionGroupsFilter
+  showGroupIntros: BooleanFilter
+  showItemCopy: BooleanFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -354,10 +368,15 @@ type PageConnection implements Connection {
 
 type Page_deBlocksSectionGroupsItems {
   label: String
+  problem: String
+  handled: String
+  showCopy: Boolean
 }
 
 type Page_deBlocksSectionGroups {
   label: String
+  intro: String
+  showIntro: Boolean
   items: [Page_deBlocksSectionGroupsItems]
 }
 
@@ -375,6 +394,8 @@ type Page_deBlocksSection {
   fontSize: String
   fontWeight: String
   groups: [Page_deBlocksSectionGroups]
+  showGroupIntros: Boolean
+  showItemCopy: Boolean
   meta: String
   email: String
   phone: String
@@ -463,10 +484,15 @@ type Page_de implements Node & Document {
 
 input Page_deBlocksSectionGroupsItemsFilter {
   label: StringFilter
+  problem: StringFilter
+  handled: StringFilter
+  showCopy: BooleanFilter
 }
 
 input Page_deBlocksSectionGroupsFilter {
   label: StringFilter
+  intro: StringFilter
+  showIntro: BooleanFilter
   items: Page_deBlocksSectionGroupsItemsFilter
 }
 
@@ -484,6 +510,8 @@ input Page_deBlocksSectionFilter {
   fontSize: StringFilter
   fontWeight: StringFilter
   groups: Page_deBlocksSectionGroupsFilter
+  showGroupIntros: BooleanFilter
+  showItemCopy: BooleanFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -1016,6 +1044,27 @@ type FitCheckResultShared {
   ctaLabel_de: String
 }
 
+type FitCheckConfirmPage {
+  emailSubject: String
+  emailSubject_de: String
+  emailBody: String
+  emailBody_de: String
+  confirmHeading: String
+  confirmHeading_de: String
+  confirmBody: String
+  confirmBody_de: String
+  confirmButton: String
+  confirmButton_de: String
+  resultTag: String
+  resultTag_de: String
+  expiredHeading: String
+  expiredHeading_de: String
+  expiredBody: String
+  expiredBody_de: String
+  backLabel: String
+  backLabel_de: String
+}
+
 type FitCheck implements Node & Document {
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
@@ -1025,6 +1074,7 @@ type FitCheck implements Node & Document {
   shortClose: FitCheckShortClose
   profiles: FitCheckProfiles
   resultShared: FitCheckResultShared
+  confirmPage: FitCheckConfirmPage
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -1274,6 +1324,27 @@ input FitCheckResultSharedFilter {
   ctaLabel_de: StringFilter
 }
 
+input FitCheckConfirmPageFilter {
+  emailSubject: StringFilter
+  emailSubject_de: StringFilter
+  emailBody: StringFilter
+  emailBody_de: StringFilter
+  confirmHeading: StringFilter
+  confirmHeading_de: StringFilter
+  confirmBody: StringFilter
+  confirmBody_de: StringFilter
+  confirmButton: StringFilter
+  confirmButton_de: StringFilter
+  resultTag: StringFilter
+  resultTag_de: StringFilter
+  expiredHeading: StringFilter
+  expiredHeading_de: StringFilter
+  expiredBody: StringFilter
+  expiredBody_de: StringFilter
+  backLabel: StringFilter
+  backLabel_de: StringFilter
+}
+
 input FitCheckFilter {
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
@@ -1283,6 +1354,7 @@ input FitCheckFilter {
   shortClose: FitCheckShortCloseFilter
   profiles: FitCheckProfilesFilter
   resultShared: FitCheckResultSharedFilter
+  confirmPage: FitCheckConfirmPageFilter
 }
 
 type FitCheckConnectionEdges {
@@ -1369,10 +1441,15 @@ input DocumentMutation {
 
 input PageBlocksSectionGroupsItemsMutation {
   label: String
+  problem: String
+  handled: String
+  showCopy: Boolean
 }
 
 input PageBlocksSectionGroupsMutation {
   label: String
+  intro: String
+  showIntro: Boolean
   items: [PageBlocksSectionGroupsItemsMutation]
 }
 
@@ -1390,6 +1467,8 @@ input PageBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   groups: [PageBlocksSectionGroupsMutation]
+  showGroupIntros: Boolean
+  showItemCopy: Boolean
   meta: String
   email: String
   phone: String
@@ -1480,10 +1559,15 @@ input PageMutation {
 
 input Page_deBlocksSectionGroupsItemsMutation {
   label: String
+  problem: String
+  handled: String
+  showCopy: Boolean
 }
 
 input Page_deBlocksSectionGroupsMutation {
   label: String
+  intro: String
+  showIntro: Boolean
   items: [Page_deBlocksSectionGroupsItemsMutation]
 }
 
@@ -1501,6 +1585,8 @@ input Page_deBlocksSectionMutation {
   fontSize: String
   fontWeight: String
   groups: [Page_deBlocksSectionGroupsMutation]
+  showGroupIntros: Boolean
+  showItemCopy: Boolean
   meta: String
   email: String
   phone: String
@@ -1917,6 +2003,27 @@ input FitCheckResultSharedMutation {
   ctaLabel_de: String
 }
 
+input FitCheckConfirmPageMutation {
+  emailSubject: String
+  emailSubject_de: String
+  emailBody: String
+  emailBody_de: String
+  confirmHeading: String
+  confirmHeading_de: String
+  confirmBody: String
+  confirmBody_de: String
+  confirmButton: String
+  confirmButton_de: String
+  resultTag: String
+  resultTag_de: String
+  expiredHeading: String
+  expiredHeading_de: String
+  expiredBody: String
+  expiredBody_de: String
+  backLabel: String
+  backLabel_de: String
+}
+
 input FitCheckMutation {
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation
@@ -1926,6 +2033,7 @@ input FitCheckMutation {
   shortClose: FitCheckShortCloseMutation
   profiles: FitCheckProfilesMutation
   resultShared: FitCheckResultSharedMutation
+  confirmPage: FitCheckConfirmPageMutation
 }
 
 input ArtMutation {

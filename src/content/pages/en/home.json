@@ -27,64 +27,184 @@
       "title": "Problems We Solve",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "The same six-phase methodology | applies across all areas | ..",
+      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you | ..",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "",
+      "content": "Most requests cross more than one area | — an order query can mean a message, a stock check and a return at once | . | We assemble the right pieces behind the scenes | so your customer gets one smooth reply | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
       "groups": [
         {
           "label": "Communication & Customers",
+          "intro": "Enquiries, questions, bookings and feedback — caught, sorted and drafted for reply, so nothing slips through and nothing goes out without your say-so.",
           "items": [
             {
-              "label": "Communication & Intake"
+              "label": "Communication & Intake",
+              "problem": "Enquiries arrive by form, email and voicemail, sometimes in more than one language — and some get missed while replies stay inconsistent.",
+              "handled": "We pull every enquiry into one list, sort it by language and type, and prepare a polite holding reply for each. You approve the replies and make the judgement calls; nothing is sent on its own.",
+              "showCopy": true
             },
             {
-              "label": "Customer Support"
+              "label": "Customer Support",
+              "problem": "Your support inbox fills with the same order-status, returns and how-to questions, and the urgent ones get buried.",
+              "handled": "We sort each message by what it's asking, draft an answer from your own saved responses, and flag anything urgent. You approve every reply, and anything complex or out-of-policy comes straight to a person.",
+              "showCopy": true
             },
             {
-              "label": "Scheduling & Booking"
+              "label": "Scheduling & Booking",
+              "problem": "Booking requests come in after hours, so reception replies late or double-books — and no-shows quietly cost you.",
+              "handled": "We check your calendar, draft a confirmation or a couple of alternative times, and send reminders before each appointment. You approve what goes out; the calendar is only updated once you or the customer confirm.",
+              "showCopy": true
+            },
+            {
+              "label": "Feedback & Reviews",
+              "problem": "Feedback lands scattered across email, review sites and surveys — praise gets missed and complaints are answered too late.",
+              "handled": "We gather it in one place, sort it by mood and topic, and draft a suitable response — a thank-you, a reply, or a note to the right person. You approve every response, and complaints that need real care go to you, not a script.",
+              "showCopy": true
             }
-          ]
+          ],
+          "showIntro": true
         },
         {
           "label": "Sales & Growth",
+          "intro": "From first interest to renewal — leads sorted, quotes drafted, follow-ups never forgotten — with you deciding what's sent and what's sold.",
           "items": [
             {
-              "label": "Lead & Sales Pipeline"
+              "label": "Lead & Sales Pipeline",
+              "problem": "Leads come in from forms, events and referrals, but they all get chased equally — so the promising ones don't get priority and stalled deals are quietly forgotten.",
+              "handled": "We gather each lead, add what we can find about them, and sort them into hot, worth-nurturing, or not-a-fit — with a draft introduction ready for the promising ones, and a nudge when a deal goes quiet. You decide who's worth pursuing and do the selling; we just make sure nothing is dropped.",
+              "showCopy": true
             },
             {
-              "label": "Content & Marketing"
+              "label": "Content & Marketing",
+              "problem": "There's never time to turn one good piece of content into posts and a newsletter, and the questions customers keep asking never become marketing.",
+              "handled": "We take a piece you've approved and draft versions for your other channels, and turn recurring customer questions into ready-to-use content ideas. You keep the final say on voice and what gets published; nothing goes out in your name without your edit and approval.",
+              "showCopy": true
             },
             {
-              "label": "E-commerce & Fulfilment"
+              "label": "E-commerce & Fulfilment",
+              "problem": "Most orders are fine, but stock-outs, wrong addresses and unusually large orders slip through — and the returns inbox mixes refunds, warranty claims and out-of-policy requests.",
+              "handled": "We screen every order and flag the ones that need a human eye, drafting a customer notice where one's needed, and we sort each return and prepare the right reply. You approve the customer messages and make the refund and warranty decisions.",
+              "showCopy": true
+            },
+            {
+              "label": "Quotes & Proposals",
+              "problem": "Quotes get built by hand from scattered price lists, so they go out late or with mistakes.",
+              "handled": "We read each request, match it to your products and prices, and draft the quote from your template — or draft a question back if something's missing. You set the pricing and any discounts, and approve the quote before it's sent.",
+              "showCopy": true
+            },
+            {
+              "label": "Renewals & Retention",
+              "problem": "Renewals quietly lapse and customers drift away, because nobody's tracking what's due or spotting the early warning signs.",
+              "handled": "We keep an eye on upcoming renewals and accounts that look at-risk, and draft a timely reminder or a note to win them back, flagging the account to you. You have the retention conversation and make any commercial decisions; we just make sure the moment isn't missed.",
+              "showCopy": true
             }
-          ]
+          ],
+          "showIntro": true
         },
         {
           "label": "Documents & Finance",
+          "intro": "The paperwork that piles up — invoices, contracts, filings, supplier bills — read, sorted and prepared, with every payment and sign-off kept firmly in your hands.",
           "items": [
             {
-              "label": "Document & Data Processing"
+              "label": "Document & Data Processing",
+              "problem": "Invoices, receipts, contracts and delivery notes arrive as PDFs, photos and post — and get retyped by hand, then are hard to find later.",
+              "handled": "We read each document, pull out the key details, and file it where it belongs, with a draft entry ready for your accounts. Anything the system isn't sure about, or that doesn't fit the usual pattern, is set aside for you to check rather than guessed at.",
+              "showCopy": true
             },
             {
-              "label": "Finance & Admin"
+              "label": "Finance & Admin",
+              "problem": "Finance manually gathers each week's due invoices and checks expense claims one by one — slow, and easy to mis-pay.",
+              "handled": "We collect the invoices that are due, match them up, and prepare the payment list for you; we also check expense claims against your policy and draft the reply. You give the final go-ahead on any payment — the money never moves without your sign-off — and the accounting judgement stays yours.",
+              "showCopy": true
+            },
+            {
+              "label": "Contracts & Agreements",
+              "problem": "Signed contracts pile up and renewal or notice dates get missed, so you're stuck with auto-renewals you didn't want.",
+              "handled": "We read each contract, pull out the key terms and dates, and keep a register that reminds you before anything falls due. The legal reading, the negotiating, and the decision to renew or walk away all stay with you — we just make sure a date never catches you out.",
+              "showCopy": true
+            },
+            {
+              "label": "Procurement & Suppliers",
+              "problem": "Matching supplier invoices to purchase orders and deliveries is done by hand, so overbilling and duplicate payments slip through.",
+              "handled": "We check each invoice against your purchase order and delivery record, queue up the ones that match, and flag anything that doesn't to the right person. You approve every payment and handle any dispute or supplier negotiation yourself.",
+              "showCopy": true
+            },
+            {
+              "label": "Compliance & Filing",
+              "problem": "Every VAT period turns into a scramble to pull the figures together, with deadlines uncomfortably close.",
+              "handled": "We gather the transactions, assemble a draft return, run the consistency checks, and remind you well before the deadline, keeping a full record for your files. The figures are always yours to review and approve, and the formal responsibility — the tax judgement and the filing itself — stays with you and your accountant. We prepare the groundwork; we don't file on your behalf or stand in for professional advice.",
+              "showCopy": true
             }
-          ]
+          ],
+          "showIntro": true
         },
         {
           "label": "Operations & Insight",
+          "intro": "The behind-the-scenes work that keeps things moving — coordinating tasks, pulling reports, screening applicants, watching quality and keeping know-how written down — with the judgement and the decisions kept with your team.",
           "items": [
             {
-              "label": "Internal Operations"
+              "label": "Internal Operations",
+              "problem": "Onboarding a new joiner, or handling everyday requests for access, equipment and facilities, means chasing several people — and steps get missed or lost in a shared inbox.",
+              "handled": "We build the checklist, assign each step to the right person, send the reminders, and track it through to done — and we sort incoming requests and route them to whoever owns them, with a quick acknowledgement drafted. Your team does the work and makes the calls on exceptions; we keep it all moving so nothing's forgotten.",
+              "showCopy": true
             },
             {
-              "label": "Reporting & Analytics"
+              "label": "Reporting & Analytics",
+              "problem": "Someone loses hours every cycle pulling the same figures into a report — and problems in the numbers are often spotted too late.",
+              "handled": "We gather the figures, assemble your standard report, and check it over before handing you a draft — and we keep an eye on the numbers between reports, alerting you when something crosses a line you care about. Reading the numbers and deciding what to do about them stays with you; we just get the report onto your desk, and the warning to you in time.",
+              "showCopy": true
+            },
+            {
+              "label": "People & Hiring",
+              "problem": "A job ad floods the inbox, and screening applications and arranging interviews by hand is slow — so good candidates go cold.",
+              "handled": "We acknowledge each application, check it against your must-have criteria, and either propose interview times for the strong ones or draft a courteous decline for the rest, keeping track of where everyone stands. The shortlisting judgement, the interviews and the hiring decision are entirely yours — we handle the admin around them, never the choice of who to hire.",
+              "showCopy": true
+            },
+            {
+              "label": "Quality & Process Monitoring",
+              "problem": "A quality or improvement effort needs steady measurement to work, but the data is gathered by hand and problems surface late.",
+              "handled": "We take the ongoing measurement off your hands — collecting the data regularly, tracking it against the levels you've set, and flagging anything that drifts out of range, with the context, to the right person. Defining the problem, finding the root cause and deciding what to change stay with you and your team — we provide the steady measurement, not the improvement programme itself.",
+              "showCopy": true
+            },
+            {
+              "label": "Knowledge & SOPs",
+              "problem": "Staff keep asking the same 'how do we do X', and the answers live in people's heads or scattered documents.",
+              "handled": "We search what's already written, draft an answer from the source, and where there's a gap, draft a starting point for a new written procedure and flag it to the right owner. You decide what's accurate and official; we keep the shared know-how findable and current, but the authoritative word is always yours to approve.",
+              "showCopy": true
             }
-          ]
+          ],
+          "showIntro": true
         }
       ],
+      "enabled": true,
+      "_template": "section",
+      "showGroupIntros": true,
+      "showItemCopy": true
+    },
+    {
+      "title": "What Stays With You",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "A person stays in control | We automate the repetitive slice | ..",
+      "subTitleFontSize": "text-[15px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "We take on the repetitive part | — reading, sorting, drafting, filing | . | Every result is prepared for you to approve | . | Nothing is sent, paid, or filed on its own | .. | The judgement calls stay yours | the ambiguous cases, the decisions, the final sign-off | . | We don't replace your judgement, your advisers, or your systems | . | And we'll always be straight about | what's better left with you | .",
+      "fontSize": "text-[17px]",
+      "fontWeight": "font-normal",
+      "enabled": true,
+      "_template": "section"
+    },
+    {
+      "title": "Start Simple, Grow",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "Begin with the one process | that's costing you hours | ..",
+      "subTitleFontSize": "text-[15px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "Get it working, earning its keep | then build from there | . | Each step is small, proven | and yours to approve before it goes live | .. | Because every automation shares the same shape | they fit together as you grow | rather than becoming a tangle | .",
+      "fontSize": "text-[17px]",
+      "fontWeight": "font-normal",
       "enabled": true,
       "_template": "section"
     },
