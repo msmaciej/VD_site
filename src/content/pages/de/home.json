@@ -27,7 +27,7 @@
       "subTitle": "Der Unterschied liegt | nicht in der Software",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Sie geben jeden Schritt frei | nichts wird von allein gesendet, bezahlt oder eingereicht | . | Ihre Daten bleiben Ihre | sie bleiben in Ihren Systemen, nicht in unseren | . | Kündbar auf Ende jedes Monats | keine Bindung, kein langer Vertrag | . | Wer es baut | geht auch ans Telefon | .",
+      "content": "Sie geben jeden Schritt frei | nichts wird von allein gesendet, bezahlt oder eingereicht | . | Ihre Daten bleiben Ihre | nie gespeichert, nie weitergegeben | . | Kündbar auf Ende jedes Monats | keine Bindung, kein langer Vertrag | . | Wer es baut | geht auch ans Telefon | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -56,7 +56,7 @@
       "subTitle": "Die Arbeit, die Ihr Team immer wieder macht | erfasst, sortiert und für Sie entworfen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Die meisten Anliegen betreffen mehrere Bereiche zugleich | — eine Bestellfrage kann Nachricht, Bestandsprüfung und Retoure auf einmal bedeuten | . | Wir fügen im Hintergrund die richtigen Teile zusammen | damit Ihre Kundin eine einzige, reibungslose Antwort erhält | .",
+      "content": "Fast alles davon folgt derselben Form | etwas kommt herein, wird gelesen und sortiert, eine Antwort oder ein Eintrag wird entworfen — und Ihnen zur Freigabe vorgelegt | . | Wir übernehmen den wiederkehrenden Teil | das Entscheiden, das Recherchieren, das Urteil bleibt bei Ihnen | .. | Manches lässt sich nur teilweise automatisieren | wo ein Mensch prüfen oder entscheiden muss — eine Ursachenanalyse, ein Qualitätsprogramm — | übernehmen wir den messbaren, wiederholbaren Teil und sagen klar, wo Sie am Steuer bleiben | . | Die meisten Anliegen betreffen mehrere Bereiche zugleich | eine Bestellfrage kann Nachricht, Bestandsprüfung und Retoure auf einmal bedeuten | . | Wir fügen im Hintergrund die richtigen Teile zusammen | damit Ihre Kundin eine einzige, reibungslose Antwort erhält | .. | Beginnen Sie mit dem Prozess, der Sie Stunden kostet | und wachsen Sie von dort | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -211,7 +211,7 @@
         }
       ],
       "showGroupIntros": true,
-      "showItemCopy": false,
+      "showItemCopy": true,
       "enabled": true,
       "_template": "section"
     },
@@ -242,7 +242,7 @@
       "subTitle": "Ihre Daten gehören Ihnen | und wir bauen so, dass es dabei bleibt",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Ihre Daten bleiben in Ihren eigenen Systemen | wir arbeiten neben Ihrer Umgebung — wir behalten keine Kopie | . | Sie entscheiden, was | ein externer KI-Dienst überhaupt zu sehen bekommt | . | Sensible Bereiche — Finanzen, Recht, Gesundheit — | lassen sich ganz aus Drittanbieter-Clouds heraushalten | . | Jeder Schritt hinterlässt eine Spur | nachvollziehbar, was geschah und wer freigegeben hat | . | Ein Auftragsverarbeitungsvertrag liegt bereit | von Anfang an revDSG- und DSGVO-bewusst | . | Schweizerische Sorgfalt | wo immer auf der Welt Sie sind | .",
+      "content": "Ihre Daten bleiben in Ihren eigenen Systemen | wir nutzen nur, was wir für die Arbeit brauchen | . | Nie gespeichert, nie weitergegeben | und gelöscht, sobald die Arbeit erledigt ist | . | Sie entscheiden, was | ein externer KI-Dienst überhaupt zu sehen bekommt | . | Sensible Bereiche — Finanzen, Recht, Gesundheit — | mit strengeren Grenzen, was Ihre Umgebung verlässt | . | Jeder Schritt hinterlässt eine Spur | nachvollziehbar, was geschah und wer freigegeben hat | . | Ein Auftragsverarbeitungsvertrag liegt bereit | von Anfang an revDSG- und DSGVO-bewusst | . | Schweizerische Sorgfalt | wo immer auf der Welt Sie sind | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -362,7 +362,7 @@
       "_template": "section"
     },
     {
-      "industry": "Internationaler Handel -",
+      "industry": "Internationaler Handel",
       "client": "",
       "location": "Schweiz",
       "package": "Basic + KI-Triage",
@@ -376,17 +376,17 @@
       "bodyFontWeight": "font-light",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "caseStudy"
     },
     {
       "quote": "Es geht nichts mehr verloren — und nichts raus, was ich nicht gesehen habe.",
       "attributionName": "",
-      "attributionOrg": "MG Redshift -",
+      "attributionOrg": "MG Redshift",
       "quoteFontSize": "text-[15px]",
       "quoteFontWeight": "font-normal",
       "metaFontSize": "text-[11px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "testimonial"
     },
     {

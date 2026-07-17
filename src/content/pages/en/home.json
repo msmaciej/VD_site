@@ -28,7 +28,7 @@
       "subTitle": "What makes this different | isn't the software",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "You approve every step | nothing is sent, paid or filed on its own | . | Your data stays yours | it stays in your systems, not ours | . | Stop at the end of any month | no lock-in, no long contract | . | The person who builds it | is the person who answers the phone | .",
+      "content": "You approve every step | nothing is sent, paid or filed on its own | . | Your data stays yours | never stored, never shared | . | Stop at the end of any month | no lock-in, no long contract | . | The person who builds it | is the person who answers the phone | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
       "showTitle": true,
@@ -57,7 +57,7 @@
       "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Most requests cross more than one area | — an order query can mean a message, a stock check and a return at once | . | We assemble the right pieces behind the scenes | so your customer gets one smooth reply | .",
+      "content": "Almost every one of these follows the same shape | something arrives, it's read and sorted, a reply or entry is drafted — and held for you | . | We take the repetitive slice | the deciding, the researching, the judgement stays with you | .. | Some work is only ever partly automatable | where a person must investigate or decide — a root-cause review, a quality programme — | we take the measurable, repeatable part and say plainly where you stay in charge | . | Most requests cross more than one area | an order query can mean a message, a stock check and a return at once | . | We assemble the right pieces behind the scenes | so your customer gets one smooth reply | .. | Start with the one that's costing you hours | and grow from there | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
       "showTitle": true,
@@ -212,7 +212,7 @@
         }
       ],
       "showGroupIntros": true,
-      "showItemCopy": false,
+      "showItemCopy": true,
       "enabled": true,
       "_template": "section"
     },
@@ -243,7 +243,7 @@
       "subTitle": "Your data is yours | and we build so it stays that way",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Your data stays in your own systems | we work alongside your setup — we don't keep a copy of it | . | You decide what, if anything, | an outside AI service ever sees | . | Sensitive work — finance, legal, health — | can be kept out of third-party clouds entirely | . | Every step leaves a record | a quiet trail of what happened and who approved it | . | A data-processing agreement is ready | revDSG- and GDPR-aware from the start | . | Swiss-grounded discipline | wherever in the world you are | .",
+      "content": "Your data stays in your own systems | we only use what we need to do the work | . | Never stored, never shared | and cleared once the work is done | . | You decide what, if anything, | an outside AI service ever sees | . | Sensitive work — finance, legal, health — | handled with stricter limits on what leaves your environment | . | Every step leaves a record | a quiet trail of what happened and who approved it | . | A data-processing agreement is ready | revDSG- and GDPR-aware from the start | . | Swiss-grounded discipline | wherever in the world you are | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
       "showTitle": true,
@@ -363,7 +363,7 @@
       "_template": "section"
     },
     {
-      "industry": "International Trade -",
+      "industry": "International Trade",
       "client": "",
       "location": "Switzerland",
       "package": "Basic + AI Triage",
@@ -377,17 +377,17 @@
       "bodyFontWeight": "font-light",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "caseStudy"
     },
     {
       "quote": "Nothing gets lost now, and nothing goes out that I haven't seen.",
       "attributionName": "",
-      "attributionOrg": "MG Redshift -",
+      "attributionOrg": "MG Redshift",
       "quoteFontSize": "text-[15px]",
       "quoteFontWeight": "font-normal",
       "metaFontSize": "text-[11px]",
-      "enabled": false,
+      "enabled": true,
       "_template": "testimonial"
     },
     {
