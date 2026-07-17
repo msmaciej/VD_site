@@ -126,6 +126,13 @@ type PageBlocksSection {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   groups: [PageBlocksSectionGroups]
   showGroupIntros: Boolean
   showItemCopy: Boolean
@@ -170,6 +177,14 @@ type PageBlocksProcessFlow {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldProcess: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   enabled: Boolean
 }
 
@@ -254,6 +269,13 @@ input PageBlocksSectionFilter {
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  showTitle: BooleanFilter
+  showSubtitle: BooleanFilter
+  showBody: BooleanFilter
+  foldBody: BooleanFilter
+  cueStyle: StringFilter
+  cueLabel: StringFilter
+  cueLabelOpen: StringFilter
   groups: PageBlocksSectionGroupsFilter
   showGroupIntros: BooleanFilter
   showItemCopy: BooleanFilter
@@ -308,6 +330,14 @@ input PageBlocksProcessFlowFilter {
   fontWeight: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  showTitle: BooleanFilter
+  showSubtitle: BooleanFilter
+  showBody: BooleanFilter
+  foldProcess: BooleanFilter
+  foldBody: BooleanFilter
+  cueStyle: StringFilter
+  cueLabel: StringFilter
+  cueLabelOpen: StringFilter
   enabled: BooleanFilter
 }
 
@@ -393,6 +423,13 @@ type Page_deBlocksSection {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   groups: [Page_deBlocksSectionGroups]
   showGroupIntros: Boolean
   showItemCopy: Boolean
@@ -437,6 +474,14 @@ type Page_deBlocksProcessFlow {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldProcess: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   enabled: Boolean
 }
 
@@ -509,6 +554,13 @@ input Page_deBlocksSectionFilter {
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  showTitle: BooleanFilter
+  showSubtitle: BooleanFilter
+  showBody: BooleanFilter
+  foldBody: BooleanFilter
+  cueStyle: StringFilter
+  cueLabel: StringFilter
+  cueLabelOpen: StringFilter
   groups: Page_deBlocksSectionGroupsFilter
   showGroupIntros: BooleanFilter
   showItemCopy: BooleanFilter
@@ -553,6 +605,14 @@ input Page_deBlocksProcessFlowFilter {
   fontWeight: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  showTitle: BooleanFilter
+  showSubtitle: BooleanFilter
+  showBody: BooleanFilter
+  foldProcess: BooleanFilter
+  foldBody: BooleanFilter
+  cueStyle: StringFilter
+  cueLabel: StringFilter
+  cueLabelOpen: StringFilter
   enabled: BooleanFilter
 }
 
@@ -1466,6 +1526,13 @@ input PageBlocksSectionMutation {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   groups: [PageBlocksSectionGroupsMutation]
   showGroupIntros: Boolean
   showItemCopy: Boolean
@@ -1510,6 +1577,14 @@ input PageBlocksProcessFlowMutation {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldProcess: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   enabled: Boolean
 }
 
@@ -1584,6 +1659,13 @@ input Page_deBlocksSectionMutation {
   bodyFont: String
   fontSize: String
   fontWeight: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   groups: [Page_deBlocksSectionGroupsMutation]
   showGroupIntros: Boolean
   showItemCopy: Boolean
@@ -1628,6 +1710,14 @@ input Page_deBlocksProcessFlowMutation {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  showTitle: Boolean
+  showSubtitle: Boolean
+  showBody: Boolean
+  foldProcess: Boolean
+  foldBody: Boolean
+  cueStyle: String
+  cueLabel: String
+  cueLabelOpen: String
   enabled: Boolean
 }
 

@@ -15,6 +15,9 @@ export const ui: Record<Lang, Record<string, string>> = {
     timelineLabel: 'Timeline',
     // Testimonial block
     testimonialTag: 'Client Feedback',
+    // Fold cue — accessible names (visually the cue is just a breathing dot)
+    foldMore: 'Show more',
+    foldLess: 'Show less',
   },
   de: {
     // Case study block
@@ -26,5 +29,8 @@ export const ui: Record<Lang, Record<string, string>> = {
     timelineLabel: 'Zeitplan',
     // Testimonial block
     testimonialTag: 'Kundenstimme',
+    // Fold cue — accessible names
+    foldMore: 'Mehr anzeigen',
+    foldLess: 'Weniger anzeigen',
   },
 };

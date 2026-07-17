@@ -267,6 +267,13 @@ export type PageBlocksSection = {
   bodyFont?: Maybe<Scalars['String']['output']>;
   fontSize?: Maybe<Scalars['String']['output']>;
   fontWeight?: Maybe<Scalars['String']['output']>;
+  showTitle?: Maybe<Scalars['Boolean']['output']>;
+  showSubtitle?: Maybe<Scalars['Boolean']['output']>;
+  showBody?: Maybe<Scalars['Boolean']['output']>;
+  foldBody?: Maybe<Scalars['Boolean']['output']>;
+  cueStyle?: Maybe<Scalars['String']['output']>;
+  cueLabel?: Maybe<Scalars['String']['output']>;
+  cueLabelOpen?: Maybe<Scalars['String']['output']>;
   groups?: Maybe<Array<Maybe<PageBlocksSectionGroups>>>;
   showGroupIntros?: Maybe<Scalars['Boolean']['output']>;
   showItemCopy?: Maybe<Scalars['Boolean']['output']>;
@@ -313,6 +320,14 @@ export type PageBlocksProcessFlow = {
   fontWeight?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
   ctaUrl?: Maybe<Scalars['String']['output']>;
+  showTitle?: Maybe<Scalars['Boolean']['output']>;
+  showSubtitle?: Maybe<Scalars['Boolean']['output']>;
+  showBody?: Maybe<Scalars['Boolean']['output']>;
+  foldProcess?: Maybe<Scalars['Boolean']['output']>;
+  foldBody?: Maybe<Scalars['Boolean']['output']>;
+  cueStyle?: Maybe<Scalars['String']['output']>;
+  cueLabel?: Maybe<Scalars['String']['output']>;
+  cueLabelOpen?: Maybe<Scalars['String']['output']>;
   enabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -400,6 +415,13 @@ export type PageBlocksSectionFilter = {
   bodyFont?: InputMaybe<StringFilter>;
   fontSize?: InputMaybe<StringFilter>;
   fontWeight?: InputMaybe<StringFilter>;
+  showTitle?: InputMaybe<BooleanFilter>;
+  showSubtitle?: InputMaybe<BooleanFilter>;
+  showBody?: InputMaybe<BooleanFilter>;
+  foldBody?: InputMaybe<BooleanFilter>;
+  cueStyle?: InputMaybe<StringFilter>;
+  cueLabel?: InputMaybe<StringFilter>;
+  cueLabelOpen?: InputMaybe<StringFilter>;
   groups?: InputMaybe<PageBlocksSectionGroupsFilter>;
   showGroupIntros?: InputMaybe<BooleanFilter>;
   showItemCopy?: InputMaybe<BooleanFilter>;
@@ -454,6 +476,14 @@ export type PageBlocksProcessFlowFilter = {
   fontWeight?: InputMaybe<StringFilter>;
   ctaLabel?: InputMaybe<StringFilter>;
   ctaUrl?: InputMaybe<StringFilter>;
+  showTitle?: InputMaybe<BooleanFilter>;
+  showSubtitle?: InputMaybe<BooleanFilter>;
+  showBody?: InputMaybe<BooleanFilter>;
+  foldProcess?: InputMaybe<BooleanFilter>;
+  foldBody?: InputMaybe<BooleanFilter>;
+  cueStyle?: InputMaybe<StringFilter>;
+  cueLabel?: InputMaybe<StringFilter>;
+  cueLabelOpen?: InputMaybe<StringFilter>;
   enabled?: InputMaybe<BooleanFilter>;
 };
 
@@ -544,6 +574,13 @@ export type Page_DeBlocksSection = {
   bodyFont?: Maybe<Scalars['String']['output']>;
   fontSize?: Maybe<Scalars['String']['output']>;
   fontWeight?: Maybe<Scalars['String']['output']>;
+  showTitle?: Maybe<Scalars['Boolean']['output']>;
+  showSubtitle?: Maybe<Scalars['Boolean']['output']>;
+  showBody?: Maybe<Scalars['Boolean']['output']>;
+  foldBody?: Maybe<Scalars['Boolean']['output']>;
+  cueStyle?: Maybe<Scalars['String']['output']>;
+  cueLabel?: Maybe<Scalars['String']['output']>;
+  cueLabelOpen?: Maybe<Scalars['String']['output']>;
   groups?: Maybe<Array<Maybe<Page_DeBlocksSectionGroups>>>;
   showGroupIntros?: Maybe<Scalars['Boolean']['output']>;
   showItemCopy?: Maybe<Scalars['Boolean']['output']>;
@@ -590,6 +627,14 @@ export type Page_DeBlocksProcessFlow = {
   fontWeight?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
   ctaUrl?: Maybe<Scalars['String']['output']>;
+  showTitle?: Maybe<Scalars['Boolean']['output']>;
+  showSubtitle?: Maybe<Scalars['Boolean']['output']>;
+  showBody?: Maybe<Scalars['Boolean']['output']>;
+  foldProcess?: Maybe<Scalars['Boolean']['output']>;
+  foldBody?: Maybe<Scalars['Boolean']['output']>;
+  cueStyle?: Maybe<Scalars['String']['output']>;
+  cueLabel?: Maybe<Scalars['String']['output']>;
+  cueLabelOpen?: Maybe<Scalars['String']['output']>;
   enabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -665,6 +710,13 @@ export type Page_DeBlocksSectionFilter = {
   bodyFont?: InputMaybe<StringFilter>;
   fontSize?: InputMaybe<StringFilter>;
   fontWeight?: InputMaybe<StringFilter>;
+  showTitle?: InputMaybe<BooleanFilter>;
+  showSubtitle?: InputMaybe<BooleanFilter>;
+  showBody?: InputMaybe<BooleanFilter>;
+  foldBody?: InputMaybe<BooleanFilter>;
+  cueStyle?: InputMaybe<StringFilter>;
+  cueLabel?: InputMaybe<StringFilter>;
+  cueLabelOpen?: InputMaybe<StringFilter>;
   groups?: InputMaybe<Page_DeBlocksSectionGroupsFilter>;
   showGroupIntros?: InputMaybe<BooleanFilter>;
   showItemCopy?: InputMaybe<BooleanFilter>;
@@ -709,6 +761,14 @@ export type Page_DeBlocksProcessFlowFilter = {
   fontWeight?: InputMaybe<StringFilter>;
   ctaLabel?: InputMaybe<StringFilter>;
   ctaUrl?: InputMaybe<StringFilter>;
+  showTitle?: InputMaybe<BooleanFilter>;
+  showSubtitle?: InputMaybe<BooleanFilter>;
+  showBody?: InputMaybe<BooleanFilter>;
+  foldProcess?: InputMaybe<BooleanFilter>;
+  foldBody?: InputMaybe<BooleanFilter>;
+  cueStyle?: InputMaybe<StringFilter>;
+  cueLabel?: InputMaybe<StringFilter>;
+  cueLabelOpen?: InputMaybe<StringFilter>;
   enabled?: InputMaybe<BooleanFilter>;
 };
 
@@ -1759,6 +1819,13 @@ export type PageBlocksSectionMutation = {
   bodyFont?: InputMaybe<Scalars['String']['input']>;
   fontSize?: InputMaybe<Scalars['String']['input']>;
   fontWeight?: InputMaybe<Scalars['String']['input']>;
+  showTitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showBody?: InputMaybe<Scalars['Boolean']['input']>;
+  foldBody?: InputMaybe<Scalars['Boolean']['input']>;
+  cueStyle?: InputMaybe<Scalars['String']['input']>;
+  cueLabel?: InputMaybe<Scalars['String']['input']>;
+  cueLabelOpen?: InputMaybe<Scalars['String']['input']>;
   groups?: InputMaybe<Array<InputMaybe<PageBlocksSectionGroupsMutation>>>;
   showGroupIntros?: InputMaybe<Scalars['Boolean']['input']>;
   showItemCopy?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1803,6 +1870,14 @@ export type PageBlocksProcessFlowMutation = {
   fontWeight?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   ctaUrl?: InputMaybe<Scalars['String']['input']>;
+  showTitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showBody?: InputMaybe<Scalars['Boolean']['input']>;
+  foldProcess?: InputMaybe<Scalars['Boolean']['input']>;
+  foldBody?: InputMaybe<Scalars['Boolean']['input']>;
+  cueStyle?: InputMaybe<Scalars['String']['input']>;
+  cueLabel?: InputMaybe<Scalars['String']['input']>;
+  cueLabelOpen?: InputMaybe<Scalars['String']['input']>;
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -1877,6 +1952,13 @@ export type Page_DeBlocksSectionMutation = {
   bodyFont?: InputMaybe<Scalars['String']['input']>;
   fontSize?: InputMaybe<Scalars['String']['input']>;
   fontWeight?: InputMaybe<Scalars['String']['input']>;
+  showTitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showBody?: InputMaybe<Scalars['Boolean']['input']>;
+  foldBody?: InputMaybe<Scalars['Boolean']['input']>;
+  cueStyle?: InputMaybe<Scalars['String']['input']>;
+  cueLabel?: InputMaybe<Scalars['String']['input']>;
+  cueLabelOpen?: InputMaybe<Scalars['String']['input']>;
   groups?: InputMaybe<Array<InputMaybe<Page_DeBlocksSectionGroupsMutation>>>;
   showGroupIntros?: InputMaybe<Scalars['Boolean']['input']>;
   showItemCopy?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1921,6 +2003,14 @@ export type Page_DeBlocksProcessFlowMutation = {
   fontWeight?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   ctaUrl?: InputMaybe<Scalars['String']['input']>;
+  showTitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
+  showBody?: InputMaybe<Scalars['Boolean']['input']>;
+  foldProcess?: InputMaybe<Scalars['Boolean']['input']>;
+  foldBody?: InputMaybe<Scalars['Boolean']['input']>;
+  cueStyle?: InputMaybe<Scalars['String']['input']>;
+  cueLabel?: InputMaybe<Scalars['String']['input']>;
+  cueLabelOpen?: InputMaybe<Scalars['String']['input']>;
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -2340,9 +2430,9 @@ export type ArtMutation = {
   showLine?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
+export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
+export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
 export type SettingsPartsFragment = { __typename: 'Settings', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null, headerLayout?: string | null, headerLinksFontSize?: string | null, footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null, enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, headerHeight?: string | null, footerHeight?: string | null, headerInnerWidth?: string | null, siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null, navLinks?: Array<{ __typename: 'SettingsNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null, socialLinks?: Array<{ __typename: 'SettingsSocialLinks', platform?: string | null, url?: string | null } | null> | null, processFlow?: { __typename: 'SettingsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null };
 
@@ -2355,7 +2445,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
+export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
 
 export type PageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2367,14 +2457,14 @@ export type PageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type Page_DeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type Page_DeQuery = { __typename?: 'Query', page_de: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
+export type Page_DeQuery = { __typename?: 'Query', page_de: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
 
 export type Page_DeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2386,7 +2476,7 @@ export type Page_DeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type Page_DeConnectionQuery = { __typename?: 'Query', page_deConnection: { __typename?: 'Page_deConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'Page_deConnectionEdges', cursor: string, node?: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+export type Page_DeConnectionQuery = { __typename?: 'Query', page_deConnection: { __typename?: 'Page_deConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'Page_deConnectionEdges', cursor: string, node?: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, meta?: string | null, email?: string | null, phone?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type SettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2463,6 +2553,13 @@ export const PagePartsFragmentDoc = gql`
       bodyFont
       fontSize
       fontWeight
+      showTitle
+      showSubtitle
+      showBody
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       groups {
         __typename
         label
@@ -2517,6 +2614,14 @@ export const PagePartsFragmentDoc = gql`
       fontWeight
       ctaLabel
       ctaUrl
+      showTitle
+      showSubtitle
+      showBody
+      foldProcess
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       enabled
     }
     ... on PageBlocksCaseStudy {
@@ -2571,6 +2676,13 @@ export const Page_DePartsFragmentDoc = gql`
       bodyFont
       fontSize
       fontWeight
+      showTitle
+      showSubtitle
+      showBody
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       groups {
         __typename
         label
@@ -2625,6 +2737,14 @@ export const Page_DePartsFragmentDoc = gql`
       fontWeight
       ctaLabel
       ctaUrl
+      showTitle
+      showSubtitle
+      showBody
+      foldProcess
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       enabled
     }
     ... on Page_deBlocksCaseStudy {

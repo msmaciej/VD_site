@@ -42,6 +42,16 @@ const fontWeightOptions = [
   { label: "Bold (700)",     value: "font-bold"     },
 ];
 
+// The reveal cue for a folded section — the small affordance a first-time
+// visitor clicks to open the body. All three share the same breathing motion;
+// they differ only in how explicit they are. 'dot' is the zen default; keep it
+// almost everywhere and reserve 'dot + word' for one or two entry sections.
+const cueStyleOptions = [
+  { label: "Dot — one breathing dot (default, most subtle)", value: "dot"       },
+  { label: "Dots — a trio of dots (a little more explicit)", value: "dots"      },
+  { label: "Dot + word — dot beside a short word (clearest)", value: "dot-label" },
+];
+
 // ── Shared page section templates (used by both EN and DE collections) ────────
 
 const pageTemplates = [
@@ -66,6 +76,24 @@ const pageTemplates = [
       { type: "string",  name: "bodyFont",   label: "Body — Font",   options: fontTypeOptions },
       { type: "string",  name: "fontSize",   label: "Body — Size",   options: fontSizeOptions },
       { type: "string",  name: "fontWeight", label: "Body — Weight", options: fontWeightOptions },
+
+      // ── Visibility & folding ──────────────────────────────────────────────
+      // The three "Show …" switches are ON unless you turn them off (a fresh
+      // section with none of them touched shows everything, exactly as before).
+      { type: "boolean", name: "showTitle",    label: "Show the title",
+        description: "On unless switched off. Off = hide the title on this section." },
+      { type: "boolean", name: "showSubtitle", label: "Show the sub-title",
+        description: "On unless switched off. Off = hide the sub-title on this section." },
+      { type: "boolean", name: "showBody",     label: "Show the body text",
+        description: "On unless switched off. Off = hide the body on this section." },
+      { type: "boolean", name: "foldBody",     label: "Fold the body (reveal on click)",
+        description: "Off = body shows straight away (normal). On = body starts hidden behind a small cue and opens when a visitor clicks it. Leave off for one-line sections and the contact block." },
+      { type: "string",  name: "cueStyle",     label: "Reveal cue style", options: cueStyleOptions,
+        description: "Only used when 'Fold the body' is on. How visible the click-to-open cue is." },
+      { type: "string",  name: "cueLabel",     label: "Reveal cue word",
+        description: "Only used with the 'Dot + word' cue. The short word beside the dot — e.g. More (EN) / Mehr (DE). Defaults to More/Mehr if left empty." },
+      { type: "string",  name: "cueLabelOpen", label: "Reveal cue word — open",
+        description: "Only used with the 'Dot + word' cue. The word shown once open — e.g. Less (EN) / Weniger (DE). Defaults to Less/Weniger if left empty." },
 
       {
         type: "object", list: true, name: "groups", label: "Folding groups (optional)",
@@ -168,6 +196,26 @@ const pageTemplates = [
         description: "e.g. Start the Fit Check. Leave empty for no button." },
       { type: "string", name: "ctaUrl", label: "Button link (optional)",
         description: "e.g. /check — the /de prefix is added automatically on the German page." },
+
+      // ── Visibility & folding ──────────────────────────────────────────────
+      // "Show …" switches are ON unless turned off. Two independent folds are
+      // possible: the steps, and the explainer text. Normally you'd use one.
+      { type: "boolean", name: "showTitle",    label: "Show the title",
+        description: "On unless switched off." },
+      { type: "boolean", name: "showSubtitle", label: "Show the sub-title (above the steps)",
+        description: "On unless switched off." },
+      { type: "boolean", name: "showBody",     label: "Show the explainer text",
+        description: "On unless switched off." },
+      { type: "boolean", name: "foldProcess",  label: "Fold the steps (reveal on click)",
+        description: "Off = steps show straight away (normal). On = the steps start hidden behind a small cue and open when a visitor clicks it." },
+      { type: "boolean", name: "foldBody",     label: "Fold the explainer text (reveal on click)",
+        description: "Off = explainer shows straight away. On = it starts hidden behind the cue and opens on click." },
+      { type: "string",  name: "cueStyle",     label: "Reveal cue style", options: cueStyleOptions,
+        description: "Only used when one of the folds above is on. How visible the click-to-open cue is." },
+      { type: "string",  name: "cueLabel",     label: "Reveal cue word",
+        description: "Only used with the 'Dot + word' cue. Defaults to More/Mehr if left empty." },
+      { type: "string",  name: "cueLabelOpen", label: "Reveal cue word — open",
+        description: "Only used with the 'Dot + word' cue. Shown once open. Defaults to Less/Weniger if left empty." },
 
       { type: "boolean", name: "enabled", label: "Section Enabled" },
     ],

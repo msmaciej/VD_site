@@ -4,12 +4,19 @@
       "title": "Was wir tun",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Wir verwandeln wiederkehrende Aufgaben | in praktische, KI-gestützte Abläufe. | ...",
+      "subTitle": "Wir verwandeln wiederkehrende Aufgaben | in praktische, KI-gestützte Abläufe.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Auf Ihr Unternehmen zugeschnitten. | . | Monatlich betreut. | . | Die Kontrolle bleibt beim Menschen. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "section"
     },
@@ -26,12 +33,19 @@
       "title": "Wo wir ansetzen",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Die Arbeit, die Ihr Team immer wieder macht | erfasst, sortiert und für Sie entworfen | ..",
+      "subTitle": "Die Arbeit, die Ihr Team immer wieder macht | erfasst, sortiert und für Sie entworfen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Die meisten Anliegen betreffen mehrere Bereiche zugleich | — eine Bestellfrage kann Nachricht, Bestandsprüfung und Retoure auf einmal bedeuten | . | Wir fügen im Hintergrund die richtigen Teile zusammen | damit Ihre Kundin eine einzige, reibungslose Antwort erhält | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "groups": [
         {
           "label": "Kommunikation & Kunden",
@@ -40,27 +54,27 @@
           "items": [
             {
               "label": "Kommunikation & Eingang",
-              "showCopy": true,
               "problem": "Anfragen treffen über Formular, E-Mail und Voicemail ein, manchmal in mehreren Sprachen — einige gehen unter, und die Antworten bleiben uneinheitlich.",
-              "handled": "Wir führen jede Anfrage in einer Liste zusammen, sortieren sie nach Sprache und Art und bereiten für jede eine höfliche Eingangsbestätigung vor. Sie geben die Antworten frei und treffen die Ermessensentscheidungen; nichts geht von allein hinaus."
+              "handled": "Wir führen jede Anfrage in einer Liste zusammen, sortieren sie nach Sprache und Art und bereiten für jede eine höfliche Eingangsbestätigung vor. Sie geben die Antworten frei und treffen die Ermessensentscheidungen; nichts geht von allein hinaus.",
+              "showCopy": true
             },
             {
               "label": "Kundenbetreuung & After-Sales",
-              "showCopy": true,
               "problem": "Ihr Support-Postfach füllt sich mit denselben Fragen zu Bestellstatus, Retouren und Bedienung — und die dringenden gehen darin unter.",
-              "handled": "Wir sortieren jede Nachricht nach ihrem Anliegen, entwerfen eine Antwort aus Ihren eigenen hinterlegten Textbausteinen und markieren alles Dringende. Sie geben jede Antwort frei, und alles Komplexe oder Ausnahmefälle landen direkt bei einem Menschen."
+              "handled": "Wir sortieren jede Nachricht nach ihrem Anliegen, entwerfen eine Antwort aus Ihren eigenen hinterlegten Textbausteinen und markieren alles Dringende. Sie geben jede Antwort frei, und alles Komplexe oder Ausnahmefälle landen direkt bei einem Menschen.",
+              "showCopy": true
             },
             {
               "label": "Terminplanung & Buchungen",
-              "showCopy": true,
               "problem": "Buchungsanfragen kommen ausserhalb der Öffnungszeiten, der Empfang antwortet spät oder bucht doppelt — und Nichterscheinen kostet Sie still und leise.",
-              "handled": "Wir prüfen Ihren Kalender, entwerfen eine Bestätigung oder ein paar Alternativtermine und senden vor jedem Termin Erinnerungen. Sie geben frei, was hinausgeht; der Kalender wird erst aktualisiert, wenn Sie oder die Kundin bestätigen."
+              "handled": "Wir prüfen Ihren Kalender, entwerfen eine Bestätigung oder ein paar Alternativtermine und senden vor jedem Termin Erinnerungen. Sie geben frei, was hinausgeht; der Kalender wird erst aktualisiert, wenn Sie oder die Kundin bestätigen.",
+              "showCopy": true
             },
             {
               "label": "Feedback & Bewertungen",
-              "showCopy": true,
               "problem": "Rückmeldungen verteilen sich über E-Mail, Bewertungsportale und Umfragen — Lob geht unter, und Beschwerden werden zu spät beantwortet.",
-              "handled": "Wir sammeln alles an einem Ort, sortieren nach Stimmung und Thema und entwerfen eine passende Antwort — ein Dankeschön, eine Rückmeldung oder einen Hinweis an die richtige Person. Sie geben jede Antwort frei, und Beschwerden, die echtes Fingerspitzengefühl brauchen, gehen an Sie, nicht an ein Skript."
+              "handled": "Wir sammeln alles an einem Ort, sortieren nach Stimmung und Thema und entwerfen eine passende Antwort — ein Dankeschön, eine Rückmeldung oder einen Hinweis an die richtige Person. Sie geben jede Antwort frei, und Beschwerden, die echtes Fingerspitzengefühl brauchen, gehen an Sie, nicht an ein Skript.",
+              "showCopy": true
             }
           ]
         },
@@ -71,33 +85,33 @@
           "items": [
             {
               "label": "Lead- & Vertriebsprozesse",
-              "showCopy": true,
               "problem": "Leads kommen aus Formularen, von Events und über Empfehlungen, werden aber alle gleich behandelt — die vielversprechenden erhalten keinen Vorrang, und ins Stocken geratene Abschlüsse geraten in Vergessenheit.",
-              "handled": "Wir erfassen jeden Lead, ergänzen, was sich finden lässt, und sortieren in heiss, aussichtsreich oder unpassend — mit einem Erstkontakt-Entwurf für die vielversprechenden und einem Anstoss, wenn ein Abschluss stillsteht. Sie entscheiden, wer sich lohnt, und übernehmen den Verkauf; wir sorgen nur dafür, dass nichts liegen bleibt."
+              "handled": "Wir erfassen jeden Lead, ergänzen, was sich finden lässt, und sortieren in heiss, aussichtsreich oder unpassend — mit einem Erstkontakt-Entwurf für die vielversprechenden und einem Anstoss, wenn ein Abschluss stillsteht. Sie entscheiden, wer sich lohnt, und übernehmen den Verkauf; wir sorgen nur dafür, dass nichts liegen bleibt.",
+              "showCopy": true
             },
             {
               "label": "Content & Marketing",
-              "showCopy": true,
               "problem": "Es fehlt die Zeit, aus einem guten Beitrag Posts und einen Newsletter zu machen — und die Fragen, die Kundinnen immer wieder stellen, werden nie zu Marketing.",
-              "handled": "Wir nehmen einen von Ihnen freigegebenen Beitrag und entwerfen Versionen für Ihre anderen Kanäle, und wir machen aus wiederkehrenden Kundenfragen fertige Content-Ideen. Sie behalten das letzte Wort über Tonalität und Veröffentlichung; nichts geht in Ihrem Namen hinaus ohne Ihre Überarbeitung und Freigabe."
+              "handled": "Wir nehmen einen von Ihnen freigegebenen Beitrag und entwerfen Versionen für Ihre anderen Kanäle, und wir machen aus wiederkehrenden Kundenfragen fertige Content-Ideen. Sie behalten das letzte Wort über Tonalität und Veröffentlichung; nichts geht in Ihrem Namen hinaus ohne Ihre Überarbeitung und Freigabe.",
+              "showCopy": true
             },
             {
               "label": "E-Commerce & Fulfilment",
-              "showCopy": true,
               "problem": "Die meisten Bestellungen sind unproblematisch, doch Fehlbestände, falsche Adressen und ungewöhnlich grosse Bestellungen rutschen durch — und im Retouren-Postfach vermischen sich Rückerstattungen, Garantiefälle und Anfragen ausserhalb der Richtlinien.",
-              "handled": "Wir prüfen jede Bestellung und markieren die, die ein menschliches Auge brauchen, und entwerfen bei Bedarf eine Kundenbenachrichtigung; jede Retoure sortieren wir und bereiten die passende Antwort vor. Sie geben die Kundennachrichten frei und entscheiden über Rückerstattungen und Garantie."
+              "handled": "Wir prüfen jede Bestellung und markieren die, die ein menschliches Auge brauchen, und entwerfen bei Bedarf eine Kundenbenachrichtigung; jede Retoure sortieren wir und bereiten die passende Antwort vor. Sie geben die Kundennachrichten frei und entscheiden über Rückerstattungen und Garantie.",
+              "showCopy": true
             },
             {
               "label": "Offerten & Angebote",
-              "showCopy": true,
               "problem": "Offerten werden von Hand aus verstreuten Preislisten zusammengestellt — sie gehen zu spät oder fehlerhaft hinaus.",
-              "handled": "Wir lesen jede Anfrage, gleichen sie mit Ihren Produkten und Preisen ab und entwerfen die Offerte aus Ihrer Vorlage — oder entwerfen eine Rückfrage, falls etwas fehlt. Sie legen Preise und Rabatte fest und geben die Offerte frei, bevor sie hinausgeht."
+              "handled": "Wir lesen jede Anfrage, gleichen sie mit Ihren Produkten und Preisen ab und entwerfen die Offerte aus Ihrer Vorlage — oder entwerfen eine Rückfrage, falls etwas fehlt. Sie legen Preise und Rabatte fest und geben die Offerte frei, bevor sie hinausgeht.",
+              "showCopy": true
             },
             {
               "label": "Verlängerungen & Kundenbindung",
-              "showCopy": true,
               "problem": "Verlängerungen laufen unbemerkt aus und Kundinnen wandern ab, weil niemand nachhält, was ansteht, oder die frühen Warnzeichen erkennt.",
-              "handled": "Wir behalten anstehende Verlängerungen und gefährdete Kunden im Blick und entwerfen rechtzeitig eine Erinnerung oder eine Nachricht zur Rückgewinnung, mit einem Hinweis an Sie. Sie führen das Gespräch zur Kundenbindung und treffen die kommerziellen Entscheidungen; wir sorgen nur dafür, dass der richtige Moment nicht verpasst wird."
+              "handled": "Wir behalten anstehende Verlängerungen und gefährdete Kunden im Blick und entwerfen rechtzeitig eine Erinnerung oder eine Nachricht zur Rückgewinnung, mit einem Hinweis an Sie. Sie führen das Gespräch zur Kundenbindung und treffen die kommerziellen Entscheidungen; wir sorgen nur dafür, dass der richtige Moment nicht verpasst wird.",
+              "showCopy": true
             }
           ]
         },
@@ -108,33 +122,33 @@
           "items": [
             {
               "label": "Dokumente & Daten",
-              "showCopy": true,
               "problem": "Rechnungen, Belege, Verträge und Lieferscheine treffen als PDF, Foto und Post ein — werden von Hand abgetippt und sind später schwer wiederzufinden.",
-              "handled": "Wir lesen jedes Dokument, ziehen die wichtigsten Angaben heraus und legen es am richtigen Ort ab, mit einem Buchungsentwurf für Ihre Buchhaltung. Alles, bei dem das System unsicher ist oder das vom üblichen Muster abweicht, wird zur Prüfung für Sie beiseitegelegt statt geraten."
+              "handled": "Wir lesen jedes Dokument, ziehen die wichtigsten Angaben heraus und legen es am richtigen Ort ab, mit einem Buchungsentwurf für Ihre Buchhaltung. Alles, bei dem das System unsicher ist oder das vom üblichen Muster abweicht, wird zur Prüfung für Sie beiseitegelegt statt geraten.",
+              "showCopy": true
             },
             {
               "label": "Finanzen & Verwaltung",
-              "showCopy": true,
               "problem": "Die Buchhaltung stellt die fälligen Rechnungen jede Woche von Hand zusammen und prüft Spesen einzeln — langsam und anfällig für Fehlzahlungen.",
-              "handled": "Wir sammeln die fälligen Rechnungen, gleichen sie ab und bereiten die Zahlungsliste für Sie vor; Spesen prüfen wir gegen Ihre Richtlinien und entwerfen die Rückmeldung. Sie geben jede Zahlung endgültig frei — Geld bewegt sich nie ohne Ihre Freigabe — und die buchhalterische Beurteilung bleibt bei Ihnen."
+              "handled": "Wir sammeln die fälligen Rechnungen, gleichen sie ab und bereiten die Zahlungsliste für Sie vor; Spesen prüfen wir gegen Ihre Richtlinien und entwerfen die Rückmeldung. Sie geben jede Zahlung endgültig frei — Geld bewegt sich nie ohne Ihre Freigabe — und die buchhalterische Beurteilung bleibt bei Ihnen.",
+              "showCopy": true
             },
             {
               "label": "Verträge & Vereinbarungen",
-              "showCopy": true,
               "problem": "Unterzeichnete Verträge stapeln sich, Verlängerungs- oder Kündigungsfristen werden verpasst — und Sie hängen an automatischen Verlängerungen, die Sie nicht wollten.",
-              "handled": "Wir lesen jeden Vertrag, ziehen die wichtigsten Konditionen und Fristen heraus und führen ein Register, das Sie rechtzeitig erinnert. Die rechtliche Prüfung, das Verhandeln und die Entscheidung über Verlängerung oder Ausstieg bleiben bei Ihnen — wir sorgen nur dafür, dass Sie kein Datum überrascht."
+              "handled": "Wir lesen jeden Vertrag, ziehen die wichtigsten Konditionen und Fristen heraus und führen ein Register, das Sie rechtzeitig erinnert. Die rechtliche Prüfung, das Verhandeln und die Entscheidung über Verlängerung oder Ausstieg bleiben bei Ihnen — wir sorgen nur dafür, dass Sie kein Datum überrascht.",
+              "showCopy": true
             },
             {
               "label": "Beschaffung & Lieferanten",
-              "showCopy": true,
               "problem": "Der Abgleich von Lieferantenrechnungen mit Bestellungen und Lieferungen erfolgt von Hand — Überberechnungen und Doppelzahlungen rutschen durch.",
-              "handled": "Wir prüfen jede Rechnung gegen Ihre Bestellung und den Liefernachweis, stellen die übereinstimmenden zur Zahlung bereit und melden Abweichungen der richtigen Person. Sie geben jede Zahlung frei und übernehmen Klärfälle und Lieferantenverhandlungen selbst."
+              "handled": "Wir prüfen jede Rechnung gegen Ihre Bestellung und den Liefernachweis, stellen die übereinstimmenden zur Zahlung bereit und melden Abweichungen der richtigen Person. Sie geben jede Zahlung frei und übernehmen Klärfälle und Lieferantenverhandlungen selbst.",
+              "showCopy": true
             },
             {
               "label": "Compliance & Meldungen",
-              "showCopy": true,
               "problem": "Jede MWST-Periode wird zur Hektik, um die Zahlen zusammenzutragen — mit unangenehm nahen Fristen.",
-              "handled": "Wir tragen die Transaktionen zusammen, erstellen einen Abrechnungsentwurf, führen die Plausibilitätsprüfungen durch und erinnern Sie rechtzeitig vor der Frist — mit einer vollständigen Ablage für Ihre Unterlagen. Die Zahlen prüfen und genehmigen stets Sie, und die formale Verantwortung — die steuerliche Beurteilung und die Einreichung selbst — bleibt bei Ihnen und Ihrem Treuhänder. Wir bereiten die Grundlage vor; wir reichen nicht für Sie ein und ersetzen keine fachliche Beratung."
+              "handled": "Wir tragen die Transaktionen zusammen, erstellen einen Abrechnungsentwurf, führen die Plausibilitätsprüfungen durch und erinnern Sie rechtzeitig vor der Frist — mit einer vollständigen Ablage für Ihre Unterlagen. Die Zahlen prüfen und genehmigen stets Sie, und die formale Verantwortung — die steuerliche Beurteilung und die Einreichung selbst — bleibt bei Ihnen und Ihrem Treuhänder. Wir bereiten die Grundlage vor; wir reichen nicht für Sie ein und ersetzen keine fachliche Beratung.",
+              "showCopy": true
             }
           ]
         },
@@ -145,52 +159,59 @@
           "items": [
             {
               "label": "Interne Abläufe & Freigaben",
-              "showCopy": true,
               "problem": "Das Onboarding neuer Mitarbeitender oder alltägliche Anfragen zu Zugängen, Ausrüstung und Räumen bedeuten, mehreren Leuten hinterherzulaufen — Schritte werden übersehen oder gehen im gemeinsamen Postfach verloren.",
-              "handled": "Wir erstellen die Checkliste, weisen jeden Schritt der richtigen Person zu, versenden die Erinnerungen und verfolgen alles bis zur Erledigung — und eingehende Anfragen sortieren und leiten wir an die zuständige Stelle weiter, mit einem kurzen Bestätigungsentwurf. Ihr Team erledigt die Arbeit und entscheidet über Ausnahmen; wir halten alles in Bewegung, damit nichts vergessen geht."
+              "handled": "Wir erstellen die Checkliste, weisen jeden Schritt der richtigen Person zu, versenden die Erinnerungen und verfolgen alles bis zur Erledigung — und eingehende Anfragen sortieren und leiten wir an die zuständige Stelle weiter, mit einem kurzen Bestätigungsentwurf. Ihr Team erledigt die Arbeit und entscheidet über Ausnahmen; wir halten alles in Bewegung, damit nichts vergessen geht.",
+              "showCopy": true
             },
             {
               "label": "Reporting & Analysen",
-              "showCopy": true,
               "problem": "Jemand verliert jede Periode Stunden damit, dieselben Zahlen in einen Bericht zu bringen — und Probleme in den Zahlen fallen oft zu spät auf.",
-              "handled": "Wir sammeln die Zahlen, stellen Ihren Standardbericht zusammen und prüfen ihn, bevor Sie einen Entwurf erhalten — und zwischen den Berichten behalten wir die Zahlen im Blick und melden, wenn etwas eine für Sie wichtige Grenze überschreitet. Die Zahlen zu deuten und daraus Entscheidungen abzuleiten, bleibt bei Ihnen; wir bringen nur den Bericht auf Ihren Tisch und die Warnung rechtzeitig zu Ihnen."
+              "handled": "Wir sammeln die Zahlen, stellen Ihren Standardbericht zusammen und prüfen ihn, bevor Sie einen Entwurf erhalten — und zwischen den Berichten behalten wir die Zahlen im Blick und melden, wenn etwas eine für Sie wichtige Grenze überschreitet. Die Zahlen zu deuten und daraus Entscheidungen abzuleiten, bleibt bei Ihnen; wir bringen nur den Bericht auf Ihren Tisch und die Warnung rechtzeitig zu Ihnen.",
+              "showCopy": true
             },
             {
               "label": "Personal & Recruiting",
-              "showCopy": true,
               "problem": "Eine Stellenanzeige flutet das Postfach, und Bewerbungen von Hand zu sichten und Gespräche zu koordinieren ist langsam — gute Kandidatinnen springen ab.",
-              "handled": "Wir bestätigen jede Bewerbung, prüfen sie gegen Ihre Muss-Kriterien und schlagen für die starken Gesprächstermine vor oder entwerfen für die übrigen eine höfliche Absage — und behalten den Stand aller im Blick. Die Auswahl der engeren Runde, die Gespräche und die Einstellungsentscheidung liegen ganz bei Ihnen — wir übernehmen die Administration darum herum, nie die Wahl, wen Sie einstellen."
+              "handled": "Wir bestätigen jede Bewerbung, prüfen sie gegen Ihre Muss-Kriterien und schlagen für die starken Gesprächstermine vor oder entwerfen für die übrigen eine höfliche Absage — und behalten den Stand aller im Blick. Die Auswahl der engeren Runde, die Gespräche und die Einstellungsentscheidung liegen ganz bei Ihnen — wir übernehmen die Administration darum herum, nie die Wahl, wen Sie einstellen.",
+              "showCopy": true
             },
             {
               "label": "Qualität & Prozessüberwachung",
-              "showCopy": true,
               "problem": "Eine Qualitäts- oder Verbesserungsinitiative braucht stetige Messung, doch die Daten werden von Hand erfasst und Probleme zeigen sich spät.",
-              "handled": "Wir nehmen Ihnen die laufende Messung ab — erfassen die Daten regelmässig, gleichen sie mit Ihren festgelegten Grenzwerten ab und melden Abweichungen samt Kontext an die richtige Person. Das Problem zu definieren, die Ursache zu finden und über Änderungen zu entscheiden, bleibt bei Ihnen und Ihrem Team — wir liefern die stetige Messung, nicht das Verbesserungsprogramm selbst."
+              "handled": "Wir nehmen Ihnen die laufende Messung ab — erfassen die Daten regelmässig, gleichen sie mit Ihren festgelegten Grenzwerten ab und melden Abweichungen samt Kontext an die richtige Person. Das Problem zu definieren, die Ursache zu finden und über Änderungen zu entscheiden, bleibt bei Ihnen und Ihrem Team — wir liefern die stetige Messung, nicht das Verbesserungsprogramm selbst.",
+              "showCopy": true
             },
             {
               "label": "Wissen & SOPs",
-              "showCopy": true,
               "problem": "Mitarbeitende fragen immer wieder «Wie machen wir X?», und die Antworten stecken in Köpfen oder verstreuten Dokumenten.",
-              "handled": "Wir durchsuchen das bereits Dokumentierte, entwerfen eine Antwort aus der Quelle und entwerfen, wo eine Lücke besteht, einen Ausgangspunkt für eine neue Arbeitsanweisung mit Hinweis an die zuständige Person. Sie entscheiden, was korrekt und verbindlich ist; wir halten das gemeinsame Wissen auffindbar und aktuell, doch das massgebliche Wort geben stets Sie frei."
+              "handled": "Wir durchsuchen das bereits Dokumentierte, entwerfen eine Antwort aus der Quelle und entwerfen, wo eine Lücke besteht, einen Ausgangspunkt für eine neue Arbeitsanweisung mit Hinweis an die zuständige Person. Sie entscheiden, was korrekt und verbindlich ist; wir halten das gemeinsame Wissen auffindbar und aktuell, doch das massgebliche Wort geben stets Sie frei.",
+              "showCopy": true
             }
           ]
         }
       ],
-      "enabled": true,
-      "_template": "section",
       "showGroupIntros": true,
-      "showItemCopy": true
+      "showItemCopy": true,
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "Was bei Ihnen bleibt",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Ein Mensch behält die Kontrolle | Wir automatisieren den wiederkehrenden Teil | ..",
+      "subTitle": "Ein Mensch behält die Kontrolle | Wir automatisieren den wiederkehrenden Teil",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Wir übernehmen den wiederkehrenden Teil | — lesen, sortieren, entwerfen, ablegen | . | Jedes Ergebnis wird zur Freigabe für Sie vorbereitet | . | Nichts wird von allein gesendet, bezahlt oder eingereicht | .. | Die Ermessensentscheidungen bleiben bei Ihnen | die unklaren Fälle, die Entscheidungen, die letzte Freigabe | . | Wir ersetzen weder Ihr Urteil noch Ihre Berater oder Ihre Systeme | . | Und wir sagen immer offen | was besser bei Ihnen bleibt | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "section"
     },
@@ -198,12 +219,19 @@
       "title": "Einfach starten, wachsen",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Beginnen Sie mit dem einen Prozess | der Sie Stunden kostet | ..",
+      "subTitle": "Beginnen Sie mit dem einen Prozess | der Sie Stunden kostet",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Erst zum Laufen bringen, damit er sich rechnet | dann darauf aufbauen | . | Jeder Schritt ist klein, erprobt | und wird von Ihnen freigegeben, bevor er live geht | .. | Weil jede Automatisierung dieselbe Form hat | fügen sie sich beim Wachsen zusammen | statt zum Wirrwarr zu werden | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "section"
     },
@@ -211,12 +239,19 @@
       "title": "Wie es funktioniert",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Phasenbasierte Umsetzung. | ...",
+      "subTitle": "Phasenbasierte Umsetzung.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Schriftliche Freigabe | bei jedem Schritt. | . | Nichts geht live | ohne Ihre Zustimmung. | . | Wir beginnen mit dem einen Prozess, | der Sie Stunden kostet. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "section"
     },
@@ -233,7 +268,7 @@
       "title": "Unser | Prozess",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "So wird Ihr Prozess umgesetzt. | Sechs Phasen. Sie geben jede einzeln frei. | ...",
+      "subTitle": "So wird Ihr Prozess umgesetzt. | Sechs Phasen. Sie geben jede einzeln frei.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "orientation": "vertical",
@@ -266,6 +301,14 @@
       "content": "",
       "fontSize": "text-[13px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldProcess": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "processFlow"
     },
@@ -328,12 +371,19 @@
       "title": "Mit wem Sie es zu tun haben",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Zwanzig Jahre Prozesse gebaut und betrieben — | Verfahrenstechnik, Projektleitung. | Heute KI-gestützte Automatisierung. | ...",
-      "subTitleFontSize": "text-[11px]",
+      "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Zwanzig Jahre Prozesse gebaut und betrieben — | Verfahrenstechnik, Projektleitung. | Heute KI-gestützte Automatisierung.",
+      "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-thin",
       "content": "Kein Account Manager. | Wer es baut, geht auch ans Telefon. | . | Ihre Daten bleiben in Ihren Systemen. | Wir arbeiten neben Ihrer IT — wir ersetzen sie nicht. | . | Sie können auf Ende jedes Monats kündigen. | Keine Bindung. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
       "email": "info@vortexdeep.ch",
       "phone": "",
       "enabled": true,

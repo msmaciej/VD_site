@@ -1,0 +1,68 @@
+---
+// src/components/Fold.astro
+// A single reusable fold: a breathing-dot cue that reveals its slotted content
+// on click. Used for per-section body folds and processFlow step folds. It is
+// deliberately NOT a <details> element — for the same reason the accordion in
+// SitePage isn't: the browser-default disclosure triangle and animation are
+// foreign to this design. The affordance is the site's own dot motif.
+//
+// All visual styling lives in SitePage's global <style> block (.vd-fold /
+// .vd-cue / .vd-cue-dot / .vd-cue-label) and the click wiring lives in
+// SitePage's <script> ([data-vd-fold]), so this component only lays out the
+// markup — it invents no parallel styling or behaviour.
+//
+// cueStyle:
+//   'dot'       → one breathing dot (the zen default)
+//   'dots'      → a trio of breathing dots (a slightly more explicit nudge)
+//   'dot-label' → a dot + a short word (the most explicit; for entry sections)
+interface Props {
+  id:            string;   // unique id, wired to aria-controls + the body element
+  cueStyle?:     string;   // 'dot' | 'dots' | 'dot-label'
+  cueLabel?:     string;   // word shown when folded (cueStyle === 'dot-label')
+  cueLabelOpen?: string;   // word shown when unfolded (swaps in on open)
+  ariaClosed?:   string;   // accessible name for the button while folded
+  ariaOpen?:     string;   // accessible name while unfolded
+  color?:        string;   // inline colour (kept theme-reactive by the caller)
+}
+const {
+  id,
+  cueStyle     = 'dot',
+  cueLabel     = 'More',
+  cueLabelOpen = 'Less',
+  ariaClosed   = 'Show more',
+  ariaOpen     = 'Show less',
+  color,
+} = Astro.props;
+
+const dotCount  = cueStyle === 'dots' ? 3 : 1;
+const showLabel = cueStyle === 'dot-label';
+---
+<div class="vd-fold" data-vd-fold data-open="false">
+  <button
+    type="button"
+    class="vd-cue"
+    data-vd-fold-cue
+    aria-expanded="false"
+    aria-controls={id}
+    aria-label={ariaClosed}
+    data-aria-closed={ariaClosed}
+    data-aria-open={ariaOpen}
+    style={color ? `color: ${color};` : ''}
+  >
+    <span class="vd-cue-dots" aria-hidden="true">
+      {Array.from({ length: dotCount }).map(() => <span class="vd-cue-dot"></span>)}
+    </span>
+    {showLabel && (
+      <span class="vd-cue-label">
+        <span class="vd-cue-label-closed">{cueLabel}</span>
+        <span class="vd-cue-label-open">{cueLabelOpen}</span>
+      </span>
+    )}
+  </button>
+
+  <div class="vd-fold-body" id={id} data-vd-fold-body>
+    <div class="vd-fold-inner">
+      <slot />
+    </div>
+  </div>
+</div>

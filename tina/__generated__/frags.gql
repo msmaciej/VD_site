@@ -15,6 +15,13 @@ fragment PageParts on Page {
       bodyFont
       fontSize
       fontWeight
+      showTitle
+      showSubtitle
+      showBody
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       groups {
         __typename
         label
@@ -69,6 +76,14 @@ fragment PageParts on Page {
       fontWeight
       ctaLabel
       ctaUrl
+      showTitle
+      showSubtitle
+      showBody
+      foldProcess
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       enabled
     }
     ... on PageBlocksCaseStudy {
@@ -122,6 +137,13 @@ fragment Page_deParts on Page_de {
       bodyFont
       fontSize
       fontWeight
+      showTitle
+      showSubtitle
+      showBody
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       groups {
         __typename
         label
@@ -176,6 +198,14 @@ fragment Page_deParts on Page_de {
       fontWeight
       ctaLabel
       ctaUrl
+      showTitle
+      showSubtitle
+      showBody
+      foldProcess
+      foldBody
+      cueStyle
+      cueLabel
+      cueLabelOpen
       enabled
     }
     ... on Page_deBlocksCaseStudy {

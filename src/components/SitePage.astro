@@ -5,6 +5,7 @@
 
 import Layout from '../layouts/Layout.astro';
 import ArtCard from './ArtCard.astro';
+import Fold from './Fold.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
@@ -84,6 +85,15 @@ const metaTitle = lang === 'de'
 const metaDescription = lang === 'de'
   ? (settings.metaDescription_de || settings.metaDescription || 'KI-Automatisierung für KMU in Zürich.')
   : (settings.metaDescription    || 'VortexDeep helps small businesses adopt practical AI automation. Based in Zürich, Switzerland.');
+
+// ── Fold cue defaults (lang-aware) ────────────────────────────────────────────
+// The visible word on a 'dot-label' cue defaults to a friendly "More"/"Mehr"
+// when an editor hasn't typed one; the accessible names come from i18n so a
+// dot-only cue still announces itself to screen readers on both language routes.
+const foldMoreDefault = lang === 'de' ? 'Mehr' : 'More';
+const foldLessDefault = lang === 'de' ? 'Weniger' : 'Less';
+const foldAriaClosed  = t.foldMore;
+const foldAriaOpen    = t.foldLess;
 
 // ── Lang-aware nav links (label_de + /de prefix on URLs) ─────────────────────
 const homeUrl = lang === 'de' ? '/de/' : '/';
@@ -524,7 +534,11 @@ const contentGroups = (text: string) => {
           screen, so if the accordion grows, the screen re-centres and the title
           and closing line visibly lurch. min-height freezes the composition: the
           dots and labels stay exactly where they are, and only the sub-areas move. */
-    .vd-acc { min-height: 264px; }
+    .vd-acc { min-height: 216px; } /* was 264px — reserved space so the body below
+                                      the accordion doesn't jump when you switch
+                                      groups. Trimmed to tighten the at-rest gap;
+                                      raise it back toward 264 if a tall open group
+                                      starts nudging the closing line. */
     .vd-acc-item { padding: 3px 0; }
     .vd-acc-head {
       display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -620,6 +634,73 @@ const contentGroups = (text: string) => {
     }
     @media (prefers-reduced-motion: reduce) {
       .vd-acc-body { transition: none; }
+    }
+
+    /* ── Per-section fold + breathing cue ─────────────────────────────────────
+       An opt-in fold for a section's body (or a processFlow's steps). At rest
+       the content is clipped to nothing behind a small cue; a click unfolds it.
+       Reuses the same 0fr→1fr grid clip as the accordion above (see the three
+       gotchas documented there) so nothing paints outside the collapsed row.
+
+       The cue is the site's own dot motif, never a chevron or plus sign. It
+       BREATHES (a slow scale pulse) rather than sitting still, because a fold
+       nobody notices is just hidden content — the motion is the discoverability.
+       Brightness is deliberately kept OFF the breathing animation and on plain
+       opacity instead, so hover and the open state can brighten the dot while it
+       keeps breathing: rest 0.3 → hover 0.72 → open 0.9. Being a real <button>,
+       it works on touch with no reliance on hover. */
+    .vd-cue {
+      display: inline-flex; align-items: center; justify-content: center; gap: 11px;
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      padding: 10px 8px; margin: 6px auto 0;
+    }
+    .vd-cue-dots { display: inline-flex; align-items: center; gap: 7px; }
+    .vd-cue-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.3;
+      transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+      animation: vdCueBreath 3s ease-in-out infinite;
+    }
+    /* A gentle left-to-right phase for the trio, echoing the connector relay —
+       still the same single breathing motion, just handed along the row. */
+    .vd-cue-dots .vd-cue-dot:nth-child(2) { animation-delay: 0.4s; }
+    .vd-cue-dots .vd-cue-dot:nth-child(3) { animation-delay: 0.8s; }
+    .vd-cue-label {
+      text-transform: uppercase; letter-spacing: 0.22em; font-size: 11px;
+      opacity: 0.5; transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    /* The visible word swaps closed→open (More → Less), CSS-driven so there's
+       no flash before JS runs. The JS still swaps the hidden aria-label. */
+    .vd-cue-label-open { display: none; }
+    [data-vd-fold][data-open="true"] .vd-cue-label-closed { display: none; }
+    [data-vd-fold][data-open="true"] .vd-cue-label-open   { display: inline; }
+    .vd-cue:hover .vd-cue-dot   { opacity: 0.72; }
+    .vd-cue:hover .vd-cue-label { opacity: 0.85; }
+    /* Open state: hold + brighten, and settle the breath so the cue reads as
+       "opened" rather than still inviting — mirrors the accordion dot. */
+    [data-vd-fold][data-open="true"] .vd-cue-dot {
+      opacity: 0.9; animation-play-state: paused;
+    }
+    [data-vd-fold][data-open="true"] .vd-cue-label { opacity: 0.95; }
+
+    @keyframes vdCueBreath {
+      0%, 100% { transform: scale(1);    }
+      50%      { transform: scale(1.42); }
+    }
+
+    .vd-fold-body {
+      display: grid; grid-template-rows: 0fr; overflow: hidden; opacity: 0;
+      transition: grid-template-rows 0.55s cubic-bezier(0.4,0,0.2,1),
+                  opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-vd-fold][data-open="true"] .vd-fold-body { grid-template-rows: 1fr; opacity: 1; }
+    .vd-fold-inner { min-height: 0; overflow: hidden; padding-top: 14px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* No breath and no slide — but keep the cue clearly visible (a touch
+         brighter, since motion is what was carrying discoverability). */
+      .vd-cue-dot { animation: none; opacity: 0.5; }
+      .vd-fold-body { transition: opacity 0.3s ease; }
     }
 
     /* ── Inline CTA ── */
@@ -899,8 +980,19 @@ const contentGroups = (text: string) => {
     </div>
 
     <!-- SCREENS 2…N: Content sections -->
-    {pageData.map((block: any) => {
+    {pageData.map((block: any, blockIdx: number) => {
       if (!block.enabled) return null;
+
+      // ── Per-section visibility & folding (section + processFlow) ──────────
+      // Three independent "show" switches, default ON (undefined on existing
+      // content still renders, exactly as before). Folds are opt-in (default
+      // OFF) so a single-line section or the contact block never folds.
+      const showTitle    = block.showTitle    !== false;
+      const showSubtitle = block.showSubtitle !== false;
+      const showBody     = block.showBody     !== false;
+      const cueStyle     = block.cueStyle || 'dot';
+      const cueLabel     = block.cueLabel || foldMoreDefault;
+      const cueLabelOpen = block.cueLabelOpen || foldLessDefault;
 
       // ── Process Flow ──────────────────────────────────────────────────────
       if (block._template === 'processFlow') {
@@ -912,10 +1004,67 @@ const contentGroups = (text: string) => {
         const flowGap = block.connectorGap ?? defaultConnectorGap;
         const flowStepSpacing = block.stepSpacing ?? defaultStepSpacing;
         const relayDuration = (block.flowSpeed || defaultFlowSpeed) * connectorCount;
+        // processFlow already grows + top-flows via .vd-screen--flow, so a fold
+        // just decides whether the steps / explainer start hidden behind a cue.
+        const pfFoldProcess = block.foldProcess === true && (block.steps?.length > 0);
+        const pfFoldBody    = block.foldBody === true && showBody && !!block.content;
+
+        // Steps + explainer defined once, then rendered either inline (as today)
+        // or inside a fold. Two independent folds are possible on one block; in
+        // practice an editor picks one.
+        const stepsEl = (
+          <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
+            {block.steps?.map((step: any, i: number) => (
+              <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
+                <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
+                      style={`${textStyle(zenText, step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
+                  {step.label}
+                </span>
+                {i < (block.steps?.length ?? 0) - 1 && (
+                  isVertical ? (
+                    <span class="vd-connector-v" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
+                      {Array.from({ length: flowDotsN }).map((_, k) => (
+                        <span class="vd-relay-dot"
+                              style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
+                      ))}
+                    </span>
+                  ) : (
+                    <span class="vd-connector" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
+                      {Array.from({ length: flowDotsN }).map((_, k) => (
+                        <span class="vd-relay-dot"
+                              style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
+                      ))}
+                    </span>
+                  )
+                )}
+              </div>
+            ))}
+          </div>
+        );
+
+        const explainerEl = block.content ? (
+          <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
+               style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
+            {contentGroups(block.content).map((g) => (
+              g.kind === 'dots' ? (
+                <div class="vd-dots" aria-hidden="true">
+                  {Array.from({ length: g.n }).map(() => <span></span>)}
+                </div>
+              ) : (
+                <p class="mb-0">
+                  {g.lines.map((l) => (
+                    <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
+                  ))}
+                </p>
+              )
+            ))}
+          </div>
+        ) : null;
+
         return (
           <div class="vd-screen vd-reveal vd-screen--flow">
             <div class="w-full max-w-2xl text-center my-auto">
-              {block.title && (
+              {showTitle && block.title && (
                 <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
                     style={textStyle(zenText, block.titleFont)}>
                   {block.title.split('|').map((line: string) => (
@@ -926,7 +1075,7 @@ const contentGroups = (text: string) => {
               {/* Sits between the title and the drawn steps, exactly where a section's
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
-              {block.subTitle && (
+              {showSubtitle && block.subTitle && (
                 <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-10 opacity-70`}
                     style={textStyle(zenText, block.subTitleFont)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
@@ -941,55 +1090,24 @@ const contentGroups = (text: string) => {
                 </h3>
               )}
 
-              <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
-                {block.steps?.map((step: any, i: number) => (
-                  <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
-                    <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
-                          style={`${textStyle(zenText, step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
-                      {step.label}
-                    </span>
-                    {i < (block.steps?.length ?? 0) - 1 && (
-                      isVertical ? (
-                        <span class="vd-connector-v" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
-                          {Array.from({ length: flowDotsN }).map((_, k) => (
-                            <span class="vd-relay-dot"
-                                  style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
-                          ))}
-                        </span>
-                      ) : (
-                        <span class="vd-connector" style={`color: ${zenText}; gap: ${flowGap}px;`} aria-hidden="true">
-                          {Array.from({ length: flowDotsN }).map((_, k) => (
-                            <span class="vd-relay-dot"
-                                  style={`width: ${flowDotSize}px; height: ${flowDotSize}px;${animFlow ? ` animation-name: vdRelayDot_${relayUid}_${i}_${k}; animation-duration: ${relayDuration}s;` : ''}`}></span>
-                          ))}
-                        </span>
-                      )
-                    )}
-                  </div>
-                ))}
-              </div>
+              {pfFoldProcess ? (
+                <Fold id={`vd-fold-${blockIdx}-steps`} cueStyle={cueStyle} cueLabel={cueLabel} cueLabelOpen={cueLabelOpen}
+                      ariaClosed={foldAriaClosed} ariaOpen={foldAriaOpen} color={zenText}>
+                  {stepsEl}
+                </Fold>
+              ) : stepsEl}
 
               {/* Optional explainer + CTA. Lets a processFlow block do more than
                   draw steps — it can also say what the steps are for and hand the
                   visitor the door. Used by the Fit Check screen; the Our Process
                   block leaves both fields empty and renders exactly as before. */}
-              {block.content && (
-                <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
-                     style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
-                  {contentGroups(block.content).map((g) => (
-                  g.kind === 'dots' ? (
-                    <div class="vd-dots" aria-hidden="true">
-                      {Array.from({ length: g.n }).map(() => <span></span>)}
-                    </div>
-                  ) : (
-                    <p class="mb-0">
-                      {g.lines.map((l) => (
-                        <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
-                      ))}
-                    </p>
-                  )
-                ))}
-                </div>
+              {showBody && explainerEl && (
+                pfFoldBody ? (
+                  <Fold id={`vd-fold-${blockIdx}-body`} cueStyle={cueStyle} cueLabel={cueLabel} cueLabelOpen={cueLabelOpen}
+                        ariaClosed={foldAriaClosed} ariaOpen={foldAriaOpen} color={zenText}>
+                    {explainerEl}
+                  </Fold>
+                ) : explainerEl
               )}
 
               {block.ctaLabel && block.ctaUrl && (
@@ -1134,11 +1252,38 @@ const contentGroups = (text: string) => {
       }
 
       // ── Standard content section ──────────────────────────────────────────
+      // Body fold is only live when there IS a body to fold and it's shown.
+      // A foldable section borrows the proven .vd-screen--flow treatment (grow +
+      // top-flow) plus my-auto on the inner block: short (folded) → centred;
+      // tall (unfolded) → flows downward, never spilling into the panel above.
+      const foldBody = block.foldBody === true && showBody && !!block.content;
+      const foldableSection = foldBody;
+      // Body markup defined once, then rendered either inline (as today) or
+      // inside the fold — identical either way, so folding changes nothing but
+      // whether it starts hidden behind the cue.
+      const sectionBodyEl = block.content ? (
+        <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
+             style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
+          {contentGroups(block.content).map((g) => (
+            g.kind === 'dots' ? (
+              <div class="vd-dots" aria-hidden="true">
+                {Array.from({ length: g.n }).map(() => <span></span>)}
+              </div>
+            ) : (
+              <p class="mb-0">
+                {g.lines.map((l) => (
+                  <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
+                ))}
+              </p>
+            )
+          ))}
+        </div>
+      ) : null;
       return (
-        <div class={`vd-screen vd-reveal ${block.groups?.length ? 'vd-screen--groups' : ''}`}>
-          <div class="w-full max-w-2xl text-center">
+        <div class={`vd-screen vd-reveal ${block.groups?.length ? 'vd-screen--groups' : ''} ${foldableSection ? 'vd-screen--flow' : ''}`}>
+          <div class={`w-full max-w-2xl text-center ${foldableSection ? 'my-auto' : ''}`}>
 
-            {block.title && (
+            {showTitle && block.title && (
               <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-normal'} uppercase tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
                   style={textStyle(zenText, block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
@@ -1147,7 +1292,7 @@ const contentGroups = (text: string) => {
               </h2>
             )}
 
-            {block.subTitle && (
+            {showSubtitle && block.subTitle && (
               <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
                   style={textStyle(zenText, block.subTitleFont)}>
                 {contentLines(block.subTitle).map(({ line, dots }) => (
@@ -1166,7 +1311,7 @@ const contentGroups = (text: string) => {
                 marker is the same dot as everything else on the site — no chevrons,
                 no plus signs, no borders. Exactly one group is open at a time. */}
             {block.groups?.length > 0 && (
-              <div class="vd-acc max-w-md mx-auto mb-8" data-vd-acc>
+              <div class="vd-acc max-w-md mx-auto mb-6" data-vd-acc>
                 {block.groups.map((g: any, i: number) => (
                   <div class="vd-acc-item" data-vd-acc-item data-open="false">
                     <button type="button" class="vd-acc-head" data-vd-acc-head style={`color: ${zenText};`}>
@@ -1213,23 +1358,13 @@ const contentGroups = (text: string) => {
               </div>
             )}
 
-            {block.content && (
-              <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
-                   style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
-                {contentGroups(block.content).map((g) => (
-                  g.kind === 'dots' ? (
-                    <div class="vd-dots" aria-hidden="true">
-                      {Array.from({ length: g.n }).map(() => <span></span>)}
-                    </div>
-                  ) : (
-                    <p class="mb-0">
-                      {g.lines.map((l) => (
-                        <span class={`block ${animTextHover ? 'vd-hover-grow' : ''}`}>{l}</span>
-                      ))}
-                    </p>
-                  )
-                ))}
-              </div>
+            {showBody && sectionBodyEl && (
+              foldBody ? (
+                <Fold id={`vd-fold-${blockIdx}`} cueStyle={cueStyle} cueLabel={cueLabel} cueLabelOpen={cueLabelOpen}
+                      ariaClosed={foldAriaClosed} ariaOpen={foldAriaOpen} color={zenText}>
+                  {sectionBodyEl}
+                </Fold>
+              ) : sectionBodyEl
             )}
 
             {(block.email || block.phone) && (
@@ -1312,6 +1447,30 @@ const contentGroups = (text: string) => {
           sub.setAttribute('data-open', wasOpen ? 'false' : 'true');
         });
       });
+    });
+  });
+
+  // Per-section folds: the breathing cue toggles its slotted content open/closed.
+  // Same interaction language as the accordion above — clicking anchors the
+  // section to the top so the body unfolds DOWNWARD rather than pushing the
+  // title up into the previous snap section; closing settles back on it.
+  document.querySelectorAll('[data-vd-fold]').forEach((fold) => {
+    const cue = fold.querySelector('[data-vd-fold-cue]');
+    const section = fold.closest('.vd-screen');
+    cue?.addEventListener('click', () => {
+      const willOpen = fold.getAttribute('data-open') !== 'true';
+      fold.setAttribute('data-open', willOpen ? 'true' : 'false');
+      cue.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      const nextAria = willOpen
+        ? cue.getAttribute('data-aria-open')
+        : cue.getAttribute('data-aria-closed');
+      if (nextAria) cue.setAttribute('aria-label', nextAria);
+      if (section) {
+        setTimeout(
+          () => section.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+          willOpen ? 60 : 0,
+        );
+      }
     });
   });
 

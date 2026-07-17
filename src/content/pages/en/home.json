@@ -4,12 +4,19 @@
       "title": "What We Do",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "We turn repetitive operational tasks | into practical AI-assisted workflows | ..",
+      "subTitle": "We turn repetitive operational tasks | into practical AI-assisted workflows",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Built for your business | . | Managed monthly | . | Human control stays at the centre | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "showArt": false,
       "enabled": true,
       "_template": "section"
@@ -27,16 +34,24 @@
       "title": "Problems We Solve",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you | ..",
+      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Most requests cross more than one area | — an order query can mean a message, a stock check and a return at once | . | We assemble the right pieces behind the scenes | so your customer gets one smooth reply | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "groups": [
         {
           "label": "Communication & Customers",
           "intro": "Enquiries, questions, bookings and feedback — caught, sorted and drafted for reply, so nothing slips through and nothing goes out without your say-so.",
+          "showIntro": true,
           "items": [
             {
               "label": "Communication & Intake",
@@ -62,12 +77,12 @@
               "handled": "We gather it in one place, sort it by mood and topic, and draft a suitable response — a thank-you, a reply, or a note to the right person. You approve every response, and complaints that need real care go to you, not a script.",
               "showCopy": true
             }
-          ],
-          "showIntro": true
+          ]
         },
         {
           "label": "Sales & Growth",
           "intro": "From first interest to renewal — leads sorted, quotes drafted, follow-ups never forgotten — with you deciding what's sent and what's sold.",
+          "showIntro": true,
           "items": [
             {
               "label": "Lead & Sales Pipeline",
@@ -99,12 +114,12 @@
               "handled": "We keep an eye on upcoming renewals and accounts that look at-risk, and draft a timely reminder or a note to win them back, flagging the account to you. You have the retention conversation and make any commercial decisions; we just make sure the moment isn't missed.",
               "showCopy": true
             }
-          ],
-          "showIntro": true
+          ]
         },
         {
           "label": "Documents & Finance",
           "intro": "The paperwork that piles up — invoices, contracts, filings, supplier bills — read, sorted and prepared, with every payment and sign-off kept firmly in your hands.",
+          "showIntro": true,
           "items": [
             {
               "label": "Document & Data Processing",
@@ -136,12 +151,12 @@
               "handled": "We gather the transactions, assemble a draft return, run the consistency checks, and remind you well before the deadline, keeping a full record for your files. The figures are always yours to review and approve, and the formal responsibility — the tax judgement and the filing itself — stays with you and your accountant. We prepare the groundwork; we don't file on your behalf or stand in for professional advice.",
               "showCopy": true
             }
-          ],
-          "showIntro": true
+          ]
         },
         {
           "label": "Operations & Insight",
           "intro": "The behind-the-scenes work that keeps things moving — coordinating tasks, pulling reports, screening applicants, watching quality and keeping know-how written down — with the judgement and the decisions kept with your team.",
+          "showIntro": true,
           "items": [
             {
               "label": "Internal Operations",
@@ -173,25 +188,31 @@
               "handled": "We search what's already written, draft an answer from the source, and where there's a gap, draft a starting point for a new written procedure and flag it to the right owner. You decide what's accurate and official; we keep the shared know-how findable and current, but the authoritative word is always yours to approve.",
               "showCopy": true
             }
-          ],
-          "showIntro": true
+          ]
         }
       ],
-      "enabled": true,
-      "_template": "section",
       "showGroupIntros": true,
-      "showItemCopy": true
+      "showItemCopy": true,
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "What Stays With You",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "A person stays in control | We automate the repetitive slice | ..",
+      "subTitle": "A person stays in control | We automate the repetitive slice",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "We take on the repetitive part | — reading, sorting, drafting, filing | . | Every result is prepared for you to approve | . | Nothing is sent, paid, or filed on its own | .. | The judgement calls stay yours | the ambiguous cases, the decisions, the final sign-off | . | We don't replace your judgement, your advisers, or your systems | . | And we'll always be straight about | what's better left with you | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "enabled": true,
       "_template": "section"
     },
@@ -199,12 +220,19 @@
       "title": "Start Simple, Grow",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Begin with the one process | that's costing you hours | ..",
+      "subTitle": "Begin with the one process | that's costing you hours",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Get it working, earning its keep | then build from there | . | Each step is small, proven | and yours to approve before it goes live | .. | Because every automation shares the same shape | they fit together as you grow | rather than becoming a tangle | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "enabled": true,
       "_template": "section"
     },
@@ -212,12 +240,19 @@
       "title": "How It Works",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Phase-gated delivery | ...",
+      "subTitle": "Phase-gated delivery",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Written sign-off | at every step | . | Nothing goes live | without your approval | . | We start with the one process | that is costing you hours | .",
       "fontSize": "text-[17px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "enabled": true,
       "_template": "section"
     },
@@ -234,7 +269,7 @@
       "title": "Our | Process",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "This is how your process gets fixed | Six phases. You sign off on each one. | ...",
+      "subTitle": "This is how your process gets fixed | Six phases. You sign off on each one.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "orientation": "vertical",
@@ -267,6 +302,14 @@
       "content": "",
       "fontSize": "text-[13px]",
       "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldProcess": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "enabled": true,
       "_template": "processFlow"
     },
@@ -329,12 +372,19 @@
       "title": "Who You're Dealing With",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Maciek Szczech · Wald ZH · Switzerland | Twenty years of building and running processes — | process engineering, project management. | Now AI workflow automation. | ...",
-      "subTitleFontSize": "text-[11px]",
+      "subTitle": "Maciek Szczech · Wald ZH · Switzerland | Twenty years of building and running processes — | process engineering, project management. | Now AI workflow automation.",
+      "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-thin",
       "content": "No account manager. The person who builds it | is the person who answers the phone. | . | Your data stays in your systems. | We work alongside your IT — we don't replace it. | . | Stop at the end of any month. | No lock-in. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "email": "info@vortexdeep.ch",
       "phone": "",
       "enabled": true,
@@ -344,7 +394,7 @@
       "title": "The Fit Check",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Six questions | About two minutes | ...",
+      "subTitle": "Six questions | About two minutes",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "orientation": "vertical",
@@ -379,6 +429,14 @@
       "fontWeight": "font-light",
       "ctaLabel": "Start the Fit Check",
       "ctaUrl": "/check",
+      "showTitle": true,
+      "showSubtitle": true,
+      "showBody": true,
+      "foldProcess": true,
+      "foldBody": true,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
       "enabled": true,
       "_template": "processFlow"
     },
