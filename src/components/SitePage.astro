@@ -1085,7 +1085,7 @@ const contentGroups = (text: string) => {
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {showSubtitle && block.subTitle && (
-                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-6 opacity-70`}
+                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
                     style={textStyle(zenText, block.subTitleFont)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
