@@ -99,19 +99,20 @@ if (send && /honeypot[\s\S]{0,120}(http_response_code|exit\s*\()/i.test(send)) {
   warn('Check that the honeypot still only FLAGS (soft) and does not hard-block a submission.');
 }
 
-// ── EXPOSURE: internal artifacts must not be web-served, ideally not in-repo. ──
+// ── EXPOSURE: internal artifacts must not be web-served (kept under _docs/). ──
+// Identified by filename so a move (root → _docs/ → wherever) doesn't blind the
+// check. The hard rule is only that they never land in a SERVED dir (public/ or
+// dist/); their presence elsewhere in a public repo is a warning handled below.
 const internalArtifacts = [
   '_VortexDeep-fit-matrix-internal.svg',
   '_VortexDeep-fit-matrix-internal.png',
   '_VortexDeep_Personas_Canvas.md',
 ];
 for (const a of internalArtifacts) {
-  if (existsSync(P('dist', a)) || existsSync(P('dist/uploads', a)))
-    fail(`Internal artifact "${a}" is in dist/ — it would be served by the website. Remove it from public/.`);
-  if (existsSync(P('public', a)) || existsSync(P('public/uploads', a)))
-    fail(`Internal artifact "${a}" is in public/ — Astro will publish it. Move it out of public/.`);
-  if (existsSync(P(a)))
-    warn(`Internal artifact "${a}" is committed at the repo root. Not served by the site, but visible to anyone with repo access — keep it out of a public repo (git rm --cached + .gitignore).`);
+  for (const servedDir of ['public', 'public/uploads', 'dist', 'dist/uploads']) {
+    if (existsSync(P(servedDir, a)))
+      fail(`Internal artifact "${a}" is in ${servedDir}/ — it would be served by the website. Keep it under _docs/ only.`);
+  }
 }
 
 // ── SECRET: a signing key must never be committed. ──
@@ -134,9 +135,11 @@ for (const s of secretPaths) {
   }
 }
 if (gitTracked) {
+  const tracked = [...gitTracked];
   for (const a of internalArtifacts) {
-    if (gitTracked.has(a)) {
-      warn(`Internal artifact "${a}" is git-tracked — fine only if this repo is PRIVATE. If it's public, remove it or make the repo private.`);
+    const path = tracked.find((t) => t === a || t.endsWith('/' + a));
+    if (path) {
+      warn(`Internal artifact "${path}" is git-tracked — fine only if this repo is PRIVATE. If it's public, it's readable by anyone.`);
     }
   }
 }
