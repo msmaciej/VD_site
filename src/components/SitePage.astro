@@ -566,10 +566,19 @@ const contentGroups = (text: string) => {
       opacity: 0;
     }
     .vd-acc-item[data-open="true"] .vd-acc-body { grid-template-rows: 1fr; opacity: 1; }
-    .vd-acc-inner { min-height: 0; overflow: hidden; padding-top: 8px; }
+    .vd-acc-inner {
+      min-height: 0; overflow: hidden; padding-top: 8px;
+      /* Nest the open group's contents in a narrower centred column so its
+         sub-topics read as CHILDREN of the open group, visibly set in from the
+         full-width top-level rows above and below it. */
+      max-width: 22rem; margin-left: auto; margin-right: auto;
+    }
+    /* A breath of space below an open group before the next top-level group,
+       so the nested block reads as one unit rather than merging into the list. */
+    .vd-acc-item[data-open="true"] { padding-bottom: 14px; }
     .vd-acc-sub {
-      display: block; text-transform: uppercase; letter-spacing: 0.14em;
-      opacity: 0.42; padding: 3px 0;
+      display: block; text-transform: uppercase; letter-spacing: 0.15em;
+      opacity: 0.4; padding: 1px 0; font-size: 12px;
     }
     /* ── Nested fold-out (Problems We Solve): group -> sub-topic names ->
        one description at a time. Keeps each open state small so the panel
@@ -590,13 +599,13 @@ const contentGroups = (text: string) => {
     .vd-acc-sub-item { border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent); }
     .vd-acc-sub-item--static { padding: 11px 0; }
     .vd-acc-sub-head {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
       width: 100%; background: none; border: none; cursor: pointer;
-      font-family: inherit; padding: 11px 0;
+      font-family: inherit; padding: 6px 0; /* row-to-row distance lever; ~5–8px is the sweet spot */
     }
     .vd-acc-sub-dot {
-      width: 4px; height: 4px; border-radius: 50%; background: currentColor;
-      opacity: 0.25; transition: opacity 0.35s; flex-shrink: 0;
+      width: 3px; height: 3px; border-radius: 50%; background: currentColor;
+      opacity: 0.22; transition: opacity 0.35s; flex-shrink: 0;
     }
     .vd-acc-sub-head:hover .vd-acc-sub { opacity: 0.82; }
     .vd-acc-sub-item[data-open="true"] .vd-acc-sub-dot { opacity: 0.85; }
@@ -1076,7 +1085,7 @@ const contentGroups = (text: string) => {
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {showSubtitle && block.subTitle && (
-                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-10 opacity-70`}
+                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-6 opacity-70`}
                     style={textStyle(zenText, block.subTitleFont)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
