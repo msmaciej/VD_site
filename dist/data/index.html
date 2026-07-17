@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en" data-theme="deep" data-auto-theme="deep" data-theme-toggle="false"> <head><meta charset="UTF-8"><!-- FIX 2: initial-scale=1 prevents mobile browsers zooming in/out on load --><meta name="viewport" content="width=device-width, initial-scale=1"><!-- FIX 3: browser chrome bar matches page background colour on iOS/Android --><meta name="theme-color" content="#0c0f14"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- ── SEO: Core ── --><title>How we handle your data — VortexDeep</title><meta name="description" content=""><link rel="canonical" href="https://vortexdeep.ch/data/"><meta name="robots" content="index, follow"><!-- ── SEO: hreflang (bilingual) ── --><link rel="alternate" hreflang="en" href="https://vortexdeep.ch/data"><link rel="alternate" hreflang="de" href="https://vortexdeep.ch/de/data/"><link rel="alternate" hreflang="x-default" href="https://vortexdeep.ch/data"><!-- ── SEO: Open Graph ── --><meta property="og:type" content="website"><meta property="og:url" content="https://vortexdeep.ch/data/"><meta property="og:title" content="How we handle your data — VortexDeep"><meta property="og:description" content=""><meta property="og:image" content="https://vortexdeep.ch/og-image.png"><meta property="og:locale" content="en_GB"><meta property="og:site_name" content="VortexDeep"><!-- ── SEO: Twitter / X Card ── --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How we handle your data — VortexDeep"><meta name="twitter:description" content=""><meta name="twitter:image" content="https://vortexdeep.ch/og-image.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!-- The full family set, not just Inter. /check sets font-family from
+         settings.fontPreset but had no stylesheet for it, so it was silently
+         falling back to the OS monospace font and looking nothing like the
+         homepage. --><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap" rel="stylesheet"><!-- ── Theme toggle: FOUC-prevention ──────────────────────────────────────
+         Must run before first paint. Reads any saved visitor choice and, if
+         present, applies it immediately — otherwise the page would flash the
+         admin's "Current" theme for a frame before JS caught up. Only ever
+         reads/writes when the admin has the toggle switched on; if a visitor
+         saved a forced choice on an earlier visit and the admin has since
+         turned the toggle off, that stored choice is simply never read here,
+         so the page shows "Current" as if the visitor had never toggled. --><script>(function(){const toggleEnabled = false;
+
+      if (toggleEnabled) {
+        try {
+          var vdSaved = localStorage.getItem('vd-theme-choice');
+          if (vdSaved === 'light' || vdSaved === 'dark') {
+            document.documentElement.setAttribute('data-theme', vdSaved);
+            document.documentElement.setAttribute('data-theme-forced', vdSaved);
+          }
+        } catch (e) {}
+      }
+    })();</script><!-- ── Theme toggle: click handling ─────────────────────────────────────
+         One button (data-vd-theme-cycle) steps through a fixed 3-position
+         cycle each click: Current (Auto) → forced state opposite Current's
+         own family → forced state matching Current's family → back to
+         Auto. E.g. Current = deep (dark family): Auto → forced-light →
+         forced-dark → Auto. Delegated on document so it works regardless
+         of which page template renders the button. Dispatches
+         vd-theme-change so live-rendered elements (e.g. the particle
+         background canvas) can react without a reload. --><script>
+      function vdNextThemeState(current, family) {
+        // current: null (Auto) | 'light' | 'dark'  — family: 'light' | 'dark'
+        var opposite = family === 'light' ? 'dark' : 'light';
+        if (current === null) return opposite;
+        if (current === opposite) return family;
+        return null;
+      }
+      function vdApplyTheme(mode) {
+        var html = document.documentElement;
+        if (mode) {
+          html.setAttribute('data-theme', mode);
+          html.setAttribute('data-theme-forced', mode);
+          try { localStorage.setItem('vd-theme-choice', mode); } catch (e) {}
+        } else {
+          html.setAttribute('data-theme', html.dataset.autoTheme || 'light');
+          html.removeAttribute('data-theme-forced');
+          try { localStorage.removeItem('vd-theme-choice'); } catch (e) {}
+        }
+        window.dispatchEvent(new CustomEvent('vd-theme-change', { detail: { mode: mode || 'auto' } }));
+      }
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-vd-theme-cycle]');
+        if (!btn) return;
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme-forced'); // null | 'light' | 'dark'
+        var family = html.dataset.autoFamily || 'light';
+        vdApplyTheme(vdNextThemeState(current, family));
+      });
+    </script><link rel="stylesheet" href="/_astro/check.DywKEGfH.css">
+<style>:root[data-theme=light]{--zen-bg:#ffffff;--zen-text:#0a0a0a;--zen-muted:#737373;--zen-accent:#000000}:root[data-theme=dark]{--zen-bg:#000000;--zen-text:#f5f5f5;--zen-muted:#a3a3a3;--zen-accent:#ffffff}:root[data-theme=paper]{--zen-bg:#F9F7F2;--zen-text:#0a0a0a;--zen-muted:#737373;--zen-accent:#0a0a0a}:root[data-theme=stone]{--zen-bg:#f0ede8;--zen-text:#2c2a28;--zen-muted:#7a6e65;--zen-accent:#7a6e65}:root[data-theme=mist]{--zen-bg:#eef0f2;--zen-text:#1e2428;--zen-muted:#5a7080;--zen-accent:#5a7080}:root[data-theme=ink]{--zen-bg:#141414;--zen-text:#e8e4de;--zen-muted:#8c7355;--zen-accent:#8c7355}:root[data-theme=sand]{--zen-bg:#f5f0e8;--zen-text:#2a2520;--zen-muted:#9a8060;--zen-accent:#9a8060}:root[data-theme=deep]{--zen-bg:#0c0f14;--zen-text:#e0e2e8;--zen-muted:#6e7a8a;--zen-accent:#8aa4c0}body{background-color:var(--zen-bg);color:var(--zen-text);font-family:Inter,sans-serif;transition:background-color .7s ease,color .7s ease;margin:0;-webkit-font-smoothing:antialiased}*{-webkit-user-select:none;-moz-user-select:none;user-select:none}input,textarea,[contenteditable]{-webkit-user-select:text;-moz-user-select:text;user-select:text}img{-webkit-user-drag:none;pointer-events:none}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--zen-bg)}::-webkit-scrollbar-thumb{background:var(--zen-muted);border-radius:10px}@media (prefers-reduced-motion: reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.vd-doc[data-astro-cid-p7ibfero]{max-width:640px;width:100%;margin:0 auto;line-height:1.75}.vd-eyebrow[data-astro-cid-p7ibfero]{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--zen-accent, var(--zen-muted));text-align:center;margin:0 0 14px}.vd-h1[data-astro-cid-p7ibfero]{font-size:20px;font-weight:600;letter-spacing:.01em;text-align:center;margin:0 0 16px;line-height:1.4}.vd-lede[data-astro-cid-p7ibfero]{font-size:16px;text-align:center;opacity:.92;margin:0 auto 52px;max-width:540px}.vd-doc[data-astro-cid-p7ibfero] section[data-astro-cid-p7ibfero]{border-top:1px solid color-mix(in srgb,var(--zen-muted) 22%,transparent);padding-top:24px;margin:0 0 36px}.vd-h2[data-astro-cid-p7ibfero]{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--zen-accent, var(--zen-muted));margin:0 0 14px}.vd-doc[data-astro-cid-p7ibfero] p[data-astro-cid-p7ibfero]{font-size:15px;margin:0 0 12px}.vd-muted[data-astro-cid-p7ibfero]{color:var(--zen-muted)}.vd-list[data-astro-cid-p7ibfero]{list-style:none;padding:0;margin:8px 0 0}.vd-list[data-astro-cid-p7ibfero] li[data-astro-cid-p7ibfero]{font-size:15px;padding:7px 0 7px 20px;position:relative}.vd-list[data-astro-cid-p7ibfero] li[data-astro-cid-p7ibfero]:before{content:"";position:absolute;left:0;top:14px;width:4px;height:4px;border-radius:50%;background:var(--zen-accent, var(--zen-muted))}.vd-note[data-astro-cid-p7ibfero]{font-size:12px;color:var(--zen-muted);border:1px dashed color-mix(in srgb,var(--zen-muted) 40%,transparent);border-radius:10px;padding:14px 16px;margin-top:10px}.vd-contact[data-astro-cid-p7ibfero]{text-align:center;margin-top:52px}.vd-soft-link[data-astro-cid-p7ibfero]{color:var(--zen-accent, var(--zen-text));text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--zen-muted) 50%,transparent);padding-bottom:2px}.vd-soft-link[data-astro-cid-p7ibfero]:hover{opacity:.8}.vd-fixed-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:center}.vd-fixed-header-inner{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2rem)}.vd-fixed-footer{position:fixed;bottom:0;left:0;right:0;padding-bottom:env(safe-area-inset-bottom,0px);z-index:50;display:flex;align-items:center;justify-content:center;gap:1.2rem}.vd-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid currentColor;font-size:8px;font-weight:600;letter-spacing:.03em;text-transform:lowercase;text-decoration:none;border-radius:3px;opacity:.35;transition:opacity .25s ease}.vd-icon:hover{opacity:.9}.vd-icon.round{border-radius:50%}
+</style></head> <body>   <header class="vd-fixed-header" style="background-color: var(--zen-bg); color: var(--zen-text); height: 52px;" data-astro-cid-p7ibfero> <div class="vd-fixed-header-inner" style="max-width: 680px;" data-astro-cid-p7ibfero> <a href="/" class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity" style="text-decoration:none; color:inherit;" data-astro-cid-p7ibfero> <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="color: var(--zen-text);" class="w-5 h-5 flex-shrink-0" data-astro-cid-p7ibfero> <polygon points="100,22 168,61 168,139 100,178 32,139 32,61" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" data-astro-cid-p7ibfero></polygon> <circle cx="100" cy="22" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <circle cx="168" cy="61" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <circle cx="168" cy="139" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <circle cx="100" cy="178" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <circle cx="32" cy="139" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <circle cx="32" cy="61" r="5" fill="currentColor" data-astro-cid-p7ibfero></circle> <polyline points="56,76 78,122 100,76" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="miter" data-astro-cid-p7ibfero></polyline> <line x1="104" y1="76" x2="104" y2="122" stroke="currentColor" stroke-width="6" stroke-linecap="round" data-astro-cid-p7ibfero></line> <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" data-astro-cid-p7ibfero></path> </svg> <span class="text-[10px] uppercase tracking-[0.4em]" style="color: var(--zen-text); font-family: 'IBM Plex Mono', monospace;" data-astro-cid-p7ibfero> VortexDeep </span> </a> <nav class="flex gap-6 items-center" style="color: var(--zen-text);" data-astro-cid-p7ibfero> <a href="/check" class="text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity" style="color: var(--zen-text); font-family: 'IBM Plex Mono', monospace;" data-astro-cid-p7ibfero> Fit Check </a> <div class="flex items-center gap-[0.6rem]" aria-label="Language switcher"> <a href="/data" aria-current="page" class="text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity opacity-80" style="color: inherit;">EN</a> <span class="opacity-20 text-[9px]" aria-hidden="true">/</span> <a href="/de/data" class="text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity opacity-30 hover:opacity-70" style="color: inherit;">DE</a> </div> </nav> </div> </header> <main class="min-h-[100svh] flex flex-col items-center px-6" style="background-color: var(--zen-bg); color: var(--zen-text); font-family: 'IBM Plex Mono', monospace; padding-top: calc(52px + 32px); padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px) + 40px);" data-astro-cid-p7ibfero> <article class="vd-doc" data-astro-cid-p7ibfero> <p class="vd-eyebrow" data-astro-cid-p7ibfero>Data &amp; Privacy</p> <h1 class="vd-h1" data-astro-cid-p7ibfero>How we handle your data</h1> <p class="vd-lede" data-astro-cid-p7ibfero>Your data is yours, and we build so it stays that way — much of the work never touches your real data at all.</p> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>Sample-first by default</h2> <p data-astro-cid-p7ibfero>Most of an automation is structure — how something is read, sorted, and drafted. That part can be built and tested against samples or made-up examples, often with no real data of yours involved at all.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>Real data — only to test, only before handover</h2> <p data-astro-cid-p7ibfero>When it's time to prove the automation works end to end, we may need to use your real data. That happens in a defined, limited window before handover: used only to test, then cleared. It is never kept beyond that work, and never shared.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>Live — in your systems</h2> <p data-astro-cid-p7ibfero>Once it's running, the automation works in or alongside your own systems. We only ever touch what a given task needs.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>What we never do</h2> <ul class="vd-list" data-astro-cid-p7ibfero> <li data-astro-cid-p7ibfero>Keep your data beyond the work</li> <li data-astro-cid-p7ibfero>Share it with anyone</li> <li data-astro-cid-p7ibfero>Use it for anything other than the job you asked for</li> </ul> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>What an AI service sees</h2> <p data-astro-cid-p7ibfero>You decide what, if anything, an outside AI service is ever shown. Sensitive work — finance, legal, health — is handled with stricter limits on what leaves your environment.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>A person approves every step</h2> <p data-astro-cid-p7ibfero>Nothing is sent, paid, or filed on its own. That human step isn't only reassurance — it's also what the rules below expect of automated decisions that affect people.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>The rules we work to</h2> <p data-astro-cid-p7ibfero><strong data-astro-cid-p7ibfero>revDSG</strong> — Switzerland's data-protection law, in force since September 2023. It sets how personal data must be handled: used only for a clear purpose, kept secure, not kept longer than needed, and open to the person it concerns.</p> <p data-astro-cid-p7ibfero><strong data-astro-cid-p7ibfero>GDPR</strong> — the EU's equivalent. It applies when a business serves or monitors people in the EU. Because we work with clients worldwide, we build to both.</p> <p class="vd-muted" data-astro-cid-p7ibfero>Both expect a human in the loop for automated decisions that significantly affect someone — a review a person can ask for. Our "approve every step" design is that review, built in.</p> </section> <section data-astro-cid-p7ibfero> <h2 class="vd-h2" data-astro-cid-p7ibfero>Working together</h2> <p data-astro-cid-p7ibfero>When we handle data on your behalf, we sign a data-processing agreement — you as the controller, us as the processor — that puts all of this in writing. Ask us for it any time.</p> <p class="vd-note" data-astro-cid-p7ibfero>This page describes how we work; it isn't legal advice. For your own obligations, your lawyer or fiduciary is the right guide.</p> </section> <p class="vd-contact" data-astro-cid-p7ibfero><a href="mailto:info@vortexdeep.ch" class="vd-soft-link" data-astro-cid-p7ibfero>info@vortexdeep.ch</a></p> </article> </main> <footer class="vd-fixed-footer" style="background-color: var(--zen-bg); color: var(--zen-text); min-height: 56px;" data-astro-cid-p7ibfero> <a href="https://www.facebook.com/profile.php?id=61591436130103" target="_blank" rel="noopener noreferrer" class="vd-icon round" title="Facebook" style="color: var(--zen-text);" data-astro-cid-p7ibfero> f </a> <span class="opacity-20 text-[9px]" style="color: var(--zen-text);" data-astro-cid-p7ibfero>·</span> <p class="text-[9px] uppercase tracking-[0.25em] opacity-30" style="color: var(--zen-text); font-family: 'IBM Plex Mono', monospace;" data-astro-cid-p7ibfero> © 2026 VortexDeep </p> </footer>    <!-- Content & code protection --> <script>
+    (function(){
+      // Right-click disabled
+      document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+      // Keyboard shortcuts that expose source / devtools
+      document.addEventListener('keydown', function(e){
+        var c = e.ctrlKey || e.metaKey, s = e.shiftKey, k = e.key;
+        if(c && k==='u'){ e.preventDefault(); return; }  // view-source
+        if(c && k==='s'){ e.preventDefault(); return; }  // save page
+        if(c && k==='a'){ e.preventDefault(); return; }  // select all
+        if(c && k==='p'){ e.preventDefault(); return; }  // print
+        if(k==='F12'){    e.preventDefault(); return; }  // devtools
+        if(c && s && k==='I'){ e.preventDefault(); return; } // devtools
+        if(c && s && k==='J'){ e.preventDefault(); return; } // console
+        if(c && s && k==='C'){ e.preventDefault(); return; } // element picker
+      });
+
+      // Drag disabled
+      document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+      // Copy disabled outside input fields
+      document.addEventListener('copy', function(e){
+        var t = document.activeElement ? document.activeElement.tagName : '';
+        if(t !== 'INPUT' && t !== 'TEXTAREA'){ e.preventDefault(); }
+      });
+
+      // FIX 1: removed window size DevTools detection — it false-positives on
+      // every iPhone and iPad because Safari's address bar / toolbar creates an
+      // outerHeight vs innerHeight gap that exceeds the 160px threshold, causing
+      // document.body.innerHTML='' to fire and produce a blank page on mobile.
+    })();
+    </script> </body> </html>

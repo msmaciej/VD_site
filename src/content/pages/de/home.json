@@ -21,6 +21,15 @@
       "_template": "section"
     },
     {
+      "title": "Was wir tun -",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": false,
+      "_template": "section"
+    },
+    {
       "title": "Warum VortexDeep",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
@@ -37,16 +46,8 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
+      "showGroupIntros": true,
       "enabled": true,
-      "_template": "section"
-    },
-    {
-      "title": "Was wir tun -",
-      "titleFontSize": "text-[15px]",
-      "titleFontWeight": "font-bold",
-      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
-      "subTitleFontSize": "text-[13px]",
-      "enabled": false,
       "_template": "section"
     },
     {
@@ -211,7 +212,7 @@
         }
       ],
       "showGroupIntros": true,
-      "showItemCopy": true,
+      "showItemCopy": false,
       "enabled": true,
       "_template": "section"
     },
@@ -276,7 +277,7 @@
       "_template": "section"
     },
     {
-      "title": "Wie es funktioniert",
+      "title": "Was Sie erwartet",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "Phasenbasierte Umsetzung.",
@@ -305,10 +306,10 @@
       "_template": "section"
     },
     {
-      "title": "Unser | Prozess",
+      "title": "Die sechs Phasen",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "So wird Ihr Prozess umgesetzt. | Sechs Phasen. Sie geben jede einzeln frei.",
+      "subTitle": "So läuft Ihr Projekt | Sie geben jeden Schritt frei.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "orientation": "vertical",
@@ -359,6 +360,26 @@
       "subTitle": "... | Discovery | .. | Scope | .. | Lösung | .. | Umsetzung | .. | Validierung | . | Live | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": false,
+      "_template": "section"
+    },
+    {
+      "title": "In der Praxis",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "",
+      "subTitleFontSize": "text-[15px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "",
+      "fontSize": "text-[15px]",
+      "fontWeight": "font-light",
+      "showTitle": true,
+      "showSubtitle": false,
+      "showBody": false,
+      "foldBody": false,
+      "cueStyle": "dots",
+      "cueLabel": "Mehr",
+      "cueLabelOpen": "Weniger",
+      "enabled": true,
       "_template": "section"
     },
     {

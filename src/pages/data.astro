@@ -1,0 +1,185 @@
+---
+// src/pages/data.astro  →  vortexdeep.ch/data
+// Standalone "How we handle your data" page. Chrome (header/footer/theme)
+// mirrors check.astro so it matches the rest of the site; it does not route
+// through SitePage.astro, so the header/footer markup is kept in sync by hand.
+import Layout from '../layouts/Layout.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { fontFamily, socialIcon } from '../utils/siteHelpers.ts';
+
+const settingFiles = await Astro.glob('../content/settings/*.json');
+const settings = settingFiles[0]?.default || {};
+
+const currentTheme = settings.theme || 'light';
+const currentYear  = new Date().getFullYear();
+
+const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
+  ? settings.customFontName
+  : (settings.fontPreset || 'Inter');
+const activeFontFamily = fontFamily(activeFont);
+
+const headerHeight     = settings.headerHeight     || '52px';
+const footerHeight     = settings.footerHeight     || '44px';
+const headerInnerWidth = settings.headerInnerWidth || '680px';
+
+const homeUrl = '/';
+const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
+  label: link.label,
+  url:   link.url,
+}));
+const contactEmail = settings.contactEmail || 'info@vortexdeep.ch';
+---
+
+<Layout title="How we handle your data — VortexDeep" theme={currentTheme} lang="en">
+  <!-- ── FIXED HEADER — mirrors check.astro / SitePage.astro ── -->
+  <header class="vd-fixed-header"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+      <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+         style="text-decoration:none; color:inherit;">
+        {settings.showLogo && (
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+               style="color: var(--zen-text);" class="w-5 h-5 flex-shrink-0">
+            <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="100" cy="22"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="61"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="139" r="5" fill="currentColor"/>
+            <circle cx="100" cy="178" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="139" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="61"  r="5" fill="currentColor"/>
+            <polyline points="56,76 78,122 100,76"
+                      fill="none" stroke="currentColor" stroke-width="6"
+                      stroke-linecap="round" stroke-linejoin="miter"/>
+            <line x1="104" y1="76" x2="104" y2="122"
+                  stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+                  fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        )}
+        <span class="text-[10px] uppercase tracking-[0.4em]"
+              style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+          {settings.siteName || 'VortexDeep'}
+        </span>
+      </a>
+
+      <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
+        {resolvedNavLinks.map((link: any) => (
+          <a href={link.url}
+             class={`${settings.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
+             style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+            {link.label}
+          </a>
+        ))}
+        <LanguageSwitcher lang="en" slug="data" />
+      </nav>
+    </div>
+  </header>
+
+  <main class="min-h-[100svh] flex flex-col items-center px-6"
+        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 32px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 40px);`}>
+    <article class="vd-doc">
+      <p class="vd-eyebrow">Data &amp; Privacy</p>
+      <h1 class="vd-h1">How we handle your data</h1>
+      <p class="vd-lede">Your data is yours, and we build so it stays that way — much of the work never touches your real data at all.</p>
+
+      <section>
+        <h2 class="vd-h2">Sample-first by default</h2>
+        <p>Most of an automation is structure — how something is read, sorted, and drafted. That part can be built and tested against samples or made-up examples, often with no real data of yours involved at all.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">Real data — only to test, only before handover</h2>
+        <p>When it's time to prove the automation works end to end, we may need to use your real data. That happens in a defined, limited window before handover: used only to test, then cleared. It is never kept beyond that work, and never shared.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">Live — in your systems</h2>
+        <p>Once it's running, the automation works in or alongside your own systems. We only ever touch what a given task needs.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">What we never do</h2>
+        <ul class="vd-list">
+          <li>Keep your data beyond the work</li>
+          <li>Share it with anyone</li>
+          <li>Use it for anything other than the job you asked for</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">What an AI service sees</h2>
+        <p>You decide what, if anything, an outside AI service is ever shown. Sensitive work — finance, legal, health — is handled with stricter limits on what leaves your environment.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">A person approves every step</h2>
+        <p>Nothing is sent, paid, or filed on its own. That human step isn't only reassurance — it's also what the rules below expect of automated decisions that affect people.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">The rules we work to</h2>
+        <p><strong>revDSG</strong> — Switzerland's data-protection law, in force since September 2023. It sets how personal data must be handled: used only for a clear purpose, kept secure, not kept longer than needed, and open to the person it concerns.</p>
+        <p><strong>GDPR</strong> — the EU's equivalent. It applies when a business serves or monitors people in the EU. Because we work with clients worldwide, we build to both.</p>
+        <p class="vd-muted">Both expect a human in the loop for automated decisions that significantly affect someone — a review a person can ask for. Our "approve every step" design is that review, built in.</p>
+      </section>
+
+      <section>
+        <h2 class="vd-h2">Working together</h2>
+        <p>When we handle data on your behalf, we sign a data-processing agreement — you as the controller, us as the processor — that puts all of this in writing. Ask us for it any time.</p>
+        <p class="vd-note">This page describes how we work; it isn't legal advice. For your own obligations, your lawyer or fiduciary is the right guide.</p>
+      </section>
+
+      <p class="vd-contact"><a href={`mailto:${contactEmail}`} class="vd-soft-link">{contactEmail}</a></p>
+    </article>
+  </main>
+
+  <footer class="vd-fixed-footer"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
+    {settings.socialLinks?.map((social: any) => {
+      const { icon, round } = socialIcon(social.platform || '');
+      return (
+        <a href={social.url} target="_blank" rel="noopener noreferrer"
+           class={`vd-icon ${round ? 'round' : ''}`} title={social.platform}
+           style="color: var(--zen-text);">
+          {icon}
+        </a>
+      );
+    })}
+    {settings.socialLinks?.length > 0 && (
+      <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
+    )}
+    <p class={`${settings.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
+       style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+      {settings.footerText ? settings.footerText : `© ${currentYear} ${settings.siteName || 'VortexDeep'}`}
+    </p>
+  </footer>
+
+  <style is:global>
+    /* ── Fixed header / footer chrome — mirrors check.astro / SitePage.astro ── */
+    .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
+    .vd-fixed-header-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 4vw, 2rem); }
+    .vd-fixed-footer { position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: env(safe-area-inset-bottom, 0px); z-index: 50; display: flex; align-items: center; justify-content: center; gap: 1.2rem; }
+    .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
+    .vd-icon:hover { opacity: 0.9; }
+    .vd-icon.round { border-radius: 50%; }
+  </style>
+
+  <style>
+    .vd-doc { max-width: 640px; width: 100%; margin: 0 auto; line-height: 1.75; }
+    .vd-eyebrow { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; }
+    .vd-h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.01em; text-align: center; margin: 0 0 16px; line-height: 1.4; }
+    .vd-lede { font-size: 16px; text-align: center; opacity: 0.92; margin: 0 auto 52px; max-width: 540px; }
+    .vd-doc section { border-top: 1px solid color-mix(in srgb, var(--zen-muted) 22%, transparent); padding-top: 24px; margin: 0 0 36px; }
+    .vd-h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; }
+    .vd-doc p { font-size: 15px; margin: 0 0 12px; }
+    .vd-muted { color: var(--zen-muted); }
+    .vd-list { list-style: none; padding: 0; margin: 8px 0 0; }
+    .vd-list li { font-size: 15px; padding: 7px 0 7px 20px; position: relative; }
+    .vd-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--zen-accent, var(--zen-muted)); }
+    .vd-note { font-size: 12px; color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+    .vd-contact { text-align: center; margin-top: 52px; }
+    .vd-soft-link { color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; }
+    .vd-soft-link:hover { opacity: 0.8; }
+  </style>
+</Layout>

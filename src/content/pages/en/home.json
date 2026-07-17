@@ -22,6 +22,15 @@
       "_template": "section"
     },
     {
+      "title": "What We Do -",
+      "titleFontSize": "text-lg",
+      "titleFontWeight": "font-bold",
+      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
+      "subTitleFontSize": "text-[13px]",
+      "enabled": false,
+      "_template": "section"
+    },
+    {
       "title": "Why VortexDeep",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
@@ -42,16 +51,7 @@
       "_template": "section"
     },
     {
-      "title": "What We Do -",
-      "titleFontSize": "text-lg",
-      "titleFontWeight": "font-bold",
-      "subTitle": "... | Repetitive operational tasks | turned into practical | AI-assisted workflows | .. | Inquiries | documents | sales pipelines | scheduling | reporting | finance | content | operations | .. | Built for your business | Managed monthly | . | Human control | stays at the centre | .",
-      "subTitleFontSize": "text-[13px]",
-      "enabled": false,
-      "_template": "section"
-    },
-    {
-      "title": "Problems We Solve",
+      "title": "The Work We Take Off You",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you",
@@ -212,7 +212,7 @@
         }
       ],
       "showGroupIntros": true,
-      "showItemCopy": true,
+      "showItemCopy": false,
       "enabled": true,
       "_template": "section"
     },
@@ -277,7 +277,7 @@
       "_template": "section"
     },
     {
-      "title": "How It Works",
+      "title": "What to Expect",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "Phase-gated delivery",
@@ -306,10 +306,10 @@
       "_template": "section"
     },
     {
-      "title": "Our | Process",
+      "title": "The Six Phases",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "This is how your process gets fixed | Six phases. You sign off on each one.",
+      "subTitle": "This is how your project runs | you sign off on each one.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "orientation": "vertical",
@@ -360,6 +360,27 @@
       "subTitle": "... | Discovery | .. | Scope | .. | Solution | .. | Build | .. | Validation | . | Live | .",
       "subTitleFontSize": "text-[13px]",
       "enabled": false,
+      "_template": "section"
+    },
+    {
+      "title": "In Practice",
+      "titleFontSize": "text-[15px]",
+      "titleFontWeight": "font-bold",
+      "subTitle": "",
+      "subTitleFontSize": "text-[15px]",
+      "subTitleFontWeight": "font-normal",
+      "content": "",
+      "fontSize": "text-[17px]",
+      "fontWeight": "font-normal",
+      "showTitle": true,
+      "showSubtitle": false,
+      "showBody": false,
+      "foldBody": false,
+      "cueStyle": "dots",
+      "cueLabel": "More",
+      "cueLabelOpen": "Less",
+      "showArt": false,
+      "enabled": true,
       "_template": "section"
     },
     {
@@ -480,7 +501,7 @@
       "_template": "processFlow"
     },
     {
-      "title": "Contact",
+      "title": "Get In Touch",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",
