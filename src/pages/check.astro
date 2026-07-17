@@ -250,11 +250,10 @@ for (const key of categoryKeysList) {
       <!-- GATE -->
       <div id="vd-gate" class="hidden text-center">
         <p class="vd-tag">One last step</p>
-        <h2 class="vd-rh">Where should we send your result?</h2>
+        <h2 class="vd-rh">Leave your email to see your result</h2>
         <p class="vd-rb">
-          We'll email you a link. Open it and your result appears on screen —
-          that one step is how we know the address is real. If there's a fit,
-          we follow up personally. No automated sequences.
+          Your result appears right here. We keep your answers so that if there's
+          a fit, we can follow up personally — no automated sequences.
         </p>
         <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
           <input type="hidden" name="source" value="vortexdeep.ch quick check">
@@ -306,26 +305,20 @@ for (const key of categoryKeysList) {
           <button type="submit"
                   class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
                   style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
-            Send me my result
+            See my result
           </button>
         </form>
       </div>
 
-      <!-- SENT screen: shown after the gate is submitted. The result itself is
-           NOT here — it's revealed on confirm.php once the visitor opens the
-           emailed link. Nothing scored or profile-related reaches this page. -->
-      <div class="hidden text-center" id="vd-sent">
-        <p class="vd-tag">Check your inbox</p>
-        <h2 class="vd-rh">Your result is on its way.</h2>
-        <p class="vd-rb">
-          We've sent a link to <strong id="vd-sent-email" style="font-weight:600;"></strong>.
-          Open it and your result appears — the link is good for 30 minutes.
-        </p>
-        <p class="vd-rb" style="opacity:0.6;">
-          Nothing there in a minute or two? It's worth a glance in spam. Still
-          nothing — email us directly at
-          <a href={`mailto:${contactEmail}`} class="vd-soft-link" style="text-transform:none; letter-spacing:normal;">{contactEmail}</a>.
-        </p>
+      {/* RESULT — shown on-page after a valid submission. The server returns
+          only the matched result text; all scoring stays server-side and never
+          reaches this page. (JSX comment — not emitted to the built HTML.) */}
+      <div class="hidden text-center" id="vd-result">
+        <p class="vd-tag" id="vd-result-tag">Your result</p>
+        <h2 class="vd-rh" id="vd-result-tagline"></h2>
+        <p class="vd-rb" id="vd-result-description"></p>
+        <p class="vd-rb" id="vd-result-disclaimer" style="opacity:0.5;"></p>
+        <a href={`mailto:${contactEmail}`} class="vd-soft-link" id="vd-result-cta">Let's talk it through</a>
         <br><button class="vd-restart mt-8">Start over</button>
       </div>
 
@@ -598,12 +591,20 @@ for (const key of categoryKeysList) {
       try {
         const res = await fetch('/send-check.php', { method: 'POST', body: new FormData(form) });
         const data = await res.json();
-        if (data.status === 'sent') {
-          const emailVal = (form.querySelector('input[name="email"]') as HTMLInputElement)?.value || '';
-          const emailEl = document.getElementById('vd-sent-email');
-          if (emailEl) emailEl.textContent = emailVal;
+        if (data.status === 'ok') {
+          const setTxt = (id: string, txt: string) => {
+            const el = document.getElementById(id);
+            if (el && txt) el.textContent = txt;
+          };
+          setTxt('vd-result-tag', data.resultTag);
+          setTxt('vd-result-tagline', data.tagline);
+          setTxt('vd-result-description', data.description);
+          const disc = document.getElementById('vd-result-disclaimer')!;
+          if (data.disclaimer) { disc.textContent = data.disclaimer; disc.classList.remove('hidden'); }
+          else { disc.classList.add('hidden'); }
+          setTxt('vd-result-cta', data.ctaLabel);
           document.getElementById('vd-gate')!.classList.add('hidden');
-          document.getElementById('vd-sent')!.classList.remove('hidden');
+          document.getElementById('vd-result')!.classList.remove('hidden');
         } else {
           // Distinct, accurate messaging per failure reason — a mail-server
           // problem isn't the visitor's fault, and telling them their math
@@ -618,7 +619,7 @@ for (const key of categoryKeysList) {
           if (data.reason === 'mail_failed' || !data.reason) {
             fallbackEl.classList.remove('hidden');
           }
-          btn.textContent = 'Send me my result'; btn.disabled = false;
+          btn.textContent = 'See my result'; btn.disabled = false;
           const mathRes = await fetch('/get-math.php');
           const mathData = await mathRes.json();
           const mathEl = document.getElementById('vd-math-q');
@@ -629,7 +630,7 @@ for (const key of categoryKeysList) {
         errorEl.textContent = 'Something went wrong — please try again, or reach out directly below.';
         errorEl.classList.remove('hidden');
         fallbackEl.classList.remove('hidden');
-        btn.textContent = 'Send me my result'; btn.disabled = false;
+        btn.textContent = 'See my result'; btn.disabled = false;
       }
     });
 

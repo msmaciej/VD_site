@@ -1,44 +1,39 @@
 <?php
 /**
  * send-check.php
- * VortexDeep Fit Check — STAGE 1 of 2: validate + issue a confirmation link.
+ * VortexDeep Fit Check — validate, score, notify the team, reveal on-site.
  *
  * Place in /public so Astro copies it to dist/ unchanged. Works on standard PHP
- * shared hosting including HostPoint. No session store, no database.
+ * shared hosting including HostPoint. No session store beyond the math captcha,
+ * no database.
  *
- * WHAT CHANGED (verify-then-reveal / "path B"):
- * This endpoint no longer returns the result to the browser and no longer
- * emails the team. It validates the submission, then emails the VISITOR a
- * one-time, self-expiring, HMAC-signed link. The result is only revealed —
- * and the team is only notified — once the visitor clicks that link
- * (confirm.php). So the address has to be real AND theirs before anyone sees
- * a result or a lead lands in the inbox.
+ * FLOW (on-site reveal — restored):
+ * On submit this endpoint validates the submission, scores it server-side,
+ * emails the TEAM the full internal breakdown (bucket, profile, matrix, answers,
+ * AI-READY block; flagged if a soft bot signal tripped), and returns ONLY the
+ * matched profile's tagline + description (+ shared disclaimer + CTA) to the
+ * browser, which shows it immediately. So a real lead lands in the inbox on
+ * every genuine submission, and the visitor sees their result without leaving
+ * the page.
  *
- * Why this is safe to do statelessly on Hostpoint: the signed token carries the
- * (already validated) answers and contact fields. Nothing is stored here; the
- * token is the state. See fitcheck-lib.php for the signing details.
+ * LEAK RULE (unchanged): the profile NAME, the bucket, the other three profiles'
+ * copy and the scoring matrix are computed here but NEVER returned to the
+ * browser — only the matched tagline + description reach the page. See
+ * fitcheck-lib.php.
  *
- * The math captcha stays a HARD requirement precisely because this endpoint now
- * sends mail to a visitor-supplied address — the captcha is what stops it being
- * driven as a mass-mailer.
+ * The math captcha stays a HARD requirement: this endpoint emails the team and
+ * reveals a result on every call, so the captcha is what stops it being driven
+ * at scale by a bot or a competitor harvesting the four blurbs.
  *
  * SETUP — only this line needs editing:
  */
-$recipient = "info@vortexdeep.ch"; // (kept for parity; the team mail is sent from confirm.php)
+$recipient = "info@vortexdeep.ch";
 
 require_once __DIR__ . '/fitcheck-lib.php';
 
 header('Content-Type: application/json');
 
-// Signing secret must be present, or confirmation links can't be trusted.
-if (empty($GLOBALS['VD_HMAC_SECRET'])) {
-    http_response_code(500);
-    echo json_encode(["status" => "error", "reason" => "config_missing"]);
-    error_log("send-check.php: VD_HMAC_SECRET missing — cannot issue links");
-    exit;
-}
-
-// ── Bot signals: honeypot + timing (soft flags, carried into the token) ──────
+// ── Bot signals: honeypot + timing (soft flags — carried into the team email) ─
 $suspicious = false;
 $suspicious_reasons = [];
 
@@ -122,31 +117,7 @@ if ($role !== "business") {
     exit;
 }
 
-// ── Build the signed confirmation token ──────────────────────────────────────
-// Short keys keep the token compact. The result is NOT computed here — the
-// answers travel in the token and confirm.php scores them at reveal time, so
-// the profile/bucket logic runs in exactly one place per request.
-$payload = [
-    'v'   => 1,
-    'e'   => $email,
-    'n'   => $name,
-    'c'   => $company,
-    'o'   => $note,
-    'l'   => $lang,
-    'src' => $source,
-    'cat' => $category,
-    'fu'  => $followup,
-    't'   => $time,
-    'p'   => $process,
-    'g'   => $goal,
-    's'   => $suspicious ? 1 : 0,
-    'sr'  => implode('; ', $suspicious_reasons),
-];
-$token = vd_token_sign($payload, $GLOBALS['VD_HMAC_SECRET']);
-$link  = vd_base_url() . '/confirm.php?t=' . rawurlencode($token);
-
-// ── Confirmation-email copy (single-sourced from config.json via the
-//    generated include; {{LINK}} is substituted here). ─────────────────────
+// ── Load config-sourced copy (generated from config.json at build) ───────────
 $uiFile = __DIR__ . '/fitcheck-profiles.gen.php';
 if (!is_file($uiFile)) {
     http_response_code(500);
@@ -156,33 +127,52 @@ if (!is_file($uiFile)) {
 }
 require $uiFile; // defines $PROFILES, $RESULT_SHARED, $CONFIRM_UI, $FITCHECK_THEME
 
-if (!isset($CONFIRM_UI[$lang]['emailSubject'], $CONFIRM_UI[$lang]['emailBody'])) {
+// ── Score server-side (leak-safe: names/bucket/matrix stay here) ─────────────
+$profileKey = vd_calc_profile_key($time, $process);
+$bucket     = vd_calc_bucket('business', $category, $time, $process, $goal);
+
+$haveProfile = isset($PROFILES[$lang][$profileKey])
+    && is_array($PROFILES[$lang][$profileKey])
+    && !empty($PROFILES[$lang][$profileKey]['tagline'])
+    && !empty($PROFILES[$lang][$profileKey]['description']);
+
+if (!$haveProfile) {
     http_response_code(500);
     echo json_encode(["status" => "error", "reason" => "profiles_invalid"]);
-    error_log("send-check.php: CONFIRM_UI missing email copy for [$lang]");
+    error_log("send-check.php: profiles missing/incomplete for [$lang][$profileKey]");
     exit;
 }
+$profile = $PROFILES[$lang][$profileKey];
 
-$mailSubject = $CONFIRM_UI[$lang]['emailSubject'];
-// emailBody uses " | " as a line separator (same convention as the CMS content
-// fields) and {{LINK}} as the placeholder for the confirmation URL.
-$mailBody = str_replace(
-    ['{{LINK}}', ' | '],
-    [$link, "\n\n"],
-    $CONFIRM_UI[$lang]['emailBody']
-);
-
+// ── Notify the team — full internal breakdown, reply-to the visitor ──────────
+$d = [
+    'e'   => $email,   'n'  => $name,     'c' => $company, 'o' => $note,
+    'l'   => $lang,    'src'=> $source,   'cat' => $category, 'fu' => $followup,
+    't'   => $time,    'p'  => $process,  'g' => $goal,
+    's'   => $suspicious ? 1 : 0,
+    'sr'  => implode('; ', $suspicious_reasons),
+];
+list($mailSubject, $mailBody) = vd_build_internal_email($d, $profile, $bucket, $profileKey);
 $headers = "From: noreply@vortexdeep.ch\r\n"
-         . "Reply-To: info@vortexdeep.ch\r\n"
+         . "Reply-To: " . $email . "\r\n"
          . "Content-Type: text/plain; charset=UTF-8";
 
-$sent = mail($email, $mailSubject, $mailBody, $headers);
-
-if ($sent) {
-    // No result, no profile, no bucket — nothing to capture here. The browser
-    // just learns the link is on its way.
-    echo json_encode(["status" => "sent"]);
-} else {
-    http_response_code(500);
-    echo json_encode(["status" => "error", "reason" => "mail_failed"]);
+// Reveal the result even if the team mail hiccups — the visitor did their part,
+// and they still have the direct mailto CTA. A failure is logged for us.
+if (!@mail($recipient, $mailSubject, $mailBody, $headers)) {
+    error_log("send-check.php: team notification mail() failed for [$lang][$bucket] $email");
 }
+
+// ── Reveal — matched tagline + description + shared disclaimer/CTA only ───────
+$resultTag  = $CONFIRM_UI[$lang]['resultTag']    ?? ($lang === 'de' ? 'Ihr Ergebnis' : 'Your result');
+$disclaimer = $RESULT_SHARED[$lang]['disclaimer'] ?? '';
+$ctaLabel   = $RESULT_SHARED[$lang]['ctaLabel']  ?? ($lang === 'de' ? 'Lassen Sie uns kurz darüber sprechen' : "Let's talk it through");
+
+echo json_encode([
+    "status"      => "ok",
+    "resultTag"   => $resultTag,
+    "tagline"     => $profile['tagline'],
+    "description" => $profile['description'],
+    "disclaimer"  => $disclaimer,
+    "ctaLabel"    => $ctaLabel,
+]);

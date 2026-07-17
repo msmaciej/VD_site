@@ -214,7 +214,6 @@ function vd_build_internal_email($d, $profile, $bucket, $profileKey) {
     $body = "BUCKET:  $bucket\n"
           . "PROFILE: " . $profile['name'] . " [$profileKey]\n"
           . "Source: " . ($d['src'] ?? '') . "\n"
-          . "Confirmed: yes (visitor clicked the emailed verification link — address is real & theirs)\n"
           . ($suspicious ? "FLAGGED: " . $reasons . " (not blocked — verify before replying)\n" : "")
           . "\n"
 

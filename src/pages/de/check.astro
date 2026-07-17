@@ -242,12 +242,11 @@ for (const key of categoryKeysList) {
       <!-- GATE -->
       <div id="vd-gate" class="hidden text-center">
         <p class="vd-tag">Noch ein Schritt</p>
-        <h2 class="vd-rh">Wohin dürfen wir Ihr Ergebnis senden?</h2>
+        <h2 class="vd-rh">E-Mail hinterlassen, Ergebnis sehen</h2>
         <p class="vd-rb">
-          Wir senden Ihnen einen Link per E-Mail. Öffnen Sie ihn, und Ihr
-          Ergebnis erscheint – dieser eine Schritt zeigt uns, dass die Adresse
-          echt ist. Passt es, melden wir uns persönlich. Keine automatisierten
-          E-Mails.
+          Ihr Ergebnis erscheint direkt hier. Wir bewahren Ihre Antworten auf,
+          damit wir uns – falls es passt – persönlich melden können. Keine
+          automatisierten E-Mails.
         </p>
         <form id="vd-gate-form" class="flex flex-col gap-5 max-w-sm mx-auto text-left mt-8">
           <input type="hidden" name="source" value="vortexdeep.ch/de schnell-check">
@@ -299,26 +298,21 @@ for (const key of categoryKeysList) {
           <button type="submit"
                   class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
                   style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
-            Ergebnis senden
+            Ergebnis anzeigen
           </button>
         </form>
       </div>
 
-      <!-- Bestätigungs-Screen: erscheint nach dem Absenden des Gates. Das
-           Ergebnis selbst steht NICHT hier — es wird auf confirm.php angezeigt,
-           sobald der Link aus der E-Mail geöffnet wird. -->
-      <div class="hidden text-center" id="vd-sent">
-        <p class="vd-tag">Prüfen Sie Ihr Postfach</p>
-        <h2 class="vd-rh">Ihr Ergebnis ist unterwegs.</h2>
-        <p class="vd-rb">
-          Wir haben einen Link an <strong id="vd-sent-email" style="font-weight:600;"></strong> gesendet.
-          Öffnen Sie ihn, und Ihr Ergebnis erscheint – der Link gilt 30 Minuten.
-        </p>
-        <p class="vd-rb" style="opacity:0.6;">
-          Nach ein, zwei Minuten noch nichts da? Ein Blick in den Spam-Ordner
-          lohnt sich. Immer noch nichts – schreiben Sie uns direkt an
-          <a href={`mailto:${contactEmail}`} class="vd-soft-link" style="text-transform:none; letter-spacing:normal;">{contactEmail}</a>.
-        </p>
+      {/* ERGEBNIS — erscheint direkt auf der Seite nach gültigem Absenden. Der
+          Server liefert nur den passenden Ergebnistext; die Bewertung bleibt
+          serverseitig und erreicht diese Seite nie. (JSX-Kommentar — nicht im
+          gebauten HTML.) */}
+      <div class="hidden text-center" id="vd-result">
+        <p class="vd-tag" id="vd-result-tag">Ihr Ergebnis</p>
+        <h2 class="vd-rh" id="vd-result-tagline"></h2>
+        <p class="vd-rb" id="vd-result-description"></p>
+        <p class="vd-rb" id="vd-result-disclaimer" style="opacity:0.5;"></p>
+        <a href={`mailto:${contactEmail}`} class="vd-soft-link" id="vd-result-cta">Lassen Sie uns kurz darüber sprechen</a>
         <br><button class="vd-restart mt-8">Nochmals starten</button>
       </div>
 
@@ -586,12 +580,20 @@ for (const key of categoryKeysList) {
       try {
         const res = await fetch('/send-check.php', { method: 'POST', body: new FormData(form) });
         const data = await res.json();
-        if (data.status === 'sent') {
-          const emailVal = (form.querySelector('input[name="email"]') as HTMLInputElement)?.value || '';
-          const emailEl = document.getElementById('vd-sent-email');
-          if (emailEl) emailEl.textContent = emailVal;
+        if (data.status === 'ok') {
+          const setTxt = (id: string, txt: string) => {
+            const el = document.getElementById(id);
+            if (el && txt) el.textContent = txt;
+          };
+          setTxt('vd-result-tag', data.resultTag);
+          setTxt('vd-result-tagline', data.tagline);
+          setTxt('vd-result-description', data.description);
+          const disc = document.getElementById('vd-result-disclaimer')!;
+          if (data.disclaimer) { disc.textContent = data.disclaimer; disc.classList.remove('hidden'); }
+          else { disc.classList.add('hidden'); }
+          setTxt('vd-result-cta', data.ctaLabel);
           document.getElementById('vd-gate')!.classList.add('hidden');
-          document.getElementById('vd-sent')!.classList.remove('hidden');
+          document.getElementById('vd-result')!.classList.remove('hidden');
         } else {
           // Unterschiedliche, genaue Meldung je Fehlergrund — ein
           // Mailserver-Problem ist nicht die Schuld der Besucherin, und "Ihre
@@ -607,7 +609,7 @@ for (const key of categoryKeysList) {
           if (data.reason === 'mail_failed' || !data.reason) {
             fallbackEl.classList.remove('hidden');
           }
-          btn.textContent = 'Ergebnis senden'; btn.disabled = false;
+          btn.textContent = 'Ergebnis anzeigen'; btn.disabled = false;
           const mathRes = await fetch('/get-math.php');
           const mathData = await mathRes.json();
           const mathEl = document.getElementById('vd-math-q');
@@ -618,7 +620,7 @@ for (const key of categoryKeysList) {
         errorEl.textContent = 'Etwas ist schiefgelaufen – bitte nochmal versuchen, oder unten direkt schreiben.';
         errorEl.classList.remove('hidden');
         fallbackEl.classList.remove('hidden');
-        btn.textContent = 'Ergebnis senden'; btn.disabled = false;
+        btn.textContent = 'Ergebnis anzeigen'; btn.disabled = false;
       }
     });
 
