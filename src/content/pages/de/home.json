@@ -236,13 +236,13 @@
       "_template": "section"
     },
     {
-      "title": "Ihre Daten bleiben Ihre",
+      "title": "Ihre Daten",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Ihre Daten gehören Ihnen | und wir bauen so, dass es dabei bleibt",
+      "subTitle": "Ihre Daten gehören Ihnen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Ihre Daten bleiben in Ihren eigenen Systemen | wir nutzen nur, was wir für die Arbeit brauchen | . | Nie gespeichert, nie weitergegeben | und gelöscht, sobald die Arbeit erledigt ist | . | Sie entscheiden, was | ein externer KI-Dienst überhaupt zu sehen bekommt | . | Sensible Bereiche — Finanzen, Recht, Gesundheit — | mit strengeren Grenzen, was Ihre Umgebung verlässt | . | Jeder Schritt hinterlässt eine Spur | nachvollziehbar, was geschah und wer freigegeben hat | . | Ein Auftragsverarbeitungsvertrag liegt bereit | von Anfang an revDSG- und DSGVO-bewusst | . | Schweizerische Sorgfalt | wo immer auf der Welt Sie sind | .",
+      "content": "Vieles am Aufbau braucht gar keine echten Daten | wir arbeiten mit Beispielen, bis es sich bewährt | . | Ihre eigenen Daten werden nur zum Testen vor der Übergabe genutzt | danach gelöscht — nie gespeichert, nie weitergegeben | . | Das ganze Bild finden Sie auf unserer Datenseite | wie wir arbeiten und nach welchen Regeln | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
