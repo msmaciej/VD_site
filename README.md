@@ -1,193 +1,180 @@
-# VortexDeep — vortexdeep.ch
+# VortexDeep — Website
 
-Marketing site for **VortexDeep**: practical AI automation for small businesses (KMU) in Zürich, Switzerland.
+The marketing site for **VortexDeep** — practical, human-in-the-loop AI automation
+for small and mid-sized companies. Grounded in Zürich, Switzerland; serving clients
+worldwide.
 
-Bilingual (DE / EN), statically generated, content-managed through TinaCMS, deployed as a plain folder of files to Hostpoint.
+Live at **[vortexdeep.ch](https://vortexdeep.ch)** · EN at `/`, DE at `/de/`.
 
-**Documentation:** this file (build, deploy, content model, structure) · [README-FITCHECK.md](README-FITCHECK.md) (Fit Check questions, scoring & pipeline) · [README-ANIMATIONS.md](README-ANIMATIONS.md) (every animation toggle & tunable).
-
----
-
-## 1. Design philosophy
-
-The site is built on a **zen-minimalist** foundation, inherited from the ARTMJS "Zen Gallery" Astro + Tina template it grew out of:
-
-- **Monochromatic**, restrained palette; type and whitespace do the work.
-- **"Ma" (negative space)** is intentional — the layout breathes.
-- Motion is ambient, not decorative noise: the depth-network / planetary backgrounds and the process-flow dot animation are the only movement on the page.
-- **KISS** — every block is a self-contained module that the admin can toggle on or off.
-
-**Important caveat for a business site.** The template's original job was to make an art gallery feel contemplative; ambiguity was a feature. VortexDeep's job is to make a KMU owner understand, within seconds, *what we do, who it is for, and what to do next.* Zen restraint is kept as the **visual** language — it must never be applied to the **message**. In practice:
-
-- Body copy stays in readable sentences, not fragments.
-- Business-critical content (what we do, case study, contact) is never sacrificed to whitespace.
-- Minimum readable type sizes apply to prose; the very small sizes (9px / 11px) belong to meta labels only.
-
-The **art gallery** capability from the original template is retained and fully functional — it is simply **off by default**. It is available to switch on for any section that genuinely needs an image grid (visual case studies, workflow screenshots, diagrams). See §5.
+> **Note on history:** this repository began life from an Astro one-pager template
+> (internally "ARTMJS / Zen Gallery"). It has since been rebuilt into the VortexDeep
+> site. A few template artefacts may still linger in the tree (e.g. the legacy
+> `art/` content collection and `ArtCard.astro`); they are inert and slated for
+> removal. Nothing below refers to the old template — this README describes the
+> site as it actually is today.
 
 ---
 
-## 2. Stack
+## 1. What this is & stack
 
-| Layer | Choice |
-|---|---|
-| Framework | **Astro 4** (static output) |
-| Styling | **Tailwind CSS 3** |
-| CMS | **TinaCMS 1.x** (local, file-based; edits write JSON into `src/content/`) |
-| 3D / background | **three.js** (`DepthNetworkBackground`, `PlanetarySystemsBackground`) |
-| Forms / backend | **PHP** (`public/*.php`) — runs on Hostpoint shared hosting, no Node server needed |
-| i18n | Astro `i18n` config — **EN at `/`**, **DE at `/de/`** |
-| Hosting | **Hostpoint** — upload the contents of `dist/` |
+A fast, content-managed marketing site with one interactive feature — the **Fit
+Check** lead assessment. Static-first for speed and resilience; a thin PHP layer
+on the host powers the Fit Check without any database.
+
+- **Framework:** [Astro 4](https://astro.build) — static output, minimal client JS.
+- **Styling:** Tailwind CSS. Default font preset: IBM Plex Mono; "deep" dark theme.
+- **Content editing:** [TinaCMS](https://tina.io) — visual editing of page copy,
+  settings, and Fit Check profile text via `npm run admin`.
+- **Backgrounds:** Three.js animated backdrops (`DepthNetworkBackground`,
+  `PlanetarySystemsBackground`).
+- **Internationalisation:** built-in Astro i18n — `en` (default, no prefix) and
+  `de` (under `/de/`).
+- **Fit Check backend:** plain PHP files served from the host (see §5). No
+  database, no session store — a signed, self-expiring token carries all state.
+- **Hosting:** static `dist/` (HTML/CSS/JS **+ the PHP files**) is deployed to
+  **Hostpoint** (Swiss hosting). PHP runs in the Hostpoint docroot.
 
 ---
 
-## 3. Running it
+## 2. Running it locally
 
-Requires Node.js (18+).
+Open **Terminal**, go to the project folder, then use the scripts below:
 
 ```bash
-npm install
+cd ~/Documents/_SITE/VD_site   # adjust to your actual path
+npm install                    # first time, or after dependency changes
+npm run dev                    # or: npm run admin  (site + CMS)
 ```
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Local site at `http://localhost:4321` (no CMS). |
-| `npm run admin` | Site **plus** the Tina admin dashboard at `http://localhost:4321/admin`. **Use this to edit content.** |
-| `npm run build` | Regenerates the fit-check profile include, then compiles the site into `dist/`. **This is the deploy artifact.** |
-| `npm run preview` | Serves the built `dist/` locally. |
-| `npm run tree` | Regenerates `site-tree.txt`. |
-| `npm run clean` | Deletes the generated Tina files and restarts the dashboard. |
-| `Ctrl + C` | Stops whatever is running. |
-
-> Note: PHP endpoints (`get-math.php`, `send-check.php`) do **not** run under `astro dev`. The fit-check form can only be tested end-to-end on the PHP host, or against a local PHP server.
+- Local site: `http://localhost:4321`
+- Admin dashboard (with `npm run admin`): `http://localhost:4321/admin`
+- Stop any running command with **Control + C**.
 
 ---
 
-## 4. Deployment
+## 3. Available scripts
 
-1. `npm run build`
-2. Upload the **contents of `dist/`** to the Hostpoint web root.
-3. `dist/` is committed to the repo, so what is in `dist/` on `main` should always equal what is live at vortexdeep.ch.
+| Command                              | What it does                                                                                          |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `npm run dev`                        | Starts the local site at `http://localhost:4321`.                                                    |
+| `npm run admin`                      | Starts the site **and** the TinaCMS dashboard at `/admin`.                                            |
+| `npm run build`                      | **Final step.** Generates Fit Check profiles, then builds the static site into `dist/` for upload.    |
+| `npm run preview`                    | Serves the built `dist/` locally to check the production output.                                      |
+| `npm run tree`                       | Regenerates `site-tree.txt` — a map of the project structure.                                         |
+| `npm run clean`                      | Reset button: clears TinaCMS generated files and restarts the dashboard.                              |
+| `node scripts/verify-fitcheck.mjs`   | **Run after any Fit Check change.** Fails loudly if the reveal, team email, or leak rule regress.     |
+| `Control + C`                        | Stops any command currently running in the Terminal.                                                  |
 
-**Deployment rule:** content changes made in Tina only touch `src/content/*.json`. They are **not live until `npm run build` is run and `dist/` is re-uploaded**. Enabling a block in Tina and forgetting to rebuild is the single easiest mistake to make here — see §8.
-
----
-
-## 5. Content model
-
-All editable content lives in `src/content/` as JSON and is exposed in the Tina dashboard.
-
-### Pages — `src/content/pages/en/home.json` and `.../de/home.json`
-
-Each page is an ordered array of **blocks**. Every block has an `enabled` flag, so sections can be switched on/off without deleting them. EN and DE are **separate files** — a change to one does not change the other.
-
-Available block templates (`_template`):
-
-| `_template` | Purpose |
-|---|---|
-| `section` | Generic title / sub-title / body block. Also the block that can host the **art gallery** (`showArt: true` + `columns`). |
-| `processFlow` | The animated Discovery → Scope → Solution → Build → Validation → Live flow. Vertical or horizontal. |
-| `caseStudy` | Structured case study: industry, location, package, timeline, Challenge / What Was Built / Result. |
-| `testimonial` | Client quote with name + organisation. |
-
-**Text convention:** in `title`, `subTitle`, `content` and the site subtitle, a `|` character is rendered as a **line break**. This is a leftover of the gallery template's typographic style. It is fine for short taglines and stacked labels — it should **not** be used to fragment prose into disconnected words.
-
-### Site settings — `src/content/settings/site.json`
-
-Global: site name and subtitle (EN + DE), header/footer layout and heights, nav links, social links, font preset, theme, background style and its parameters, and the SEO / schema fields (`metaTitle`, `metaDescription`, `ogImage`, `siteUrl`, address, `contactEmail`, `contactPhone`).
-
-### Fit Check — `src/content/fitcheck/config.json`
-
-All question and answer copy for the `/check` (`/de/check`) tool, in both languages — every question (role, category + follow-up, time cost, process, goal) is label-editable here — plus the four result profiles (FireFight / Refine / Build / Optimize). Schema lives in `tina/fitcheck-schema.ts`. This file is the **single source of truth** for the profile copy: `send-check.php` consumes a generated include built from it, so it is never edited by hand in two places. See [README-FITCHECK.md](README-FITCHECK.md).
-
-### Art gallery — `src/content/art/*.json`
-
-One JSON file per image (title, year, price, image, visibility toggles), rendered by `ArtCard.astro` inside any `section` block with `showArt: true`. Retained from the template; unused on the current homepage but available whenever an image grid is the right answer.
-
-### UI labels — `src/i18n/ui.ts`
-
-Hard-coded bilingual strings that are **not** editable in Tina (e.g. "Case Study" / "Fallstudie", "Challenge" / "Herausforderung"). Add a key here for any new fixed label.
+> **`npm run build` order matters.** It runs `scripts/gen-fitcheck-profiles.mjs`
+> *first* (emitting `public/fitcheck-profiles.gen.php`), *then* `astro build` — so
+> Astro copies the freshly generated PHP into `dist/` alongside the other PHP
+> files. See §5.
 
 ---
 
-## 6. The Fit Check (`/check`)
-
-A short guided assessment: role → pain category → follow-up → time cost → process maturity → goal.
-
-- `public/get-math.php` — issues a simple arithmetic challenge, answer held in the PHP session. Bot gate.
-- `public/send-check.php` — validates the gate, **scores the submission server-side**, emails the lead to `info@vortexdeep.ch`, and returns only the matched profile's tagline and description.
-
-**Do not move scoring to the client.** By design, the browser sends only raw answers. The internal bucket (lead / warm / other) and the profile *names* (FireFight / Refine / Build / Optimize) are never sent to the visitor — only the matching tagline and description text. Keep it that way.
-
-**Profile copy is single-source.** The profile text is **not** duplicated in `send-check.php` any more. It lives once in the `profiles` section of `src/content/fitcheck/config.json` (edited in Tina). At build time, `scripts/gen-fitcheck-profiles.mjs` (the first step of `npm run build`) generates `public/fitcheck-profiles.gen.php` from it, which `send-check.php` then `require`s. So editing profile text in Tina and rebuilding is enough — there is nothing to mirror by hand, and the page and the PHP cannot drift apart. If `config.json` is incomplete the build fails loudly rather than shipping blank copy.
-
-> **Full details** — the six questions, the label-editable / value-fixed split, the exact Time × Process scoring matrix, the bucket logic, the generator pipeline and the guards — are documented in **[README-FITCHECK.md](README-FITCHECK.md)**.
-
----
-
-## 7. Project structure
+## 4. Project structure
 
 ```
 VD_site/
-├── astro.config.mjs           # Astro + Tailwind + i18n (EN at /, DE at /de/)
-├── tailwind.config.mjs
+├── astro.config.mjs           # Astro config: site URL, EN/DE i18n, build options
+├── tailwind.config.mjs        # Tailwind configuration
+├── package.json               # Dependencies & scripts
+├── site-tree.txt              # Generated project map (npm run tree)
+│
 ├── tina/
-│   ├── config.ts              # Tina schema: blocks, pages (EN/DE), settings, art
-│   └── fitcheck-schema.ts     # Tina schema: fit-check questions & profiles
-├── scripts/
-│   └── gen-fitcheck-profiles.mjs  # build-time: config.json → PHP profile include
+│   ├── config.ts              # TinaCMS schema & admin configuration
+│   └── fitcheck-schema.ts     # Fit Check collection schema
+│
 ├── src/
-│   ├── content/               # ← all editable content (JSON)
-│   │   ├── pages/en/home.json
-│   │   ├── pages/de/home.json
-│   │   ├── settings/site.json
-│   │   ├── fitcheck/config.json
-│   │   └── art/*.json
-│   ├── components/
-│   │   ├── SitePage.astro     # renders the block array — the core engine
-│   │   ├── Hero.astro
-│   │   ├── ArtCard.astro      # zen gallery card (optional, off by default)
-│   │   ├── LanguageSwitcher.astro
-│   │   ├── DepthNetworkBackground.astro
-│   │   └── PlanetarySystemsBackground.astro
-│   ├── layouts/Layout.astro   # global shell, theme, SEO tags
-│   ├── i18n/ui.ts             # fixed bilingual labels
-│   ├── utils/siteHelpers.ts
-│   └── pages/
-│       ├── index.astro        # EN home
-│       ├── check.astro        # EN fit check
-│       ├── de/index.astro     # DE home
-│       └── de/check.astro     # DE fit check
-├── public/
-│   ├── .htaccess              # denies direct access to the generated include
-│   ├── get-math.php           # bot-gate challenge
-│   ├── send-check.php         # fit-check handler + server-side scoring
-│   ├── fitcheck-profiles.gen.php  # GENERATED profile copy (do not edit)
-│   ├── images/, uploads/      # logos, backgrounds, Tina media
-│   ├── robots.txt
-│   └── sitemap.xml
-└── dist/                      # BUILD OUTPUT — this is what is live on Hostpoint
+│   ├── pages/
+│   │   ├── index.astro        # EN home (one-pager engine)
+│   │   ├── check.astro        # EN Fit Check page
+│   │   └── de/                # DE home + Fit Check
+│   ├── layouts/
+│   │   └── Layout.astro       # Global shell, theme, fonts, backgrounds
+│   ├── components/            # Hero, Fold, SitePage, LanguageSwitcher,
+│   │                          # DepthNetworkBackground, PlanetarySystemsBackground …
+│   ├── content/
+│   │   ├── pages/             # Page block content (home.json, en/, de/)
+│   │   ├── settings/site.json # Global settings: name, theme, nav, background
+│   │   └── fitcheck/config.json  # SINGLE SOURCE OF TRUTH for Fit Check copy & profiles
+│   ├── i18n/ui.ts             # UI string translations
+│   └── utils/siteHelpers.ts   # Shared helpers
+│
+├── public/                    # Copied verbatim into dist/ at build time
+│   ├── admin/                 # TinaCMS admin interface
+│   ├── images/, uploads/      # Logos, backgrounds, drag-and-drop media
+│   ├── send-check.php         # Fit Check: validate + email visitor a one-time link
+│   ├── confirm.php            # Fit Check: reveal result + email the qualified lead
+│   ├── fitcheck-lib.php       # Shared logic: HMAC-signed, self-expiring token
+│   ├── fitcheck-profiles.gen.php  # GENERATED from config.json (do not hand-edit)
+│   └── get-math.php           # Lightweight math challenge (anti-bot)
+│
+├── scripts/
+│   ├── gen-fitcheck-profiles.mjs  # config.json → fitcheck-profiles.gen.php (fail-loud)
+│   └── verify-fitcheck.mjs        # Guard: checks Fit Check invariants
+│
+└── _docs/                     # Internal engineering notes (not shipped)
+    ├── README-FITCHECK.md         # How the Fit Check is wired
+    ├── README-MAINTENANCE.md      # Read before touching dependencies
+    └── …                          # Animations, guards, personas, fit matrix
 ```
 
 ---
 
-## 8. Known issues / to fix
+## 5. The Fit Check (how it's wired)
 
-- **`dist/` is stale.** The MG Redshift `caseStudy` and `testimonial` blocks are `"enabled": true` in both `src/content/pages/en/home.json` and `de/home.json`, but neither appears in `dist/index.html` or `dist/de/index.html`. **Run `npm run build` and re-upload `dist/`** — the case study is currently written but invisible to visitors.
-- **`npm run clean` targets the wrong path.** The script removes `.tina/__generated__`, but the generated files live in `tina/__generated__` (no leading dot). It currently does nothing.
-- **`package.json` still says `"name": "artmjs-zen"`.** Rename to `vortexdeep`.
-- **`site-tree.txt` is stale** — it still lists the old gallery structure. Run `npm run tree`.
-- **`contactPhone` is empty** in `site.json`. KMU visitors expect a phone number; it also feeds the Google `LocalBusiness` schema.
-- **No Impressum / Datenschutz page** — expected for a Swiss business site.
-- **Default locale is EN.** The target audience is Zürich KMU; consider making DE the default (`astro.config.mjs` → `defaultLocale: 'de'`) and serving EN at `/en/`.
-- **Readability:** several blocks use `text-[13px]` for body prose and `text-[9px]` for attribution, and the header subtitle uses `tracking-[1.2em]`. Fine for meta labels, too small / too spaced for anything a prospect needs to actually read.
+The Fit Check at `/check` (EN) and `/de/check` (DE) is a short guided assessment.
+It is deliberately built so that **sensitive logic and other people's data never
+reach the browser**:
+
+1. **Single source of truth.** All profile copy lives in
+   `src/content/fitcheck/config.json` (editable in TinaCMS). `npm run build` runs
+   `gen-fitcheck-profiles.mjs`, which generates `public/fitcheck-profiles.gen.php`.
+   If a required field is missing, the build **fails loudly** rather than shipping
+   empty copy.
+2. **Verify, then reveal — two stages, no database.**
+   - `send-check.php` validates the submission (math challenge, email format, a DNS
+     check, honeypot/timing signals), then emails the **visitor** a one-time link
+     and shows a "check your inbox" panel. The team is **not** emailed yet.
+   - `confirm.php` (opened via that link) reveals the matched result **and** sends
+     the qualified-lead email to the team — only now, because only the real inbox
+     owner can click the link.
+3. **The token is the state.** A compact, HMAC-signed, self-expiring token (30 min)
+   carries the already-validated answers — no session store, no database. A visitor
+   cannot alter it and nobody can forge one without the server's signing key.
+4. **Nothing leaks.** The browser only ever sends *raw answers* and only ever
+   receives *the matched result's text*. Scoring logic, profile names, and the
+   other profiles' copy never reach the client.
+
+> After **any** change near the Fit Check, run `node scripts/verify-fitcheck.mjs`.
+> The full contract is in `_docs/README-FITCHECK.md` and the invariants doc.
 
 ---
 
-## 9. Editing checklist
+## 6. Deploying
 
-1. `npm run admin`
-2. Edit content at `http://localhost:4321/admin` (or edit the JSON in `src/content/` directly).
-3. `npm run build` — this also regenerates `public/fitcheck-profiles.gen.php` from the fit-check config, so profile-text edits made in Tina take effect automatically. No manual PHP editing.
-4. Upload the contents of `dist/` to Hostpoint.
-5. Commit — including `dist/`.
+1. Run `npm run build`. This produces `dist/` containing the static site **and**
+   the PHP files (`send-check.php`, `confirm.php`, `fitcheck-lib.php`,
+   `fitcheck-profiles.gen.php`, `get-math.php`).
+2. Upload the **contents of `dist/`** to the Hostpoint docroot (FTP). The PHP files
+   must sit in the docroot so `confirm.php`/`send-check.php` resolve their includes
+   via `__DIR__`.
+3. Confirm the Fit Check end to end on the live domain (submit → inbox link →
+   reveal → team email).
+
+---
+
+## 7. Maintenance guardrails (short version)
+
+- **`@astrojs/sitemap` is pinned to exactly `3.2.1`** — 3.3+ requires Astro 5 and
+  breaks this Astro 4 build. Don't bump it until you upgrade Astro.
+- **Don't run `npm audit fix --force`.** It jumps major versions and is the most
+  likely way to break the build. Most advisories are dev-tooling (TinaCMS/build)
+  that never ships in `dist/`.
+- **New dependency?** `npm install` first, *then* `npm run build`.
+- Full notes: `_docs/README-MAINTENANCE.md`.
+
+---
+
+*vortexdeep.ch · info@vortexdeep.ch · Kanton Zürich, Switzerland — worldwide.*
