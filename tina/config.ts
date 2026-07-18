@@ -129,6 +129,13 @@ const pageTemplates = [
       { type: "string",  name: "email",   label: "Contact Email (optional)" },
       { type: "string",  name: "phone",   label: "Contact Phone (optional)",
         description: "Renders as a tap-to-call link. Leave empty until a company number exists — do not publish a private mobile." },
+
+      // ── Optional link button (same style as the Fit Check button) ─────────
+      { type: "string", name: "ctaLabel", label: "Button label (optional)",
+        description: "Leave empty for no button. Fill in to show a link button under this section — e.g. 'How we handle your data'." },
+      { type: "string", name: "ctaUrl",   label: "Button link (optional)",
+        description: "Where the button goes — e.g. /data. A '/…' link is prefixed with /de automatically on the German site. A '/data' button hides itself automatically when the Data Page is switched off." },
+
       { type: "boolean", name: "showArt", label: "Activate Art Gallery?" },
       { type: "string",  name: "columns", label: "Gallery columns", options: [
         { label: "2 Columns", value: "grid-cols-2" },
@@ -556,6 +563,42 @@ export default defineConfig({
           { type: "string", name: "addressPostal",  label: "Address: Postal Code",  description: "e.g. 8001" },
           { type: "string", name: "contactEmail",   label: "Contact Email (for Google schema)" },
           { type: "string", name: "contactPhone",   label: "Contact Phone (optional, for Google schema)" },
+        ],
+      },
+
+      // ── DATA PAGE (/data, /de/data content) ──────────────────────────────
+      // One entry per language (en, de). "Enabled" off = the page is not built
+      // at all (a direct URL just gets the normal not-found) AND its button on
+      // the home page hides itself.
+      {
+        name: "dataPage",
+        label: "Data Page (/data)",
+        path: "src/content/dataPage",
+        format: "json",
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          { type: "string",  name: "lang", label: "Language (do not change)",
+            description: "Which language route this is — en or de. Leave as-is." },
+          { type: "boolean", name: "enabled", label: "Page enabled",
+            description: "Off = the /data page is not built and its button on the home page disappears. On = the page exists and the button shows." },
+          { type: "string",  name: "eyebrow", label: "Small label (eyebrow)" },
+          { type: "string",  name: "heading", label: "Heading" },
+          { type: "string",  name: "intro",   label: "Intro line", ui: { component: "textarea" } },
+          {
+            type: "object", list: true, name: "sections", label: "Sections",
+            ui: { itemProps: (item: any) => ({ label: item?.heading || "(note)" }) },
+            fields: [
+              { type: "string", name: "heading", label: "Heading (leave empty for a plain note)" },
+              { type: "string", name: "style", label: "Style", options: [
+                { label: "Paragraphs", value: "prose" },
+                { label: "Bulleted list", value: "list" },
+                { label: "Boxed legal note", value: "note" },
+              ]},
+              { type: "string", name: "body", label: "Body — separate paragraphs / bullets with |",
+                ui: { component: "textarea" } },
+            ],
+          },
+          { type: "string", name: "contactEmail", label: "Contact email" },
         ],
       },
 

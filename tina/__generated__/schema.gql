@@ -60,6 +60,8 @@ type Query {
   page_deConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: Page_deFilter): Page_deConnection!
   settings(relativePath: String): Settings!
   settingsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SettingsFilter): SettingsConnection!
+  dataPage(relativePath: String): DataPage!
+  dataPageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DataPageFilter): DataPageConnection!
   fitCheck(relativePath: String): FitCheck!
   fitCheckConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FitCheckFilter): FitCheckConnection!
   art(relativePath: String): Art!
@@ -70,6 +72,7 @@ input DocumentFilter {
   page: PageFilter
   page_de: Page_deFilter
   settings: SettingsFilter
+  dataPage: DataPageFilter
   fitCheck: FitCheckFilter
   art: ArtFilter
 }
@@ -97,7 +100,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Page | Page_de | Settings | FitCheck | Art | Folder
+union DocumentNode = Page | Page_de | Settings | DataPage | FitCheck | Art | Folder
 
 type PageBlocksSectionGroupsItems {
   label: String
@@ -139,6 +142,8 @@ type PageBlocksSection {
   meta: String
   email: String
   phone: String
+  ctaLabel: String
+  ctaUrl: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -282,6 +287,8 @@ input PageBlocksSectionFilter {
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
+  ctaLabel: StringFilter
+  ctaUrl: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -436,6 +443,8 @@ type Page_deBlocksSection {
   meta: String
   email: String
   phone: String
+  ctaLabel: String
+  ctaUrl: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -567,6 +576,8 @@ input Page_deBlocksSectionFilter {
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
+  ctaLabel: StringFilter
+  ctaUrl: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -858,6 +869,52 @@ type SettingsConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [SettingsConnectionEdges]
+}
+
+type DataPageSections {
+  heading: String
+  style: String
+  body: String
+}
+
+type DataPage implements Node & Document {
+  lang: String
+  enabled: Boolean
+  eyebrow: String
+  heading: String
+  intro: String
+  sections: [DataPageSections]
+  contactEmail: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input DataPageSectionsFilter {
+  heading: StringFilter
+  style: StringFilter
+  body: StringFilter
+}
+
+input DataPageFilter {
+  lang: StringFilter
+  enabled: BooleanFilter
+  eyebrow: StringFilter
+  heading: StringFilter
+  intro: StringFilter
+  sections: DataPageSectionsFilter
+  contactEmail: StringFilter
+}
+
+type DataPageConnectionEdges {
+  cursor: String!
+  node: DataPage
+}
+
+type DataPageConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [DataPageConnectionEdges]
 }
 
 type FitCheckRoleQuestion {
@@ -1476,6 +1533,8 @@ type Mutation {
   createPage_de(relativePath: String!, params: Page_deMutation!): Page_de!
   updateSettings(relativePath: String!, params: SettingsMutation!): Settings!
   createSettings(relativePath: String!, params: SettingsMutation!): Settings!
+  updateDataPage(relativePath: String!, params: DataPageMutation!): DataPage!
+  createDataPage(relativePath: String!, params: DataPageMutation!): DataPage!
   updateFitCheck(relativePath: String!, params: FitCheckMutation!): FitCheck!
   createFitCheck(relativePath: String!, params: FitCheckMutation!): FitCheck!
   updateArt(relativePath: String!, params: ArtMutation!): Art!
@@ -1486,6 +1545,7 @@ input DocumentUpdateMutation {
   page: PageMutation
   page_de: Page_deMutation
   settings: SettingsMutation
+  dataPage: DataPageMutation
   fitCheck: FitCheckMutation
   art: ArtMutation
   relativePath: String
@@ -1495,6 +1555,7 @@ input DocumentMutation {
   page: PageMutation
   page_de: Page_deMutation
   settings: SettingsMutation
+  dataPage: DataPageMutation
   fitCheck: FitCheckMutation
   art: ArtMutation
 }
@@ -1539,6 +1600,8 @@ input PageBlocksSectionMutation {
   meta: String
   email: String
   phone: String
+  ctaLabel: String
+  ctaUrl: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -1672,6 +1735,8 @@ input Page_deBlocksSectionMutation {
   meta: String
   email: String
   phone: String
+  ctaLabel: String
+  ctaUrl: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -1847,6 +1912,22 @@ input SettingsMutation {
   addressPostal: String
   contactEmail: String
   contactPhone: String
+}
+
+input DataPageSectionsMutation {
+  heading: String
+  style: String
+  body: String
+}
+
+input DataPageMutation {
+  lang: String
+  enabled: Boolean
+  eyebrow: String
+  heading: String
+  intro: String
+  sections: [DataPageSectionsMutation]
+  contactEmail: String
 }
 
 input FitCheckRoleQuestionMutation {

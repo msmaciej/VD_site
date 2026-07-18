@@ -22,6 +22,12 @@ interface Props {
 const { lang, pageData, settings, artFiles } = Astro.props;
 const t = ui[lang];
 
+// Data page on/off — a section's "/data" button hides itself when the page is off.
+const dataPageDocs = await Astro.glob('../content/dataPage/*.json');
+const dataPageDoc = (dataPageDocs.find((d: any) => d.default?.lang === lang)
+  || dataPageDocs.find((d: any) => d.default?.lang === 'en'))?.default || {};
+const dataPageEnabled = (dataPageDoc as any).enabled !== false;
+
 // ── Theme & font ──────────────────────────────────────────────────────────────
 const currentTheme = settings.theme || 'light';
 const currentYear  = new Date().getFullYear();
@@ -1395,6 +1401,16 @@ const contentGroups = (text: string) => {
                     {block.phone}
                   </a>
                 )}
+              </div>
+            )}
+
+            {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (
+              <div class="flex justify-center mt-10">
+                <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
+                   class="vd-cta text-[11px]"
+                   style={`color: ${zenText};`}>
+                  {block.ctaLabel}
+                </a>
               </div>
             )}
 

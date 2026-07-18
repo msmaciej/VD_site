@@ -1,0 +1,55 @@
+{
+  "lang": "en",
+  "enabled": true,
+  "eyebrow": "Data & Privacy",
+  "heading": "How we handle your data",
+  "intro": "Your data is yours, and we build so it stays that way — much of the work never touches your real data at all.",
+  "sections": [
+    {
+      "heading": "Sample-first by default",
+      "style": "prose",
+      "body": "Most of an automation is structure — how something is read, sorted, and drafted. That part can be built and tested against samples or made-up examples, often with no real data of yours involved at all."
+    },
+    {
+      "heading": "Real data — only to test, only before handover",
+      "style": "prose",
+      "body": "When it's time to prove the automation works end to end, we may need to use your real data. That happens in a defined, limited window before handover: used only to test, then cleared. It is never kept beyond that work, and never shared."
+    },
+    {
+      "heading": "Live — in your systems",
+      "style": "prose",
+      "body": "Once it's running, the automation works in or alongside your own systems. We only ever touch what a given task needs."
+    },
+    {
+      "heading": "What we never do",
+      "style": "list",
+      "body": "Keep your data beyond the work | Share it with anyone | Use it for anything other than the job you asked for"
+    },
+    {
+      "heading": "What an AI service sees",
+      "style": "prose",
+      "body": "You decide what, if anything, an outside AI service is ever shown. Sensitive work — finance, legal, health — is handled with stricter limits on what leaves your environment."
+    },
+    {
+      "heading": "A person approves every step",
+      "style": "prose",
+      "body": "Nothing is sent, paid, or filed on its own. That human step isn't only reassurance — it's also what the rules below expect of automated decisions that affect people."
+    },
+    {
+      "heading": "The rules we work to",
+      "style": "prose",
+      "body": "revDSG — Switzerland's data-protection law, in force since September 2023. It sets how personal data must be handled: used only for a clear purpose, kept secure, not kept longer than needed, and open to the person it concerns. | GDPR — the EU's equivalent. It applies when a business serves or monitors people in the EU. Because we work with clients worldwide, we build to both. | Both expect a human in the loop for automated decisions that significantly affect someone — a review a person can ask for. Our approve-every-step design is that review, built in."
+    },
+    {
+      "heading": "Working together",
+      "style": "prose",
+      "body": "When we handle data on your behalf, we sign a data-processing agreement — you as the controller, us as the processor — that puts all of this in writing. Ask us for it any time."
+    },
+    {
+      "heading": "",
+      "style": "note",
+      "body": "This page describes how we work; it isn't legal advice. For your own obligations, your lawyer or fiduciary is the right guide."
+    }
+  ],
+  "contactEmail": "info@vortexdeep.ch"
+}

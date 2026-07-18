@@ -40,6 +40,8 @@ fragment PageParts on Page {
       meta
       email
       phone
+      ctaLabel
+      ctaUrl
       showArt
       columns
       enabled
@@ -162,6 +164,8 @@ fragment Page_deParts on Page_de {
       meta
       email
       phone
+      ctaLabel
+      ctaUrl
       showArt
       columns
       enabled
@@ -320,6 +324,22 @@ fragment SettingsParts on Settings {
   addressPostal
   contactEmail
   contactPhone
+}
+
+fragment DataPageParts on DataPage {
+  __typename
+  lang
+  enabled
+  eyebrow
+  heading
+  intro
+  sections {
+    __typename
+    heading
+    style
+    body
+  }
+  contactEmail
 }
 
 fragment FitCheckParts on FitCheck {

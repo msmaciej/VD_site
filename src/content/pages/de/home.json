@@ -7,7 +7,7 @@
       "subTitle": "Wir verwandeln wiederkehrende Aufgaben | in praktische, KI-gestützte Abläufe.",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Auf Ihr Unternehmen zugeschnitten. | . | Monatlich betreut. | . | Die Kontrolle bleibt beim Menschen. | .",
+      "content": "Die Abläufe werden für Ihr Unternehmen gebaut. | Sie werden monatlich betreut. | Die Kontrolle bleibt beim Menschen.",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -21,22 +21,13 @@
       "_template": "section"
     },
     {
-      "title": "Was wir tun -",
-      "titleFontSize": "text-[15px]",
-      "titleFontWeight": "font-bold",
-      "subTitle": "... | Wiederkehrende Betriebsaufgaben | werden zu praktischen | KI-gestützten Abläufen | .. | Anfragen | Dokumente | Vertriebsprozesse | Terminplanung | Reporting | Finanzen | Inhalte | Kundenservice | .. | Für Ihr Unternehmen gebaut | Monatlich betreut | . | Menschliche Kontrolle | bleibt im Mittelpunkt | .",
-      "subTitleFontSize": "text-[13px]",
-      "enabled": false,
-      "_template": "section"
-    },
-    {
       "title": "Warum VortexDeep",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "Der Unterschied liegt | nicht in der Software",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Sie geben jeden Schritt frei | nichts wird von allein gesendet, bezahlt oder eingereicht | . | Ihre Daten bleiben Ihre | nie gespeichert, nie weitergegeben | . | Kündbar auf Ende jedes Monats | keine Bindung, kein langer Vertrag | . | Wer es baut | geht auch ans Telefon | .",
+      "content": "Sie geben jeden Schritt frei. Nichts wird von allein gesendet, bezahlt oder eingereicht. | Ihre Daten bleiben Ihre, nie gespeichert, nie weitergegeben. | Kündbar auf Ende jedes Monats, keine Bindung, kein langer Vertrag. | Wer es baut, geht auch ans Telefon.",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -46,7 +37,7 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "showGroupIntros": true,
+      "showGroupIntros": false,
       "enabled": true,
       "_template": "section"
     },
@@ -57,7 +48,7 @@
       "subTitle": "Die Arbeit, die Ihr Team immer wieder macht | erfasst, sortiert und für Sie entworfen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Fast alles davon folgt derselben Form | etwas kommt herein, wird gelesen und sortiert, eine Antwort oder ein Eintrag wird entworfen — und Ihnen zur Freigabe vorgelegt | . | Wir übernehmen den wiederkehrenden Teil | das Entscheiden, das Recherchieren, das Urteil bleibt bei Ihnen | .. | Manches lässt sich nur teilweise automatisieren | wo ein Mensch prüfen oder entscheiden muss — eine Ursachenanalyse, ein Qualitätsprogramm — | übernehmen wir den messbaren, wiederholbaren Teil und sagen klar, wo Sie am Steuer bleiben | . | Die meisten Anliegen betreffen mehrere Bereiche zugleich | eine Bestellfrage kann Nachricht, Bestandsprüfung und Retoure auf einmal bedeuten | . | Wir fügen im Hintergrund die richtigen Teile zusammen | damit Ihre Kundin eine einzige, reibungslose Antwort erhält | .. | Beginnen Sie mit dem Prozess, der Sie Stunden kostet | und wachsen Sie von dort | .",
+      "content": "Fast alles davon folgt derselben Form: etwas kommt herein, wird gelesen und sortiert, eine Antwort oder ein Eintrag wird entworfen — und Ihnen zur Freigabe vorgelegt. Wir übernehmen den wiederkehrenden Teil; das Entscheiden, das Recherchieren und das Urteil bleiben bei Ihnen. | . | Manches lässt sich nur teilweise automatisieren — dort, wo ein Mensch prüfen oder entscheiden muss, etwa bei einer Ursachenanalyse oder einem Qualitätsprogramm. Wir übernehmen den messbaren, wiederholbaren Teil und sagen klar, wo Sie am Steuer bleiben. | . | Die meisten Anliegen betreffen mehrere Bereiche zugleich: eine Bestellfrage kann Nachricht, Bestandsprüfung und Retoure auf einmal bedeuten. Wir fügen im Hintergrund die richtigen Teile zusammen, damit Ihre Kundin eine einzige, reibungslose Antwort erhält. Beginnen Sie mit dem Prozess, der Sie Stunden kostet, und wachsen Sie von dort. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -223,7 +214,7 @@
       "subTitle": "Ein Mensch behält die Kontrolle | Wir automatisieren den wiederkehrenden Teil",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Wir übernehmen den wiederkehrenden Teil | — lesen, sortieren, entwerfen, ablegen | .. | Jedes Ergebnis wird zur Freigabe für Sie vorbereitet | Nichts wird von allein gesendet, bezahlt oder eingereicht | . | Die Ermessensentscheidungen bleiben bei Ihnen | die unklaren Fälle, die Entscheidungen, die letzte Freigabe | . | Wir ersetzen weder Ihr Urteil noch Ihre Berater oder Ihre Systeme | . | Und wir sagen immer offen | was besser bei Ihnen bleibt | .",
+      "content": "Wir übernehmen den wiederkehrenden Teil — lesen, sortieren, entwerfen, ablegen. Jedes Ergebnis wird Ihnen zur Freigabe vorbereitet. Nichts wird von allein gesendet, bezahlt oder abgelegt. | . | Die Ermessensentscheidungen bleiben bei Ihnen: die unklaren Fälle, die Entscheidungen, die letzte Freigabe. Wir ersetzen weder Ihr Urteil noch Ihre Berater oder Ihre Systeme. | . | Und wir sagen Ihnen immer offen, was besser bei Ihnen bleibt. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -243,7 +234,7 @@
       "subTitle": "Ihre Daten gehören Ihnen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Vieles am Aufbau braucht gar keine echten Daten | wir arbeiten mit Beispielen, bis es sich bewährt | . | Ihre eigenen Daten werden nur zum Testen vor der Übergabe genutzt | danach gelöscht — nie gespeichert, nie weitergegeben | . | Das ganze Bild finden Sie auf unserer Datenseite | wie wir arbeiten und nach welchen Regeln | .",
+      "content": "Vieles am Aufbau braucht gar keine echten Daten — wir arbeiten mit Beispielen, bis es sich bewährt. Ihre eigenen Daten werden nur zum Testen vor der Übergabe genutzt, danach gelöscht — nie gespeichert, nie weitergegeben. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -253,6 +244,7 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
+      "showGroupIntros": true,
       "enabled": true,
       "_template": "section"
     },
@@ -263,7 +255,7 @@
       "subTitle": "Beginnen Sie mit dem einen Prozess | der Sie Stunden kostet",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Erst zum Laufen bringen, damit er sich rechnet | dann darauf aufbauen | . | Jeder Schritt ist klein, erprobt | und wird von Ihnen freigegeben, bevor er live geht | .. | Weil jede Automatisierung dieselbe Form hat | fügen sie sich beim Wachsen zusammen | statt zum Wirrwarr zu werden | .",
+      "content": "Bringen Sie ihn zum Laufen, sodass er sich lohnt, und bauen Sie von dort weiter. Jeder Schritt ist klein, erprobt und von Ihnen freizugeben, bevor er live geht. | . | Weil jede Automatisierung derselben Form folgt, fügen sie sich beim Wachsen zusammen, statt zum Wirrwarr zu werden. | .",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -280,10 +272,10 @@
       "title": "Was Sie erwartet",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Phasenbasierte Umsetzung.",
+      "subTitle": "Lieferung in freigegebenen Phasen",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
-      "content": "Schriftliche Freigabe | bei jedem Schritt. | . | Nichts geht live | ohne Ihre Zustimmung. | . | Wir beginnen mit dem einen Prozess, | der Sie Stunden kostet. | .",
+      "content": "Schriftliche Freigabe bei jedem Schritt. | Nichts geht ohne Ihre Zustimmung live. | Wir beginnen mit dem einen Prozess, der Sie Stunden kostet.",
       "fontSize": "text-[15px]",
       "fontWeight": "font-light",
       "showTitle": true,
@@ -294,15 +286,6 @@
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
       "enabled": true,
-      "_template": "section"
-    },
-    {
-      "title": "Wie es funktioniert -",
-      "titleFontSize": "text-[15px]",
-      "titleFontWeight": "font-bold",
-      "subTitle": "... | Phasenbasierte Umsetzung | .. | Schriftliche Freigabe | bei jedem Schritt | . | Nichts geht live | ohne Ihre | Zustimmung | .",
-      "subTitleFontSize": "text-[13px]",
-      "enabled": false,
       "_template": "section"
     },
     {
@@ -317,13 +300,13 @@
       "stepFontWeight": "font-thin",
       "steps": [
         {
-          "label": "Discovery"
+          "label": "Analyse"
         },
         {
           "label": "Umfang"
         },
         {
-          "label": "Lösungsplan"
+          "label": "Lösung"
         },
         {
           "label": "Aufbau"
@@ -352,15 +335,6 @@
       "cueLabelOpen": "Weniger",
       "enabled": true,
       "_template": "processFlow"
-    },
-    {
-      "title": "Unser | Prozess -",
-      "titleFontSize": "text-[15px]",
-      "titleFontWeight": "font-bold",
-      "subTitle": "... | Discovery | .. | Scope | .. | Lösung | .. | Umsetzung | .. | Validierung | . | Live | .",
-      "subTitleFontSize": "text-[13px]",
-      "enabled": false,
-      "_template": "section"
     },
     {
       "title": "In der Praxis",
@@ -432,10 +406,10 @@
       "title": "Mit wem Sie es zu tun haben",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Zwanzig Jahre Prozesse gebaut und betrieben — | Verfahrenstechnik, Projektleitung. | Heute KI-gestützte Automatisierung.",
+      "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Zwanzig Jahre Prozesse gebaut und geführt — | Verfahrenstechnik, Projektmanagement. | Heute KI-Workflow-Automatisierung.",
       "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-thin",
-      "content": "Kein Account Manager. | Wer es baut, geht auch ans Telefon. | . | Sie können auf Ende jedes Monats kündigen. | Keine Bindung. | .",
+      "content": "Kein Account Manager. | Wer es baut, geht auch ans Telefon. | Kündbar auf Ende jedes Monats. Keine Bindung. | .\n",
       "fontSize": "text-[15px]",
       "fontWeight": "font-normal",
       "showTitle": true,

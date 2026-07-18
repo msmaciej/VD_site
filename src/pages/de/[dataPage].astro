@@ -1,0 +1,159 @@
+---
+// src/pages/[dataPage].astro  →  vortexdeep.ch/data
+// Content comes from src/content/dataPage/en.json (editable in Tina).
+// If that file's "enabled" is false, getStaticPaths returns nothing, so the
+// page is not built at all — a direct visit just gets the normal not-found.
+import Layout from '../../layouts/Layout.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
+import { fontFamily, socialIcon } from '../../utils/siteHelpers.ts';
+import doc from '../../content/dataPage/de.json';
+
+export async function getStaticPaths() {
+  const enabled = (doc as any)?.enabled !== false;
+  return enabled ? [{ params: { dataPage: 'data' } }] : [];
+}
+
+const settingFiles = await Astro.glob('../../content/settings/*.json');
+const settings = settingFiles[0]?.default || {};
+
+const currentTheme = settings.theme || 'light';
+const currentYear  = new Date().getFullYear();
+
+const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
+  ? settings.customFontName
+  : (settings.fontPreset || 'Inter');
+const activeFontFamily = fontFamily(activeFont);
+
+const headerHeight     = settings.headerHeight     || '52px';
+const footerHeight     = settings.footerHeight     || '44px';
+const headerInnerWidth = settings.headerInnerWidth || '680px';
+
+const homeUrl = '/de/';
+const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
+  label: link.label_de || link.label,
+  url:   link.url,
+}));
+const contactEmail = (doc as any).contactEmail || settings.contactEmail || 'info@vortexdeep.ch';
+
+const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Boolean);
+---
+
+<Layout title={`${(doc as any).heading} — VortexDeep`} theme={currentTheme} lang="de">
+  <header class="vd-fixed-header"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+      <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+         style="text-decoration:none; color:inherit;">
+        {settings.showLogo && (
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+               style="color: var(--zen-text);" class="w-5 h-5 flex-shrink-0">
+            <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="100" cy="22"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="61"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="139" r="5" fill="currentColor"/>
+            <circle cx="100" cy="178" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="139" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="61"  r="5" fill="currentColor"/>
+            <polyline points="56,76 78,122 100,76"
+                      fill="none" stroke="currentColor" stroke-width="6"
+                      stroke-linecap="round" stroke-linejoin="miter"/>
+            <line x1="104" y1="76" x2="104" y2="122"
+                  stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+                  fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        )}
+        <span class="text-[10px] uppercase tracking-[0.4em]"
+              style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+          {settings.siteName || 'VortexDeep'}
+        </span>
+      </a>
+
+      <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
+        {resolvedNavLinks.map((link: any) => (
+          <a href={link.url}
+             class={`${settings.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
+             style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+            {link.label}
+          </a>
+        ))}
+        <LanguageSwitcher lang="de" slug="data" />
+      </nav>
+    </div>
+  </header>
+
+  <main class="min-h-[100svh] flex flex-col items-center px-6"
+        style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 32px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 40px);`}>
+    <article class="vd-doc">
+      {(doc as any).eyebrow && <p class="vd-eyebrow">{(doc as any).eyebrow}</p>}
+      <h1 class="vd-h1">{(doc as any).heading}</h1>
+      {(doc as any).intro && <p class="vd-lede">{(doc as any).intro}</p>}
+
+      {(doc as any).sections?.map((sec: any) => (
+        <section>
+          {sec.heading && <h2 class="vd-h2">{sec.heading}</h2>}
+          {sec.style === 'list' ? (
+            <ul class="vd-list">{parts(sec.body).map((li) => <li>{li}</li>)}</ul>
+          ) : sec.style === 'note' ? (
+            <div class="vd-note">{parts(sec.body).map((p) => <p style="margin:0 0 6px;">{p}</p>)}</div>
+          ) : (
+            parts(sec.body).map((p, i) => (
+              <p class={i === parts(sec.body).length - 1 && parts(sec.body).length > 2 ? 'vd-muted' : ''}>{p}</p>
+            ))
+          )}
+        </section>
+      ))}
+
+      <p class="vd-contact"><a href={`mailto:${contactEmail}`} class="vd-soft-link">{contactEmail}</a></p>
+    </article>
+  </main>
+
+  <footer class="vd-fixed-footer"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
+    {settings.socialLinks?.map((social: any) => {
+      const { icon, round } = socialIcon(social.platform || '');
+      return (
+        <a href={social.url} target="_blank" rel="noopener noreferrer"
+           class={`vd-icon ${round ? 'round' : ''}`} title={social.platform}
+           style="color: var(--zen-text);">
+          {icon}
+        </a>
+      );
+    })}
+    {settings.socialLinks?.length > 0 && (
+      <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
+    )}
+    <p class={`${settings.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
+       style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+      {settings.footerText ? settings.footerText : `© ${currentYear} ${settings.siteName || 'VortexDeep'}`}
+    </p>
+  </footer>
+
+  <style is:global>
+    .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
+    .vd-fixed-header-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 4vw, 2rem); }
+    .vd-fixed-footer { position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: env(safe-area-inset-bottom, 0px); z-index: 50; display: flex; align-items: center; justify-content: center; gap: 1.2rem; }
+    .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
+    .vd-icon:hover { opacity: 0.9; }
+    .vd-icon.round { border-radius: 50%; }
+  </style>
+
+  <style>
+    .vd-doc { max-width: 640px; width: 100%; margin: 0 auto; line-height: 1.75; }
+    .vd-eyebrow { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; }
+    .vd-h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.01em; text-align: center; margin: 0 0 16px; line-height: 1.4; }
+    .vd-lede { font-size: 16px; text-align: center; opacity: 0.92; margin: 0 auto 52px; max-width: 540px; }
+    .vd-doc section { border-top: 1px solid color-mix(in srgb, var(--zen-muted) 22%, transparent); padding-top: 24px; margin: 0 0 36px; }
+    .vd-h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; }
+    .vd-doc p { font-size: 15px; margin: 0 0 12px; }
+    .vd-muted { color: var(--zen-muted); }
+    .vd-list { list-style: none; padding: 0; margin: 8px 0 0; }
+    .vd-list li { font-size: 15px; padding: 7px 0 7px 20px; position: relative; }
+    .vd-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--zen-accent, var(--zen-muted)); }
+    .vd-note { font-size: 12px; color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+    .vd-contact { text-align: center; margin-top: 52px; }
+    .vd-soft-link { color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; }
+    .vd-soft-link:hover { opacity: 0.8; }
+  </style>
+</Layout>

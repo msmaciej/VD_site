@@ -13,13 +13,14 @@
     "clean": "rm -rf .tina/__generated__ && npm run admin"
   },
   "dependencies": {
+    "@astrojs/sitemap": "3.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "@tinacms/cli": "^2.2.0",
     "astro": "^4.16.19",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.19",
-    "tinacms": "^1.6.7",
-    "three": "^0.169.0"
+    "three": "^0.169.0",
+    "tinacms": "^1.6.7"
   }
 }

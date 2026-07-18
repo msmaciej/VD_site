@@ -163,6 +163,61 @@ query settingsConnection($before: String, $after: String, $first: Float, $last: 
   }
 }
 
+query dataPage($relativePath: String!) {
+  dataPage(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...DataPageParts
+  }
+}
+
+query dataPageConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: DataPageFilter) {
+  dataPageConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...DataPageParts
+      }
+    }
+  }
+}
+
 query fitCheck($relativePath: String!) {
   fitCheck(relativePath: $relativePath) {
     ... on Document {
