@@ -202,7 +202,7 @@
           ]
         }
       ],
-      "showGroupIntros": true,
+      "showGroupIntros": false,
       "showItemCopy": false,
       "enabled": true,
       "_template": "section"
@@ -245,6 +245,8 @@
       "cueLabel": "More",
       "cueLabelOpen": "Less",
       "showGroupIntros": true,
+      "ctaLabel": "How we handle your data",
+      "ctaUrl": "/data",
       "enabled": true,
       "_template": "section"
     },

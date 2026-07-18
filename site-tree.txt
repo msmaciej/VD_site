@@ -71,11 +71,9 @@
 ./src/pages
 ./src/pages/[dataPage].astro
 ./src/pages/check.astro
-./src/pages/data.astro
 ./src/pages/de
 ./src/pages/de/[dataPage].astro
 ./src/pages/de/check.astro
-./src/pages/de/data.astro
 ./src/pages/de/index.astro
 ./src/pages/index.astro
 ./src/utils
