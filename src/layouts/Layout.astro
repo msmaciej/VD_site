@@ -1,5 +1,16 @@
 ---
 // src/layouts/Layout.astro
+import siteSettings from '../content/settings/site.json';
+import SiteStatusScreen from '../components/SiteStatusScreen.astro';
+
+// ── Site status gate ──────────────────────────────────────────────────────
+// Every page (home, /check, /data, EN + DE) renders through this Layout, so
+// reading the status here is enough to cover the WHOLE public site with one
+// switch. "live" = normal. "preparation"/"maintenance" = the entire site is
+// replaced by SiteStatusScreen (see that component + _docs/README-SITE-STATUS.md).
+const siteStatus: string = (siteSettings as any).siteStatus || 'live';
+const isPaused = siteStatus === 'preparation' || siteStatus === 'maintenance';
+
 interface Props {
   title:        string;
   theme?:       string;
@@ -98,7 +109,7 @@ const autoOverrideCss = (autoBg || autoText)
     <title>{title}</title>
     <meta name="description"        content={description} />
     <link rel="canonical"           href={canonical} />
-    <meta name="robots"             content="index, follow" />
+    <meta name="robots"             content={isPaused ? "noindex, nofollow" : "index, follow"} />
 
     <!-- ── SEO: hreflang (bilingual) ── -->
     <link rel="alternate" hreflang="en"        href={hreflangEn} />
@@ -230,7 +241,9 @@ const autoOverrideCss = (autoBg || autoText)
     </script>
   </head>
   <body>
-    <slot />
+    {isPaused
+      ? <SiteStatusScreen mode={siteStatus as 'preparation' | 'maintenance'} lang={lang} />
+      : <slot />}
     <!-- Content & code protection -->
     <script is:inline>
     (function(){

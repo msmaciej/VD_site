@@ -7,6 +7,7 @@
 ./_docs/README-FITCHECK.md
 ./_docs/README-GUARDS.md
 ./_docs/README-MAINTENANCE.md
+./_docs/README-SITE-STATUS.md
 ./_docs/SETUP-sitemap-and-housekeeping.md
 ./_docs/_VortexDeep-background-LI.png
 ./_docs/_VortexDeep-fit-matrix-internal.png
@@ -48,6 +49,7 @@
 ./src/components/LanguageSwitcher.astro
 ./src/components/PlanetarySystemsBackground.astro
 ./src/components/SitePage.astro
+./src/components/SiteStatusScreen.astro
 ./src/content
 ./src/content/art
 ./src/content/art/fragment-01.json

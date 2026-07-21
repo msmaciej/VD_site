@@ -1,0 +1,105 @@
+diff --git a/astro.config.mjs b/astro.config.mjs
+index b7dc7b6..7646f4f 100644
+--- a/astro.config.mjs
++++ b/astro.config.mjs
+@@ -1,9 +1,22 @@
+ import { defineConfig } from 'astro/config';
+ import tailwind from '@astrojs/tailwind';
++import sitemap from '@astrojs/sitemap';
+ 
+ export default defineConfig({
+   site: 'https://vortexdeep.ch',
+-  integrations: [tailwind()],
++  integrations: [
++    tailwind(),
++    // Drift-proof sitemap: auto-generated from the real routes on every build,
++    // so a new page can never be silently left out. Emits hreflang alternates
++    // (en at /, de at /de/) and skips the Tina admin route.
++    sitemap({
++      i18n: {
++        defaultLocale: 'en',
++        locales: { en: 'en', de: 'de' },
++      },
++      filter: (page) => !page.includes('/admin'),
++    }),
++  ],
+   i18n: {
+     defaultLocale: 'en',
+     locales: ['en', 'de'],
+diff --git a/package.json b/package.json
+index 76f3bde..5548730 100644
+--- a/package.json
++++ b/package.json
+@@ -13,13 +13,14 @@
+     "clean": "rm -rf .tina/__generated__ && npm run admin"
+   },
+   "dependencies": {
++    "@astrojs/sitemap": "3.2.1",
+     "@astrojs/tailwind": "^5.1.5",
+     "@tinacms/cli": "^2.2.0",
+     "astro": "^4.16.19",
+     "react": "^18.3.1",
+     "react-dom": "^18.3.1",
+     "tailwindcss": "^3.4.19",
+-    "tinacms": "^1.6.7",
+-    "three": "^0.169.0"
++    "three": "^0.169.0",
++    "tinacms": "^1.6.7"
+   }
+ }
+diff --git a/public/robots.txt b/public/robots.txt
+index 0e7bdbe..39695b8 100644
+--- a/public/robots.txt
++++ b/public/robots.txt
+@@ -2,4 +2,4 @@ User-agent: *
+ Allow: /
+ Disallow: /admin/
+ 
+-Sitemap: https://vortexdeep.ch/sitemap.xml
++Sitemap: https://vortexdeep.ch/sitemap-index.xml
+diff --git a/scripts/verify-fitcheck.mjs b/scripts/verify-fitcheck.mjs
+index 5611cdd..25dfc2f 100644
+--- a/scripts/verify-fitcheck.mjs
++++ b/scripts/verify-fitcheck.mjs
+@@ -99,19 +99,20 @@ if (send && /honeypot[\s\S]{0,120}(http_response_code|exit\s*\()/i.test(send)) {
+   warn('Check that the honeypot still only FLAGS (soft) and does not hard-block a submission.');
+ }
+ 
+-// ── EXPOSURE: internal artifacts must not be web-served, ideally not in-repo. ──
++// ── EXPOSURE: internal artifacts must not be web-served (kept under _docs/). ──
++// Identified by filename so a move (root → _docs/ → wherever) doesn't blind the
++// check. The hard rule is only that they never land in a SERVED dir (public/ or
++// dist/); their presence elsewhere in a public repo is a warning handled below.
+ const internalArtifacts = [
+   '_VortexDeep-fit-matrix-internal.svg',
+   '_VortexDeep-fit-matrix-internal.png',
+   '_VortexDeep_Personas_Canvas.md',
+ ];
+ for (const a of internalArtifacts) {
+-  if (existsSync(P('dist', a)) || existsSync(P('dist/uploads', a)))
+-    fail(`Internal artifact "${a}" is in dist/ — it would be served by the website. Remove it from public/.`);
+-  if (existsSync(P('public', a)) || existsSync(P('public/uploads', a)))
+-    fail(`Internal artifact "${a}" is in public/ — Astro will publish it. Move it out of public/.`);
+-  if (existsSync(P(a)))
+-    warn(`Internal artifact "${a}" is committed at the repo root. Not served by the site, but visible to anyone with repo access — keep it out of a public repo (git rm --cached + .gitignore).`);
++  for (const servedDir of ['public', 'public/uploads', 'dist', 'dist/uploads']) {
++    if (existsSync(P(servedDir, a)))
++      fail(`Internal artifact "${a}" is in ${servedDir}/ — it would be served by the website. Keep it under _docs/ only.`);
++  }
+ }
+ 
+ // ── SECRET: a signing key must never be committed. ──
+@@ -134,9 +135,11 @@ for (const s of secretPaths) {
+   }
+ }
+ if (gitTracked) {
++  const tracked = [...gitTracked];
+   for (const a of internalArtifacts) {
+-    if (gitTracked.has(a)) {
+-      warn(`Internal artifact "${a}" is git-tracked — fine only if this repo is PRIVATE. If it's public, remove it or make the repo private.`);
++    const path = tracked.find((t) => t === a || t.endsWith('/' + a));
++    if (path) {
++      warn(`Internal artifact "${path}" is git-tracked — fine only if this repo is PRIVATE. If it's public, it's readable by anyone.`);
+     }
+   }
+ }

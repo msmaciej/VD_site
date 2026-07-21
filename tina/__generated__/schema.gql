@@ -682,6 +682,17 @@ type Page_deConnection implements Connection {
   edges: [Page_deConnectionEdges]
 }
 
+type SettingsSiteStatusContent {
+  preparationBadge_de: String
+  preparationBadge_en: String
+  preparationMessage_de: String
+  preparationMessage_en: String
+  maintenanceBadge_de: String
+  maintenanceBadge_en: String
+  maintenanceMessage_de: String
+  maintenanceMessage_en: String
+}
+
 type SettingsNavLinks {
   label: String
   label_de: String
@@ -716,6 +727,8 @@ type SettingsPlanetarySystems {
 }
 
 type Settings implements Node & Document {
+  siteStatus: String
+  siteStatusContent: SettingsSiteStatusContent
   siteName: String
   siteNameFont: String
   siteNameFontSize: String
@@ -769,6 +782,17 @@ type Settings implements Node & Document {
   _values: JSON!
 }
 
+input SettingsSiteStatusContentFilter {
+  preparationBadge_de: StringFilter
+  preparationBadge_en: StringFilter
+  preparationMessage_de: StringFilter
+  preparationMessage_en: StringFilter
+  maintenanceBadge_de: StringFilter
+  maintenanceBadge_en: StringFilter
+  maintenanceMessage_de: StringFilter
+  maintenanceMessage_en: StringFilter
+}
+
 input SettingsNavLinksFilter {
   label: StringFilter
   label_de: StringFilter
@@ -810,6 +834,8 @@ input ImageFilter {
 }
 
 input SettingsFilter {
+  siteStatus: StringFilter
+  siteStatusContent: SettingsSiteStatusContentFilter
   siteName: StringFilter
   siteNameFont: StringFilter
   siteNameFontSize: StringFilter
@@ -1830,6 +1856,17 @@ input Page_deMutation {
   blocks: [Page_deBlocksMutation]
 }
 
+input SettingsSiteStatusContentMutation {
+  preparationBadge_de: String
+  preparationBadge_en: String
+  preparationMessage_de: String
+  preparationMessage_en: String
+  maintenanceBadge_de: String
+  maintenanceBadge_en: String
+  maintenanceMessage_de: String
+  maintenanceMessage_en: String
+}
+
 input SettingsNavLinksMutation {
   label: String
   label_de: String
@@ -1864,6 +1901,8 @@ input SettingsPlanetarySystemsMutation {
 }
 
 input SettingsMutation {
+  siteStatus: String
+  siteStatusContent: SettingsSiteStatusContentMutation
   siteName: String
   siteNameFont: String
   siteNameFontSize: String

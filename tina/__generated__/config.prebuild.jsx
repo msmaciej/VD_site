@@ -608,6 +608,40 @@ var config_default = defineConfig({
         path: "src/content/settings",
         format: "json",
         fields: [
+          // ── Site status (maintenance / in-preparation gate) ───────────────
+          // "live" = normal site. The other two swap the ENTIRE public site
+          // (home, /check, /data, EN + DE) for one full-screen notice that
+          // carries the same animated background. After changing this you must
+          // run `npm run build` and upload dist/. The Tina admin (/admin) is
+          // never gated, so you can always come back here and set it to Live.
+          // See _docs/README-SITE-STATUS.md.
+          {
+            type: "string",
+            name: "siteStatus",
+            label: "Site status",
+            description: "Live = site works normally. In preparation / Maintenance = the whole public site is replaced by ONE full-screen notice (with the same animated background), and no other page stays reachable. Remember: run a build and upload dist/ after changing this.",
+            options: [
+              { label: "Live \u2014 normal site", value: "live" },
+              { label: "In preparation \u2014 not yet commercially active (RAV wording)", value: "preparation" },
+              { label: "Maintenance \u2014 temporarily offline, back soon", value: "maintenance" }
+            ]
+          },
+          {
+            type: "object",
+            name: "siteStatusContent",
+            label: "Site status \u2014 custom wording (optional)",
+            description: "Leave everything empty to use the built-in bilingual defaults. Fill only the lines you want to override.",
+            fields: [
+              { type: "string", name: "preparationBadge_de", label: "In preparation \u2014 badge (DE)" },
+              { type: "string", name: "preparationBadge_en", label: "In preparation \u2014 badge (EN)" },
+              { type: "string", name: "preparationMessage_de", label: "In preparation \u2014 message (DE)", ui: { component: "textarea" } },
+              { type: "string", name: "preparationMessage_en", label: "In preparation \u2014 message (EN)", ui: { component: "textarea" } },
+              { type: "string", name: "maintenanceBadge_de", label: "Maintenance \u2014 badge (DE)" },
+              { type: "string", name: "maintenanceBadge_en", label: "Maintenance \u2014 badge (EN)" },
+              { type: "string", name: "maintenanceMessage_de", label: "Maintenance \u2014 message (DE)", ui: { component: "textarea" } },
+              { type: "string", name: "maintenanceMessage_en", label: "Maintenance \u2014 message (EN)", ui: { component: "textarea" } }
+            ]
+          },
           // ── Hero: Main title ──────────────────────────────────────────────
           { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },

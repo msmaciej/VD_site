@@ -248,6 +248,18 @@ fragment Page_deParts on Page_de {
 
 fragment SettingsParts on Settings {
   __typename
+  siteStatus
+  siteStatusContent {
+    __typename
+    preparationBadge_de
+    preparationBadge_en
+    preparationMessage_de
+    preparationMessage_en
+    maintenanceBadge_de
+    maintenanceBadge_en
+    maintenanceMessage_de
+    maintenanceMessage_en
+  }
   siteName
   siteNameFont
   siteNameFontSize
