@@ -187,21 +187,19 @@ try {
   console.warn(`[gen-fitcheck-profiles] could not read site settings, using deep/IBM Plex Mono: ${e.message}`);
 }
 
-// ── Ensure a signing secret exists (never committed; deploy-only) ────────────
-// send-check.php / confirm.php need public/fitcheck-secret.php at runtime. It is
-// gitignored, so a fresh clone won't have one — create it here so `npm run
-// build` always produces a deployable set. Existing secret is left untouched.
-{
-  const secretPath = resolve(REPO_ROOT, 'public/fitcheck-secret.php');
-  let exists = true;
-  try { readFileSync(secretPath); } catch { exists = false; }
-  if (!exists) {
-    const bytes = (await import('node:crypto')).randomBytes(48).toString('hex');
-    const php = `<?php\n// GENERATED signing key — do not commit. Rotate by replacing the string.\n$VD_HMAC_SECRET = '${bytes}';\n`;
-    writeFileSync(secretPath, php, 'utf8');
-    console.log('[gen-fitcheck-profiles] created public/fitcheck-secret.php (new signing key)');
-  }
-}
+// ── Signing secret: REMOVED (2026-07) ───────────────────────────────────────
+// This block used to auto-create public/fitcheck-secret.php on every build.
+// That key belonged to the OLD Fit Check flow, where the visitor was emailed a
+// signed link and clicked it to reveal the result (confirm.php). That flow was
+// replaced by the current on-site reveal: send-check.php scores the submission,
+// emails the team, and returns the matched copy straight to the page. No link
+// is issued, so nothing signs anything, so no key is needed.
+//
+// It was also actively harmful: the repo has no .gitignore, so the generated
+// key was committed to a PUBLIC repo on every fresh clone + build.
+//
+// confirm.php and fitcheck-secret.php are both deleted. Do not reintroduce
+// this block. See _docs/README-FITCHECK-INVARIANTS.md.
 
 // ── Emit the PHP include ─────────────────────────────────────────────────────
 const stamp = new Date().toISOString();

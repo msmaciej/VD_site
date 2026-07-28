@@ -25,18 +25,26 @@ const warn = (m) => warns.push(m);
 // ── Gather the browser-facing surface: built check pages + their JS bundles.
 //    Skip three.module*.js — it's the 3D background lib and legitimately
 //    contains words like "optimize"/"matrix" (Matrix4), which are not leaks.
+// Where the built site lives. `npm run deploy` puts the REAL site in
+// deploy/_vd-live/ (the public docroot only holds the paused notice, which has
+// no Fit Check to scan). `npm run build` still writes dist/. Prefer whichever
+// exists, newest first.
+const BUILD_DIR = existsSync(P('deploy/_vd-live/check/index.html'))
+  ? 'deploy/_vd-live'
+  : 'dist';
+
 const distFiles = [];
-for (const f of ['dist/check/index.html', 'dist/de/check/index.html']) {
+for (const f of [`${BUILD_DIR}/check/index.html`, `${BUILD_DIR}/de/check/index.html`]) {
   if (existsSync(P(f))) distFiles.push(f);
 }
-const astroDir = P('dist/_astro');
+const astroDir = P(`${BUILD_DIR}/_astro`);
 if (existsSync(astroDir)) {
   for (const f of readdirSync(astroDir)) {
-    if (f.endsWith('.js') && !f.startsWith('three.module')) distFiles.push(`dist/_astro/${f}`);
+    if (f.endsWith('.js') && !f.startsWith('three.module')) distFiles.push(`${BUILD_DIR}/_astro/${f}`);
   }
 }
 if (distFiles.length === 0) {
-  fail('No built check pages found in dist/. Run `npm run build` first.');
+  fail(`No built check pages found in ${BUILD_DIR}/. Run \`npm run deploy\` (or \`npm run build\`) first.`);
 }
 const browserBlob = distFiles.map((f) => readFileSync(P(f), 'utf8')).join('\n');
 
@@ -109,7 +117,7 @@ const internalArtifacts = [
   '_VortexDeep_Personas_Canvas.md',
 ];
 for (const a of internalArtifacts) {
-  for (const servedDir of ['public', 'public/uploads', 'dist', 'dist/uploads']) {
+  for (const servedDir of ['public', 'public/uploads', BUILD_DIR, `${BUILD_DIR}/uploads`]) {
     if (existsSync(P(servedDir, a)))
       fail(`Internal artifact "${a}" is in ${servedDir}/ — it would be served by the website. Keep it under _docs/ only.`);
   }

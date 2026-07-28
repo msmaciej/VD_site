@@ -8,7 +8,15 @@ import SiteStatusScreen from '../components/SiteStatusScreen.astro';
 // reading the status here is enough to cover the WHOLE public site with one
 // switch. "live" = normal. "preparation"/"maintenance" = the entire site is
 // replaced by SiteStatusScreen (see that component + _docs/README-SITE-STATUS.md).
-const siteStatus: string = (siteSettings as any).siteStatus || 'live';
+// VD_SITE_STATUS (env) wins when set, so one codebase can produce BOTH builds
+// in a single deploy run: the public "in preparation" site and the real site
+// that sits behind the preview gate. See scripts/build-deploy.mjs. When the env
+// var is absent (normal `npm run dev` / `npm run build`), site.json decides,
+// exactly as before.
+const siteStatus: string =
+  (typeof process !== 'undefined' && process.env?.VD_SITE_STATUS) ||
+  (siteSettings as any).siteStatus ||
+  'live';
 const isPaused = siteStatus === 'preparation' || siteStatus === 'maintenance';
 
 interface Props {

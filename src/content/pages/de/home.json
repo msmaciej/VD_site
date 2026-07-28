@@ -339,7 +339,7 @@
       "_template": "processFlow"
     },
     {
-      "title": "In der Praxis",
+      "title": "In der Praxis -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",
@@ -355,11 +355,11 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {
-      "industry": "Internationaler Handel",
+      "industry": "Internationaler Handel -",
       "client": "",
       "location": "Schweiz",
       "package": "Basic + KI-Triage",
@@ -373,17 +373,17 @@
       "bodyFontWeight": "font-light",
       "labelFontSize": "text-[13px]",
       "metaFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "caseStudy"
     },
     {
       "quote": "„Früher haben wir viel Zeit damit verbracht, E-Mails zu prüfen und zu sortieren, bevor wir überhaupt antworten konnten. Das ist jetzt deutlich weniger — wir können uns auf die Antworten konzentrieren, die das Geschäft wirklich voranbringen.\"",
       "attributionName": "",
-      "attributionOrg": "MG Redshift",
+      "attributionOrg": "MG Redshift -",
       "quoteFontSize": "text-[15px]",
       "quoteFontWeight": "font-normal",
       "metaFontSize": "text-[11px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "testimonial"
     },
     {
@@ -405,7 +405,7 @@
       "_template": "caseStudy"
     },
     {
-      "title": "Mit wem Sie es zu tun haben",
+      "title": "Mit wem Sie es zu tun haben -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Zwanzig Jahre Prozesse gebaut und geführt — | Verfahrenstechnik, Projektmanagement. | Heute KI-Workflow-Automatisierung.",
@@ -421,9 +421,9 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "email": "info@vortexdeep.ch",
+      "email": "-",
       "phone": "",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {

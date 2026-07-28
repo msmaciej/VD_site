@@ -45,7 +45,7 @@
       "title": "The Work We Take Off You",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you",
+      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you | . ",
       "subTitleFontSize": "text-[15px]",
       "subTitleFontWeight": "font-normal",
       "content": "Almost every one of these follows the same shape: something arrives, it's read and sorted, a reply or entry is drafted — and held for you. We take the repetitive slice; the deciding, the researching and the judgement stay with you. | . | Some work is only ever partly automatable — where a person must investigate or decide, like a root-cause review or a quality programme. We take the measurable, repeatable part and say plainly where you stay in charge. | . | Most requests cross more than one area: an order query can mean a message, a stock check and a return at once. We assemble the right pieces behind the scenes, so your customer gets one smooth reply. Start with the one that's costing you hours, and grow from there. | .",
@@ -339,7 +339,7 @@
       "_template": "processFlow"
     },
     {
-      "title": "In Practice",
+      "title": "In Practice -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",
@@ -356,11 +356,11 @@
       "cueLabel": "More",
       "cueLabelOpen": "Less",
       "showArt": false,
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {
-      "industry": "International Trade",
+      "industry": "International Trade -",
       "client": "",
       "location": "Switzerland",
       "package": "Basic + AI Triage",
@@ -374,17 +374,17 @@
       "bodyFontWeight": "font-light",
       "labelFontSize": "text-[15px]",
       "metaFontSize": "text-[15px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "caseStudy"
     },
     {
       "quote": "\"We used to spend a lot of time checking and classifying emails before we could even reply. That's now greatly reduced — we can focus on the replies that actually move the business.\"",
       "attributionName": "",
-      "attributionOrg": "MG Redshift",
+      "attributionOrg": "MG Redshift -",
       "quoteFontSize": "text-[15px]",
       "quoteFontWeight": "font-normal",
       "metaFontSize": "text-[13px]",
-      "enabled": true,
+      "enabled": false,
       "_template": "testimonial"
     },
     {
@@ -406,10 +406,10 @@
       "_template": "caseStudy"
     },
     {
-      "title": "Who You're Dealing With",
+      "title": "Who You're Dealing With -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
-      "subTitle": "Maciek Szczech · Wald ZH · Switzerland | Twenty years of building and running processes — | process engineering, project management. | Now AI workflow automation.",
+      "subTitle": "Maciek Szczech · Wald ZH · Schweiz | Twenty years of building and running processes — | process engineering, project management. | Now AI workflow automation.",
       "subTitleFontSize": "text-[13px]",
       "subTitleFontWeight": "font-thin",
       "content": "No account manager. | The person who builds it is the person who answers the phone. | Stop at the end of any month. No lock-in. | .",
@@ -422,13 +422,13 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
-      "email": "info@vortexdeep.ch",
+      "email": "",
       "phone": "",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {
-      "title": "The Fit Check",
+      "title": "The Fit Check -",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "Six questions | About two minutes",
@@ -477,7 +477,7 @@
       "_template": "processFlow"
     },
     {
-      "title": "Get In Touch",
+      "title": "Contact",
       "titleFontSize": "text-[15px]",
       "titleFontWeight": "font-bold",
       "subTitle": "",

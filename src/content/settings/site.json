@@ -1,9 +1,9 @@
 {
-  "siteStatus": "preparation",
   "headerPaddingTop": "120px",
   "headerPaddingBottom": "0px",
   "footerPaddingTop": "0px",
   "footerPaddingBottom": "120px",
+  "siteStatus": "live",
   "siteName": "VortexDeep",
   "siteNameFont": "",
   "siteNameFontSize": "text-lg md:text-xl",
@@ -25,7 +25,7 @@
   "socialLinks": [
     {
       "platform": "Facebook",
-      "url": "https://www.facebook.com/profile.php?id=61591436130103"
+      "url": "https://www.facebook.com/people/VortexDeep/61591436130103/"
     }
   ],
   "fontPreset": "IBM Plex Mono",
