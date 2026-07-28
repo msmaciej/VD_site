@@ -1,0 +1,31 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VortexDeep">
+  <title>VortexDeep</title>
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="98" fill="#0c0f14"/>
+
+  <!-- Hexagon frame -->
+  <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+           fill="none" stroke="#d0d4dc" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- 6 network nodes — deep red accent -->
+  <circle cx="100" cy="22"  r="5.5" fill="#8B1A2B"/>
+  <circle cx="168" cy="61"  r="5.5" fill="#8B1A2B"/>
+  <circle cx="168" cy="139" r="5.5" fill="#8B1A2B"/>
+  <circle cx="100" cy="178" r="5.5" fill="#8B1A2B"/>
+  <circle cx="32"  cy="139" r="5.5" fill="#8B1A2B"/>
+  <circle cx="32"  cy="61"  r="5.5" fill="#8B1A2B"/>
+
+  <!-- V monogram -->
+  <polyline points="56,76 78,122 100,76"
+            fill="none" stroke="#d0d4dc" stroke-width="6"
+            stroke-linecap="round" stroke-linejoin="miter"/>
+
+  <!-- D monogram — vertical stroke -->
+  <line x1="104" y1="76" x2="104" y2="122"
+        stroke="#d0d4dc" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- D monogram — right curve -->
+  <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+        fill="none" stroke="#d0d4dc" stroke-width="6" stroke-linecap="round"/>
+</svg>
