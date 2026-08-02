@@ -151,6 +151,21 @@ var fontWeightOptions = [
   { label: "Semibold (600)", value: "font-semibold" },
   { label: "Bold (700)", value: "font-bold" }
 ];
+var noticeSizeOptions = [
+  { label: "XS \u2014 10px", value: "10px" },
+  { label: "S \u2014 11px", value: "11px" },
+  { label: "M \u2014 12px", value: "12px" },
+  { label: "L \u2014 13px", value: "13px" },
+  { label: "XL \u2014 14px", value: "14px" }
+];
+var noticeWeightOptions = [
+  { label: "Thin (100)", value: "100" },
+  { label: "Light (300)", value: "300" },
+  { label: "Regular (400)", value: "400" },
+  { label: "Medium (500)", value: "500" },
+  { label: "Semibold (600)", value: "600" },
+  { label: "Bold (700)", value: "700" }
+];
 var cueStyleOptions = [
   { label: "Dot \u2014 one breathing dot (default, most subtle)", value: "dot" },
   { label: "Dots \u2014 a trio of dots (a little more explicit)", value: "dots" },
@@ -705,6 +720,10 @@ var config_default = defineConfig({
             { label: "Animated (pulsing)", value: "animated" },
             { label: "None", value: "none" }
           ] },
+          { type: "string", name: "noticeBannerTextFontSize", label: "Notice banner \u2014 pill text size", options: noticeSizeOptions },
+          { type: "string", name: "noticeBannerTextFontWeight", label: "Notice banner \u2014 pill text weight", options: noticeWeightOptions },
+          { type: "string", name: "noticeBannerBodyFontSize", label: "Notice banner \u2014 longer text size", options: noticeSizeOptions },
+          { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner \u2014 longer text weight", options: noticeWeightOptions },
           // ── Header ────────────────────────────────────────────────────────
           { type: "string", name: "headerLayout", label: "Header Layout Style", options: [
             { label: "Centered (Links Below Title)", value: "centered" },

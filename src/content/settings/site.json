@@ -17,6 +17,10 @@
   "noticeBannerStyle": "ribbon",
   "noticeBannerFlowSeconds": "34",
   "noticeBannerDot": "none",
+  "noticeBannerTextFontSize": "12px",
+  "noticeBannerTextFontWeight": "400",
+  "noticeBannerBodyFontSize": "12px",
+  "noticeBannerBodyFontWeight": "400",
   "headerLayout": "centered",
   "navLinks": [
     {

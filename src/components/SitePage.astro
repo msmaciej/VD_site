@@ -103,6 +103,10 @@ const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
   : (noticeBannerStyle === 'pill' ? '38px' : '32px');
 // Banner dot: 'static' (steady glow, default), 'animated' (pulses), or 'none'.
 const noticeDot = settings.noticeBannerDot || 'static';
+const noticeTextSize   = settings.noticeBannerTextFontSize   || '11px';
+const noticeTextWeight = settings.noticeBannerTextFontWeight || '400';
+const noticeBodySize   = settings.noticeBannerBodyFontSize   || '12px';
+const noticeBodyWeight = settings.noticeBannerBodyFontWeight || '400';
 
 const metaTitle = lang === 'de'
   ? (settings.metaTitle_de     || settings.metaTitle     || 'VortexDeep — KI-Automatisierung für KMU in Zürich')
@@ -983,14 +987,14 @@ const contentGroups = (text: string) => {
     <div class="vd-notice-bar vd-load-fade" role="status" style={headerFooterBg}>
       {noticeBannerStyle === 'ribbon' && (
         <div class="vd-notice-row">
-          <span style={`display:inline-flex; align-items:center; gap:9px; flex:none; color:var(--zen-muted); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+          <span style={`display:inline-flex; align-items:center; gap:9px; flex:none; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:0.2em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
             {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
           </span>
           {noticeBannerBody && (
             <Fragment>
               <span style="width:1px; height:15px; background:var(--zen-muted); opacity:0.5; flex:none;"></span>
               <div class="vd-notice-flow">
-                <div class="vd-notice-track" style={`--vdFlowSecs:${noticeFlowSecs}s; color:var(--zen-muted); font-size:11px; letter-spacing:0.12em; font-family:${fontFamily(activeFont)};`}>
+                <div class="vd-notice-track" style={`--vdFlowSecs:${noticeFlowSecs}s; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; letter-spacing:0.12em; font-family:${fontFamily(activeFont)};`}>
                   <span style="padding:0 42px;">{noticeBannerBody}</span>
                   <span style="padding:0 42px;" aria-hidden="true">{noticeBannerBody}</span>
                 </div>
@@ -1000,7 +1004,7 @@ const contentGroups = (text: string) => {
         </div>
       )}
       {noticeBannerStyle === 'pill' && (
-        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
           {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
         </span>
       )}
@@ -1039,11 +1043,11 @@ const contentGroups = (text: string) => {
       {showNoticeBanner && noticeBannerStyle === 'stacked' && (
         <div class="vd-notice-wrap vd-load-fade" role="status">
           <div class="vd-notice-block">
-            <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+            <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
               {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
             </span>
             {noticeBannerBody && (
-              <p style={`max-width:52ch; margin:14px auto 0; color:var(--zen-muted); font-size:12px; line-height:1.65; letter-spacing:0.02em; opacity:0.9; font-family:${fontFamily(activeFont)};`}>{noticeBannerBody}</p>
+              <p style={`max-width:52ch; margin:14px auto 0; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; line-height:1.65; letter-spacing:0.02em; opacity:0.9; font-family:${fontFamily(activeFont)};`}>{noticeBannerBody}</p>
             )}
           </div>
         </div>

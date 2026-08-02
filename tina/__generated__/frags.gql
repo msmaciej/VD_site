@@ -279,6 +279,10 @@ fragment SettingsParts on Settings {
   noticeBannerStyle
   noticeBannerFlowSeconds
   noticeBannerDot
+  noticeBannerTextFontSize
+  noticeBannerTextFontWeight
+  noticeBannerBodyFontSize
+  noticeBannerBodyFontWeight
   headerLayout
   headerLinksFontSize
   navLinks {

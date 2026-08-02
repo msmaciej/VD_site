@@ -748,6 +748,10 @@ type Settings implements Node & Document {
   noticeBannerStyle: String
   noticeBannerFlowSeconds: String
   noticeBannerDot: String
+  noticeBannerTextFontSize: String
+  noticeBannerTextFontWeight: String
+  noticeBannerBodyFontSize: String
+  noticeBannerBodyFontWeight: String
   headerLayout: String
   headerLinksFontSize: String
   navLinks: [SettingsNavLinks]
@@ -864,6 +868,10 @@ input SettingsFilter {
   noticeBannerStyle: StringFilter
   noticeBannerFlowSeconds: StringFilter
   noticeBannerDot: StringFilter
+  noticeBannerTextFontSize: StringFilter
+  noticeBannerTextFontWeight: StringFilter
+  noticeBannerBodyFontSize: StringFilter
+  noticeBannerBodyFontWeight: StringFilter
   headerLayout: StringFilter
   headerLinksFontSize: StringFilter
   navLinks: SettingsNavLinksFilter
@@ -1940,6 +1948,10 @@ input SettingsMutation {
   noticeBannerStyle: String
   noticeBannerFlowSeconds: String
   noticeBannerDot: String
+  noticeBannerTextFontSize: String
+  noticeBannerTextFontWeight: String
+  noticeBannerBodyFontSize: String
+  noticeBannerBodyFontWeight: String
   headerLayout: String
   headerLinksFontSize: String
   navLinks: [SettingsNavLinksMutation]

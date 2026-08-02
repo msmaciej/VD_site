@@ -40,6 +40,21 @@ const fontWeightOptions = [
   { label: "Medium (500)",   value: "font-medium"   },
   { label: "Semibold (600)", value: "font-semibold" },
   { label: "Bold (700)",     value: "font-bold"     },
+]
+const noticeSizeOptions = [
+  { label: "XS — 10px", value: "10px" },
+  { label: "S — 11px",  value: "11px" },
+  { label: "M — 12px",  value: "12px" },
+  { label: "L — 13px",  value: "13px" },
+  { label: "XL — 14px", value: "14px" },
+]
+const noticeWeightOptions = [
+  { label: "Thin (100)",     value: "100" },
+  { label: "Light (300)",    value: "300" },
+  { label: "Regular (400)",  value: "400" },
+  { label: "Medium (500)",   value: "500" },
+  { label: "Semibold (600)", value: "600" },
+  { label: "Bold (700)",     value: "700" },
 ];
 
 // The reveal cue for a folded section — the small affordance a first-time
@@ -425,6 +440,10 @@ export default defineConfig({
             { label: "Animated (pulsing)",        value: "animated" },
             { label: "None",                      value: "none"     },
           ]},
+          { type: "string", name: "noticeBannerTextFontSize",   label: "Notice banner — pill text size",     options: noticeSizeOptions },
+          { type: "string", name: "noticeBannerTextFontWeight", label: "Notice banner — pill text weight",   options: noticeWeightOptions },
+          { type: "string", name: "noticeBannerBodyFontSize",   label: "Notice banner — longer text size",   options: noticeSizeOptions },
+          { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner — longer text weight", options: noticeWeightOptions },
 
           // ── Header ────────────────────────────────────────────────────────
           { type: "string", name: "headerLayout", label: "Header Layout Style", options: [
