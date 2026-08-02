@@ -69,7 +69,9 @@ const autoFamily = themeFamily(getBgColor());
 
 // ── Layout dimensions ─────────────────────────────────────────────────────────
 const headerHeight     = settings.headerHeight     || '52px';
-const footerHeight     = settings.footerHeight     || '44px';
+const footerHeight     = (settings.matchFooterToHeader === false)
+  ? (settings.footerHeight || '52px')
+  : headerHeight;
 const headerInnerWidth = settings.headerInnerWidth || '680px';
 
 // ── Gallery column map ────────────────────────────────────────────────────────
@@ -83,6 +85,24 @@ const widthMap: Record<string, string> = {
 const subSiteName = lang === 'de'
   ? (settings.subSiteName_de   || settings.subSiteName)
   : settings.subSiteName;
+
+// Notice banner — small editable strip under the header (toggle in Site Settings).
+const noticeBannerText = lang === 'de'
+  ? (settings.noticeBannerText_de || settings.noticeBannerText_en)
+  : (settings.noticeBannerText_en || settings.noticeBannerText_de);
+const showNoticeBanner = settings.noticeBannerEnabled && !!noticeBannerText;
+const noticeBannerBody = lang === 'de'
+  ? (settings.noticeBannerBody_de || settings.noticeBannerBody_en)
+  : (settings.noticeBannerBody_en || settings.noticeBannerBody_de);
+const noticeBannerStyle = settings.noticeBannerStyle || 'ribbon';
+const noticeFlowSecs    = settings.noticeBannerFlowSeconds || '34';
+// Reserved height for the persistent notice bar (ribbon/pill sit fixed under the
+// header on every screen). Stacked stays hero-only, so it reserves nothing.
+const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
+  ? '0px'
+  : (noticeBannerStyle === 'pill' ? '38px' : '32px');
+// Banner dot: 'static' (steady glow, default), 'animated' (pulses), or 'none'.
+const noticeDot = settings.noticeBannerDot || 'static';
 
 const metaTitle = lang === 'de'
   ? (settings.metaTitle_de     || settings.metaTitle     || 'VortexDeep — KI-Automatisierung für KMU in Zürich')
@@ -376,7 +396,7 @@ const contentGroups = (text: string) => {
     />
   )}
 
-  <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth }}>
+  <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth, noticeH }}>
     html, body { font-family: var(--activeFontFamily); }
 
     /* ── Scroll snap — original setup, unchanged ── */
@@ -486,7 +506,7 @@ const contentGroups = (text: string) => {
       scroll-snap-align: start; scroll-snap-stop: always;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding-top: calc(var(--headerHeight) + 12px);
+      padding-top: calc(var(--headerHeight) + var(--noticeH, 0px) + 12px);
       /* FIX 8 cont: match the footer's expanded height on notched phones */
       padding-bottom: calc(var(--footerHeight) + env(safe-area-inset-bottom, 0px) + 12px);
       padding-left: 1.5rem; padding-right: 1.5rem;
@@ -499,6 +519,30 @@ const contentGroups = (text: string) => {
       from { opacity:0; transform:translateY(10px); }
       to   { opacity:1; transform:translateY(0);    }
     }
+
+    /* ── Notice banner (under header) ── */
+    .vd-notice-wrap { position:absolute; top:calc(var(--headerHeight) + 10px); left:0; right:0;
+      display:flex; justify-content:center; padding:0; pointer-events:none; z-index:2; }
+    .vd-notice-wrap > * { pointer-events:auto; }
+    .vd-notice-row { width:100%; max-width:var(--headerInnerWidth); padding:2px clamp(1rem,4vw,2rem);
+      display:flex; align-items:center; gap:16px; }
+    .vd-notice-block { width:100%; max-width:var(--headerInnerWidth); padding:0 clamp(1rem,4vw,2rem); text-align:center; }
+    .vd-notice-bar { position:fixed; top:var(--headerHeight); left:0; right:0; z-index:49;
+      min-height:var(--noticeH,0px); display:flex; align-items:center; justify-content:center; }
+    .vd-notice-dot { width:7px; height:7px; border-radius:50%; background:var(--zen-accent);
+      box-shadow:0 0 11px 1px var(--zen-accent); flex:none; display:inline-block; }
+    .vd-notice-dot--pulse { animation: vdNoticePulse 3s ease-in-out infinite; }
+    @keyframes vdNoticePulse { 0%,100%{ opacity:1; box-shadow:0 0 11px 1px var(--zen-accent); }
+      50%{ opacity:0.45; box-shadow:0 0 4px 0 var(--zen-accent); } }
+    @media (prefers-reduced-motion: reduce){ .vd-notice-dot--pulse{ animation:none; } }
+    .vd-notice-flow { flex:1; min-width:0; overflow:hidden;
+      -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
+      mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%); }
+    .vd-notice-track { display:inline-flex; white-space:nowrap; will-change:transform;
+      animation: vdNoticeFlow var(--vdFlowSecs,34s) linear infinite; }
+    .vd-notice-flow:hover .vd-notice-track { animation-play-state:paused; }
+    @keyframes vdNoticeFlow { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @media (prefers-reduced-motion: reduce){ .vd-notice-track{ animation:none; } }
     .vd-reveal {
       opacity: 0; transform: translateY(10px);
       transition: opacity 1.6s cubic-bezier(0.4,0,0.2,1),
@@ -935,6 +979,34 @@ const contentGroups = (text: string) => {
     </div>
   </header>
 
+  {showNoticeBanner && noticeBannerStyle !== 'stacked' && (
+    <div class="vd-notice-bar vd-load-fade" role="status" style={headerFooterBg}>
+      {noticeBannerStyle === 'ribbon' && (
+        <div class="vd-notice-row">
+          <span style={`display:inline-flex; align-items:center; gap:9px; flex:none; color:var(--zen-muted); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+            {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
+          </span>
+          {noticeBannerBody && (
+            <Fragment>
+              <span style="width:1px; height:15px; background:var(--zen-muted); opacity:0.5; flex:none;"></span>
+              <div class="vd-notice-flow">
+                <div class="vd-notice-track" style={`--vdFlowSecs:${noticeFlowSecs}s; color:var(--zen-muted); font-size:11px; letter-spacing:0.12em; font-family:${fontFamily(activeFont)};`}>
+                  <span style="padding:0 42px;">{noticeBannerBody}</span>
+                  <span style="padding:0 42px;" aria-hidden="true">{noticeBannerBody}</span>
+                </div>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      )}
+      {noticeBannerStyle === 'pill' && (
+        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+          {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
+        </span>
+      )}
+    </div>
+  )}
+
   <!-- ── FIXED FOOTER ── -->
   <footer class="vd-fixed-footer vd-load-fade" style={headerFooterBg}>
     {settings.socialLinks?.map((social: any) => {
@@ -964,6 +1036,18 @@ const contentGroups = (text: string) => {
 
     <!-- SCREEN 1: Hero -->
     <div class="vd-screen vd-load-fade">
+      {showNoticeBanner && noticeBannerStyle === 'stacked' && (
+        <div class="vd-notice-wrap vd-load-fade" role="status">
+          <div class="vd-notice-block">
+            <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; font-family:${fontFamily(activeFont)};`}>
+              {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
+            </span>
+            {noticeBannerBody && (
+              <p style={`max-width:52ch; margin:14px auto 0; color:var(--zen-muted); font-size:12px; line-height:1.65; letter-spacing:0.02em; opacity:0.9; font-family:${fontFamily(activeFont)};`}>{noticeBannerBody}</p>
+            )}
+          </div>
+        </div>
+      )}
       <div class="w-full max-w-xl text-center">
         {!settings.showSubSiteNameOnly && settings.siteName && (
           <h1 class={`${settings.siteNameFontSize || 'text-3xl md:text-4xl'} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}

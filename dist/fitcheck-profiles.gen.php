@@ -9,7 +9,7 @@
  *
  * Any edit you make here is overwritten on the next build. Change the copy
  * in config.json / Tina instead.
- * Generated: 2026-07-28T20:05:57.043Z
+ * Generated: 2026-08-02T11:19:50.757Z
  */
 
 $PROFILES = [

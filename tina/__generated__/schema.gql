@@ -740,6 +740,14 @@ type Settings implements Node & Document {
   subSiteNameFontWeight: String
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
+  noticeBannerEnabled: Boolean
+  noticeBannerText_en: String
+  noticeBannerText_de: String
+  noticeBannerBody_en: String
+  noticeBannerBody_de: String
+  noticeBannerStyle: String
+  noticeBannerFlowSeconds: String
+  noticeBannerDot: String
   headerLayout: String
   headerLinksFontSize: String
   navLinks: [SettingsNavLinks]
@@ -764,6 +772,7 @@ type Settings implements Node & Document {
   depthBackground: SettingsDepthBackground
   planetarySystems: SettingsPlanetarySystems
   headerHeight: String
+  matchFooterToHeader: Boolean
   footerHeight: String
   headerInnerWidth: String
   siteUrl: String
@@ -847,6 +856,14 @@ input SettingsFilter {
   subSiteNameFontWeight: StringFilter
   subSiteNameTracking: StringFilter
   showSubSiteNameOnly: BooleanFilter
+  noticeBannerEnabled: BooleanFilter
+  noticeBannerText_en: StringFilter
+  noticeBannerText_de: StringFilter
+  noticeBannerBody_en: StringFilter
+  noticeBannerBody_de: StringFilter
+  noticeBannerStyle: StringFilter
+  noticeBannerFlowSeconds: StringFilter
+  noticeBannerDot: StringFilter
   headerLayout: StringFilter
   headerLinksFontSize: StringFilter
   navLinks: SettingsNavLinksFilter
@@ -871,6 +888,7 @@ input SettingsFilter {
   depthBackground: SettingsDepthBackgroundFilter
   planetarySystems: SettingsPlanetarySystemsFilter
   headerHeight: StringFilter
+  matchFooterToHeader: BooleanFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
   siteUrl: StringFilter
@@ -1914,6 +1932,14 @@ input SettingsMutation {
   subSiteNameFontWeight: String
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
+  noticeBannerEnabled: Boolean
+  noticeBannerText_en: String
+  noticeBannerText_de: String
+  noticeBannerBody_en: String
+  noticeBannerBody_de: String
+  noticeBannerStyle: String
+  noticeBannerFlowSeconds: String
+  noticeBannerDot: String
   headerLayout: String
   headerLinksFontSize: String
   navLinks: [SettingsNavLinksMutation]
@@ -1938,6 +1964,7 @@ input SettingsMutation {
   depthBackground: SettingsDepthBackgroundMutation
   planetarySystems: SettingsPlanetarySystemsMutation
   headerHeight: String
+  matchFooterToHeader: Boolean
   footerHeight: String
   headerInnerWidth: String
   siteUrl: String

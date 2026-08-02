@@ -404,6 +404,28 @@ export default defineConfig({
           ]},
           { type: "boolean", name: "showSubSiteNameOnly",    label: "Show subtitle only (hide main title)" },
 
+          // ── Notice banner (small strip under the header, on the live site) ─
+          { type: "boolean", name: "noticeBannerEnabled", label: "Show notice banner (small strip under the header)" },
+          { type: "string",  name: "noticeBannerText_en", label: "Notice banner text (EN)", description: "e.g. In preparation — leave empty or switch off to hide" },
+          { type: "string",  name: "noticeBannerText_de", label: "Notice banner text (DE)", description: "e.g. In Vorbereitung" },
+          { type: "string",  name: "noticeBannerBody_en", label: "Notice banner — longer explanation (EN, optional)", ui: { component: "textarea" }, description: "Shown as small text under the banner pill. Leave empty to show only the pill." },
+          { type: "string",  name: "noticeBannerBody_de", label: "Notice banner — longer explanation (DE, optional)", ui: { component: "textarea" } },
+          { type: "string",  name: "noticeBannerStyle", label: "Notice banner — style / placement", options: [
+            { label: "Ribbon under header (flowing text)", value: "ribbon"  },
+            { label: "Stacked under header (no motion)",   value: "stacked" },
+            { label: "Pill only",                          value: "pill"    },
+          ]},
+          { type: "string",  name: "noticeBannerFlowSeconds", label: "Ribbon flow speed (ribbon style only)", options: [
+            { label: "Very slow", value: "48" },
+            { label: "Slow",      value: "34" },
+            { label: "Medium",    value: "24" },
+          ]},
+          { type: "string",  name: "noticeBannerDot", label: "Notice banner — dot", options: [
+            { label: "Static glow (recommended)", value: "static"   },
+            { label: "Animated (pulsing)",        value: "animated" },
+            { label: "None",                      value: "none"     },
+          ]},
+
           // ── Header ────────────────────────────────────────────────────────
           { type: "string", name: "headerLayout", label: "Header Layout Style", options: [
             { label: "Centered (Links Below Title)", value: "centered"     },
@@ -551,11 +573,12 @@ export default defineConfig({
             { label: "Comfortable — 64px",            value: "64px" },
             { label: "Spacious — 80px",               value: "80px" },
           ]},
-          { type: "string", name: "footerHeight", label: "Footer Height", options: [
-            { label: "Compact — 36px",                value: "36px" },
-            { label: "Standard — 44px (recommended)", value: "44px" },
-            { label: "Comfortable — 56px",            value: "56px" },
-            { label: "Spacious — 72px",               value: "72px" },
+          { type: "boolean", name: "matchFooterToHeader", label: "Match footer height to header (keep them equal)" },
+          { type: "string", name: "footerHeight", label: "Footer Height (used only when the match toggle above is off)", options: [
+            { label: "Compact — 40px",                value: "40px" },
+            { label: "Standard — 52px (recommended)", value: "52px" },
+            { label: "Comfortable — 64px",            value: "64px" },
+            { label: "Spacious — 80px",               value: "80px" },
           ]},
           { type: "string", name: "headerInnerWidth", label: "Header Content Width", options: [
             { label: "Narrow — 480px",                      value: "480px" },

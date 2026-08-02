@@ -271,6 +271,14 @@ fragment SettingsParts on Settings {
   subSiteNameFontWeight
   subSiteNameTracking
   showSubSiteNameOnly
+  noticeBannerEnabled
+  noticeBannerText_en
+  noticeBannerText_de
+  noticeBannerBody_en
+  noticeBannerBody_de
+  noticeBannerStyle
+  noticeBannerFlowSeconds
+  noticeBannerDot
   headerLayout
   headerLinksFontSize
   navLinks {
@@ -323,6 +331,7 @@ fragment SettingsParts on Settings {
     pathOpacity
   }
   headerHeight
+  matchFooterToHeader
   footerHeight
   headerInnerWidth
   siteUrl

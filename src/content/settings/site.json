@@ -1,8 +1,4 @@
 {
-  "headerPaddingTop": "120px",
-  "headerPaddingBottom": "0px",
-  "footerPaddingTop": "0px",
-  "footerPaddingBottom": "120px",
   "siteStatus": "live",
   "siteName": "VortexDeep",
   "siteNameFont": "",
@@ -13,6 +9,14 @@
   "subSiteNameFontWeight": "font-normal",
   "subSiteNameTracking": "tracking-[1.2em]",
   "showSubSiteNameOnly": true,
+  "noticeBannerEnabled": true,
+  "noticeBannerText_en": "In preparation",
+  "noticeBannerText_de": "In Vorbereitung",
+  "noticeBannerBody_en": "VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.",
+  "noticeBannerBody_de": "VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.",
+  "noticeBannerStyle": "ribbon",
+  "noticeBannerFlowSeconds": "34",
+  "noticeBannerDot": "none",
   "headerLayout": "centered",
   "navLinks": [
     {
@@ -47,7 +51,8 @@
     "pathOpacity": 0.55
   },
   "headerHeight": "52px",
-  "footerHeight": "56px",
+  "matchFooterToHeader": true,
+  "footerHeight": "52px",
   "siteUrl": "https://vortexdeep.ch",
   "metaTitle": "VortexDeep — AI Automation for SMEs in Zürich",
   "metaTitle_de": "VortexDeep — KI-Automatisierung für KMU in Zürich",
