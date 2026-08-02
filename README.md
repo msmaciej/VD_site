@@ -109,6 +109,24 @@ Open a terminal, `cd` into the project folder, then:
 | `npm run clean` | Clears the generated TinaCMS cache and restarts the admin. |
 | `Ctrl + C` | Stops whatever is running in the terminal. |
 
+### Deploying & pausing the site
+
+The site can be **live**, **in preparation**, or in **maintenance** — set by
+`siteStatus` in `src/content/settings/site.json` (or Tina → Site Settings).
+Two commands publish it:
+
+| Command | Builds | Use when |
+| --- | --- | --- |
+| `npm run build` | `dist/` | Ship exactly the current mode — including going fully public. |
+| `npm run deploy` | `deploy/` | Keep the public paused behind the notice, but preview the real site yourself via a private key. |
+
+Then upload the *contents* of that folder to the Hostpoint web root. Nothing is
+live until you upload — the folders are local only.
+
+**Full instructions, recipes, the preview key, and upload gotchas are in
+[`_docs/README-DEPLOY.md`](./_docs/README-DEPLOY.md)** (with companions
+`README-SITE-STATUS.md` and `README-PREVIEW.md`).
+
 ### Project structure
 
 ```
