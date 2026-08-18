@@ -1,0 +1,52 @@
+# VortexDeep — server rules.
+#
+# Two jobs:
+#   1. Stop the site's internal PHP includes being opened directly in a browser.
+#   2. Route requests to the preview gate, but ONLY if a preview cookie is present.
+#
+# Nothing here decides who is allowed to preview. That decision is made in PHP,
+# in gate.php, against the key in preview-secret.php. A cookie is trivial to
+# fake; treat the rule below as routing, not security.
+#
+# IMPORTANT: this file must be uploaded with the rest of the site. Many FTP
+# clients hide dotfiles by default — turn on "show hidden files" or the preview
+# gate simply won't exist. That is a safe failure: without it, everyone
+# (including you) sees the public "in preparation" page.
+
+# ── 1. Internal includes are not web pages ──────────────────────────────────
+<FilesMatch "^(preview-lib|preview-secret|fitcheck-lib|fitcheck-profiles\.gen)\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# ── 2. Preview routing ──────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # PHP endpoints always run normally — never through the gate.
+  RewriteRule \.php$ - [L]
+
+  # Separate subsites living in their own folders are left completely alone.
+  # Without this, an active preview pass would send /chessap/ to the gate too,
+  # which would look for it inside the main site's folder, fail, and show the
+  # VortexDeep home page instead. Add one line here per extra subsite.
+  RewriteRule ^chessap(/|$) - [L]
+
+  # Anything else: if the visitor carries a preview cookie, hand the request to
+  # gate.php, which verifies it properly and serves the real site. No cookie,
+  # no rewrite, and Apache serves the ordinary "in preparation" page.
+  RewriteCond %{HTTP_COOKIE} (^|;\s*)vd_preview=
+  RewriteRule ^ /gate.php [L]
+</IfModule>
+
+# ── 3. Don't index anything while the site is paused ────────────────────────
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set X-Robots-Tag "noindex, nofollow"
+  </FilesMatch>
+</IfModule>
