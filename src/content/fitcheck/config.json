@@ -1,4 +1,9 @@
 {
+  "appearance": {
+    "fontPreset": "",
+    "customFontName": "",
+    "baseSize": "lg"
+  },
   "roleQuestion": {
     "questionLabel": "What best describes you right now?",
     "questionLabel_de": "Was trifft auf Sie am ehesten zu?",

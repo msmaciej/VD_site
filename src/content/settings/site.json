@@ -2,10 +2,10 @@
   "siteStatus": "live",
   "siteName": "VortexDeep",
   "siteNameFont": "",
-  "siteNameFontSize": "text-lg md:text-xl",
+  "siteNameFontSize": "lg",
   "subSiteName": "Practical | AI automation | . | for small and mid-sized companies | . | From Zürich, Switzerland | Worldwide",
   "subSiteName_de": "Praktische | KI-Automatisierung | . | für KMU | . | Aus Zürich, Schweiz | Weltweit",
-  "subSiteNameFontSize": "text-sm md:text-base",
+  "subSiteNameFontSize": "lg",
   "subSiteNameFontWeight": "font-normal",
   "subSiteNameTracking": "tracking-[1.2em]",
   "showSubSiteNameOnly": true,
@@ -22,6 +22,7 @@
   "noticeBannerBodyFontSize": "12px",
   "noticeBannerBodyFontWeight": "400",
   "headerLayout": "centered",
+  "headerLinksFontSize": "",
   "navLinks": [
     {
       "label": "Fit Check",
@@ -30,6 +31,8 @@
     }
   ],
   "footerText": "© 2026 VortexDeep",
+  "showFooterLine": true,
+  "footerTextFontSize": "",
   "socialLinks": [
     {
       "platform": "Facebook",
@@ -37,8 +40,22 @@
     }
   ],
   "fontPreset": "IBM Plex Mono",
+  "typography": {
+    "title": {
+      "size": "lg",
+      "weight": "font-bold"
+    },
+    "subTitle": {
+      "size": "lg",
+      "weight": "font-normal"
+    },
+    "body": {
+      "size": "lg",
+      "weight": "font-light"
+    }
+  },
   "showLogo": true,
-  "theme": "deep",
+  "theme": "paper",
   "baseTextColor": "",
   "customBackgroundColor": "",
   "enableThemeToggle": true,

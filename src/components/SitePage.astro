@@ -10,7 +10,7 @@ import LanguageSwitcher from './LanguageSwitcher.astro';
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
 import { ui, type Lang } from '../i18n/ui.ts';
-import { themeColors, themeFamily, fontFamily, textStyle, socialIcon } from '../utils/siteHelpers.ts';
+import { themeColors, themeFamily, fontFamily, textStyle, socialIcon, fontSizeClass, fontSizePx } from '../utils/siteHelpers.ts';
 
 interface Props {
   lang:     Lang;
@@ -103,9 +103,12 @@ const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
   : (noticeBannerStyle === 'pill' ? '38px' : '32px');
 // Banner dot: 'static' (steady glow, default), 'animated' (pulses), or 'none'.
 const noticeDot = settings.noticeBannerDot || 'static';
-const noticeTextSize   = settings.noticeBannerTextFontSize   || '11px';
+// Site-wide typography defaults (Site Settings → Typography). Blocks inherit
+// these unless they set their own size/weight. blank/undefined = fall through.
+const typo = (settings.typography || {}) as any;
+const noticeTextSize   = fontSizePx(settings.noticeBannerTextFontSize, 'xs');
 const noticeTextWeight = settings.noticeBannerTextFontWeight || '400';
-const noticeBodySize   = settings.noticeBannerBodyFontSize   || '12px';
+const noticeBodySize   = fontSizePx(settings.noticeBannerBodyFontSize, 'xs');
 const noticeBodyWeight = settings.noticeBannerBodyFontWeight || '400';
 
 const metaTitle = lang === 'de'
@@ -956,7 +959,7 @@ const contentGroups = (text: string) => {
       <nav class="flex gap-6 items-center" style={`color: ${zenText};`}>
         {resolvedNavLinks.map((link: any) => (
           <a href={link.url}
-             class={`${settings.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
+             class={`${fontSizeClass(settings.headerLinksFontSize || 'text-[10px]')} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
              style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
             {link.label}
           </a>
@@ -1027,7 +1030,7 @@ const contentGroups = (text: string) => {
     {settings.socialLinks?.length > 0 && (
       <span class="opacity-20 text-[9px]" style={`color: ${zenText};`}>·</span>
     )}
-    <p class={`${settings.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
+    <p class={`${fontSizeClass(settings.footerTextFontSize || 'text-[9px]')} uppercase tracking-[0.25em] opacity-30`}
        style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
       {settings.footerText
         ? settings.footerText
@@ -1054,13 +1057,13 @@ const contentGroups = (text: string) => {
       )}
       <div class="w-full max-w-xl text-center">
         {!settings.showSubSiteNameOnly && settings.siteName && (
-          <h1 class={`${settings.siteNameFontSize || 'text-3xl md:text-4xl'} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+          <h1 class={`${fontSizeClass(settings.siteNameFontSize || 'text-3xl md:text-4xl')} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
               style={textStyle(zenText, settings.siteNameFont)}>
             {settings.siteName}
           </h1>
         )}
         {subSiteName && (
-          <h2 class={`${settings.subSiteNameFontSize || 'text-[13px]'} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
+          <h2 class={`${fontSizeClass(settings.subSiteNameFontSize || 'text-[13px]')} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
               style={`${textStyle(zenText, settings.subSiteNameFont)} opacity: 0.7;`}>
             {contentLines(subSiteName).map(({ line, dots }) => (
               dots > 0 ? (
@@ -1119,7 +1122,7 @@ const contentGroups = (text: string) => {
           <div class={`flex ${isVertical ? 'flex-col items-center gap-0' : 'flex-row flex-wrap items-center justify-center'}`}>
             {block.steps?.map((step: any, i: number) => (
               <div class={`flex ${isVertical ? 'flex-col items-center' : 'flex-row items-center'}`}>
-                <span class={`${step.fontSize || block.stepFontSize || 'text-[11px]'} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
+                <span class={`${fontSizeClass(step.fontSize || block.stepFontSize || 'text-[11px]')} ${step.fontWeight || block.stepFontWeight || 'font-thin'} uppercase tracking-[0.25em] opacity-75`}
                       style={`${textStyle(zenText, step.font || block.stepFont)} ${isVertical ? `padding-top: ${flowStepSpacing}px; padding-bottom: ${flowStepSpacing}px;` : `padding-left: ${flowStepSpacing}px; padding-right: ${flowStepSpacing}px;`}`}>
                   {step.label}
                 </span>
@@ -1146,7 +1149,7 @@ const contentGroups = (text: string) => {
         );
 
         const explainerEl = block.content ? (
-          <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
+          <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
                style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
             {contentGroups(block.content).map((g) => (
               g.kind === 'dots' ? (
@@ -1168,7 +1171,7 @@ const contentGroups = (text: string) => {
           <div class="vd-screen vd-reveal vd-screen--flow">
             <div class="w-full max-w-2xl text-center my-auto">
               {showTitle && block.title && (
-                <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
+                <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
                     style={textStyle(zenText, block.titleFont)}>
                   {block.title.split('|').map((line: string) => (
                     <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
@@ -1179,7 +1182,7 @@ const contentGroups = (text: string) => {
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {showSubtitle && block.subTitle && (
-                <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
+                <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
                     style={textStyle(zenText, block.subTitleFont)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
@@ -1233,12 +1236,12 @@ const contentGroups = (text: string) => {
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
 
-              <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.3em] opacity-40 mb-2 translate-x-[0.15em]`}
+              <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.3em] opacity-40 mb-2 translate-x-[0.15em]`}
                  style={textStyle(zenText, block.metaFont)}>
                 {t.caseStudyTag}
               </p>
 
-              <h2 class={`${block.titleFontSize || 'text-[13px]'} ${block.titleFontWeight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[13px]')} ${block.titleFontWeight || typo.title?.weight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
                   style={textStyle(zenText, block.titleFont)}>
                 {block.industry || 'Industry'}
               </h2>
@@ -1247,14 +1250,14 @@ const contentGroups = (text: string) => {
                   client when the client has said yes. Empty = anonymous, exactly
                   as before. */}
               {block.client && (
-                <p class={`${block.labelFontSize || 'text-[11px]'} uppercase tracking-[0.25em] opacity-55 mb-1 translate-x-[0.125em]`}
+                <p class={`${fontSizeClass(block.labelFontSize || 'text-[11px]')} uppercase tracking-[0.25em] opacity-55 mb-1 translate-x-[0.125em]`}
                    style={textStyle(zenText, block.metaFont)}>
                   {block.client}
                 </p>
               )}
 
               {block.location && (
-                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30 translate-x-[0.125em]
+                <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.25em] opacity-30 translate-x-[0.125em]
                   mb-6 md:mb-12`}
                    style={textStyle(zenText, block.metaFont)}>
                   {block.location}
@@ -1266,9 +1269,9 @@ const contentGroups = (text: string) => {
 
                 {block.challenge && (
                   <div class="border-l border-current border-opacity-10 pl-5">
-                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                    <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.challenge}</p>
-                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.challenge).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
@@ -1279,9 +1282,9 @@ const contentGroups = (text: string) => {
 
                 {block.built && (
                   <div class="border-l border-current border-opacity-10 pl-5">
-                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                    <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.built}</p>
-                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.built).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
@@ -1292,9 +1295,9 @@ const contentGroups = (text: string) => {
 
                 {block.result && (
                   <div class="border-l border-current border-opacity-10 pl-5">
-                    <p class={`${block.labelFontSize || 'text-[9px]'} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
+                    <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.result}</p>
-                    <div class={`${block.bodyFontSize || 'text-[12px]'} ${block.bodyFontWeight || 'font-thin'} leading-relaxed opacity-70`}
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
                          style={textStyle(zenText, block.bodyFont)}>
                       {streamLines(block.result).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
@@ -1306,13 +1309,13 @@ const contentGroups = (text: string) => {
 
               <div class="flex justify-center gap-10 opacity-30">
                 {block.package && (
-                  <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
+                  <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.2em]`}
                      style={textStyle(zenText, block.metaFont)}>
                     {t.packageLabel}: {block.package}
                   </p>
                 )}
                 {block.timeline && (
-                  <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.2em]`}
+                  <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.2em]`}
                      style={textStyle(zenText, block.metaFont)}>
                     {t.timelineLabel}: {block.timeline}
                   </p>
@@ -1330,20 +1333,20 @@ const contentGroups = (text: string) => {
           <div class="vd-screen vd-reveal">
             <div class="w-full max-w-2xl text-center">
 
-              <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.3em] opacity-40 mb-6 translate-x-[0.15em]`}
+              <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.3em] opacity-40 mb-6 translate-x-[0.15em]`}
                  style={`color: ${zenText};`}>
                 {t.testimonialTag}
               </p>
 
               {block.quote && (
-                <blockquote class={`${block.quoteFontSize || 'text-[15px]'} ${block.quoteFontWeight || 'font-thin'} leading-relaxed opacity-80 mb-6 ${animTextHover ? 'vd-hover-grow' : ''}`}
+                <blockquote class={`${fontSizeClass(block.quoteFontSize || 'text-[15px]')} ${block.quoteFontWeight || 'font-thin'} leading-relaxed opacity-80 mb-6 ${animTextHover ? 'vd-hover-grow' : ''}`}
                      style={textStyle(zenText)}>
                   “{block.quote}”
                 </blockquote>
               )}
 
               {attribution && (
-                <p class={`${block.metaFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-40`}
+                <p class={`${fontSizeClass(block.metaFontSize || 'text-[9px]')} uppercase tracking-[0.25em] opacity-40`}
                    style={`color: ${zenText};`}>
                   {attribution}
                 </p>
@@ -1365,7 +1368,7 @@ const contentGroups = (text: string) => {
       // inside the fold — identical either way, so folding changes nothing but
       // whether it starts hidden behind the cue.
       const sectionBodyEl = block.content ? (
-        <div class={`${block.fontSize || 'text-[15px]'} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
+        <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
              style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
           {contentGroups(block.content).map((g) => (
             g.kind === 'dots' ? (
@@ -1387,7 +1390,7 @@ const contentGroups = (text: string) => {
           <div class={`w-full max-w-2xl text-center ${foldableSection ? 'my-auto' : ''}`}>
 
             {showTitle && block.title && (
-              <h2 class={`${block.titleFontSize || 'text-[11px]'} ${block.titleFontWeight || 'font-normal'} uppercase tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-normal'} uppercase tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
                   style={textStyle(zenText, block.titleFont)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
@@ -1396,7 +1399,7 @@ const contentGroups = (text: string) => {
             )}
 
             {showSubtitle && block.subTitle && (
-              <h3 class={`${block.subTitleFontSize || 'text-[11px]'} ${block.subTitleFontWeight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
+              <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
                   style={textStyle(zenText, block.subTitleFont)}>
                 {contentLines(block.subTitle).map(({ line, dots }) => (
                   dots > 0 ? (
@@ -1419,7 +1422,7 @@ const contentGroups = (text: string) => {
                   <div class="vd-acc-item" data-vd-acc-item data-open="false">
                     <button type="button" class="vd-acc-head" data-vd-acc-head style={`color: ${zenText};`}>
                       <span class="vd-acc-dot" aria-hidden="true"></span>
-                      <span class={`vd-acc-label ${block.subTitleFontSize || 'text-[13px]'}`}>{g.label}</span>
+                      <span class={`vd-acc-label ${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[13px]')}`}>{g.label}</span>
                       <span class="vd-acc-close" aria-hidden="true">{'\u00d7'}</span>
                     </button>
                     <div class="vd-acc-body" data-vd-acc-body>

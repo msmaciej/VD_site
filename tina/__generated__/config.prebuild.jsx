@@ -98,6 +98,40 @@ var confirmPageFields = [
   ...bilingualString("expiredBody", "Expired-link page \u2014 body"),
   ...bilingualString("backLabel", "Expired-link page \u2014 back-to-check link")
 ];
+var appearanceFields = [
+  {
+    type: "string",
+    name: "fontPreset",
+    label: "Fit Check Font",
+    description: "Overrides the site's Global Default Font on the Fit Check page only. 'Inherit' follows Site Settings.",
+    options: [
+      { label: "Inherit site default", value: "" },
+      { label: "IBM Plex Mono \u2014 Monospace", value: "IBM Plex Mono" },
+      { label: "Inter \u2014 Modern Sans", value: "Inter" },
+      { label: "Lora \u2014 Elegant Serif", value: "Lora" },
+      { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
+      { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
+      { label: "Custom Google Font", value: "custom" }
+    ]
+  },
+  { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+  {
+    // Uses the SAME size-token scale as the rest of the site (see FONT_SIZES in
+    // src/utils/siteHelpers.ts). The chosen token becomes a scale factor applied
+    // to the Fit Check's type, so this page sizes consistently with everything
+    // else instead of via its own separate multiplier.
+    type: "string",
+    name: "baseSize",
+    label: "Fit Check Text Size",
+    description: "Base text size for the Fit Check, from the site size scale. Larger tokens scale the whole page's type up proportionally.",
+    options: [
+      { label: "S \u2014 13px (compact)", value: "sm" },
+      { label: "M \u2014 15px (default)", value: "base" },
+      { label: "L \u2014 17px (larger)", value: "lg" },
+      { label: "XL \u2014 20px (largest)", value: "xl" }
+    ]
+  }
+];
 var fitCheckCollection = {
   name: "fitCheck",
   label: "Fit Check",
@@ -108,6 +142,7 @@ var fitCheckCollection = {
     allowedActions: { create: false, delete: false }
   },
   fields: [
+    { type: "object", name: "appearance", label: "Appearance \u2014 font & text size", fields: appearanceFields },
     { type: "object", name: "roleQuestion", label: "Q0 \u2014 Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 \u2014 Category", fields: categoryQuestionFields },
     { type: "object", name: "timeQuestion", label: "Q2 \u2014 Time cost", fields: timeQuestionFields },
@@ -130,18 +165,17 @@ var fontTypeOptions = [
   { label: "Newsreader \u2014 Editorial Serif", value: "Newsreader" }
 ];
 var fontSizeOptions = [
-  { label: "9px  \u2014 meta / attribution", value: "text-[9px]" },
-  { label: "11px \u2014 labels, tracked caps", value: "text-[11px]" },
-  { label: "13px \u2014 small label / step", value: "text-[13px]" },
-  { label: "15px \u2014 small body", value: "text-[15px]" },
-  { label: "17px \u2014 body (recommended)", value: "text-[17px]" },
-  { label: "19px \u2014 large body", value: "text-[19px]" },
-  { label: "22px \u2014 statement", value: "text-[22px]" },
-  { label: "26px \u2014 display", value: "text-[26px]" },
-  // Kept because existing content still references it (two retired blocks use it
-  // as a title size). Dropping an in-use value from the options list leaves the
-  // Tina select blank on those blocks, and a blank select can clear itself on save.
-  { label: "18px \u2014 legacy (text-lg)", value: "text-lg" }
+  { label: "2XS \u2014 9px (meta / attribution)", value: "2xs" },
+  { label: "XS \u2014 11px (labels, tracked caps)", value: "xs" },
+  { label: "S \u2014 13px (small label / step)", value: "sm" },
+  { label: "M \u2014 15px (base body)", value: "base" },
+  { label: "L \u2014 17px (body, recommended)", value: "lg" },
+  { label: "XL \u2014 20px (large body)", value: "xl" },
+  { label: "2XL \u2014 24px (statement)", value: "2xl" },
+  { label: "3XL \u2014 28\u219234px (display)", value: "3xl" },
+  { label: "4XL \u2014 34\u219244px (display)", value: "4xl" },
+  { label: "5XL \u2014 44\u219256px (hero)", value: "5xl" },
+  { label: "6XL \u2014 56\u219272px (hero)", value: "6xl" }
 ];
 var fontWeightOptions = [
   { label: "Thin (100)", value: "font-thin" },
@@ -660,14 +694,7 @@ var config_default = defineConfig({
           // ── Hero: Main title ──────────────────────────────────────────────
           { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
-          { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: [
-            { label: "XXS \u2014 match page sections (11px)", value: "text-[11px]" },
-            { label: "XS \u2014 subtle wordmark", value: "text-lg md:text-xl" },
-            { label: "S  \u2014 compact", value: "text-2xl md:text-3xl" },
-            { label: "M  \u2014 balanced (recommended)", value: "text-3xl md:text-4xl" },
-            { label: "L  \u2014 prominent", value: "text-4xl md:text-5xl" },
-            { label: "XL \u2014 hero scale", value: "text-6xl md:text-7xl lg:text-[6vw]" }
-          ] },
+          { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: fontSizeOptions },
           { type: "string", name: "siteNameFontWeight", label: "Main title \u2014 Weight", options: fontWeightOptions },
           // ── Hero: Subtitle (EN + DE) ──────────────────────────────────────
           {
@@ -683,14 +710,7 @@ var config_default = defineConfig({
             description: "e.g. Praktische KI-Automatisierung | f\xFCr KMU"
           },
           { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
-          { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: [
-            { label: "XXS \u2014 11px", value: "text-[11px]" },
-            { label: "XS  \u2014 13px (match page sections)", value: "text-[13px]" },
-            { label: "S   \u2014 small", value: "text-xs md:text-sm" },
-            { label: "M   \u2014 balanced", value: "text-sm md:text-base" },
-            { label: "L   \u2014 prominent", value: "text-base md:text-lg" },
-            { label: "XL  \u2014 large", value: "text-lg md:text-xl" }
-          ] },
+          { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: fontSizeOptions },
           { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
           { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [
             { label: "Tight  \u2014 0.25em", value: "tracking-[0.25em]" },
@@ -730,11 +750,7 @@ var config_default = defineConfig({
             { label: "Centered (Links Above Title)", value: "centered-top" },
             { label: "Left Aligned (Split)", value: "split" }
           ] },
-          { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: [
-            { label: "9px", value: "text-[9px]" },
-            { label: "11px", value: "text-[11px]" },
-            { label: "14px", value: "text-[14px]" }
-          ] },
+          { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: fontSizeOptions },
           {
             type: "object",
             list: true,
@@ -750,10 +766,7 @@ var config_default = defineConfig({
           // ── Footer ────────────────────────────────────────────────────────
           { type: "string", name: "footerText", label: "Footer Text (overrides copyright)" },
           { type: "boolean", name: "showFooterLine", label: "Show separator line above footer" },
-          { type: "string", name: "footerTextFontSize", label: "Footer text size", options: [
-            { label: "9px (default)", value: "text-[9px]" },
-            { label: "11px", value: "text-[11px]" }
-          ] },
+          { type: "string", name: "footerTextFontSize", label: "Footer text size", options: fontSizeOptions },
           {
             type: "object",
             list: true,
@@ -774,6 +787,30 @@ var config_default = defineConfig({
             { label: "Custom Google Font", value: "custom" }
           ] },
           { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+          // ── TYPOGRAPHY — site-wide defaults by role (grouped) ───────────────
+          // Set size + weight ONCE per role here and every page block inherits
+          // it, so you don't hunt through each block. A block can still override
+          // its own size/weight in the page editor; blank there = inherit these.
+          {
+            type: "object",
+            name: "typography",
+            label: "Typography \u2014 site-wide text defaults",
+            description: "Titles, sub-titles and body text across all pages inherit these unless a block overrides them.",
+            fields: [
+              { type: "object", name: "title", label: "Titles (bold headings)", fields: [
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+              ] },
+              { type: "object", name: "subTitle", label: "Sub-titles", fields: [
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+              ] },
+              { type: "object", name: "body", label: "Body / main text", fields: [
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+              ] }
+            ]
+          },
           { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
           { type: "string", name: "theme", label: "Theme", options: [
             { label: "Light \u2014 pure white", value: "light" },

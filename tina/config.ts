@@ -18,19 +18,23 @@ const fontTypeOptions = [
 // `content`, the reading sizes have to exist: 16–19px is where body copy is
 // comfortable, and a light-weight mono on a dark background reads a notch
 // smaller than its px value suggests, so bias upward rather than down.
+// ── Font size token scale — ONE dropdown, used by every size field site-wide ──
+// Values are semantic tokens (not raw px or Tailwind classes). The tokens are
+// resolved to actual sizes in ONE place — FONT_SIZES in src/utils/siteHelpers.ts
+// — so the CMS shows a consistent size picker everywhere and the rendered px
+// can never drift per-field. Keep these values in sync with FONT_SIZES' keys.
 const fontSizeOptions = [
-  { label: "9px  — meta / attribution", value: "text-[9px]"  },
-  { label: "11px — labels, tracked caps", value: "text-[11px]" },
-  { label: "13px — small label / step", value: "text-[13px]" },
-  { label: "15px — small body", value: "text-[15px]" },
-  { label: "17px — body (recommended)", value: "text-[17px]" },
-  { label: "19px — large body", value: "text-[19px]" },
-  { label: "22px — statement", value: "text-[22px]" },
-  { label: "26px — display", value: "text-[26px]" },
-  // Kept because existing content still references it (two retired blocks use it
-  // as a title size). Dropping an in-use value from the options list leaves the
-  // Tina select blank on those blocks, and a blank select can clear itself on save.
-  { label: "18px — legacy (text-lg)", value: "text-lg" },
+  { label: "2XS — 9px (meta / attribution)",   value: "2xs"  },
+  { label: "XS — 11px (labels, tracked caps)", value: "xs"   },
+  { label: "S — 13px (small label / step)",    value: "sm"   },
+  { label: "M — 15px (base body)",             value: "base" },
+  { label: "L — 17px (body, recommended)",     value: "lg"   },
+  { label: "XL — 20px (large body)",           value: "xl"   },
+  { label: "2XL — 24px (statement)",           value: "2xl"  },
+  { label: "3XL — 28→34px (display)",          value: "3xl"  },
+  { label: "4XL — 34→44px (display)",          value: "4xl"  },
+  { label: "5XL — 44→56px (hero)",             value: "5xl"  },
+  { label: "6XL — 56→72px (hero)",             value: "6xl"  },
 ];
 
 const fontWeightOptions = [
@@ -384,14 +388,7 @@ export default defineConfig({
           // ── Hero: Main title ──────────────────────────────────────────────
           { type: "string", name: "siteName",         label: "Main title text (e.g. VortexDeep)" },
           { type: "string", name: "siteNameFont",     label: "Main title — Font",   options: fontTypeOptions },
-          { type: "string", name: "siteNameFontSize", label: "Main title — Size", options: [
-            { label: "XXS — match page sections (11px)", value: "text-[11px]"                       },
-            { label: "XS — subtle wordmark",             value: "text-lg md:text-xl"                },
-            { label: "S  — compact",                     value: "text-2xl md:text-3xl"              },
-            { label: "M  — balanced (recommended)",      value: "text-3xl md:text-4xl"              },
-            { label: "L  — prominent",                   value: "text-4xl md:text-5xl"              },
-            { label: "XL — hero scale",                  value: "text-6xl md:text-7xl lg:text-[6vw]"},
-          ]},
+          { type: "string", name: "siteNameFontSize", label: "Main title — Size", options: fontSizeOptions },
           { type: "string", name: "siteNameFontWeight", label: "Main title — Weight", options: fontWeightOptions },
 
           // ── Hero: Subtitle (EN + DE) ──────────────────────────────────────
@@ -402,14 +399,7 @@ export default defineConfig({
             label: "Subtitle (DE) — use | for line breaks",
             description: "e.g. Praktische KI-Automatisierung | für KMU" },
           { type: "string", name: "subSiteNameFont",       label: "Subtitle — Font",   options: fontTypeOptions },
-          { type: "string", name: "subSiteNameFontSize",   label: "Subtitle — Size", options: [
-            { label: "XXS — 11px",                        value: "text-[11px]"         },
-            { label: "XS  — 13px (match page sections)",  value: "text-[13px]"         },
-            { label: "S   — small",                       value: "text-xs md:text-sm"  },
-            { label: "M   — balanced",                    value: "text-sm md:text-base"},
-            { label: "L   — prominent",                   value: "text-base md:text-lg"},
-            { label: "XL  — large",                       value: "text-lg md:text-xl"  },
-          ]},
+          { type: "string", name: "subSiteNameFontSize",   label: "Subtitle — Size", options: fontSizeOptions },
           { type: "string",  name: "subSiteNameFontWeight",  label: "Subtitle — Weight", options: fontWeightOptions },
           { type: "string",  name: "subSiteNameTracking", label: "Subtitle — Letter Spacing", options: [
             { label: "Tight  — 0.25em", value: "tracking-[0.25em]" },
@@ -451,11 +441,7 @@ export default defineConfig({
             { label: "Centered (Links Above Title)", value: "centered-top" },
             { label: "Left Aligned (Split)",         value: "split"        },
           ]},
-          { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: [
-            { label: "9px",  value: "text-[9px]"  },
-            { label: "11px", value: "text-[11px]" },
-            { label: "14px", value: "text-[14px]" },
-          ]},
+          { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: fontSizeOptions },
           { type: "object", list: true, name: "navLinks", label: "Header Navigation Links",
             fields: [
               { type: "string", name: "label",    label: "Link Label (EN)" },
@@ -468,10 +454,7 @@ export default defineConfig({
           // ── Footer ────────────────────────────────────────────────────────
           { type: "string",  name: "footerText",         label: "Footer Text (overrides copyright)" },
           { type: "boolean", name: "showFooterLine",     label: "Show separator line above footer" },
-          { type: "string",  name: "footerTextFontSize", label: "Footer text size", options: [
-            { label: "9px (default)", value: "text-[9px]"  },
-            { label: "11px",          value: "text-[11px]" },
-          ]},
+          { type: "string",  name: "footerTextFontSize", label: "Footer text size", options: fontSizeOptions },
           { type: "object", list: true, name: "socialLinks", label: "Footer Social Links",
             fields: [
               { type: "string", name: "platform", label: "Platform (e.g. LinkedIn, Facebook)" },
@@ -489,6 +472,29 @@ export default defineConfig({
             { label: "Custom Google Font",     value: "custom"     },
           ]},
           { type: "string",  name: "customFontName",        label: "Custom Font Name (if Custom selected)" },
+
+          // ── TYPOGRAPHY — site-wide defaults by role (grouped) ───────────────
+          // Set size + weight ONCE per role here and every page block inherits
+          // it, so you don't hunt through each block. A block can still override
+          // its own size/weight in the page editor; blank there = inherit these.
+          { type: "object", name: "typography", label: "Typography — site-wide text defaults",
+            description: "Titles, sub-titles and body text across all pages inherit these unless a block overrides them.",
+            fields: [
+              { type: "object", name: "title", label: "Titles (bold headings)", fields: [
+                { type: "string", name: "size",   label: "Size",   options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+              ]},
+              { type: "object", name: "subTitle", label: "Sub-titles", fields: [
+                { type: "string", name: "size",   label: "Size",   options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+              ]},
+              { type: "object", name: "body", label: "Body / main text", fields: [
+                { type: "string", name: "size",   label: "Size",   options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+              ]},
+            ],
+          },
+
           { type: "boolean", name: "showLogo",              label: "Show logo mark in header (alongside wordmark)" },
           { type: "string",  name: "theme",                 label: "Theme", options: [
             { label: "Light — pure white",         value: "light" },

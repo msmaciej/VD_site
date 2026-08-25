@@ -704,6 +704,27 @@ type SettingsSocialLinks {
   url: String
 }
 
+type SettingsTypographyTitle {
+  size: String
+  weight: String
+}
+
+type SettingsTypographySubTitle {
+  size: String
+  weight: String
+}
+
+type SettingsTypographyBody {
+  size: String
+  weight: String
+}
+
+type SettingsTypography {
+  title: SettingsTypographyTitle
+  subTitle: SettingsTypographySubTitle
+  body: SettingsTypographyBody
+}
+
 type SettingsProcessFlow {
   enabled: Boolean
 }
@@ -761,6 +782,7 @@ type Settings implements Node & Document {
   socialLinks: [SettingsSocialLinks]
   fontPreset: String
   customFontName: String
+  typography: SettingsTypography
   showLogo: Boolean
   theme: String
   baseTextColor: String
@@ -815,6 +837,27 @@ input SettingsNavLinksFilter {
 input SettingsSocialLinksFilter {
   platform: StringFilter
   url: StringFilter
+}
+
+input SettingsTypographyTitleFilter {
+  size: StringFilter
+  weight: StringFilter
+}
+
+input SettingsTypographySubTitleFilter {
+  size: StringFilter
+  weight: StringFilter
+}
+
+input SettingsTypographyBodyFilter {
+  size: StringFilter
+  weight: StringFilter
+}
+
+input SettingsTypographyFilter {
+  title: SettingsTypographyTitleFilter
+  subTitle: SettingsTypographySubTitleFilter
+  body: SettingsTypographyBodyFilter
 }
 
 input SettingsProcessFlowFilter {
@@ -881,6 +924,7 @@ input SettingsFilter {
   socialLinks: SettingsSocialLinksFilter
   fontPreset: StringFilter
   customFontName: StringFilter
+  typography: SettingsTypographyFilter
   showLogo: BooleanFilter
   theme: StringFilter
   baseTextColor: StringFilter
@@ -967,6 +1011,12 @@ type DataPageConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [DataPageConnectionEdges]
+}
+
+type FitCheckAppearance {
+  fontPreset: String
+  customFontName: String
+  baseSize: String
 }
 
 type FitCheckRoleQuestion {
@@ -1235,6 +1285,7 @@ type FitCheckConfirmPage {
 }
 
 type FitCheck implements Node & Document {
+  appearance: FitCheckAppearance
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
   timeQuestion: FitCheckTimeQuestion
@@ -1247,6 +1298,12 @@ type FitCheck implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input FitCheckAppearanceFilter {
+  fontPreset: StringFilter
+  customFontName: StringFilter
+  baseSize: StringFilter
 }
 
 input FitCheckRoleQuestionFilter {
@@ -1515,6 +1572,7 @@ input FitCheckConfirmPageFilter {
 }
 
 input FitCheckFilter {
+  appearance: FitCheckAppearanceFilter
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
   timeQuestion: FitCheckTimeQuestionFilter
@@ -1904,6 +1962,27 @@ input SettingsSocialLinksMutation {
   url: String
 }
 
+input SettingsTypographyTitleMutation {
+  size: String
+  weight: String
+}
+
+input SettingsTypographySubTitleMutation {
+  size: String
+  weight: String
+}
+
+input SettingsTypographyBodyMutation {
+  size: String
+  weight: String
+}
+
+input SettingsTypographyMutation {
+  title: SettingsTypographyTitleMutation
+  subTitle: SettingsTypographySubTitleMutation
+  body: SettingsTypographyBodyMutation
+}
+
 input SettingsProcessFlowMutation {
   enabled: Boolean
 }
@@ -1961,6 +2040,7 @@ input SettingsMutation {
   socialLinks: [SettingsSocialLinksMutation]
   fontPreset: String
   customFontName: String
+  typography: SettingsTypographyMutation
   showLogo: Boolean
   theme: String
   baseTextColor: String
@@ -2006,6 +2086,12 @@ input DataPageMutation {
   intro: String
   sections: [DataPageSectionsMutation]
   contactEmail: String
+}
+
+input FitCheckAppearanceMutation {
+  fontPreset: String
+  customFontName: String
+  baseSize: String
 }
 
 input FitCheckRoleQuestionMutation {
@@ -2274,6 +2360,7 @@ input FitCheckConfirmPageMutation {
 }
 
 input FitCheckMutation {
+  appearance: FitCheckAppearanceMutation
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation
   timeQuestion: FitCheckTimeQuestionMutation

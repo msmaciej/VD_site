@@ -33,6 +33,73 @@ export const themeFamily = (bgHex: string): 'light' | 'dark' => {
   return luminance > 0.5 ? 'light' : 'dark';
 };
 
+// ── FONT SIZE TOKEN SCALE — single source of truth for the whole site ────────
+// One t-shirt scale governs every text size in Tina. Editors pick a token from
+// a dropdown (e.g. "sm", "base", "lg"); code resolves the token here. Because
+// there is exactly one table, sizes can no longer drift into a mix of raw px,
+// arbitrary Tailwind classes, and per-page scales — that inconsistency is what
+// this replaces. Each token carries BOTH representations so either apply method
+// works from the same source: `class` for class={…} spots, `px` for inline
+// style={…} spots (e.g. the notice banner). Keep the two columns in sync.
+export const FONT_SIZES: Record<string, { class: string; px: string; label: string }> = {
+  '2xs':  { class: 'text-[9px]',                 px: '9px',  label: '2XS — 9px'  },
+  'xs':   { class: 'text-[11px]',                px: '11px', label: 'XS — 11px' },
+  'sm':   { class: 'text-[13px]',                px: '13px', label: 'S — 13px'  },
+  'base': { class: 'text-[15px]',                px: '15px', label: 'M — 15px (base)' },
+  'lg':   { class: 'text-[17px]',                px: '17px', label: 'L — 17px'  },
+  'xl':   { class: 'text-[20px]',                px: '20px', label: 'XL — 20px' },
+  '2xl':  { class: 'text-[24px]',                px: '24px', label: '2XL — 24px' },
+  '3xl':  { class: 'text-[28px] md:text-[34px]', px: '30px', label: '3XL — 28→34px (display)' },
+  '4xl':  { class: 'text-[34px] md:text-[44px]', px: '40px', label: '4XL — 34→44px (display)' },
+  '5xl':  { class: 'text-[44px] md:text-[56px]', px: '48px', label: '5XL — 44→56px (hero)' },
+  '6xl':  { class: 'text-[56px] md:text-[72px]', px: '60px', label: '6XL — 56→72px (hero)' },
+};
+
+// Tina dropdown options, generated from the scale so the CMS and the resolver
+// never fall out of step. The leading blank = "inherit / default".
+export const FONT_SIZE_OPTIONS = [
+  { label: 'Default / inherit', value: '' },
+  ...Object.entries(FONT_SIZES).map(([value, v]) => ({ label: v.label, value })),
+];
+
+// px value of the base token — used to turn any token into a relative scale
+// factor (see fontScaleFactor), which is how the Fit Check sizes its type.
+const BASE_PX = 15;
+
+/**
+ * Resolve a size field to a Tailwind class. Backward-compatible on purpose:
+ *  - a token ("sm")            → its class ("text-[13px]")
+ *  - a legacy Tailwind class   → passed through unchanged ("text-lg md:text-xl")
+ *  - a legacy raw px ("12px")  → wrapped as an arbitrary class ("text-[12px]")
+ *  - empty                     → the fallback token's class
+ * So migrating content is safe even if a value is missed or hand-edited later.
+ */
+export const fontSizeClass = (value: string | undefined, fallback = 'base'): string => {
+  const v = (value || '').trim();
+  if (!v) return (FONT_SIZES[fallback] || FONT_SIZES.base).class;
+  if (FONT_SIZES[v]) return FONT_SIZES[v].class;
+  if (/^text-/.test(v)) return v;                 // legacy Tailwind class
+  if (/^\d+(\.\d+)?px$/.test(v)) return `text-[${v}]`; // legacy raw px
+  return v;                                        // anything else: passthrough
+};
+
+/** Same idea, but returns a raw CSS px value for inline style={…} contexts. */
+export const fontSizePx = (value: string | undefined, fallback = 'base'): string => {
+  const v = (value || '').trim();
+  if (!v) return (FONT_SIZES[fallback] || FONT_SIZES.base).px;
+  if (FONT_SIZES[v]) return FONT_SIZES[v].px;
+  if (/^\d+(\.\d+)?px$/.test(v)) return v;
+  const m = v.match(/text-\[(\d+(?:\.\d+)?px)\]/); // pull px out of a Tailwind class
+  if (m) return m[1];
+  return v;
+};
+
+/** Turn a size token (or legacy value) into a multiplier relative to base (15px). */
+export const fontScaleFactor = (value: string | undefined, fallback = 'base'): number => {
+  const px = parseFloat(fontSizePx(value, fallback));
+  return px && !Number.isNaN(px) ? px / BASE_PX : 1;
+};
+
 /** Returns a CSS font-family string from a preset name. */
 export const fontFamily = (name: string): string => {
   const map: Record<string, string> = {

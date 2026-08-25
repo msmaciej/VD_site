@@ -157,6 +157,43 @@ const confirmPageFields = [
   ...bilingualString("backLabel", "Expired-link page — back-to-check link"),
 ];
 
+// ── Fit Check appearance (font & text size) ──────────────────────────────────
+// Gives the Fit Check its OWN font controls in the CMS, independent of the
+// site-wide Global Default Font. Leave the font on "Inherit" to follow Site
+// Settings (the default, matching current behaviour). Text size is a single
+// scale lever applied to the page's small uppercase type — the readability
+// control for the "letters too small" issue, now editable without code.
+const appearanceFields = [
+  {
+    type: "string", name: "fontPreset", label: "Fit Check Font",
+    description: "Overrides the site's Global Default Font on the Fit Check page only. 'Inherit' follows Site Settings.",
+    options: [
+      { label: "Inherit site default",         value: ""             },
+      { label: "IBM Plex Mono — Monospace",    value: "IBM Plex Mono"},
+      { label: "Inter — Modern Sans",          value: "Inter"        },
+      { label: "Lora — Elegant Serif",         value: "Lora"         },
+      { label: "Space Mono — Monospace",       value: "Space Mono"   },
+      { label: "Newsreader — Editorial",       value: "Newsreader"   },
+      { label: "Custom Google Font",           value: "custom"       },
+    ],
+  },
+  { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+  {
+    // Uses the SAME size-token scale as the rest of the site (see FONT_SIZES in
+    // src/utils/siteHelpers.ts). The chosen token becomes a scale factor applied
+    // to the Fit Check's type, so this page sizes consistently with everything
+    // else instead of via its own separate multiplier.
+    type: "string", name: "baseSize", label: "Fit Check Text Size",
+    description: "Base text size for the Fit Check, from the site size scale. Larger tokens scale the whole page's type up proportionally.",
+    options: [
+      { label: "S — 13px (compact)",  value: "sm"   },
+      { label: "M — 15px (default)",  value: "base" },
+      { label: "L — 17px (larger)",   value: "lg"   },
+      { label: "XL — 20px (largest)", value: "xl"   },
+    ],
+  },
+];
+
 export const fitCheckCollection = {
 
   name: "fitCheck",
@@ -168,6 +205,7 @@ export const fitCheckCollection = {
     allowedActions: { create: false, delete: false },
   },
   fields: [
+    { type: "object", name: "appearance", label: "Appearance — font & text size", fields: appearanceFields },
     { type: "object", name: "roleQuestion", label: "Q0 — Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 — Category", fields: categoryQuestionFields },
     { type: "object", name: "timeQuestion", label: "Q2 — Time cost", fields: timeQuestionFields },

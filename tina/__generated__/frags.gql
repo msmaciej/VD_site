@@ -301,6 +301,24 @@ fragment SettingsParts on Settings {
   }
   fontPreset
   customFontName
+  typography {
+    __typename
+    title {
+      __typename
+      size
+      weight
+    }
+    subTitle {
+      __typename
+      size
+      weight
+    }
+    body {
+      __typename
+      size
+      weight
+    }
+  }
   showLogo
   theme
   baseTextColor
@@ -369,6 +387,12 @@ fragment DataPageParts on DataPage {
 
 fragment FitCheckParts on FitCheck {
   __typename
+  appearance {
+    __typename
+    fontPreset
+    customFontName
+    baseSize
+  }
   roleQuestion {
     __typename
     questionLabel

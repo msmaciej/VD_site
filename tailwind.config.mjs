@@ -15,8 +15,10 @@ export default {
     'md:text-2xl', 'md:text-3xl', 'md:text-4xl', 'md:text-5xl',
     'lg:text-\\[4vw\\]', 'lg:text-\\[6vw\\]',
 
-    // Arbitrary font sizes (pattern matches all text-[Npx] values)
+    // Arbitrary font sizes (pattern matches all text-[Npx] values), including
+    // the responsive md: variants used by the display tokens in FONT_SIZES.
     { pattern: /^text-\[.+\]$/ },
+    { pattern: /^text-\[.+\]$/, variants: ['sm', 'md', 'lg'] },
   ],
   theme: {
     extend: {

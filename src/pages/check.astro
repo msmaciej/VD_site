@@ -2,7 +2,7 @@
 // src/pages/check.astro  →  vortexdeep.ch/check
 import Layout from '../layouts/Layout.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-import { themeColors, fontFamily, socialIcon } from '../utils/siteHelpers.ts';
+import { themeColors, themeFamily, fontFamily, fontScaleFactor, socialIcon } from '../utils/siteHelpers.ts';
 
 // Pull real Site Settings so this page mimics the rest of the site's header,
 // footer, and theme — same data source index.astro passes into
@@ -21,11 +21,19 @@ const settings = settingFiles[0]?.default || {};
 const currentTheme = settings.theme || 'light';
 const currentYear  = new Date().getFullYear();
 
+// Mirror SitePage.astro so the Fit Check behaves like the rest of the site:
+// pass the visitor theme-toggle gate and the light/dark family classification
+// into Layout. Without these, Layout's FOUC-restore script stays gated off
+// (const toggleEnabled = false), so a visitor's saved light/dark choice made
+// elsewhere on the site is ignored here and the page renders in the admin's
+// preset theme regardless — which is why the Fit Check didn't match the site.
+const themeToggleEnabled = settings.enableThemeToggle === true;
+const autoFamily = themeFamily(themeColors[currentTheme]?.bg || '#ffffff');
+
 const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
   ? settings.customFontName
   : (settings.fontPreset || 'Inter');
-const activeFontFamily = fontFamily(activeFont);
-
+let activeFontFamily = fontFamily(activeFont);
 const headerHeight     = settings.headerHeight     || '52px';
 const footerHeight     = settings.footerHeight     || '44px';
 const headerInnerWidth = settings.headerInnerWidth || '680px';
@@ -54,6 +62,20 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
 // server-side scoring keys off them; the visible labels are all CMS-editable.
 const fitCheckFiles = await Astro.glob('../content/fitcheck/*.json');
 const fc = fitCheckFiles[0]?.default || {};
+
+// ── Fit Check appearance overrides (Tina: fitCheck → Appearance) ─────────────
+// Font: if set, overrides the site Global Default Font on this page only;
+// blank = inherit Site Settings (computed above). Text size: a scale factor
+// exposed as --vd-fs-scale and multiplied into the small .vd-* type below.
+const fcAppear = fc.appearance || {};
+const fcFontChoice = fcAppear.fontPreset || '';
+if (fcFontChoice) {
+  const fcFontName = (fcFontChoice === 'custom' && fcAppear.customFontName)
+    ? fcAppear.customFontName
+    : fcFontChoice;
+  activeFontFamily = fontFamily(fcFontName);
+}
+const fcTextScale = fontScaleFactor(fcAppear.baseSize, 'base');
 
 const categoryKeysList = ['comms', 'sales', 'docs', 'ops', 'reporting', 'content', 'several'] as const;
 
@@ -86,7 +108,7 @@ for (const key of categoryKeysList) {
 }
 ---
 
-<Layout title="VortexDeep — Quick Operations Check" theme={currentTheme} lang="en">
+<Layout title="VortexDeep — Quick Operations Check" theme={currentTheme} lang="en" autoFamily={autoFamily} themeToggleEnabled={themeToggleEnabled}>
   <!-- ── FIXED HEADER — mirrors SitePage.astro's header for parity with the
        rest of the site. See that file's header block if this needs to
        change; the two aren't shared as a component (this page doesn't
@@ -135,6 +157,23 @@ for (const key of categoryKeysList) {
           </a>
         ))}
         <LanguageSwitcher lang="en" slug="check" />
+        {themeToggleEnabled && (
+          <button type="button" data-vd-theme-cycle
+                  class="vd-theme-btn" style="color: var(--zen-text);"
+                  aria-label="Switch light/dark view">
+            <span class="vd-theme-icon vd-theme-icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="12" cy="12" r="4.2"/>
+                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/>
+              </svg>
+            </span>
+            <span class="vd-theme-icon vd-theme-icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.7 6.7 0 0 0 10.7 10.7Z"/>
+              </svg>
+            </span>
+          </button>
+        )}
       </nav>
     </div>
   </header>
@@ -350,7 +389,40 @@ for (const key of categoryKeysList) {
     </p>
   </footer>
 
-  <style is:global>
+  <style is:global define:vars={{ activeFontFamily, fcTextScale }}>
+    /* ── Font parity with the rest of the site ───────────────────────────────
+       Layout.astro defaults body to Inter; SitePage.astro overrides that
+       globally with the configured font. The Fit Check bypasses SitePage, so
+       without this rule its body-level text fell back to Inter instead of the
+       admin's fontPreset (e.g. IBM Plex Mono) — the "no font settings" gap.
+       Set it globally here, exactly as SitePage does, so every element (incl.
+       the runtime-built quiz DOM) inherits the configured family. ── */
+    html, body { font-family: var(--activeFontFamily); }
+
+    /* ── Theme toggle button (sun/moon) — mirrors SitePage.astro so the Fit
+       Check gets the same light/dark selector as the rest of the site. Click
+       handling is delegated globally in Layout.astro (data-vd-theme-cycle). ── */
+    .vd-theme-btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; padding: 0; border: none; background: none;
+      cursor: pointer;
+    }
+    .vd-theme-icon {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.4) rotate(-70deg);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .vd-theme-icon svg { width: 100%; height: 100%; }
+    /* Auto: opposite-of-current icon, dimmed — an invitation, not a selection */
+    html:not([data-theme-forced])[data-auto-family="dark"]  .vd-theme-icon-sun  { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced])[data-auto-family="light"] .vd-theme-icon-moon { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced]) .vd-theme-btn:hover .vd-theme-icon { opacity: 0.62; }
+    /* Forced: selected icon, fully solid, unaffected by hover */
+    html[data-theme-forced="light"] .vd-theme-icon-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+    html[data-theme-forced="dark"]  .vd-theme-icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+
     /* ── Fixed header / footer chrome — mirrors SitePage.astro ── */
     .vd-fixed-header {
       position: fixed; top: 0; left: 0; right: 0;
@@ -421,19 +493,24 @@ for (const key of categoryKeysList) {
   </style>
 
   <style>
-    .vd-ql { font-size:14px; font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 2rem; text-align:center; }
-    .vd-opt { text-align:left; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; padding:14px 4px; border:none; border-bottom:1px solid var(--zen-muted); background:transparent; color:var(--zen-text); opacity:0.6; cursor:pointer; font-family:inherit; transition:opacity 0.2s ease, border-color 0.2s ease; width:100%; }
+    /* Font sizes bumped for readability — the original 9–11px uppercase type
+       was hard to read (the "small letters" complaint). Raised the smallest
+       elements to a comfortable floor (option text 11→13, field labels 9→11,
+       tags/links 10→11) while keeping the minimalist uppercase/tracking look.
+       Tune these numbers freely — they're the only readability lever here. */
+    .vd-ql { font-size:calc(15px * var(--fcTextScale, 1)); font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 2rem; text-align:center; }
+    .vd-opt { text-align:left; font-size:calc(13px * var(--fcTextScale, 1)); letter-spacing:0.05em; text-transform:uppercase; padding:14px 4px; border:none; border-bottom:1px solid var(--zen-muted); background:transparent; color:var(--zen-text); opacity:0.6; cursor:pointer; font-family:inherit; transition:opacity 0.2s ease, border-color 0.2s ease; width:100%; }
     .vd-opt:hover { opacity:1; border-color:var(--zen-text); }
     .vd-opt.selected { opacity:1; border-color:var(--zen-text); font-weight:600; }
-    .vd-tag { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; border-bottom:1px solid var(--zen-muted); display:inline-block; padding-bottom:6px; margin-bottom:1.5rem; }
-    .vd-rh { font-size:16px; font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 1rem; }
-    .vd-rb { opacity:0.65; font-size:13px; line-height:1.7; max-width:38rem; margin:0 auto 2rem; }
-    .vd-fl { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; display:block; margin-bottom:4px; }
-    .vd-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--zen-muted); color:var(--zen-text); font-family:inherit; font-size:13px; padding:8px 2px; resize:vertical; }
+    .vd-tag { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; border-bottom:1px solid var(--zen-muted); display:inline-block; padding-bottom:6px; margin-bottom:1.5rem; }
+    .vd-rh { font-size:calc(17px * var(--fcTextScale, 1)); font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 1rem; }
+    .vd-rb { opacity:0.65; font-size:calc(14px * var(--fcTextScale, 1)); line-height:1.7; max-width:38rem; margin:0 auto 2rem; }
+    .vd-fl { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; display:block; margin-bottom:4px; }
+    .vd-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--zen-muted); color:var(--zen-text); font-family:inherit; font-size:calc(14px * var(--fcTextScale, 1)); padding:8px 2px; resize:vertical; }
     .vd-input:focus { outline:none; border-color:var(--zen-text); }
-    .vd-soft-link { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; color:var(--zen-text); border-bottom:1px solid var(--zen-muted); padding-bottom:3px; text-decoration:none; }
+    .vd-soft-link { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; color:var(--zen-text); border-bottom:1px solid var(--zen-muted); padding-bottom:3px; text-decoration:none; }
     .vd-soft-link:hover { opacity:1; }
-    .vd-restart { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; background:none; border:none; cursor:pointer; font-family:inherit; color:var(--zen-text); }
+    .vd-restart { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; background:none; border:none; cursor:pointer; font-family:inherit; color:var(--zen-text); }
     .vd-restart:hover { opacity:0.9; }
     /* Progress: the same dot motif as the background network and the process flow.
        Replaces six 1px hairlines at 0.3 opacity — present in the DOM, invisible on screen. */
