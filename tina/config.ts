@@ -484,6 +484,14 @@ export default defineConfig({
             ui: { itemProps: (item: any) => ({ label: item?.platform || 'New Social Link' }) },
           },
 
+          // ── SEO / structured data ─────────────────────────────────────────
+          { type: "string",  name: "founderName", label: "Founder name (JSON-LD)",
+            description: "Shown to search engines as the company founder. Leave blank to omit." },
+          { type: "string",  name: "founderUrl",  label: "Founder profile URL (e.g. LinkedIn)",
+            description: "Only used inside structured data. Must be a full https:// URL." },
+          { type: "boolean", name: "enableContentProtection", label: "Block copy / right-click / print",
+            description: "Off is recommended: it never stops crawlers and it hurts accessibility and AI-search quoting." },
+
           // ── Global appearance ─────────────────────────────────────────────
           { type: "string", name: "fontPreset", label: "Global Default Font", options: [
             { label: "Inter — Modern Sans",    value: "Inter"      },
