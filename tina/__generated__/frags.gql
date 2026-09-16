@@ -37,6 +37,12 @@ fragment PageParts on Page {
       }
       showGroupIntros
       showItemCopy
+      cards {
+        __typename
+        title
+        line
+      }
+      cardColumns
       meta
       email
       phone
@@ -161,6 +167,12 @@ fragment Page_deParts on Page_de {
       }
       showGroupIntros
       showItemCopy
+      cards {
+        __typename
+        title
+        line
+      }
+      cardColumns
       meta
       email
       phone
@@ -387,6 +399,7 @@ fragment DataPageParts on DataPage {
 
 fragment FitCheckParts on FitCheck {
   __typename
+  enabled
   appearance {
     __typename
     fontPreset

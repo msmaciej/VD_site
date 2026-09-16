@@ -142,6 +142,12 @@ var fitCheckCollection = {
     allowedActions: { create: false, delete: false }
   },
   fields: [
+    {
+      type: "boolean",
+      name: "enabled",
+      label: "Fit Check enabled \u2014 master switch",
+      description: 'Off = the "Fit Check" link disappears from the site header nav, the "Start the Fit Check" button hides wherever it appears (incl. the home-page teaser section), and the /check and /de/check pages show a short "not available" notice instead of the quiz. On = fully available everywhere. This is the single switch for the whole feature \u2014 no other toggle needs to change.'
+    },
     { type: "object", name: "appearance", label: "Appearance \u2014 font & text size", fields: appearanceFields },
     { type: "object", name: "roleQuestion", label: "Q0 \u2014 Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 \u2014 Category", fields: categoryQuestionFields },
@@ -335,6 +341,28 @@ var pageTemplates = [
         label: "Show sub-area descriptions (master)",
         description: "Master switch for the problem / what-we-do text under each sub-area."
       },
+      // ── Card grid (optional) ───────────────────────────────────────────────
+      // The always-visible counterpart to "Folding groups": a handful of short
+      // points that should all read at a glance, no click required. Use for
+      // 3-6 short points; use Folding groups instead once there's real depth
+      // to tuck away (problem/handled copy, more than ~6 items).
+      {
+        type: "object",
+        list: true,
+        name: "cards",
+        label: "Card grid (optional)",
+        description: "A small set of always-visible cards \u2014 index number, short title, one line. Use INSTEAD of stacked sentences for 3-6 short points that should all be readable at a glance, with nothing hidden behind a click. For long or many-item lists, use 'Folding groups' above instead.",
+        ui: { itemProps: (item) => ({ label: item?.title || "Card" }) },
+        fields: [
+          { type: "string", name: "title", label: "Card title (a few words)" },
+          { type: "string", name: "line", label: "One line", ui: { component: "textarea" } }
+        ]
+      },
+      { type: "string", name: "cardColumns", label: "Card grid columns", options: [
+        { label: "2 Columns", value: "grid-cols-2" },
+        { label: "3 Columns", value: "grid-cols-3" },
+        { label: "4 Columns", value: "grid-cols-4" }
+      ] },
       {
         type: "string",
         name: "meta",

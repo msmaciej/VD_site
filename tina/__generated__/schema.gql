@@ -116,6 +116,11 @@ type PageBlocksSectionGroups {
   items: [PageBlocksSectionGroupsItems]
 }
 
+type PageBlocksSectionCards {
+  title: String
+  line: String
+}
+
 type PageBlocksSection {
   title: String
   titleFont: String
@@ -139,6 +144,8 @@ type PageBlocksSection {
   groups: [PageBlocksSectionGroups]
   showGroupIntros: Boolean
   showItemCopy: Boolean
+  cards: [PageBlocksSectionCards]
+  cardColumns: String
   meta: String
   email: String
   phone: String
@@ -261,6 +268,11 @@ input PageBlocksSectionGroupsFilter {
   items: PageBlocksSectionGroupsItemsFilter
 }
 
+input PageBlocksSectionCardsFilter {
+  title: StringFilter
+  line: StringFilter
+}
+
 input PageBlocksSectionFilter {
   title: StringFilter
   titleFont: StringFilter
@@ -284,6 +296,8 @@ input PageBlocksSectionFilter {
   groups: PageBlocksSectionGroupsFilter
   showGroupIntros: BooleanFilter
   showItemCopy: BooleanFilter
+  cards: PageBlocksSectionCardsFilter
+  cardColumns: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -417,6 +431,11 @@ type Page_deBlocksSectionGroups {
   items: [Page_deBlocksSectionGroupsItems]
 }
 
+type Page_deBlocksSectionCards {
+  title: String
+  line: String
+}
+
 type Page_deBlocksSection {
   title: String
   titleFont: String
@@ -440,6 +459,8 @@ type Page_deBlocksSection {
   groups: [Page_deBlocksSectionGroups]
   showGroupIntros: Boolean
   showItemCopy: Boolean
+  cards: [Page_deBlocksSectionCards]
+  cardColumns: String
   meta: String
   email: String
   phone: String
@@ -550,6 +571,11 @@ input Page_deBlocksSectionGroupsFilter {
   items: Page_deBlocksSectionGroupsItemsFilter
 }
 
+input Page_deBlocksSectionCardsFilter {
+  title: StringFilter
+  line: StringFilter
+}
+
 input Page_deBlocksSectionFilter {
   title: StringFilter
   titleFont: StringFilter
@@ -573,6 +599,8 @@ input Page_deBlocksSectionFilter {
   groups: Page_deBlocksSectionGroupsFilter
   showGroupIntros: BooleanFilter
   showItemCopy: BooleanFilter
+  cards: Page_deBlocksSectionCardsFilter
+  cardColumns: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -1285,6 +1313,7 @@ type FitCheckConfirmPage {
 }
 
 type FitCheck implements Node & Document {
+  enabled: Boolean
   appearance: FitCheckAppearance
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
@@ -1572,6 +1601,7 @@ input FitCheckConfirmPageFilter {
 }
 
 input FitCheckFilter {
+  enabled: BooleanFilter
   appearance: FitCheckAppearanceFilter
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
@@ -1684,6 +1714,11 @@ input PageBlocksSectionGroupsMutation {
   items: [PageBlocksSectionGroupsItemsMutation]
 }
 
+input PageBlocksSectionCardsMutation {
+  title: String
+  line: String
+}
+
 input PageBlocksSectionMutation {
   title: String
   titleFont: String
@@ -1707,6 +1742,8 @@ input PageBlocksSectionMutation {
   groups: [PageBlocksSectionGroupsMutation]
   showGroupIntros: Boolean
   showItemCopy: Boolean
+  cards: [PageBlocksSectionCardsMutation]
+  cardColumns: String
   meta: String
   email: String
   phone: String
@@ -1819,6 +1856,11 @@ input Page_deBlocksSectionGroupsMutation {
   items: [Page_deBlocksSectionGroupsItemsMutation]
 }
 
+input Page_deBlocksSectionCardsMutation {
+  title: String
+  line: String
+}
+
 input Page_deBlocksSectionMutation {
   title: String
   titleFont: String
@@ -1842,6 +1884,8 @@ input Page_deBlocksSectionMutation {
   groups: [Page_deBlocksSectionGroupsMutation]
   showGroupIntros: Boolean
   showItemCopy: Boolean
+  cards: [Page_deBlocksSectionCardsMutation]
+  cardColumns: String
   meta: String
   email: String
   phone: String
@@ -2360,6 +2404,7 @@ input FitCheckConfirmPageMutation {
 }
 
 input FitCheckMutation {
+  enabled: Boolean
   appearance: FitCheckAppearanceMutation
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation

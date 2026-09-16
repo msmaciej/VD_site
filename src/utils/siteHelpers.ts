@@ -131,3 +131,18 @@ export const socialIcon = (platform: string): { icon: string; round: boolean } =
   if (p.includes('twitter') || p.includes('x.com')) return { icon: 'x', round: false };
   return { icon: p.substring(0, 2), round: false };
 };
+
+// ── Fit Check switch ──────────────────────────────────────────────────────
+// Tina → "Fit Check" → first field "Fit Check enabled" (src/content/fitcheck/
+// config.json → enabled). When off: /check and /de/check render a short
+// "not available" notice with noindex, the header link and the home-page
+// Fit Check section (any block whose CTA points at /check) are hidden, and
+// the sitemap skips the page. Defaults ON if the field is absent.
+export const isFitCheckEnabled = (fitCheckConfig: any): boolean =>
+  fitCheckConfig?.enabled !== false;
+
+export const isFitCheckUrl = (url: string | undefined): boolean =>
+  typeof url === 'string' && /^(\/de)?\/check\/?$/.test(url);
+
+export const filterNavLinks = (links: any[], fitCheckEnabled: boolean): any[] =>
+  (links || []).filter((l: any) => fitCheckEnabled || !isFitCheckUrl(l?.url));

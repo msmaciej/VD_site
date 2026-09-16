@@ -39,10 +39,6 @@ const footerHeight     = settings.footerHeight     || '44px';
 const headerInnerWidth = settings.headerInnerWidth || '680px';
 
 const homeUrl = '/';
-const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
-  label: link.label,
-  url:   link.url,
-}));
 
 const contactEmail = settings.contactEmail || 'info@vortexdeep.ch';
 
@@ -62,6 +58,17 @@ const checkAnimationsEnabled = settings.enableCheckPageAnimations === true;
 // server-side scoring keys off them; the visible labels are all CMS-editable.
 const fitCheckFiles = await Astro.glob('../content/fitcheck/*.json');
 const fc = fitCheckFiles[0]?.default || {};
+
+// Master switch (Tina: Fit Check → "Fit Check enabled"). Off = this page's
+// own nav link hides itself and the quiz below is replaced by a short
+// "not available" notice — see the vd-root conditional further down.
+const fitCheckEnabled = fc.enabled !== false;
+const resolvedNavLinks = (settings.navLinks || [])
+  .filter((link: any) => fitCheckEnabled || link.url !== '/check')
+  .map((link: any) => ({
+    label: link.label,
+    url:   link.url,
+  }));
 
 // ── Fit Check appearance overrides (Tina: fitCheck → Appearance) ─────────────
 // Font: if set, overrides the site Global Default Font on this page only;
@@ -191,6 +198,14 @@ for (const key of categoryKeysList) {
   <main class="min-h-[100svh] flex flex-col items-center px-6"
         style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 24px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 24px);`}>
     <div class="max-w-xl w-full mx-auto my-auto" id="vd-root">
+      {!fitCheckEnabled ? (
+        <div class="text-center">
+          <p class="vd-tag">The Fit Check</p>
+          <h2 class="vd-rh">Not available right now</h2>
+          <p class="vd-rb">The Fit Check is temporarily unavailable. Please check back soon, or get in touch directly.</p>
+          <a href={`mailto:${contactEmail}`} class="vd-soft-link">Get in touch</a>
+        </div>
+      ) : (<>
 
       <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
         The Fit Check
@@ -361,6 +376,7 @@ for (const key of categoryKeysList) {
         <br><button class="vd-restart mt-8">Start over</button>
       </div>
 
+      </>)}
     </div>
   </main>
 
@@ -520,6 +536,12 @@ for (const key of categoryKeysList) {
   </style>
 
   <script>
+    // Astro hoists this module script unconditionally regardless of the
+    // {!fitCheckEnabled ? ... : ...} branch taken above, so guard here too:
+    // when the master switch is off, #vd-progress was never rendered and
+    // none of the element lookups below would resolve — do nothing instead
+    // of throwing on the first non-null assertion.
+    if (document.getElementById('vd-progress')) {
     const STEPS_BUSINESS = ['role', 'category', 'followup', 'time', 'process', 'goal'];
     const answers: Record<string, string> = {};
     let current = 'role';
@@ -713,5 +735,6 @@ for (const key of categoryKeysList) {
 
     document.querySelectorAll('.vd-restart').forEach(btn => btn.addEventListener('click', () => window.location.reload()));
     showStep('role');
+    } // end fitCheckEnabled guard
   </script>
 </Layout>

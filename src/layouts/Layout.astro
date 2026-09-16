@@ -44,24 +44,43 @@ interface Props {
   // this to know which forced state to visit first.
   autoFamily?:         'light' | 'dark';
   themeToggleEnabled?: boolean;
+  // Force noindex on a single page (e.g. a switched-off Fit Check) even when the site is live.
+  noindex?:            boolean;
 }
 const {
   title,
   theme       = 'light',
-  description = '',
-  ogImage     = '',
-  siteUrl     = 'https://vortexdeep.ch',
+  description: descriptionProp = '',
+  ogImage:     ogImageProp     = '',
+  siteUrl     = (siteSettings as any).siteUrl || 'https://vortexdeep.ch',
   lang        = 'en',
   autoBg,
   autoText,
   autoFamily,
   themeToggleEnabled = false,
+  noindex            = false,
 } = Astro.props;
 
+// ── SEO fallbacks ─────────────────────────────────────────────────────────
+// Pages that don't pass their own description/ogImage (e.g. /check, /data)
+// used to ship an EMPTY meta description and point og:image at
+// /og-image.png, a file that does not exist. Fall back to Site Settings so
+// every page always has a real description and a real share image.
+const settingsDescription = lang === 'de'
+  ? ((siteSettings as any).metaDescription_de || (siteSettings as any).metaDescription || '')
+  : ((siteSettings as any).metaDescription || '');
+const description = descriptionProp || settingsDescription;
+const ogImage     = ogImageProp || (siteSettings as any).ogImage || '/images/vd-logo-512.png';
+
+// ── Copy/right-click protection ──────────────────────────────────────────
+// Opt-out via Site Settings (`enableContentProtection: false`). It never
+// affected crawlers, but it does block select/copy/print for humans and
+// assistive tech, which is a poor signal for a site that wants to be quoted
+// by AI search engines. Defaults ON to preserve existing behaviour.
+const contentProtection = (siteSettings as any).enableContentProtection !== false;
+
 const canonical   = `${siteUrl}${Astro.url.pathname}`;
-const ogImageFull = ogImage
-  ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
-  : `${siteUrl}/og-image.png`;
+const ogImageFull = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
 // ── hreflang alternate URLs ───────────────────────────────────────────────────
 const currentPath = Astro.url.pathname;
@@ -104,7 +123,7 @@ const autoOverrideCss = (autoBg || autoText)
   : '';
 ---
 <!doctype html>
-<html lang={lang} data-theme={theme} data-auto-theme={theme} data-auto-family={autoFamily} data-theme-toggle={themeToggleEnabled ? 'true' : 'false'}>
+<html lang={lang} data-content-protection={contentProtection ? 'true' : 'false'} data-theme={theme} data-auto-theme={theme} data-auto-family={autoFamily} data-theme-toggle={themeToggleEnabled ? 'true' : 'false'}>
   <head>
     <meta charset="UTF-8" />
     <!-- FIX 2: initial-scale=1 prevents mobile browsers zooming in/out on load -->
@@ -117,7 +136,7 @@ const autoOverrideCss = (autoBg || autoText)
     <title>{title}</title>
     <meta name="description"        content={description} />
     <link rel="canonical"           href={canonical} />
-    <meta name="robots"             content={isPaused ? "noindex, nofollow" : "index, follow"} />
+    <meta name="robots"             content={(isPaused || noindex) ? "noindex, nofollow" : "index, follow"} />
 
     <!-- ── SEO: hreflang (bilingual) ── -->
     <link rel="alternate" hreflang="en"        href={hreflangEn} />
@@ -164,9 +183,9 @@ const autoOverrideCss = (autoBg || autoText)
         margin: 0;
         -webkit-font-smoothing: antialiased;
       }
-      * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
-      input, textarea, [contenteditable] { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
-      img { -webkit-user-drag:none; pointer-events:none; }
+      html[data-content-protection="true"] * { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+      html[data-content-protection="true"] input, html[data-content-protection="true"] textarea, html[data-content-protection="true"] [contenteditable] { -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+      html[data-content-protection="true"] img { -webkit-user-drag:none; pointer-events:none; }
       ::-webkit-scrollbar { width:5px; }
       ::-webkit-scrollbar-track { background:var(--zen-bg); }
       ::-webkit-scrollbar-thumb { background:var(--zen-muted); border-radius:10px; }
@@ -252,7 +271,8 @@ const autoOverrideCss = (autoBg || autoText)
     {isPaused
       ? <SiteStatusScreen mode={siteStatus as 'preparation' | 'maintenance'} lang={lang} />
       : <slot />}
-    <!-- Content & code protection -->
+    <!-- Content & code protection (Site Settings → enableContentProtection) -->
+    {contentProtection && (
     <script is:inline>
     (function(){
       // Right-click disabled
@@ -286,5 +306,6 @@ const autoOverrideCss = (autoBg || autoText)
       // document.body.innerHTML='' to fire and produce a blank page on mobile.
     })();
     </script>
+    )}
   </body>
 </html>

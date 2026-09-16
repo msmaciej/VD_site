@@ -205,6 +205,8 @@ export const fitCheckCollection = {
     allowedActions: { create: false, delete: false },
   },
   fields: [
+    { type: "boolean", name: "enabled", label: "Fit Check enabled — master switch",
+      description: "Off = the \"Fit Check\" link disappears from the site header nav, the \"Start the Fit Check\" button hides wherever it appears (incl. the home-page teaser section), and the /check and /de/check pages show a short \"not available\" notice instead of the quiz. On = fully available everywhere. This is the single switch for the whole feature — no other toggle needs to change." },
     { type: "object", name: "appearance", label: "Appearance — font & text size", fields: appearanceFields },
     { type: "object", name: "roleQuestion", label: "Q0 — Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 — Category", fields: categoryQuestionFields },

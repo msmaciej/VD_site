@@ -84,5 +84,8 @@
   "addressCity": "Zürich",
   "addressPostal": "",
   "contactEmail": "info@vortexdeep.ch",
-  "contactPhone": "+41 77 259 8865"
+  "contactPhone": "+41 77 259 8865",
+  "enableContentProtection": true,
+  "founderName": "Maciek Szczech",
+  "founderUrl": ""
 }

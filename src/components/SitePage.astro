@@ -1464,6 +1464,36 @@ const contentGroups = (text: string) => {
               </div>
             )}
 
+            {/* Card grid. The non-folding counterpart to the accordion above:
+                a handful of points that should all read at a glance, nothing
+                behind a click. Same hairline-rule primitive as the case-study
+                fields (border + tracked label + short copy), turned horizontal
+                and laid out in a grid instead of stacked full-width blocks. */}
+            {block.cards?.length > 0 && (
+              <div class={`grid ${block.cardColumns || 'grid-cols-2'} gap-x-8 gap-y-6 text-left max-w-md mx-auto mb-6`}>
+                {block.cards.map((c: any, i: number) => (
+                  <div class="border-t border-current border-opacity-10 pt-3">
+                    <p class="text-[9px] uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]"
+                       style={`color: ${zenText};`}>
+                      {String(i + 1).padStart(2, '0')}
+                    </p>
+                    {c.title && (
+                      <p class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[12px]')} font-medium mb-1 ${animTextHover ? 'vd-hover-grow' : ''}`}
+                         style={`color: ${zenText};`}>
+                        {c.title}
+                      </p>
+                    )}
+                    {c.line && (
+                      <p class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[11px]')} font-light leading-relaxed opacity-65`}
+                         style={`color: ${zenText};`}>
+                        {c.line}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
             {showBody && sectionBodyEl && (
               foldBody ? (
                 <Fold id={`vd-fold-${blockIdx}`} cueStyle={cueStyle} cueLabel={cueLabel} cueLabelOpen={cueLabelOpen}

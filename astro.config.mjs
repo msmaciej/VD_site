@@ -1,6 +1,12 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import { readFileSync } from 'node:fs';
+const fitCheckConfig = JSON.parse(readFileSync(new URL('./src/content/fitcheck/config.json', import.meta.url), 'utf8'));
+
+// Fit Check master switch (Tina → Fit Check → "Fit Check enabled"). When off,
+// the /check routes still build (as a noindex notice) but must not be advertised.
+const fitCheckEnabled = fitCheckConfig.enabled !== false;
 
 export default defineConfig({
   site: 'https://vortexdeep.ch',
@@ -14,7 +20,7 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: { en: 'en', de: 'de' },
       },
-      filter: (page) => !page.includes('/admin'),
+      filter: (page) => !page.includes('/admin') && (fitCheckEnabled || !/\/check\/?$/.test(page)),
     }),
   ],
   i18n: {
