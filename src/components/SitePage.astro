@@ -28,6 +28,14 @@ const dataPageDoc = (dataPageDocs.find((d: any) => d.default?.lang === lang)
   || dataPageDocs.find((d: any) => d.default?.lang === 'en'))?.default || {};
 const dataPageEnabled = (dataPageDoc as any).enabled !== false;
 
+// Fit Check master switch — off hides the header nav link, any CTA button
+// pointing at /check (incl. the home-page teaser block's own button), and
+// (in check.astro / de/check.astro) blocks the quiz itself. See
+// tina/fitcheck-schema.ts's "enabled" field for the single source of truth.
+const fitCheckDocs = await Astro.glob('../content/fitcheck/*.json');
+const fitCheckDoc = (fitCheckDocs[0]?.default || {}) as any;
+const fitCheckEnabled = fitCheckDoc.enabled !== false;
+
 // ── Theme & font ──────────────────────────────────────────────────────────────
 const currentTheme = settings.theme || 'light';
 const currentYear  = new Date().getFullYear();
@@ -130,10 +138,14 @@ const foldAriaOpen    = t.foldLess;
 
 // ── Lang-aware nav links (label_de + /de prefix on URLs) ─────────────────────
 const homeUrl = lang === 'de' ? '/de/' : '/';
-const resolvedNavLinks = (settings.navLinks || []).map((link: any) => ({
-  label: lang === 'de' ? (link.label_de || link.label) : link.label,
-  url:   lang === 'de' ? `/de${link.url}` : link.url,
-}));
+// The Fit Check master switch hides its own nav entry — matched on the
+// stored (un-prefixed) url before the lang-prefix step below.
+const resolvedNavLinks = (settings.navLinks || [])
+  .filter((link: any) => fitCheckEnabled || link.url !== '/check')
+  .map((link: any) => ({
+    label: lang === 'de' ? (link.label_de || link.label) : link.label,
+    url:   lang === 'de' ? `/de${link.url}` : link.url,
+  }));
 
 // ── JSON-LD structured data ───────────────────────────────────────────────────
 const jsonLd = {
@@ -1216,7 +1228,7 @@ const contentGroups = (text: string) => {
                 ) : explainerEl
               )}
 
-              {block.ctaLabel && block.ctaUrl && (
+              {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
                 <div class="flex justify-center mt-10">
                   <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
                      class="vd-cta text-[11px]"
@@ -1362,8 +1374,18 @@ const contentGroups = (text: string) => {
       // A foldable section borrows the proven .vd-screen--flow treatment (grow +
       // top-flow) plus my-auto on the inner block: short (folded) → centred;
       // tall (unfolded) → flows downward, never spilling into the panel above.
-      const foldBody = block.foldBody === true && showBody && !!block.content;
-      const foldableSection = foldBody;
+      const foldBody  = block.foldBody === true && showBody && !!block.content;
+      const hasGroups = block.groups?.length > 0;
+      // .vd-screen--groups uses the SAME grow-and-top-flow treatment as
+      // --flow (see both rules below), so it needs the same my-auto
+      // centring compensation — otherwise a groups section whose body text
+      // is hidden/absent (showBody off, foldBody off, or no `content`) is
+      // permanently pinned to the top of the screen instead of centring
+      // when its content is shorter than the viewport. Previously this was
+      // gated on foldBody alone, which happened to hold for "The Work We
+      // Take Off You" only while it also had a foldable intro paragraph —
+      // any groups section without one silently lost centring.
+      const foldableSection = foldBody || hasGroups;
       // Body markup defined once, then rendered either inline (as today) or
       // inside the fold — identical either way, so folding changes nothing but
       // whether it starts hidden behind the cue.
@@ -1386,7 +1408,7 @@ const contentGroups = (text: string) => {
         </div>
       ) : null;
       return (
-        <div class={`vd-screen vd-reveal ${block.groups?.length ? 'vd-screen--groups' : ''} ${foldableSection ? 'vd-screen--flow' : ''}`}>
+        <div class={`vd-screen vd-reveal ${hasGroups ? 'vd-screen--groups' : ''} ${foldBody ? 'vd-screen--flow' : ''}`}>
           <div class={`w-full max-w-2xl text-center ${foldableSection ? 'my-auto' : ''}`}>
 
             {showTitle && block.title && (
@@ -1525,7 +1547,7 @@ const contentGroups = (text: string) => {
               </div>
             )}
 
-            {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (
+            {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
               <div class="flex justify-center mt-10">
                 <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
                    class="vd-cta text-[11px]"
