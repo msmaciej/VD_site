@@ -146,6 +146,13 @@ type PageBlocksSection {
   showItemCopy: Boolean
   cards: [PageBlocksSectionCards]
   cardColumns: String
+  cardGridSpacing: String
+  cardTitleFont: String
+  cardTitleFontSize: String
+  cardTitleFontWeight: String
+  cardLineFont: String
+  cardLineFontSize: String
+  cardLineFontWeight: String
   meta: String
   email: String
   phone: String
@@ -298,6 +305,13 @@ input PageBlocksSectionFilter {
   showItemCopy: BooleanFilter
   cards: PageBlocksSectionCardsFilter
   cardColumns: StringFilter
+  cardGridSpacing: StringFilter
+  cardTitleFont: StringFilter
+  cardTitleFontSize: StringFilter
+  cardTitleFontWeight: StringFilter
+  cardLineFont: StringFilter
+  cardLineFontSize: StringFilter
+  cardLineFontWeight: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -461,6 +475,13 @@ type Page_deBlocksSection {
   showItemCopy: Boolean
   cards: [Page_deBlocksSectionCards]
   cardColumns: String
+  cardGridSpacing: String
+  cardTitleFont: String
+  cardTitleFontSize: String
+  cardTitleFontWeight: String
+  cardLineFont: String
+  cardLineFontSize: String
+  cardLineFontWeight: String
   meta: String
   email: String
   phone: String
@@ -601,6 +622,13 @@ input Page_deBlocksSectionFilter {
   showItemCopy: BooleanFilter
   cards: Page_deBlocksSectionCardsFilter
   cardColumns: StringFilter
+  cardGridSpacing: StringFilter
+  cardTitleFont: StringFilter
+  cardTitleFontSize: StringFilter
+  cardTitleFontWeight: StringFilter
+  cardLineFont: StringFilter
+  cardLineFontSize: StringFilter
+  cardLineFontWeight: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -721,63 +749,7 @@ type SettingsSiteStatusContent {
   maintenanceMessage_en: String
 }
 
-type SettingsNavLinks {
-  label: String
-  label_de: String
-  url: String
-}
-
-type SettingsSocialLinks {
-  platform: String
-  url: String
-}
-
-type SettingsTypographyTitle {
-  size: String
-  weight: String
-}
-
-type SettingsTypographySubTitle {
-  size: String
-  weight: String
-}
-
-type SettingsTypographyBody {
-  size: String
-  weight: String
-}
-
-type SettingsTypography {
-  title: SettingsTypographyTitle
-  subTitle: SettingsTypographySubTitle
-  body: SettingsTypographyBody
-}
-
-type SettingsProcessFlow {
-  enabled: Boolean
-}
-
-type SettingsDepthBackground {
-  nodeCount: Float
-  connectDistance: Float
-  lineOpacity: Float
-  nodeOpacity: Float
-  nodeColor: String
-  fogColor: String
-}
-
-type SettingsPlanetarySystems {
-  systemCount: Float
-  maxPlanets: Float
-  orbitMinRadius: Float
-  orbitMaxRadius: Float
-  starColor: String
-  pathOpacity: Float
-}
-
-type Settings implements Node & Document {
-  siteStatus: String
-  siteStatusContent: SettingsSiteStatusContent
+type SettingsHero {
   siteName: String
   siteNameFont: String
   siteNameFontSize: String
@@ -789,6 +761,9 @@ type Settings implements Node & Document {
   subSiteNameFontWeight: String
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
+}
+
+type SettingsNoticeBanner {
   noticeBannerEnabled: Boolean
   noticeBannerText_en: String
   noticeBannerText_de: String
@@ -801,45 +776,156 @@ type Settings implements Node & Document {
   noticeBannerTextFontWeight: String
   noticeBannerBodyFontSize: String
   noticeBannerBodyFontWeight: String
+}
+
+type SettingsHeaderNavLinks {
+  label: String
+  label_de: String
+  url: String
+}
+
+type SettingsHeader {
   headerLayout: String
   headerLinksFontSize: String
-  navLinks: [SettingsNavLinks]
+  navLinks: [SettingsHeaderNavLinks]
+}
+
+type SettingsFooterSocialLinks {
+  platform: String
+  url: String
+}
+
+type SettingsFooter {
   footerText: String
   showFooterLine: Boolean
   footerTextFontSize: String
-  socialLinks: [SettingsSocialLinks]
+  socialLinks: [SettingsFooterSocialLinks]
+}
+
+type SettingsTypographyTitle {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+type SettingsTypographySubTitle {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+type SettingsTypographyBody {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+type SettingsTypographyCardTitle {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+type SettingsTypographyCardLine {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+type SettingsTypography {
+  title: SettingsTypographyTitle
+  subTitle: SettingsTypographySubTitle
+  body: SettingsTypographyBody
+  cardTitle: SettingsTypographyCardTitle
+  cardLine: SettingsTypographyCardLine
+}
+
+type SettingsAppearance {
   fontPreset: String
   customFontName: String
-  typography: SettingsTypography
   showLogo: Boolean
   theme: String
   baseTextColor: String
   customBackgroundColor: String
   enableThemeToggle: Boolean
+}
+
+type SettingsAnimationsProcessFlow {
+  enabled: Boolean
+}
+
+type SettingsAnimationsDepthBackground {
+  nodeCount: Float
+  connectDistance: Float
+  lineOpacity: Float
+  nodeOpacity: Float
+  nodeColor: String
+  fogColor: String
+}
+
+type SettingsAnimationsPlanetarySystems {
+  systemCount: Float
+  maxPlanets: Float
+  orbitMinRadius: Float
+  orbitMaxRadius: Float
+  starColor: String
+  pathOpacity: Float
+}
+
+type SettingsAnimations {
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
   enableCheckPageAnimations: Boolean
   backgroundStyle: String
-  processFlow: SettingsProcessFlow
-  depthBackground: SettingsDepthBackground
-  planetarySystems: SettingsPlanetarySystems
+  processFlow: SettingsAnimationsProcessFlow
+  depthBackground: SettingsAnimationsDepthBackground
+  planetarySystems: SettingsAnimationsPlanetarySystems
+}
+
+type SettingsLayout {
   headerHeight: String
   matchFooterToHeader: Boolean
   footerHeight: String
   headerInnerWidth: String
+  cardGridSpacing: String
+}
+
+type SettingsSeo {
   siteUrl: String
   metaTitle: String
   metaTitle_de: String
   metaDescription: String
   metaDescription_de: String
   ogImage: String
+  founderName: String
+  founderUrl: String
+  enableContentProtection: Boolean
   addressStreet: String
   addressCity: String
   addressPostal: String
   contactEmail: String
   contactPhone: String
+}
+
+type Settings implements Node & Document {
+  siteStatus: String
+  siteStatusContent: SettingsSiteStatusContent
+  hero: SettingsHero
+  noticeBanner: SettingsNoticeBanner
+  header: SettingsHeader
+  footer: SettingsFooter
+  typography: SettingsTypography
+  appearance: SettingsAppearance
+  animations: SettingsAnimations
+  layout: SettingsLayout
+  seo: SettingsSeo
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -856,70 +942,7 @@ input SettingsSiteStatusContentFilter {
   maintenanceMessage_en: StringFilter
 }
 
-input SettingsNavLinksFilter {
-  label: StringFilter
-  label_de: StringFilter
-  url: StringFilter
-}
-
-input SettingsSocialLinksFilter {
-  platform: StringFilter
-  url: StringFilter
-}
-
-input SettingsTypographyTitleFilter {
-  size: StringFilter
-  weight: StringFilter
-}
-
-input SettingsTypographySubTitleFilter {
-  size: StringFilter
-  weight: StringFilter
-}
-
-input SettingsTypographyBodyFilter {
-  size: StringFilter
-  weight: StringFilter
-}
-
-input SettingsTypographyFilter {
-  title: SettingsTypographyTitleFilter
-  subTitle: SettingsTypographySubTitleFilter
-  body: SettingsTypographyBodyFilter
-}
-
-input SettingsProcessFlowFilter {
-  enabled: BooleanFilter
-}
-
-input SettingsDepthBackgroundFilter {
-  nodeCount: NumberFilter
-  connectDistance: NumberFilter
-  lineOpacity: NumberFilter
-  nodeOpacity: NumberFilter
-  nodeColor: StringFilter
-  fogColor: StringFilter
-}
-
-input SettingsPlanetarySystemsFilter {
-  systemCount: NumberFilter
-  maxPlanets: NumberFilter
-  orbitMinRadius: NumberFilter
-  orbitMaxRadius: NumberFilter
-  starColor: StringFilter
-  pathOpacity: NumberFilter
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
-}
-
-input SettingsFilter {
-  siteStatus: StringFilter
-  siteStatusContent: SettingsSiteStatusContentFilter
+input SettingsHeroFilter {
   siteName: StringFilter
   siteNameFont: StringFilter
   siteNameFontSize: StringFilter
@@ -931,6 +954,9 @@ input SettingsFilter {
   subSiteNameFontWeight: StringFilter
   subSiteNameTracking: StringFilter
   showSubSiteNameOnly: BooleanFilter
+}
+
+input SettingsNoticeBannerFilter {
   noticeBannerEnabled: BooleanFilter
   noticeBannerText_en: StringFilter
   noticeBannerText_de: StringFilter
@@ -943,45 +969,163 @@ input SettingsFilter {
   noticeBannerTextFontWeight: StringFilter
   noticeBannerBodyFontSize: StringFilter
   noticeBannerBodyFontWeight: StringFilter
+}
+
+input SettingsHeaderNavLinksFilter {
+  label: StringFilter
+  label_de: StringFilter
+  url: StringFilter
+}
+
+input SettingsHeaderFilter {
   headerLayout: StringFilter
   headerLinksFontSize: StringFilter
-  navLinks: SettingsNavLinksFilter
+  navLinks: SettingsHeaderNavLinksFilter
+}
+
+input SettingsFooterSocialLinksFilter {
+  platform: StringFilter
+  url: StringFilter
+}
+
+input SettingsFooterFilter {
   footerText: StringFilter
   showFooterLine: BooleanFilter
   footerTextFontSize: StringFilter
-  socialLinks: SettingsSocialLinksFilter
+  socialLinks: SettingsFooterSocialLinksFilter
+}
+
+input SettingsTypographyTitleFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+}
+
+input SettingsTypographySubTitleFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+}
+
+input SettingsTypographyBodyFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+}
+
+input SettingsTypographyCardTitleFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+}
+
+input SettingsTypographyCardLineFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+}
+
+input SettingsTypographyFilter {
+  title: SettingsTypographyTitleFilter
+  subTitle: SettingsTypographySubTitleFilter
+  body: SettingsTypographyBodyFilter
+  cardTitle: SettingsTypographyCardTitleFilter
+  cardLine: SettingsTypographyCardLineFilter
+}
+
+input SettingsAppearanceFilter {
   fontPreset: StringFilter
   customFontName: StringFilter
-  typography: SettingsTypographyFilter
   showLogo: BooleanFilter
   theme: StringFilter
   baseTextColor: StringFilter
   customBackgroundColor: StringFilter
   enableThemeToggle: BooleanFilter
+}
+
+input SettingsAnimationsProcessFlowFilter {
+  enabled: BooleanFilter
+}
+
+input SettingsAnimationsDepthBackgroundFilter {
+  nodeCount: NumberFilter
+  connectDistance: NumberFilter
+  lineOpacity: NumberFilter
+  nodeOpacity: NumberFilter
+  nodeColor: StringFilter
+  fogColor: StringFilter
+}
+
+input SettingsAnimationsPlanetarySystemsFilter {
+  systemCount: NumberFilter
+  maxPlanets: NumberFilter
+  orbitMinRadius: NumberFilter
+  orbitMaxRadius: NumberFilter
+  starColor: StringFilter
+  pathOpacity: NumberFilter
+}
+
+input SettingsAnimationsFilter {
   enableLogoAnimation: BooleanFilter
   enableStatusDot: BooleanFilter
   enableCascadeReveal: BooleanFilter
   enableTextHover: BooleanFilter
   enableCheckPageAnimations: BooleanFilter
   backgroundStyle: StringFilter
-  processFlow: SettingsProcessFlowFilter
-  depthBackground: SettingsDepthBackgroundFilter
-  planetarySystems: SettingsPlanetarySystemsFilter
+  processFlow: SettingsAnimationsProcessFlowFilter
+  depthBackground: SettingsAnimationsDepthBackgroundFilter
+  planetarySystems: SettingsAnimationsPlanetarySystemsFilter
+}
+
+input SettingsLayoutFilter {
   headerHeight: StringFilter
   matchFooterToHeader: BooleanFilter
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
+  cardGridSpacing: StringFilter
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input SettingsSeoFilter {
   siteUrl: StringFilter
   metaTitle: StringFilter
   metaTitle_de: StringFilter
   metaDescription: StringFilter
   metaDescription_de: StringFilter
   ogImage: ImageFilter
+  founderName: StringFilter
+  founderUrl: StringFilter
+  enableContentProtection: BooleanFilter
   addressStreet: StringFilter
   addressCity: StringFilter
   addressPostal: StringFilter
   contactEmail: StringFilter
   contactPhone: StringFilter
+}
+
+input SettingsFilter {
+  siteStatus: StringFilter
+  siteStatusContent: SettingsSiteStatusContentFilter
+  hero: SettingsHeroFilter
+  noticeBanner: SettingsNoticeBannerFilter
+  header: SettingsHeaderFilter
+  footer: SettingsFooterFilter
+  typography: SettingsTypographyFilter
+  appearance: SettingsAppearanceFilter
+  animations: SettingsAnimationsFilter
+  layout: SettingsLayoutFilter
+  seo: SettingsSeoFilter
 }
 
 type SettingsConnectionEdges {
@@ -1744,6 +1888,13 @@ input PageBlocksSectionMutation {
   showItemCopy: Boolean
   cards: [PageBlocksSectionCardsMutation]
   cardColumns: String
+  cardGridSpacing: String
+  cardTitleFont: String
+  cardTitleFontSize: String
+  cardTitleFontWeight: String
+  cardLineFont: String
+  cardLineFontSize: String
+  cardLineFontWeight: String
   meta: String
   email: String
   phone: String
@@ -1886,6 +2037,13 @@ input Page_deBlocksSectionMutation {
   showItemCopy: Boolean
   cards: [Page_deBlocksSectionCardsMutation]
   cardColumns: String
+  cardGridSpacing: String
+  cardTitleFont: String
+  cardTitleFontSize: String
+  cardTitleFontWeight: String
+  cardLineFont: String
+  cardLineFontSize: String
+  cardLineFontWeight: String
   meta: String
   email: String
   phone: String
@@ -1995,63 +2153,7 @@ input SettingsSiteStatusContentMutation {
   maintenanceMessage_en: String
 }
 
-input SettingsNavLinksMutation {
-  label: String
-  label_de: String
-  url: String
-}
-
-input SettingsSocialLinksMutation {
-  platform: String
-  url: String
-}
-
-input SettingsTypographyTitleMutation {
-  size: String
-  weight: String
-}
-
-input SettingsTypographySubTitleMutation {
-  size: String
-  weight: String
-}
-
-input SettingsTypographyBodyMutation {
-  size: String
-  weight: String
-}
-
-input SettingsTypographyMutation {
-  title: SettingsTypographyTitleMutation
-  subTitle: SettingsTypographySubTitleMutation
-  body: SettingsTypographyBodyMutation
-}
-
-input SettingsProcessFlowMutation {
-  enabled: Boolean
-}
-
-input SettingsDepthBackgroundMutation {
-  nodeCount: Float
-  connectDistance: Float
-  lineOpacity: Float
-  nodeOpacity: Float
-  nodeColor: String
-  fogColor: String
-}
-
-input SettingsPlanetarySystemsMutation {
-  systemCount: Float
-  maxPlanets: Float
-  orbitMinRadius: Float
-  orbitMaxRadius: Float
-  starColor: String
-  pathOpacity: Float
-}
-
-input SettingsMutation {
-  siteStatus: String
-  siteStatusContent: SettingsSiteStatusContentMutation
+input SettingsHeroMutation {
   siteName: String
   siteNameFont: String
   siteNameFontSize: String
@@ -2063,6 +2165,9 @@ input SettingsMutation {
   subSiteNameFontWeight: String
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
+}
+
+input SettingsNoticeBannerMutation {
   noticeBannerEnabled: Boolean
   noticeBannerText_en: String
   noticeBannerText_de: String
@@ -2075,45 +2180,156 @@ input SettingsMutation {
   noticeBannerTextFontWeight: String
   noticeBannerBodyFontSize: String
   noticeBannerBodyFontWeight: String
+}
+
+input SettingsHeaderNavLinksMutation {
+  label: String
+  label_de: String
+  url: String
+}
+
+input SettingsHeaderMutation {
   headerLayout: String
   headerLinksFontSize: String
-  navLinks: [SettingsNavLinksMutation]
+  navLinks: [SettingsHeaderNavLinksMutation]
+}
+
+input SettingsFooterSocialLinksMutation {
+  platform: String
+  url: String
+}
+
+input SettingsFooterMutation {
   footerText: String
   showFooterLine: Boolean
   footerTextFontSize: String
-  socialLinks: [SettingsSocialLinksMutation]
+  socialLinks: [SettingsFooterSocialLinksMutation]
+}
+
+input SettingsTypographyTitleMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+input SettingsTypographySubTitleMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+input SettingsTypographyBodyMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+input SettingsTypographyCardTitleMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+input SettingsTypographyCardLineMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+}
+
+input SettingsTypographyMutation {
+  title: SettingsTypographyTitleMutation
+  subTitle: SettingsTypographySubTitleMutation
+  body: SettingsTypographyBodyMutation
+  cardTitle: SettingsTypographyCardTitleMutation
+  cardLine: SettingsTypographyCardLineMutation
+}
+
+input SettingsAppearanceMutation {
   fontPreset: String
   customFontName: String
-  typography: SettingsTypographyMutation
   showLogo: Boolean
   theme: String
   baseTextColor: String
   customBackgroundColor: String
   enableThemeToggle: Boolean
+}
+
+input SettingsAnimationsProcessFlowMutation {
+  enabled: Boolean
+}
+
+input SettingsAnimationsDepthBackgroundMutation {
+  nodeCount: Float
+  connectDistance: Float
+  lineOpacity: Float
+  nodeOpacity: Float
+  nodeColor: String
+  fogColor: String
+}
+
+input SettingsAnimationsPlanetarySystemsMutation {
+  systemCount: Float
+  maxPlanets: Float
+  orbitMinRadius: Float
+  orbitMaxRadius: Float
+  starColor: String
+  pathOpacity: Float
+}
+
+input SettingsAnimationsMutation {
   enableLogoAnimation: Boolean
   enableStatusDot: Boolean
   enableCascadeReveal: Boolean
   enableTextHover: Boolean
   enableCheckPageAnimations: Boolean
   backgroundStyle: String
-  processFlow: SettingsProcessFlowMutation
-  depthBackground: SettingsDepthBackgroundMutation
-  planetarySystems: SettingsPlanetarySystemsMutation
+  processFlow: SettingsAnimationsProcessFlowMutation
+  depthBackground: SettingsAnimationsDepthBackgroundMutation
+  planetarySystems: SettingsAnimationsPlanetarySystemsMutation
+}
+
+input SettingsLayoutMutation {
   headerHeight: String
   matchFooterToHeader: Boolean
   footerHeight: String
   headerInnerWidth: String
+  cardGridSpacing: String
+}
+
+input SettingsSeoMutation {
   siteUrl: String
   metaTitle: String
   metaTitle_de: String
   metaDescription: String
   metaDescription_de: String
   ogImage: String
+  founderName: String
+  founderUrl: String
+  enableContentProtection: Boolean
   addressStreet: String
   addressCity: String
   addressPostal: String
   contactEmail: String
   contactPhone: String
+}
+
+input SettingsMutation {
+  siteStatus: String
+  siteStatusContent: SettingsSiteStatusContentMutation
+  hero: SettingsHeroMutation
+  noticeBanner: SettingsNoticeBannerMutation
+  header: SettingsHeaderMutation
+  footer: SettingsFooterMutation
+  typography: SettingsTypographyMutation
+  appearance: SettingsAppearanceMutation
+  animations: SettingsAnimationsMutation
+  layout: SettingsLayoutMutation
+  seo: SettingsSeoMutation
 }
 
 input DataPageSectionsMutation {

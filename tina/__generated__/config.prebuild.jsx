@@ -363,6 +363,19 @@ var pageTemplates = [
         { label: "3 Columns", value: "grid-cols-3" },
         { label: "4 Columns", value: "grid-cols-4" }
       ] },
+      { type: "string", name: "cardGridSpacing", label: "Space above the card grid (optional, overrides site default)", options: [
+        { label: "Default \u2014 inherit site-wide setting", value: "" },
+        { label: "None \u2014 flush against sub-title", value: "mt-0" },
+        { label: "Small", value: "mt-3" },
+        { label: "Medium", value: "mt-6" },
+        { label: "Large", value: "mt-10" }
+      ] },
+      { type: "string", name: "cardTitleFont", label: "Card title \u2014 Font (optional, overrides site default)", options: fontTypeOptions },
+      { type: "string", name: "cardTitleFontSize", label: "Card title \u2014 Size (optional, overrides site default)", options: fontSizeOptions },
+      { type: "string", name: "cardTitleFontWeight", label: "Card title \u2014 Weight (optional, overrides site default)", options: fontWeightOptions },
+      { type: "string", name: "cardLineFont", label: "Card line \u2014 Font (optional, overrides site default)", options: fontTypeOptions },
+      { type: "string", name: "cardLineFontSize", label: "Card line \u2014 Size (optional, overrides site default)", options: fontSizeOptions },
+      { type: "string", name: "cardLineFontWeight", label: "Card line \u2014 Weight (optional, overrides site default)", options: fontWeightOptions },
       {
         type: "string",
         name: "meta",
@@ -719,102 +732,100 @@ var config_default = defineConfig({
               { type: "string", name: "maintenanceMessage_en", label: "Maintenance \u2014 message (EN)", ui: { component: "textarea" } }
             ]
           },
-          // ── Hero: Main title ──────────────────────────────────────────────
-          { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
-          { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
-          { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: fontSizeOptions },
-          { type: "string", name: "siteNameFontWeight", label: "Main title \u2014 Weight", options: fontWeightOptions },
-          // ── Hero: Subtitle (EN + DE) ──────────────────────────────────────
-          {
-            type: "string",
-            name: "subSiteName",
-            label: "Subtitle (EN) \u2014 use | for line breaks",
-            description: "e.g. Practical AI automation | for small business"
-          },
-          {
-            type: "string",
-            name: "subSiteName_de",
-            label: "Subtitle (DE) \u2014 use | for line breaks",
-            description: "e.g. Praktische KI-Automatisierung | f\xFCr KMU"
-          },
-          { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
-          { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: fontSizeOptions },
-          { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
-          { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [
-            { label: "Tight  \u2014 0.25em", value: "tracking-[0.25em]" },
-            { label: "Normal \u2014 0.5em", value: "tracking-[0.5em]" },
-            { label: "Wide   \u2014 1.2em (matches page sections)", value: "tracking-[1.2em]" },
-            { label: "Wider  \u2014 1.5em", value: "tracking-[1.5em]" }
+          // ── Hero: Main title + Subtitle (EN + DE) ──────────────────────────
+          { type: "object", name: "hero", label: "Hero (main title & subtitle)", fields: [
+            { type: "string", name: "siteName", label: "Main title text (e.g. VortexDeep)" },
+            { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
+            { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: fontSizeOptions },
+            { type: "string", name: "siteNameFontWeight", label: "Main title \u2014 Weight", options: fontWeightOptions },
+            {
+              type: "string",
+              name: "subSiteName",
+              label: "Subtitle (EN) \u2014 use | for line breaks",
+              description: "e.g. Practical AI automation | for small business"
+            },
+            {
+              type: "string",
+              name: "subSiteName_de",
+              label: "Subtitle (DE) \u2014 use | for line breaks",
+              description: "e.g. Praktische KI-Automatisierung | f\xFCr KMU"
+            },
+            { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
+            { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: fontSizeOptions },
+            { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
+            { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [
+              { label: "Tight  \u2014 0.25em", value: "tracking-[0.25em]" },
+              { label: "Normal \u2014 0.5em", value: "tracking-[0.5em]" },
+              { label: "Wide   \u2014 1.2em (matches page sections)", value: "tracking-[1.2em]" },
+              { label: "Wider  \u2014 1.5em", value: "tracking-[1.5em]" }
+            ] },
+            { type: "boolean", name: "showSubSiteNameOnly", label: "Show subtitle only (hide main title)" }
           ] },
-          { type: "boolean", name: "showSubSiteNameOnly", label: "Show subtitle only (hide main title)" },
           // ── Notice banner (small strip under the header, on the live site) ─
-          { type: "boolean", name: "noticeBannerEnabled", label: "Show notice banner (small strip under the header)" },
-          { type: "string", name: "noticeBannerText_en", label: "Notice banner text (EN)", description: "e.g. In preparation \u2014 leave empty or switch off to hide" },
-          { type: "string", name: "noticeBannerText_de", label: "Notice banner text (DE)", description: "e.g. In Vorbereitung" },
-          { type: "string", name: "noticeBannerBody_en", label: "Notice banner \u2014 longer explanation (EN, optional)", ui: { component: "textarea" }, description: "Shown as small text under the banner pill. Leave empty to show only the pill." },
-          { type: "string", name: "noticeBannerBody_de", label: "Notice banner \u2014 longer explanation (DE, optional)", ui: { component: "textarea" } },
-          { type: "string", name: "noticeBannerStyle", label: "Notice banner \u2014 style / placement", options: [
-            { label: "Ribbon under header (flowing text)", value: "ribbon" },
-            { label: "Stacked under header (no motion)", value: "stacked" },
-            { label: "Pill only", value: "pill" }
+          { type: "object", name: "noticeBanner", label: "Notice banner", fields: [
+            { type: "boolean", name: "noticeBannerEnabled", label: "Show notice banner (small strip under the header)" },
+            { type: "string", name: "noticeBannerText_en", label: "Notice banner text (EN)", description: "e.g. In preparation \u2014 leave empty or switch off to hide" },
+            { type: "string", name: "noticeBannerText_de", label: "Notice banner text (DE)", description: "e.g. In Vorbereitung" },
+            { type: "string", name: "noticeBannerBody_en", label: "Notice banner \u2014 longer explanation (EN, optional)", ui: { component: "textarea" }, description: "Shown as small text under the banner pill. Leave empty to show only the pill." },
+            { type: "string", name: "noticeBannerBody_de", label: "Notice banner \u2014 longer explanation (DE, optional)", ui: { component: "textarea" } },
+            { type: "string", name: "noticeBannerStyle", label: "Notice banner \u2014 style / placement", options: [
+              { label: "Ribbon under header (flowing text)", value: "ribbon" },
+              { label: "Stacked under header (no motion)", value: "stacked" },
+              { label: "Pill only", value: "pill" }
+            ] },
+            { type: "string", name: "noticeBannerFlowSeconds", label: "Ribbon flow speed (ribbon style only)", options: [
+              { label: "Very slow", value: "48" },
+              { label: "Slow", value: "34" },
+              { label: "Medium", value: "24" }
+            ] },
+            { type: "string", name: "noticeBannerDot", label: "Notice banner \u2014 dot", options: [
+              { label: "Static glow (recommended)", value: "static" },
+              { label: "Animated (pulsing)", value: "animated" },
+              { label: "None", value: "none" }
+            ] },
+            { type: "string", name: "noticeBannerTextFontSize", label: "Notice banner \u2014 pill text size", options: noticeSizeOptions },
+            { type: "string", name: "noticeBannerTextFontWeight", label: "Notice banner \u2014 pill text weight", options: noticeWeightOptions },
+            { type: "string", name: "noticeBannerBodyFontSize", label: "Notice banner \u2014 longer text size", options: noticeSizeOptions },
+            { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner \u2014 longer text weight", options: noticeWeightOptions }
           ] },
-          { type: "string", name: "noticeBannerFlowSeconds", label: "Ribbon flow speed (ribbon style only)", options: [
-            { label: "Very slow", value: "48" },
-            { label: "Slow", value: "34" },
-            { label: "Medium", value: "24" }
-          ] },
-          { type: "string", name: "noticeBannerDot", label: "Notice banner \u2014 dot", options: [
-            { label: "Static glow (recommended)", value: "static" },
-            { label: "Animated (pulsing)", value: "animated" },
-            { label: "None", value: "none" }
-          ] },
-          { type: "string", name: "noticeBannerTextFontSize", label: "Notice banner \u2014 pill text size", options: noticeSizeOptions },
-          { type: "string", name: "noticeBannerTextFontWeight", label: "Notice banner \u2014 pill text weight", options: noticeWeightOptions },
-          { type: "string", name: "noticeBannerBodyFontSize", label: "Notice banner \u2014 longer text size", options: noticeSizeOptions },
-          { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner \u2014 longer text weight", options: noticeWeightOptions },
           // ── Header ────────────────────────────────────────────────────────
-          { type: "string", name: "headerLayout", label: "Header Layout Style", options: [
-            { label: "Centered (Links Below Title)", value: "centered" },
-            { label: "Centered (Links Above Title)", value: "centered-top" },
-            { label: "Left Aligned (Split)", value: "split" }
+          { type: "object", name: "header", label: "Header", fields: [
+            { type: "string", name: "headerLayout", label: "Header Layout Style", options: [
+              { label: "Centered (Links Below Title)", value: "centered" },
+              { label: "Centered (Links Above Title)", value: "centered-top" },
+              { label: "Left Aligned (Split)", value: "split" }
+            ] },
+            { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: fontSizeOptions },
+            {
+              type: "object",
+              list: true,
+              name: "navLinks",
+              label: "Header Navigation Links",
+              fields: [
+                { type: "string", name: "label", label: "Link Label (EN)" },
+                { type: "string", name: "label_de", label: "Link Label (DE)" },
+                { type: "string", name: "url", label: "URL (e.g. /check) \u2014 /de is added automatically for DE" }
+              ],
+              ui: { itemProps: (item) => ({ label: item?.label || "New Link" }) }
+            }
           ] },
-          { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: fontSizeOptions },
-          {
-            type: "object",
-            list: true,
-            name: "navLinks",
-            label: "Header Navigation Links",
-            fields: [
-              { type: "string", name: "label", label: "Link Label (EN)" },
-              { type: "string", name: "label_de", label: "Link Label (DE)" },
-              { type: "string", name: "url", label: "URL (e.g. /check) \u2014 /de is added automatically for DE" }
-            ],
-            ui: { itemProps: (item) => ({ label: item?.label || "New Link" }) }
-          },
           // ── Footer ────────────────────────────────────────────────────────
-          { type: "string", name: "footerText", label: "Footer Text (overrides copyright)" },
-          { type: "boolean", name: "showFooterLine", label: "Show separator line above footer" },
-          { type: "string", name: "footerTextFontSize", label: "Footer text size", options: fontSizeOptions },
-          {
-            type: "object",
-            list: true,
-            name: "socialLinks",
-            label: "Footer Social Links",
-            fields: [
-              { type: "string", name: "platform", label: "Platform (e.g. LinkedIn, Facebook)" },
-              { type: "string", name: "url", label: "Profile URL" }
-            ],
-            ui: { itemProps: (item) => ({ label: item?.platform || "New Social Link" }) }
-          },
-          // ── Global appearance ─────────────────────────────────────────────
-          { type: "string", name: "fontPreset", label: "Global Default Font", options: [
-            { label: "Inter \u2014 Modern Sans", value: "Inter" },
-            { label: "Lora \u2014 Elegant Serif", value: "Lora" },
-            { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
-            { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
-            { label: "Custom Google Font", value: "custom" }
+          { type: "object", name: "footer", label: "Footer", fields: [
+            { type: "string", name: "footerText", label: "Footer Text (overrides copyright)" },
+            { type: "boolean", name: "showFooterLine", label: "Show separator line above footer" },
+            { type: "string", name: "footerTextFontSize", label: "Footer text size", options: fontSizeOptions },
+            {
+              type: "object",
+              list: true,
+              name: "socialLinks",
+              label: "Footer Social Links",
+              fields: [
+                { type: "string", name: "platform", label: "Platform (e.g. LinkedIn, Facebook)" },
+                { type: "string", name: "url", label: "Profile URL" }
+              ],
+              ui: { itemProps: (item) => ({ label: item?.platform || "New Social Link" }) }
+            }
           ] },
-          { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
           // ── TYPOGRAPHY — site-wide defaults by role (grouped) ───────────────
           // Set size + weight ONCE per role here and every page block inherits
           // it, so you don't hunt through each block. A block can still override
@@ -826,38 +837,92 @@ var config_default = defineConfig({
             description: "Titles, sub-titles and body text across all pages inherit these unless a block overrides them.",
             fields: [
               { type: "object", name: "title", label: "Titles (bold headings)", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
                 { type: "string", name: "size", label: "Size", options: fontSizeOptions },
-                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                {
+                  type: "boolean",
+                  name: "uppercase",
+                  label: "Uppercase",
+                  description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
+                }
               ] },
               { type: "object", name: "subTitle", label: "Sub-titles", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
                 { type: "string", name: "size", label: "Size", options: fontSizeOptions },
-                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                {
+                  type: "boolean",
+                  name: "uppercase",
+                  label: "Uppercase",
+                  description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
+                }
               ] },
               { type: "object", name: "body", label: "Body / main text", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
                 { type: "string", name: "size", label: "Size", options: fontSizeOptions },
-                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions }
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                {
+                  type: "boolean",
+                  name: "uppercase",
+                  label: "Uppercase",
+                  description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
+                }
+              ] },
+              { type: "object", name: "cardTitle", label: "Card titles (in a card grid)", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                {
+                  type: "boolean",
+                  name: "uppercase",
+                  label: "Uppercase",
+                  description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
+                }
+              ] },
+              { type: "object", name: "cardLine", label: "Card lines (in a card grid)", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                {
+                  type: "boolean",
+                  name: "uppercase",
+                  label: "Uppercase",
+                  description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
+                }
               ] }
             ]
           },
-          { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
-          { type: "string", name: "theme", label: "Theme", options: [
-            { label: "Light \u2014 pure white", value: "light" },
-            { label: "Dark  \u2014 pure black", value: "dark" },
-            { label: "Paper \u2014 warm white", value: "paper" },
-            { label: "Stone \u2014 warm grey", value: "stone" },
-            { label: "Mist  \u2014 cool blue-grey", value: "mist" },
-            { label: "Ink   \u2014 dark warm ground", value: "ink" },
-            { label: "Sand  \u2014 dry neutral", value: "sand" },
-            { label: "Deep  \u2014 constellation dark", value: "deep" }
+          // ── Global appearance ─────────────────────────────────────────────
+          { type: "object", name: "appearance", label: "Global appearance", fields: [
+            { type: "string", name: "fontPreset", label: "Global Default Font", options: [
+              { label: "Inter \u2014 Modern Sans", value: "Inter" },
+              { label: "Lora \u2014 Elegant Serif", value: "Lora" },
+              { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
+              { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
+              { label: "Custom Google Font", value: "custom" }
+            ] },
+            { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+            { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
+            { type: "string", name: "theme", label: "Theme", options: [
+              { label: "Light \u2014 pure white", value: "light" },
+              { label: "Dark  \u2014 pure black", value: "dark" },
+              { label: "Paper \u2014 warm white", value: "paper" },
+              { label: "Stone \u2014 warm grey", value: "stone" },
+              { label: "Mist  \u2014 cool blue-grey", value: "mist" },
+              { label: "Ink   \u2014 dark warm ground", value: "ink" },
+              { label: "Sand  \u2014 dry neutral", value: "sand" },
+              { label: "Deep  \u2014 constellation dark", value: "deep" }
+            ] },
+            { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
+            { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
+            {
+              type: "boolean",
+              name: "enableThemeToggle",
+              label: "Show visitor light/dark toggle (sun/moon icon)",
+              description: 'When on, visitors see a sun/moon icon in the header. It always starts showing your Theme setting above ("Current"), correctly iconed as sun or moon depending on how light or dark that theme actually reads. A visitor can click through to a fixed plain white or fixed plain black view and back \u2014 those two fixed views never use your custom colours above, only your Theme setting does. Their choice is remembered for their next visit; turning this off here always shows everyone your Theme setting again, regardless of anything a visitor previously chose.'
+            }
           ] },
-          { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
-          { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
-          {
-            type: "boolean",
-            name: "enableThemeToggle",
-            label: "Show visitor light/dark toggle (sun/moon icon)",
-            description: 'When on, visitors see a sun/moon icon in the header. It always starts showing your Theme setting above ("Current"), correctly iconed as sun or moon depending on how light or dark that theme actually reads. A visitor can click through to a fixed plain white or fixed plain black view and back \u2014 those two fixed views never use your custom colours above, only your Theme setting does. Their choice is remembered for their next visit; turning this off here always shows everyone your Theme setting again, regardless of anything a visitor previously chose.'
-          },
           // ── Animations ────────────────────────────────────────────────────
           // General toggles default to ON when left unset (existing content
           // with no value for these fields keeps animating exactly as before
@@ -868,218 +933,253 @@ var config_default = defineConfig({
           // collapsible nested panels in Tina, rather than a flat list of
           // ~20 fields — each only matters when its feature is actually in
           // use (backgroundStyle set to match, or Process Flow animation on).
-          {
-            type: "boolean",
-            name: "enableLogoAnimation",
-            label: "Header logo draws itself in on load",
-            description: "Off = logo appears instantly, no ink-draw effect."
-          },
-          {
-            type: "boolean",
-            name: "enableStatusDot",
-            label: "Breathing status dot beside the wordmark",
-            description: "Off = wordmark shown with no dot."
-          },
-          {
-            type: "boolean",
-            name: "enableCascadeReveal",
-            label: "Case Study fields reveal line-by-line",
-            description: "Off = each field fades in as one block, same as other sections."
-          },
-          {
-            type: "boolean",
-            name: "enableTextHover",
-            label: "Text lines grow slightly on hover",
-            description: "Off = body text and case-study lines have no hover effect."
-          },
-          {
-            type: "boolean",
-            name: "enableCheckPageAnimations",
-            label: "Fit Check page (/check): enable header animations",
-            description: "Controls the logo ink-draw, breathing status dot, and page load-fade on the Fit Check page only \u2014 independent of the equivalent toggles above, which only affect the home page. Off by default (opt-in, not opt-out like every other toggle here): Fit Check is a conversion-focused page, and starts calm/instant rather than inheriting the home page's animate-by-default behaviour."
-          },
-          {
-            type: "string",
-            name: "backgroundStyle",
-            label: "Background style",
-            description: "Only one animated background can run at a time \u2014 both are three.js WebGL renderers, and running two simultaneously doubles the render cost for no visual benefit. Choose which one (if any) plays behind the whole page. Requires 'three' installed (npm install three).",
-            options: [
-              { label: "None", value: "none" },
-              { label: "Depth network", value: "depth" },
-              { label: "Planetary systems", value: "planetary" }
-            ]
-          },
-          {
-            type: "object",
-            name: "processFlow",
-            label: "Process Flow Animation",
-            description: "Per-block tuning (dot count, size, speed, spacing) lives on each Process Flow section itself, in the Pages collection \u2014 this only controls whether the sequence-lighting effect runs at all.",
-            fields: [
-              {
-                type: "boolean",
-                name: "enabled",
-                label: "Dots light up in sequence on Process Flow connectors",
-                description: "Off = connectors shown as plain static dots."
-              }
-            ]
-          },
-          {
-            type: "object",
-            name: "depthBackground",
-            label: "Depth Network Background",
-            description: "Only used when Background style above is set to 'Depth network'.",
-            fields: [
-              {
-                type: "number",
-                name: "nodeCount",
-                label: "Number of points",
-                description: "Default 90. Higher = denser field, more render cost."
-              },
-              {
-                type: "number",
-                name: "connectDistance",
-                label: "Connection distance",
-                description: "Default 5.4. Higher = more lines drawn between points (denser web)."
-              },
-              {
-                type: "number",
-                name: "lineOpacity",
-                label: "Line opacity (0\u20131)",
-                description: "Default 0.16. How visible the connecting lines are."
-              },
-              {
-                type: "number",
-                name: "nodeOpacity",
-                label: "Point opacity (0\u20131)",
-                description: "Default 0.75. How visible the points themselves are."
-              },
-              {
-                type: "string",
-                name: "nodeColor",
-                label: "Point colour override",
-                description: "Leave empty to auto-match the theme's text colour.",
-                ui: { component: "color" }
-              },
-              {
-                type: "string",
-                name: "fogColor",
-                label: "Fog colour override",
-                description: "Leave empty to auto-match the theme's background colour. Also used as the fog colour for Planetary Systems, if that's the active background instead.",
-                ui: { component: "color" }
-              }
-            ]
-          },
-          {
-            type: "object",
-            name: "planetarySystems",
-            label: "Planetary Systems Background",
-            description: "Only used when Background style above is set to 'Planetary systems'.",
-            fields: [
-              {
-                type: "number",
-                name: "systemCount",
-                label: "Number of systems",
-                description: "Default 4."
-              },
-              {
-                type: "number",
-                name: "maxPlanets",
-                label: "Max planets per system",
-                description: "Default 4. Each system gets a random count from 1 up to this, for natural variety."
-              },
-              {
-                type: "number",
-                name: "orbitMinRadius",
-                label: "Orbit distance, minimum (0\u20131)",
-                description: "Default 0.35. Fraction of the base orbit size \u2014 how close the nearest planet can sit to its star."
-              },
-              {
-                type: "number",
-                name: "orbitMaxRadius",
-                label: "Orbit distance, maximum (0\u20131)",
-                description: "Default 1. How far the outermost planet can sit from its star."
-              },
-              {
-                type: "string",
-                name: "starColor",
-                label: "Star colour override",
-                description: "Leave empty to auto-match the theme's text colour. Planets and orbit paths derive from this same colour at lower opacity.",
-                ui: { component: "color" }
-              },
-              {
-                type: "number",
-                name: "pathOpacity",
-                label: "Orbit path opacity (0\u20131)",
-                description: "Default 0.12. How visible the faint orbit rings are."
-              }
-            ]
-          },
+          { type: "object", name: "animations", label: "Animations", fields: [
+            {
+              type: "boolean",
+              name: "enableLogoAnimation",
+              label: "Header logo draws itself in on load",
+              description: "Off = logo appears instantly, no ink-draw effect."
+            },
+            {
+              type: "boolean",
+              name: "enableStatusDot",
+              label: "Breathing status dot beside the wordmark",
+              description: "Off = wordmark shown with no dot."
+            },
+            {
+              type: "boolean",
+              name: "enableCascadeReveal",
+              label: "Case Study fields reveal line-by-line",
+              description: "Off = each field fades in as one block, same as other sections."
+            },
+            {
+              type: "boolean",
+              name: "enableTextHover",
+              label: "Text lines grow slightly on hover",
+              description: "Off = body text and case-study lines have no hover effect."
+            },
+            {
+              type: "boolean",
+              name: "enableCheckPageAnimations",
+              label: "Fit Check page (/check): enable header animations",
+              description: "Controls the logo ink-draw, breathing status dot, and page load-fade on the Fit Check page only \u2014 independent of the equivalent toggles above, which only affect the home page. Off by default (opt-in, not opt-out like every other toggle here): Fit Check is a conversion-focused page, and starts calm/instant rather than inheriting the home page's animate-by-default behaviour."
+            },
+            {
+              type: "string",
+              name: "backgroundStyle",
+              label: "Background style",
+              description: "Only one animated background can run at a time \u2014 both are three.js WebGL renderers, and running two simultaneously doubles the render cost for no visual benefit. Choose which one (if any) plays behind the whole page. Requires 'three' installed (npm install three).",
+              options: [
+                { label: "None", value: "none" },
+                { label: "Depth network", value: "depth" },
+                { label: "Planetary systems", value: "planetary" }
+              ]
+            },
+            {
+              type: "object",
+              name: "processFlow",
+              label: "Process Flow Animation",
+              description: "Per-block tuning (dot count, size, speed, spacing) lives on each Process Flow section itself, in the Pages collection \u2014 this only controls whether the sequence-lighting effect runs at all.",
+              fields: [
+                {
+                  type: "boolean",
+                  name: "enabled",
+                  label: "Dots light up in sequence on Process Flow connectors",
+                  description: "Off = connectors shown as plain static dots."
+                }
+              ]
+            },
+            {
+              type: "object",
+              name: "depthBackground",
+              label: "Depth Network Background",
+              description: "Only used when Background style above is set to 'Depth network'.",
+              fields: [
+                {
+                  type: "number",
+                  name: "nodeCount",
+                  label: "Number of points",
+                  description: "Default 90. Higher = denser field, more render cost."
+                },
+                {
+                  type: "number",
+                  name: "connectDistance",
+                  label: "Connection distance",
+                  description: "Default 5.4. Higher = more lines drawn between points (denser web)."
+                },
+                {
+                  type: "number",
+                  name: "lineOpacity",
+                  label: "Line opacity (0\u20131)",
+                  description: "Default 0.16. How visible the connecting lines are."
+                },
+                {
+                  type: "number",
+                  name: "nodeOpacity",
+                  label: "Point opacity (0\u20131)",
+                  description: "Default 0.75. How visible the points themselves are."
+                },
+                {
+                  type: "string",
+                  name: "nodeColor",
+                  label: "Point colour override",
+                  description: "Leave empty to auto-match the theme's text colour.",
+                  ui: { component: "color" }
+                },
+                {
+                  type: "string",
+                  name: "fogColor",
+                  label: "Fog colour override",
+                  description: "Leave empty to auto-match the theme's background colour. Also used as the fog colour for Planetary Systems, if that's the active background instead.",
+                  ui: { component: "color" }
+                }
+              ]
+            },
+            {
+              type: "object",
+              name: "planetarySystems",
+              label: "Planetary Systems Background",
+              description: "Only used when Background style above is set to 'Planetary systems'.",
+              fields: [
+                {
+                  type: "number",
+                  name: "systemCount",
+                  label: "Number of systems",
+                  description: "Default 4."
+                },
+                {
+                  type: "number",
+                  name: "maxPlanets",
+                  label: "Max planets per system",
+                  description: "Default 4. Each system gets a random count from 1 up to this, for natural variety."
+                },
+                {
+                  type: "number",
+                  name: "orbitMinRadius",
+                  label: "Orbit distance, minimum (0\u20131)",
+                  description: "Default 0.35. Fraction of the base orbit size \u2014 how close the nearest planet can sit to its star."
+                },
+                {
+                  type: "number",
+                  name: "orbitMaxRadius",
+                  label: "Orbit distance, maximum (0\u20131)",
+                  description: "Default 1. How far the outermost planet can sit from its star."
+                },
+                {
+                  type: "string",
+                  name: "starColor",
+                  label: "Star colour override",
+                  description: "Leave empty to auto-match the theme's text colour. Planets and orbit paths derive from this same colour at lower opacity.",
+                  ui: { component: "color" }
+                },
+                {
+                  type: "number",
+                  name: "pathOpacity",
+                  label: "Orbit path opacity (0\u20131)",
+                  description: "Default 0.12. How visible the faint orbit rings are."
+                }
+              ]
+            }
+          ] },
           // ── Layout dimensions ─────────────────────────────────────────────
-          { type: "string", name: "headerHeight", label: "Header Height", options: [
-            { label: "Compact \u2014 40px", value: "40px" },
-            { label: "Standard \u2014 52px (recommended)", value: "52px" },
-            { label: "Comfortable \u2014 64px", value: "64px" },
-            { label: "Spacious \u2014 80px", value: "80px" }
+          { type: "object", name: "layout", label: "Layout dimensions", fields: [
+            { type: "string", name: "headerHeight", label: "Header Height", options: [
+              { label: "Compact \u2014 40px", value: "40px" },
+              { label: "Standard \u2014 52px (recommended)", value: "52px" },
+              { label: "Comfortable \u2014 64px", value: "64px" },
+              { label: "Spacious \u2014 80px", value: "80px" }
+            ] },
+            { type: "boolean", name: "matchFooterToHeader", label: "Match footer height to header (keep them equal)" },
+            { type: "string", name: "footerHeight", label: "Footer Height (used only when the match toggle above is off)", options: [
+              { label: "Compact \u2014 40px", value: "40px" },
+              { label: "Standard \u2014 52px (recommended)", value: "52px" },
+              { label: "Comfortable \u2014 64px", value: "64px" },
+              { label: "Spacious \u2014 80px", value: "80px" }
+            ] },
+            { type: "string", name: "headerInnerWidth", label: "Header Content Width", options: [
+              { label: "Narrow \u2014 480px", value: "480px" },
+              { label: "Balanced \u2014 580px", value: "580px" },
+              { label: "Standard \u2014 680px (recommended)", value: "680px" },
+              { label: "Wide \u2014 820px", value: "820px" },
+              { label: "Full width", value: "100%" }
+            ] },
+            {
+              type: "string",
+              name: "cardGridSpacing",
+              label: "Card grid \u2014 default space above (from sub-title)",
+              description: "Site-wide default for every 'Card grid' section. A section can still override this individually \u2014 blank there = inherit this.",
+              options: [
+                { label: "None \u2014 flush against sub-title", value: "mt-0" },
+                { label: "Small", value: "mt-3" },
+                { label: "Medium", value: "mt-6" },
+                { label: "Large", value: "mt-10" }
+              ]
+            }
           ] },
-          { type: "boolean", name: "matchFooterToHeader", label: "Match footer height to header (keep them equal)" },
-          { type: "string", name: "footerHeight", label: "Footer Height (used only when the match toggle above is off)", options: [
-            { label: "Compact \u2014 40px", value: "40px" },
-            { label: "Standard \u2014 52px (recommended)", value: "52px" },
-            { label: "Comfortable \u2014 64px", value: "64px" },
-            { label: "Spacious \u2014 80px", value: "80px" }
-          ] },
-          { type: "string", name: "headerInnerWidth", label: "Header Content Width", options: [
-            { label: "Narrow \u2014 480px", value: "480px" },
-            { label: "Balanced \u2014 580px", value: "580px" },
-            { label: "Standard \u2014 680px (recommended)", value: "680px" },
-            { label: "Wide \u2014 820px", value: "820px" },
-            { label: "Full width", value: "100%" }
-          ] },
-          // ── SEO (EN + DE) ──────────────────────────────────────────────────
-          {
-            type: "string",
-            name: "siteUrl",
-            label: "SEO: Site URL",
-            description: "Full URL with no trailing slash \u2014 e.g. https://vortexdeep.ch"
-          },
-          {
-            type: "string",
-            name: "metaTitle",
-            label: "SEO: Page Title (EN)",
-            description: "Shown in Google results. 50\u201360 chars."
-          },
-          {
-            type: "string",
-            name: "metaTitle_de",
-            label: "SEO: Page Title (DE)",
-            description: "Shown in Google results for German page. 50\u201360 chars."
-          },
-          {
-            type: "string",
-            name: "metaDescription",
-            label: "SEO: Meta Description (EN)",
-            description: "120\u2013155 chars. Include 'Z\xFCrich' and what you do.",
-            ui: { component: "textarea" }
-          },
-          {
-            type: "string",
-            name: "metaDescription_de",
-            label: "SEO: Meta Description (DE)",
-            description: "120\u2013155 chars f\xFCr die deutsche Seite.",
-            ui: { component: "textarea" }
-          },
-          {
-            type: "image",
-            name: "ogImage",
-            label: "SEO: Social Share Image",
-            description: "1200\xD7630px recommended."
-          },
-          // ── LocalBusiness (Google / JSON-LD) ──────────────────────────────
-          { type: "string", name: "addressStreet", label: "Address: Street (for Google)" },
-          { type: "string", name: "addressCity", label: "Address: City", description: "e.g. Z\xFCrich" },
-          { type: "string", name: "addressPostal", label: "Address: Postal Code", description: "e.g. 8001" },
-          { type: "string", name: "contactEmail", label: "Contact Email (for Google schema)" },
-          { type: "string", name: "contactPhone", label: "Contact Phone (optional, for Google schema)" }
+          // ── SEO & structured data (EN + DE, LocalBusiness, JSON-LD) ────────
+          { type: "object", name: "seo", label: "SEO & structured data", fields: [
+            {
+              type: "string",
+              name: "siteUrl",
+              label: "SEO: Site URL",
+              description: "Full URL with no trailing slash \u2014 e.g. https://vortexdeep.ch"
+            },
+            {
+              type: "string",
+              name: "metaTitle",
+              label: "SEO: Page Title (EN)",
+              description: "Shown in Google results. 50\u201360 chars."
+            },
+            {
+              type: "string",
+              name: "metaTitle_de",
+              label: "SEO: Page Title (DE)",
+              description: "Shown in Google results for German page. 50\u201360 chars."
+            },
+            {
+              type: "string",
+              name: "metaDescription",
+              label: "SEO: Meta Description (EN)",
+              description: "120\u2013155 chars. Include 'Z\xFCrich' and what you do.",
+              ui: { component: "textarea" }
+            },
+            {
+              type: "string",
+              name: "metaDescription_de",
+              label: "SEO: Meta Description (DE)",
+              description: "120\u2013155 chars f\xFCr die deutsche Seite.",
+              ui: { component: "textarea" }
+            },
+            {
+              type: "image",
+              name: "ogImage",
+              label: "SEO: Social Share Image",
+              description: "1200\xD7630px recommended."
+            },
+            {
+              type: "string",
+              name: "founderName",
+              label: "Founder name (JSON-LD)",
+              description: "Shown to search engines as the company founder. Leave blank to omit."
+            },
+            {
+              type: "string",
+              name: "founderUrl",
+              label: "Founder profile URL (e.g. LinkedIn)",
+              description: "Only used inside structured data. Must be a full https:// URL."
+            },
+            {
+              type: "boolean",
+              name: "enableContentProtection",
+              label: "Block copy / right-click / print",
+              description: "Off is recommended: it never stops crawlers and it hurts accessibility and AI-search quoting."
+            },
+            { type: "string", name: "addressStreet", label: "Address: Street (for Google)" },
+            { type: "string", name: "addressCity", label: "Address: City", description: "e.g. Z\xFCrich" },
+            { type: "string", name: "addressPostal", label: "Address: Postal Code", description: "e.g. 8001" },
+            { type: "string", name: "contactEmail", label: "Contact Email (for Google schema)" },
+            { type: "string", name: "contactPhone", label: "Contact Phone (optional, for Google schema)" }
+          ] }
         ]
       },
       // ── DATA PAGE (/data, /de/data content) ──────────────────────────────

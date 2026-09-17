@@ -37,12 +37,12 @@ const fitCheckDoc = (fitCheckDocs[0]?.default || {}) as any;
 const fitCheckEnabled = fitCheckDoc.enabled !== false;
 
 // ── Theme & font ──────────────────────────────────────────────────────────────
-const currentTheme = settings.theme || 'light';
+const currentTheme = settings.appearance.theme || 'light';
 const currentYear  = new Date().getFullYear();
 
-const activeFont = (settings.fontPreset === 'custom' && settings.customFontName)
-  ? settings.customFontName
-  : (settings.fontPreset || 'Inter');
+const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
+  ? settings.appearance.customFontName
+  : (settings.appearance.fontPreset || 'Inter');
 
 const activeFontFamily = fontFamily(activeFont);
 
@@ -50,11 +50,11 @@ const allFontsUrl = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght
 
 // ── Colour helpers ────────────────────────────────────────────────────────────
 const getBgColor = () => {
-  if (settings.customBackgroundColor) return settings.customBackgroundColor;
+  if (settings.appearance.customBackgroundColor) return settings.appearance.customBackgroundColor;
   return themeColors[currentTheme]?.bg || '#ffffff';
 };
 const getTextColor = (customColor?: string) => {
-  const base = customColor || settings.baseTextColor;
+  const base = customColor || settings.appearance.baseTextColor;
   if (!base) return themeColors[currentTheme]?.text || '#0a0a0a';
   return base;
 };
@@ -70,17 +70,17 @@ const zenText = 'var(--zen-text)';
 const zenBg   = 'var(--zen-bg)';
 
 // ── Theme toggle (sun/moon) ───────────────────────────────────────────────
-const themeToggleEnabled = settings.enableThemeToggle === true;
+const themeToggleEnabled = settings.appearance.enableThemeToggle === true;
 // Classified from the *effective* background (custom override included, via
 // getBgColor()) rather than the preset name — see themeFamily()'s doc comment.
 const autoFamily = themeFamily(getBgColor());
 
 // ── Layout dimensions ─────────────────────────────────────────────────────────
-const headerHeight     = settings.headerHeight     || '52px';
-const footerHeight     = (settings.matchFooterToHeader === false)
-  ? (settings.footerHeight || '52px')
+const headerHeight     = settings.layout.headerHeight     || '52px';
+const footerHeight     = (settings.layout.matchFooterToHeader === false)
+  ? (settings.layout.footerHeight || '52px')
   : headerHeight;
-const headerInnerWidth = settings.headerInnerWidth || '680px';
+const headerInnerWidth = settings.layout.headerInnerWidth || '680px';
 
 // ── Gallery column map ────────────────────────────────────────────────────────
 const widthMap: Record<string, string> = {
@@ -91,41 +91,41 @@ const widthMap: Record<string, string> = {
 
 // ── Lang-aware settings ───────────────────────────────────────────────────────
 const subSiteName = lang === 'de'
-  ? (settings.subSiteName_de   || settings.subSiteName)
-  : settings.subSiteName;
+  ? (settings.hero.subSiteName_de   || settings.hero.subSiteName)
+  : settings.hero.subSiteName;
 
 // Notice banner — small editable strip under the header (toggle in Site Settings).
 const noticeBannerText = lang === 'de'
-  ? (settings.noticeBannerText_de || settings.noticeBannerText_en)
-  : (settings.noticeBannerText_en || settings.noticeBannerText_de);
-const showNoticeBanner = settings.noticeBannerEnabled && !!noticeBannerText;
+  ? (settings.noticeBanner.noticeBannerText_de || settings.noticeBanner.noticeBannerText_en)
+  : (settings.noticeBanner.noticeBannerText_en || settings.noticeBanner.noticeBannerText_de);
+const showNoticeBanner = settings.noticeBanner.noticeBannerEnabled && !!noticeBannerText;
 const noticeBannerBody = lang === 'de'
-  ? (settings.noticeBannerBody_de || settings.noticeBannerBody_en)
-  : (settings.noticeBannerBody_en || settings.noticeBannerBody_de);
-const noticeBannerStyle = settings.noticeBannerStyle || 'ribbon';
-const noticeFlowSecs    = settings.noticeBannerFlowSeconds || '34';
+  ? (settings.noticeBanner.noticeBannerBody_de || settings.noticeBanner.noticeBannerBody_en)
+  : (settings.noticeBanner.noticeBannerBody_en || settings.noticeBanner.noticeBannerBody_de);
+const noticeBannerStyle = settings.noticeBanner.noticeBannerStyle || 'ribbon';
+const noticeFlowSecs    = settings.noticeBanner.noticeBannerFlowSeconds || '34';
 // Reserved height for the persistent notice bar (ribbon/pill sit fixed under the
 // header on every screen). Stacked stays hero-only, so it reserves nothing.
 const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
   ? '0px'
   : (noticeBannerStyle === 'pill' ? '38px' : '32px');
 // Banner dot: 'static' (steady glow, default), 'animated' (pulses), or 'none'.
-const noticeDot = settings.noticeBannerDot || 'static';
+const noticeDot = settings.noticeBanner.noticeBannerDot || 'static';
 // Site-wide typography defaults (Site Settings → Typography). Blocks inherit
 // these unless they set their own size/weight. blank/undefined = fall through.
 const typo = (settings.typography || {}) as any;
-const noticeTextSize   = fontSizePx(settings.noticeBannerTextFontSize, 'xs');
-const noticeTextWeight = settings.noticeBannerTextFontWeight || '400';
-const noticeBodySize   = fontSizePx(settings.noticeBannerBodyFontSize, 'xs');
-const noticeBodyWeight = settings.noticeBannerBodyFontWeight || '400';
+const noticeTextSize   = fontSizePx(settings.noticeBanner.noticeBannerTextFontSize, 'xs');
+const noticeTextWeight = settings.noticeBanner.noticeBannerTextFontWeight || '400';
+const noticeBodySize   = fontSizePx(settings.noticeBanner.noticeBannerBodyFontSize, 'xs');
+const noticeBodyWeight = settings.noticeBanner.noticeBannerBodyFontWeight || '400';
 
 const metaTitle = lang === 'de'
-  ? (settings.metaTitle_de     || settings.metaTitle     || 'VortexDeep — KI-Automatisierung für KMU in Zürich')
-  : (settings.metaTitle        || `${settings.siteName || 'VortexDeep'} — Practical AI Automation for Small Business`);
+  ? (settings.seo.metaTitle_de     || settings.seo.metaTitle     || 'VortexDeep — KI-Automatisierung für KMU in Zürich')
+  : (settings.seo.metaTitle        || `${settings.hero.siteName || 'VortexDeep'} — Practical AI Automation for Small Business`);
 
 const metaDescription = lang === 'de'
-  ? (settings.metaDescription_de || settings.metaDescription || 'KI-Automatisierung für KMU in Zürich.')
-  : (settings.metaDescription    || 'VortexDeep helps small businesses adopt practical AI automation. Based in Zürich, Switzerland.');
+  ? (settings.seo.metaDescription_de || settings.seo.metaDescription || 'KI-Automatisierung für KMU in Zürich.')
+  : (settings.seo.metaDescription    || 'VortexDeep helps small businesses adopt practical AI automation. Based in Zürich, Switzerland.');
 
 // ── Fold cue defaults (lang-aware) ────────────────────────────────────────────
 // The visible word on a 'dot-label' cue defaults to a friendly "More"/"Mehr"
@@ -140,7 +140,7 @@ const foldAriaOpen    = t.foldLess;
 const homeUrl = lang === 'de' ? '/de/' : '/';
 // The Fit Check master switch hides its own nav entry — matched on the
 // stored (un-prefixed) url before the lang-prefix step below.
-const resolvedNavLinks = (settings.navLinks || [])
+const resolvedNavLinks = (settings.header.navLinks || [])
   .filter((link: any) => fitCheckEnabled || link.url !== '/check')
   .map((link: any) => ({
     label: lang === 'de' ? (link.label_de || link.label) : link.label,
@@ -151,16 +151,16 @@ const resolvedNavLinks = (settings.navLinks || [])
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": settings.siteName || "VortexDeep",
+  "name": settings.hero.siteName || "VortexDeep",
   "description": metaDescription,
-  "url": settings.siteUrl || "https://vortexdeep.ch",
-  "email": settings.contactEmail || "info@vortexdeep.ch",
-  ...(settings.contactPhone ? { "telephone": settings.contactPhone } : {}),
+  "url": settings.seo.siteUrl || "https://vortexdeep.ch",
+  "email": settings.seo.contactEmail || "info@vortexdeep.ch",
+  ...(settings.seo.contactPhone ? { "telephone": settings.seo.contactPhone } : {}),
   "address": {
     "@type": "PostalAddress",
-    "streetAddress":   settings.addressStreet  || "",
-    "addressLocality": settings.addressCity    || "Zürich",
-    "postalCode":      settings.addressPostal  || "",
+    "streetAddress":   settings.seo.addressStreet  || "",
+    "addressLocality": settings.seo.addressCity    || "Zürich",
+    "postalCode":      settings.seo.addressPostal  || "",
     "addressCountry":  "CH",
   },
   "areaServed": [
@@ -169,18 +169,18 @@ const jsonLd = {
   ],
   "serviceType": lang === 'de' ? "KI-Automatisierungsberatung" : "AI Automation Consulting",
   "priceRange": "$$",
-  "sameAs": (settings.socialLinks || []).map((l: any) => l.url).filter(Boolean),
+  "sameAs": (settings.footer.socialLinks || []).map((l: any) => l.url).filter(Boolean),
 };
 
 // ── Animation toggles ──────────────────────────────────────────────────────────
 // Each defaults to ON (!== false, not === true) so existing content with no
 // value saved for these fields yet keeps animating exactly as it does today —
 // this is opt-out from the CMS, not opt-in.
-const animLogo    = settings.enableLogoAnimation        !== false;
-const animDot     = settings.enableStatusDot            !== false;
-const animFlow    = settings.processFlow?.enabled !== false;
-const animCascade = settings.enableCascadeReveal        !== false;
-const animTextHover = settings.enableTextHover          !== false;
+const animLogo    = settings.animations.enableLogoAnimation        !== false;
+const animDot     = settings.animations.enableStatusDot            !== false;
+const animFlow    = settings.animations.processFlow?.enabled !== false;
+const animCascade = settings.animations.enableCascadeReveal        !== false;
+const animTextHover = settings.animations.enableTextHover          !== false;
 // Unlike the other five toggles, this one defaults OFF ('none', not an
 // opt-out default) — it's a much bigger visual commitment than a quiet dot
 // or a hover nudge, and should be something someone deliberately turns on
@@ -190,7 +190,7 @@ const animTextHover = settings.enableTextHover          !== false;
 // backgroundStyle replaces two independent booleans (enableDepthBackground,
 // enablePlanetarySystems) that used to allow both three.js renderers to run
 // at once. It's a single select now, so at most one can ever be active.
-const backgroundStyle = settings.backgroundStyle || 'none';
+const backgroundStyle = settings.animations.backgroundStyle || 'none';
 const animDepthBg = backgroundStyle === 'depth';
 const animPlanetary = backgroundStyle === 'planetary';
 const anyFixedBackground = animDepthBg || animPlanetary; // either one needs the same translucency + z-index treatment below
@@ -374,8 +374,8 @@ const contentGroups = (text: string) => {
   title={metaTitle}
   theme={currentTheme}
   description={metaDescription}
-  ogImage={settings.ogImage || ''}
-  siteUrl={settings.siteUrl || 'https://vortexdeep.ch'}
+  ogImage={settings.seo.ogImage || ''}
+  siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'}
   autoBg={getBgColor()}
   autoText={getTextColor()}
   autoFamily={autoFamily}
@@ -386,12 +386,12 @@ const contentGroups = (text: string) => {
 
   {animDepthBg && (
     <DepthNetworkBackground
-      nodeColor={settings.depthBackground?.nodeColor || getTextColor()}
-      fogColor={settings.depthBackground?.fogColor || getBgColor()}
-      nodeCount={settings.depthBackground?.nodeCount || undefined}
-      connectDistance={settings.depthBackground?.connectDistance || undefined}
-      lineOpacity={settings.depthBackground?.lineOpacity ?? undefined}
-      nodeOpacity={settings.depthBackground?.nodeOpacity ?? undefined}
+      nodeColor={settings.animations.depthBackground?.nodeColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      nodeCount={settings.animations.depthBackground?.nodeCount || undefined}
+      connectDistance={settings.animations.depthBackground?.connectDistance || undefined}
+      lineOpacity={settings.animations.depthBackground?.lineOpacity ?? undefined}
+      nodeOpacity={settings.animations.depthBackground?.nodeOpacity ?? undefined}
       lightNodeColor={themeColors.light.text}
       lightFogColor={themeColors.light.bg}
       darkNodeColor={themeColors.dark.text}
@@ -401,13 +401,13 @@ const contentGroups = (text: string) => {
 
   {animPlanetary && (
     <PlanetarySystemsBackground
-      starColor={settings.planetarySystems?.starColor || getTextColor()}
-      fogColor={settings.depthBackground?.fogColor || getBgColor()}
-      systemCount={settings.planetarySystems?.systemCount ?? undefined}
-      maxPlanets={settings.planetarySystems?.maxPlanets ?? undefined}
-      orbitMinRadius={settings.planetarySystems?.orbitMinRadius ?? undefined}
-      orbitMaxRadius={settings.planetarySystems?.orbitMaxRadius ?? undefined}
-      pathOpacity={settings.planetarySystems?.pathOpacity ?? undefined}
+      starColor={settings.animations.planetarySystems?.starColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      systemCount={settings.animations.planetarySystems?.systemCount ?? undefined}
+      maxPlanets={settings.animations.planetarySystems?.maxPlanets ?? undefined}
+      orbitMinRadius={settings.animations.planetarySystems?.orbitMinRadius ?? undefined}
+      orbitMaxRadius={settings.animations.planetarySystems?.orbitMaxRadius ?? undefined}
+      pathOpacity={settings.animations.planetarySystems?.pathOpacity ?? undefined}
       lightStarColor={themeColors.light.text}
       lightFogColor={themeColors.light.bg}
       darkStarColor={themeColors.dark.text}
@@ -937,7 +937,7 @@ const contentGroups = (text: string) => {
     <div class="vd-fixed-header-inner">
       <!-- Wordmark / logo -->
       <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
-        {settings.showLogo && (
+        {settings.appearance.showLogo && (
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
                style={`color: ${zenText};`}
                class={`w-5 h-5 flex-shrink-0 ${animLogo ? 'vd-logo' : ''}`}>
@@ -960,7 +960,7 @@ const contentGroups = (text: string) => {
         )}
         <span class="text-[10px] uppercase tracking-[0.4em]"
               style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
-          {settings.siteName || 'VortexDeep'}
+          {settings.hero.siteName || 'VortexDeep'}
         </span>
         {animDot && (
           <span class="vd-status-dot" style={`color: ${zenText};`} aria-hidden="true"></span>
@@ -971,7 +971,7 @@ const contentGroups = (text: string) => {
       <nav class="flex gap-6 items-center" style={`color: ${zenText};`}>
         {resolvedNavLinks.map((link: any) => (
           <a href={link.url}
-             class={`${fontSizeClass(settings.headerLinksFontSize || 'text-[10px]')} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
+             class={`${fontSizeClass(settings.header.headerLinksFontSize || 'text-[10px]')} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
              style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
             {link.label}
           </a>
@@ -1028,7 +1028,7 @@ const contentGroups = (text: string) => {
 
   <!-- ── FIXED FOOTER ── -->
   <footer class="vd-fixed-footer vd-load-fade" style={headerFooterBg}>
-    {settings.socialLinks?.map((social: any) => {
+    {settings.footer.socialLinks?.map((social: any) => {
       const { icon, round } = socialIcon(social.platform || '');
       return (
         <a href={social.url} target="_blank" rel="noopener noreferrer"
@@ -1039,14 +1039,14 @@ const contentGroups = (text: string) => {
         </a>
       );
     })}
-    {settings.socialLinks?.length > 0 && (
+    {settings.footer.socialLinks?.length > 0 && (
       <span class="opacity-20 text-[9px]" style={`color: ${zenText};`}>·</span>
     )}
-    <p class={`${fontSizeClass(settings.footerTextFontSize || 'text-[9px]')} uppercase tracking-[0.25em] opacity-30`}
+    <p class={`${fontSizeClass(settings.footer.footerTextFontSize || 'text-[9px]')} uppercase tracking-[0.25em] opacity-30`}
        style={`color: ${zenText}; font-family: ${fontFamily(activeFont)};`}>
-      {settings.footerText
-        ? settings.footerText
-        : `© ${currentYear} ${settings.siteName || 'VortexDeep'}`}
+      {settings.footer.footerText
+        ? settings.footer.footerText
+        : `© ${currentYear} ${settings.hero.siteName || 'VortexDeep'}`}
     </p>
   </footer>
 
@@ -1068,15 +1068,15 @@ const contentGroups = (text: string) => {
         </div>
       )}
       <div class="w-full max-w-xl text-center">
-        {!settings.showSubSiteNameOnly && settings.siteName && (
-          <h1 class={`${fontSizeClass(settings.siteNameFontSize || 'text-3xl md:text-4xl')} ${settings.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
-              style={textStyle(zenText, settings.siteNameFont)}>
-            {settings.siteName}
+        {!settings.hero.showSubSiteNameOnly && settings.hero.siteName && (
+          <h1 class={`${fontSizeClass(settings.hero.siteNameFontSize || 'text-3xl md:text-4xl')} ${settings.hero.siteNameFontWeight || 'font-thin'} text-center tracking-[0.5em] uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+              style={textStyle(zenText, settings.hero.siteNameFont)}>
+            {settings.hero.siteName}
           </h1>
         )}
         {subSiteName && (
-          <h2 class={`${fontSizeClass(settings.subSiteNameFontSize || 'text-[13px]')} ${settings.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
-              style={`${textStyle(zenText, settings.subSiteNameFont)} opacity: 0.7;`}>
+          <h2 class={`${fontSizeClass(settings.hero.subSiteNameFontSize || 'text-[13px]')} ${settings.hero.subSiteNameFontWeight || 'font-thin'} text-center tracking-[0.25em] uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
+              style={`${textStyle(zenText, settings.hero.subSiteNameFont)} opacity: 0.7;`}>
             {contentLines(subSiteName).map(({ line, dots }) => (
               dots > 0 ? (
                 <span class="vd-dots block" aria-hidden="true">
@@ -1162,7 +1162,7 @@ const contentGroups = (text: string) => {
 
         const explainerEl = block.content ? (
           <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
-               style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
+               style={(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''}>
             {contentGroups(block.content).map((g) => (
               g.kind === 'dots' ? (
                 <div class="vd-dots" aria-hidden="true">
@@ -1183,8 +1183,8 @@ const contentGroups = (text: string) => {
           <div class="vd-screen vd-reveal vd-screen--flow">
             <div class="w-full max-w-2xl text-center my-auto">
               {showTitle && block.title && (
-                <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-thin'} uppercase tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
-                    style={textStyle(zenText, block.titleFont)}>
+                <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-thin'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
+                    style={textStyle(zenText, block.titleFont || typo.title?.font)}>
                   {block.title.split('|').map((line: string) => (
                     <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                   ))}
@@ -1194,8 +1194,8 @@ const contentGroups = (text: string) => {
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {showSubtitle && block.subTitle && (
-                <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
-                    style={textStyle(zenText, block.subTitleFont)}>
+                <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3 opacity-70`}
+                    style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
                       <span class="vd-dots block" aria-hidden="true">
@@ -1253,8 +1253,8 @@ const contentGroups = (text: string) => {
                 {t.caseStudyTag}
               </p>
 
-              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[13px]')} ${block.titleFontWeight || typo.title?.weight || 'font-bold'} uppercase tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
-                  style={textStyle(zenText, block.titleFont)}>
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[13px]')} ${block.titleFontWeight || typo.title?.weight || 'font-bold'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+                  style={textStyle(zenText, block.titleFont || typo.title?.font)}>
                 {block.industry || 'Industry'}
               </h2>
 
@@ -1284,7 +1284,7 @@ const contentGroups = (text: string) => {
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.challenge}</p>
                     <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
                       {streamLines(block.challenge).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1297,7 +1297,7 @@ const contentGroups = (text: string) => {
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.built}</p>
                     <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
                       {streamLines(block.built).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1310,7 +1310,7 @@ const contentGroups = (text: string) => {
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.result}</p>
                     <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont)}>
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
                       {streamLines(block.result).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1390,8 +1390,8 @@ const contentGroups = (text: string) => {
       // inside the fold — identical either way, so folding changes nothing but
       // whether it starts hidden behind the cue.
       const sectionBodyEl = block.content ? (
-        <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
-             style={block.bodyFont ? `font-family: ${fontFamily(block.bodyFont)};` : ''}>
+        <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} ${typo.body?.uppercase === true ? 'uppercase' : ''} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
+             style={(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''}>
           {contentGroups(block.content).map((g) => (
             g.kind === 'dots' ? (
               <div class="vd-dots" aria-hidden="true">
@@ -1412,8 +1412,8 @@ const contentGroups = (text: string) => {
           <div class={`w-full max-w-2xl text-center ${foldableSection ? 'my-auto' : ''}`}>
 
             {showTitle && block.title && (
-              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-normal'} uppercase tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
-                  style={textStyle(zenText, block.titleFont)}>
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-normal'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
+                  style={textStyle(zenText, block.titleFont || typo.title?.font)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
@@ -1421,8 +1421,8 @@ const contentGroups = (text: string) => {
             )}
 
             {showSubtitle && block.subTitle && (
-              <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} uppercase tracking-[0.15em] mb-3 opacity-70`}
-                  style={textStyle(zenText, block.subTitleFont)}>
+              <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3 opacity-70`}
+                  style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font)}>
                 {contentLines(block.subTitle).map(({ line, dots }) => (
                   dots > 0 ? (
                     <span class="vd-dots block" aria-hidden="true">
@@ -1492,22 +1492,22 @@ const contentGroups = (text: string) => {
                 fields (border + tracked label + short copy), turned horizontal
                 and laid out in a grid instead of stacked full-width blocks. */}
             {block.cards?.length > 0 && (
-              <div class={`grid ${block.cardColumns || 'grid-cols-2'} gap-x-8 gap-y-6 text-left max-w-md mx-auto mb-6`}>
+              <div class={`grid ${block.cardColumns || 'grid-cols-2'} ${block.cardGridSpacing || settings.layout?.cardGridSpacing || ''} gap-x-6 gap-y-5 text-left max-w-xl mx-auto mb-6`}>
                 {block.cards.map((c: any, i: number) => (
-                  <div class="border-t border-current border-opacity-10 pt-3">
-                    <p class="text-[9px] uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]"
+                  <div class="border-t border-current border-opacity-10 pt-2.5">
+                    <p class="text-[9px] uppercase tracking-[0.25em] opacity-30 mb-1.5 translate-x-[0.125em]"
                        style={`color: ${zenText};`}>
                       {String(i + 1).padStart(2, '0')}
                     </p>
                     {c.title && (
-                      <p class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[12px]')} font-medium mb-1 ${animTextHover ? 'vd-hover-grow' : ''}`}
-                         style={`color: ${zenText};`}>
+                      <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} mb-1.5 ${animTextHover ? 'vd-hover-grow' : ''}`}
+                         style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font)}>
                         {c.title}
                       </p>
                     )}
                     {c.line && (
-                      <p class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[11px]')} font-light leading-relaxed opacity-65`}
-                         style={`color: ${zenText};`}>
+                      <p class={`${fontSizeClass(block.cardLineFontSize || typo.cardLine?.size || 'xs')} ${block.cardLineFontWeight || typo.cardLine?.weight || 'font-light'} ${typo.cardLine?.uppercase === true ? 'uppercase' : ''} leading-relaxed opacity-65`}
+                         style={textStyle(zenText, block.cardLineFont || typo.cardLine?.font)}>
                         {c.line}
                       </p>
                     )}

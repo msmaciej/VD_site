@@ -18,7 +18,22 @@
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "cards": [
+        {
+          "title": "Für Ihr Unternehmen gebaut",
+          "line": "Die Abläufe werden für Ihr Unternehmen gebaut."
+        },
+        {
+          "title": "Monatlich betreut",
+          "line": "Sie werden monatlich betreut."
+        },
+        {
+          "title": "Kontrolle beim Menschen",
+          "line": "Die Kontrolle bleibt beim Menschen."
+        }
+      ],
+      "cardColumns": "grid-cols-3"
     },
     {
       "title": "Warum VortexDeep",
@@ -39,7 +54,26 @@
       "cueLabelOpen": "Weniger",
       "showGroupIntros": false,
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "cards": [
+        {
+          "title": "Sie behalten die Kontrolle",
+          "line": "Nichts wird von allein gesendet, bezahlt oder eingereicht."
+        },
+        {
+          "title": "Ihre Daten bleiben Ihre",
+          "line": "Nie gespeichert, nie weitergegeben."
+        },
+        {
+          "title": "Keine Bindung",
+          "line": "Kündbar auf Ende jedes Monats."
+        },
+        {
+          "title": "Immer dieselbe Person",
+          "line": "Wer es baut, geht auch ans Telefon."
+        }
+      ],
+      "cardColumns": "grid-cols-2"
     },
     {
       "title": "Wo wir ansetzen",
@@ -225,7 +259,22 @@
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "cards": [
+        {
+          "title": "Wir automatisieren das Wiederkehrende",
+          "line": "Lesen, sortieren, entwerfen, ablegen. Jedes Ergebnis wird Ihnen zur Freigabe vorbereitet."
+        },
+        {
+          "title": "Sie behalten das Ermessen",
+          "line": "Die unklaren Fälle, die Entscheidungen, die letzte Freigabe."
+        },
+        {
+          "title": "Wir sind offen über Grenzen",
+          "line": "Wir sagen Ihnen immer offen, was besser bei Ihnen bleibt."
+        }
+      ],
+      "cardColumns": "grid-cols-3"
     },
     {
       "title": "Ihre Daten",
@@ -268,7 +317,18 @@
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
       "enabled": true,
-      "_template": "section"
+      "_template": "section",
+      "cards": [
+        {
+          "title": "Klein, erprobt",
+          "line": "Bringen Sie ihn zum Laufen, sodass er sich lohnt, und bauen Sie von dort weiter."
+        },
+        {
+          "title": "Passt zusammen",
+          "line": "Jede Automatisierung folgt derselben Form, sie fügen sich beim Wachsen zusammen."
+        }
+      ],
+      "cardColumns": "grid-cols-2"
     },
     {
       "title": "Was Sie erwartet -",

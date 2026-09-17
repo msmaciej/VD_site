@@ -1,91 +1,123 @@
 {
   "siteStatus": "live",
-  "siteName": "VortexDeep",
-  "siteNameFont": "",
-  "siteNameFontSize": "lg",
-  "subSiteName": "Practical | AI automation | . | for small and mid-sized companies | . | From Zürich, Switzerland | Worldwide",
-  "subSiteName_de": "Praktische | KI-Automatisierung | . | für KMU | . | Aus Zürich, Schweiz | Weltweit",
-  "subSiteNameFontSize": "lg",
-  "subSiteNameFontWeight": "font-normal",
-  "subSiteNameTracking": "tracking-[1.2em]",
-  "showSubSiteNameOnly": true,
-  "noticeBannerEnabled": true,
-  "noticeBannerText_en": "In preparation",
-  "noticeBannerText_de": "In Vorbereitung",
-  "noticeBannerBody_en": "VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.",
-  "noticeBannerBody_de": "VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.",
-  "noticeBannerStyle": "ribbon",
-  "noticeBannerFlowSeconds": "34",
-  "noticeBannerDot": "none",
-  "noticeBannerTextFontSize": "12px",
-  "noticeBannerTextFontWeight": "400",
-  "noticeBannerBodyFontSize": "12px",
-  "noticeBannerBodyFontWeight": "400",
-  "headerLayout": "centered",
-  "headerLinksFontSize": "",
-  "navLinks": [
-    {
-      "label": "Fit Check",
-      "label_de": "Fit-Check",
-      "url": "/check"
-    }
-  ],
-  "footerText": "© 2026 VortexDeep",
-  "showFooterLine": true,
-  "footerTextFontSize": "",
-  "socialLinks": [
-    {
-      "platform": "Facebook",
-      "url": "https://www.facebook.com/people/VortexDeep/61591436130103/"
-    }
-  ],
-  "fontPreset": "IBM Plex Mono",
+  "hero": {
+    "siteName": "VortexDeep",
+    "siteNameFont": "",
+    "siteNameFontSize": "lg",
+    "subSiteName": "Practical | AI automation | . | for small and mid-sized companies | . | From Zürich, Switzerland | Worldwide",
+    "subSiteName_de": "Praktische | KI-Automatisierung | . | für KMU | . | Aus Zürich, Schweiz | Weltweit",
+    "subSiteNameFontSize": "lg",
+    "subSiteNameFontWeight": "font-normal",
+    "subSiteNameTracking": "tracking-[1.2em]",
+    "showSubSiteNameOnly": true
+  },
+  "noticeBanner": {
+    "noticeBannerEnabled": true,
+    "noticeBannerText_en": "In preparation",
+    "noticeBannerText_de": "In Vorbereitung",
+    "noticeBannerBody_en": "VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.",
+    "noticeBannerBody_de": "VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.",
+    "noticeBannerStyle": "ribbon",
+    "noticeBannerFlowSeconds": "34",
+    "noticeBannerDot": "none",
+    "noticeBannerTextFontSize": "12px",
+    "noticeBannerTextFontWeight": "400",
+    "noticeBannerBodyFontSize": "12px",
+    "noticeBannerBodyFontWeight": "400"
+  },
+  "header": {
+    "headerLayout": "centered",
+    "headerLinksFontSize": "",
+    "navLinks": [
+      {
+        "label": "Fit Check",
+        "label_de": "Fit-Check",
+        "url": "/check"
+      }
+    ]
+  },
+  "footer": {
+    "footerText": "© 2026 VortexDeep",
+    "showFooterLine": true,
+    "footerTextFontSize": "",
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/people/VortexDeep/61591436130103/"
+      }
+    ]
+  },
   "typography": {
     "title": {
-      "size": "lg",
-      "weight": "font-bold"
+      "font": "Inter",
+      "size": "xl",
+      "weight": "font-bold",
+      "uppercase": true
     },
     "subTitle": {
-      "size": "lg",
-      "weight": "font-normal"
+      "font": "Inter",
+      "size": "xl",
+      "weight": "font-normal",
+      "uppercase": false
     },
     "body": {
-      "size": "lg",
+      "font": "Inter",
+      "size": "xl",
+      "weight": "font-light"
+    },
+    "cardTitle": {
+      "font": "Inter",
+      "size": "xl",
+      "weight": "font-medium"
+    },
+    "cardLine": {
+      "font": "Inter",
+      "size": "xl",
       "weight": "font-light"
     }
   },
-  "showLogo": true,
-  "theme": "paper",
-  "baseTextColor": "",
-  "customBackgroundColor": "",
-  "enableThemeToggle": true,
-  "enableLogoAnimation": true,
-  "enableTextHover": false,
-  "backgroundStyle": "depth",
-  "depthBackground": {
-    "lineOpacity": 0.21,
-    "nodeOpacity": 0.89
+  "appearance": {
+    "fontPreset": "IBM Plex Mono",
+    "showLogo": true,
+    "theme": "paper",
+    "baseTextColor": "",
+    "customBackgroundColor": "",
+    "enableThemeToggle": true
   },
-  "planetarySystems": {
-    "systemCount": 8,
-    "maxPlanets": 5,
-    "pathOpacity": 0.55
+  "animations": {
+    "enableLogoAnimation": true,
+    "enableTextHover": false,
+    "backgroundStyle": "depth",
+    "depthBackground": {
+      "lineOpacity": 0.21,
+      "nodeOpacity": 0.89
+    },
+    "planetarySystems": {
+      "systemCount": 8,
+      "maxPlanets": 5,
+      "pathOpacity": 0.55
+    }
   },
-  "headerHeight": "52px",
-  "matchFooterToHeader": true,
-  "footerHeight": "52px",
-  "siteUrl": "https://vortexdeep.ch",
-  "metaTitle": "VortexDeep — AI Automation for SMEs in Zürich",
-  "metaTitle_de": "VortexDeep — KI-Automatisierung für KMU in Zürich",
-  "metaDescription": "Practical AI automation for small and mid-sized companies. From inquiry handling and document processing to reporting — built, then run for you. You approve every step. From Zürich, worldwide.",
-  "metaDescription_de": "KI-Automatisierung für KMU in Zürich. Von Anfragebearbeitung und Dokumentenverarbeitung bis zu Vertriebsprozessen, Reporting und Finanzverwaltung. Phasenbasierte Lieferung, monatlich betreut. Mensch im Mittelpunkt.",
-  "ogImage": "/uploads/_VortexDeep-background-LI.png",
-  "addressStreet": "",
-  "addressCity": "Zürich",
-  "addressPostal": "",
-  "contactEmail": "info@vortexdeep.ch",
-  "contactPhone": "+41 77 259 8865",
-  "enableContentProtection": true,
-  "founderName": "Maciek Szczech",
-  "founderUrl": ""
+  "layout": {
+    "headerHeight": "52px",
+    "matchFooterToHeader": true,
+    "footerHeight": "52px",
+    "cardGridSpacing": "mt-10"
+  },
+  "seo": {
+    "siteUrl": "https://vortexdeep.ch",
+    "metaTitle": "VortexDeep — AI Automation for SMEs in Zürich",
+    "metaTitle_de": "VortexDeep — KI-Automatisierung für KMU in Zürich",
+    "metaDescription": "Practical AI automation for small and mid-sized companies. From inquiry handling and document processing to reporting — built, then run for you. You approve every step. From Zürich, worldwide.",
+    "metaDescription_de": "KI-Automatisierung für KMU in Zürich. Von Anfragebearbeitung und Dokumentenverarbeitung bis zu Vertriebsprozessen, Reporting und Finanzverwaltung. Phasenbasierte Lieferung, monatlich betreut. Mensch im Mittelpunkt.",
+    "ogImage": "/uploads/_VortexDeep-background-LI.png",
+    "founderName": "Maciek Szczech",
+    "founderUrl": "",
+    "enableContentProtection": true,
+    "addressStreet": "",
+    "addressCity": "Zürich",
+    "addressPostal": "",
+    "contactEmail": "info@vortexdeep.ch",
+    "contactPhone": "+41 77 259 8865"
+  }
 }

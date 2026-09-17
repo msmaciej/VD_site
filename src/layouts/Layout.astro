@@ -52,7 +52,7 @@ const {
   theme       = 'light',
   description: descriptionProp = '',
   ogImage:     ogImageProp     = '',
-  siteUrl     = (siteSettings as any).siteUrl || 'https://vortexdeep.ch',
+  siteUrl     = (siteSettings as any).seo?.siteUrl || 'https://vortexdeep.ch',
   lang        = 'en',
   autoBg,
   autoText,
@@ -67,17 +67,17 @@ const {
 // /og-image.png, a file that does not exist. Fall back to Site Settings so
 // every page always has a real description and a real share image.
 const settingsDescription = lang === 'de'
-  ? ((siteSettings as any).metaDescription_de || (siteSettings as any).metaDescription || '')
-  : ((siteSettings as any).metaDescription || '');
+  ? ((siteSettings as any).seo?.metaDescription_de || (siteSettings as any).seo?.metaDescription || '')
+  : ((siteSettings as any).seo?.metaDescription || '');
 const description = descriptionProp || settingsDescription;
-const ogImage     = ogImageProp || (siteSettings as any).ogImage || '/images/vd-logo-512.png';
+const ogImage     = ogImageProp || (siteSettings as any).seo?.ogImage || '/images/vd-logo-512.png';
 
 // ── Copy/right-click protection ──────────────────────────────────────────
 // Opt-out via Site Settings (`enableContentProtection: false`). It never
 // affected crawlers, but it does block select/copy/print for humans and
 // assistive tech, which is a poor signal for a site that wants to be quoted
 // by AI search engines. Defaults ON to preserve existing behaviour.
-const contentProtection = (siteSettings as any).enableContentProtection !== false;
+const contentProtection = (siteSettings as any).seo?.enableContentProtection !== false;
 
 const canonical   = `${siteUrl}${Astro.url.pathname}`;
 const ogImageFull = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
@@ -161,7 +161,7 @@ const autoOverrideCss = (autoBg || autoText)
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- The full family set, not just Inter. /check sets font-family from
-         settings.fontPreset but had no stylesheet for it, so it was silently
+         settings.appearance.fontPreset but had no stylesheet for it, so it was silently
          falling back to the OS monospace font and looking nothing like the
          homepage. -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">

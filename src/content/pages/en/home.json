@@ -17,6 +17,21 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
+      "cards": [
+        {
+          "title": "Workflow",
+          "line": "Workflows are built for your business."
+        },
+        {
+          "title": "Management",
+          "line": "They are managed monthly."
+        },
+        {
+          "title": "Control",
+          "line": "Human control stays at the centre."
+        }
+      ],
+      "cardColumns": "grid-cols-3",
       "showArt": false,
       "enabled": true,
       "_template": "section"
@@ -38,6 +53,25 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
+      "cards": [
+        {
+          "title": "Control",
+          "line": "You stay in control. Nothing is sent, paid or filed on its own."
+        },
+        {
+          "title": "Data",
+          "line": "Your data stays yours and never stored or shared."
+        },
+        {
+          "title": "No lock-in",
+          "line": "Stop at the end of any month."
+        },
+        {
+          "title": "Build",
+          "line": "Who builds it is who answers the phone."
+        }
+      ],
+      "cardColumns": "grid-cols-2",
       "enabled": true,
       "_template": "section"
     },
@@ -224,6 +258,21 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
+      "cards": [
+        {
+          "title": "We automate the routine",
+          "line": "Reading, sorting, drafting, filing. Every result is prepared for you to approve."
+        },
+        {
+          "title": "You keep the judgement",
+          "line": "The ambiguous cases, the decisions, the final sign-off."
+        },
+        {
+          "title": "We're straight about limits",
+          "line": "We'll always say plainly what's better left with you."
+        }
+      ],
+      "cardColumns": "grid-cols-3",
       "enabled": true,
       "_template": "section"
     },
@@ -267,6 +316,17 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
+      "cards": [
+        {
+          "title": "Small, proven steps",
+          "line": "Get it working, earning its keep, then build from there."
+        },
+        {
+          "title": "Built to fit together",
+          "line": "Every automation shares the same shape, so they connect as you grow."
+        }
+      ],
+      "cardColumns": "grid-cols-2",
       "enabled": true,
       "_template": "section"
     },

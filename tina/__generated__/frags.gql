@@ -43,6 +43,13 @@ fragment PageParts on Page {
         line
       }
       cardColumns
+      cardGridSpacing
+      cardTitleFont
+      cardTitleFontSize
+      cardTitleFontWeight
+      cardLineFont
+      cardLineFontSize
+      cardLineFontWeight
       meta
       email
       phone
@@ -173,6 +180,13 @@ fragment Page_deParts on Page_de {
         line
       }
       cardColumns
+      cardGridSpacing
+      cardTitleFont
+      cardTitleFontSize
+      cardTitleFontWeight
+      cardLineFont
+      cardLineFontSize
+      cardLineFontWeight
       meta
       email
       phone
@@ -272,113 +286,161 @@ fragment SettingsParts on Settings {
     maintenanceMessage_de
     maintenanceMessage_en
   }
-  siteName
-  siteNameFont
-  siteNameFontSize
-  siteNameFontWeight
-  subSiteName
-  subSiteName_de
-  subSiteNameFont
-  subSiteNameFontSize
-  subSiteNameFontWeight
-  subSiteNameTracking
-  showSubSiteNameOnly
-  noticeBannerEnabled
-  noticeBannerText_en
-  noticeBannerText_de
-  noticeBannerBody_en
-  noticeBannerBody_de
-  noticeBannerStyle
-  noticeBannerFlowSeconds
-  noticeBannerDot
-  noticeBannerTextFontSize
-  noticeBannerTextFontWeight
-  noticeBannerBodyFontSize
-  noticeBannerBodyFontWeight
-  headerLayout
-  headerLinksFontSize
-  navLinks {
+  hero {
     __typename
-    label
-    label_de
-    url
+    siteName
+    siteNameFont
+    siteNameFontSize
+    siteNameFontWeight
+    subSiteName
+    subSiteName_de
+    subSiteNameFont
+    subSiteNameFontSize
+    subSiteNameFontWeight
+    subSiteNameTracking
+    showSubSiteNameOnly
   }
-  footerText
-  showFooterLine
-  footerTextFontSize
-  socialLinks {
+  noticeBanner {
     __typename
-    platform
-    url
+    noticeBannerEnabled
+    noticeBannerText_en
+    noticeBannerText_de
+    noticeBannerBody_en
+    noticeBannerBody_de
+    noticeBannerStyle
+    noticeBannerFlowSeconds
+    noticeBannerDot
+    noticeBannerTextFontSize
+    noticeBannerTextFontWeight
+    noticeBannerBodyFontSize
+    noticeBannerBodyFontWeight
   }
-  fontPreset
-  customFontName
+  header {
+    __typename
+    headerLayout
+    headerLinksFontSize
+    navLinks {
+      __typename
+      label
+      label_de
+      url
+    }
+  }
+  footer {
+    __typename
+    footerText
+    showFooterLine
+    footerTextFontSize
+    socialLinks {
+      __typename
+      platform
+      url
+    }
+  }
   typography {
     __typename
     title {
       __typename
+      font
       size
       weight
+      uppercase
     }
     subTitle {
       __typename
+      font
       size
       weight
+      uppercase
     }
     body {
       __typename
+      font
       size
       weight
+      uppercase
+    }
+    cardTitle {
+      __typename
+      font
+      size
+      weight
+      uppercase
+    }
+    cardLine {
+      __typename
+      font
+      size
+      weight
+      uppercase
     }
   }
-  showLogo
-  theme
-  baseTextColor
-  customBackgroundColor
-  enableThemeToggle
-  enableLogoAnimation
-  enableStatusDot
-  enableCascadeReveal
-  enableTextHover
-  enableCheckPageAnimations
-  backgroundStyle
-  processFlow {
+  appearance {
     __typename
-    enabled
+    fontPreset
+    customFontName
+    showLogo
+    theme
+    baseTextColor
+    customBackgroundColor
+    enableThemeToggle
   }
-  depthBackground {
+  animations {
     __typename
-    nodeCount
-    connectDistance
-    lineOpacity
-    nodeOpacity
-    nodeColor
-    fogColor
+    enableLogoAnimation
+    enableStatusDot
+    enableCascadeReveal
+    enableTextHover
+    enableCheckPageAnimations
+    backgroundStyle
+    processFlow {
+      __typename
+      enabled
+    }
+    depthBackground {
+      __typename
+      nodeCount
+      connectDistance
+      lineOpacity
+      nodeOpacity
+      nodeColor
+      fogColor
+    }
+    planetarySystems {
+      __typename
+      systemCount
+      maxPlanets
+      orbitMinRadius
+      orbitMaxRadius
+      starColor
+      pathOpacity
+    }
   }
-  planetarySystems {
+  layout {
     __typename
-    systemCount
-    maxPlanets
-    orbitMinRadius
-    orbitMaxRadius
-    starColor
-    pathOpacity
+    headerHeight
+    matchFooterToHeader
+    footerHeight
+    headerInnerWidth
+    cardGridSpacing
   }
-  headerHeight
-  matchFooterToHeader
-  footerHeight
-  headerInnerWidth
-  siteUrl
-  metaTitle
-  metaTitle_de
-  metaDescription
-  metaDescription_de
-  ogImage
-  addressStreet
-  addressCity
-  addressPostal
-  contactEmail
-  contactPhone
+  seo {
+    __typename
+    siteUrl
+    metaTitle
+    metaTitle_de
+    metaDescription
+    metaDescription_de
+    ogImage
+    founderName
+    founderUrl
+    enableContentProtection
+    addressStreet
+    addressCity
+    addressPostal
+    contactEmail
+    contactPhone
+  }
 }
 
 fragment DataPageParts on DataPage {

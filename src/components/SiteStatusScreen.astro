@@ -34,12 +34,12 @@ const { mode } = Astro.props;
 const settings: any = settingsJson;
 
 // ── Colours: resolve exactly like SitePage so the canvas matches the theme ──
-const currentTheme = settings.theme || 'light';
-const bgColor   = settings.customBackgroundColor || themeColors[currentTheme]?.bg   || '#ffffff';
-const textColor = settings.baseTextColor        || themeColors[currentTheme]?.text || '#0a0a0a';
+const currentTheme = settings.appearance.theme || 'light';
+const bgColor   = settings.appearance.customBackgroundColor || themeColors[currentTheme]?.bg   || '#ffffff';
+const textColor = settings.appearance.baseTextColor        || themeColors[currentTheme]?.text || '#0a0a0a';
 
 // ── Background style: identical to the live site ──
-const backgroundStyle = settings.backgroundStyle || 'none';
+const backgroundStyle = settings.animations.backgroundStyle || 'none';
 const animDepthBg   = backgroundStyle === 'depth';
 const animPlanetary = backgroundStyle === 'planetary';
 
@@ -70,18 +70,18 @@ const badgeEn = pick('preparationBadge_en',   'maintenanceBadge_en')   || d.badg
 const msgDe   = pick('preparationMessage_de', 'maintenanceMessage_de') || d.msg_de;
 const msgEn   = pick('preparationMessage_en', 'maintenanceMessage_en') || d.msg_en;
 
-const siteName = settings.siteName || 'VortexDeep';
+const siteName = settings.hero.siteName || 'VortexDeep';
 const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month: 'long' });
 ---
 
 {animDepthBg && (
   <DepthNetworkBackground
-    nodeColor={settings.depthBackground?.nodeColor || textColor}
-    fogColor={settings.depthBackground?.fogColor || bgColor}
-    nodeCount={settings.depthBackground?.nodeCount || undefined}
-    connectDistance={settings.depthBackground?.connectDistance || undefined}
-    lineOpacity={settings.depthBackground?.lineOpacity ?? undefined}
-    nodeOpacity={settings.depthBackground?.nodeOpacity ?? undefined}
+    nodeColor={settings.animations.depthBackground?.nodeColor || textColor}
+    fogColor={settings.animations.depthBackground?.fogColor || bgColor}
+    nodeCount={settings.animations.depthBackground?.nodeCount || undefined}
+    connectDistance={settings.animations.depthBackground?.connectDistance || undefined}
+    lineOpacity={settings.animations.depthBackground?.lineOpacity ?? undefined}
+    nodeOpacity={settings.animations.depthBackground?.nodeOpacity ?? undefined}
     lightNodeColor={themeColors.light.text}
     lightFogColor={themeColors.light.bg}
     darkNodeColor={themeColors.dark.text}
@@ -91,13 +91,13 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
 
 {animPlanetary && (
   <PlanetarySystemsBackground
-    starColor={settings.planetarySystems?.starColor || textColor}
-    fogColor={settings.depthBackground?.fogColor || bgColor}
-    systemCount={settings.planetarySystems?.systemCount ?? undefined}
-    maxPlanets={settings.planetarySystems?.maxPlanets ?? undefined}
-    orbitMinRadius={settings.planetarySystems?.orbitMinRadius ?? undefined}
-    orbitMaxRadius={settings.planetarySystems?.orbitMaxRadius ?? undefined}
-    pathOpacity={settings.planetarySystems?.pathOpacity ?? undefined}
+    starColor={settings.animations.planetarySystems?.starColor || textColor}
+    fogColor={settings.animations.depthBackground?.fogColor || bgColor}
+    systemCount={settings.animations.planetarySystems?.systemCount ?? undefined}
+    maxPlanets={settings.animations.planetarySystems?.maxPlanets ?? undefined}
+    orbitMinRadius={settings.animations.planetarySystems?.orbitMinRadius ?? undefined}
+    orbitMaxRadius={settings.animations.planetarySystems?.orbitMaxRadius ?? undefined}
+    pathOpacity={settings.animations.planetarySystems?.pathOpacity ?? undefined}
     lightStarColor={themeColors.light.text}
     lightFogColor={themeColors.light.bg}
     darkStarColor={themeColors.dark.text}
