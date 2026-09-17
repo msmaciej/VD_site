@@ -104,15 +104,48 @@ export const fontScaleFactor = (value: string | undefined, fallback = 'base'): n
 export const fontFamily = (name: string): string => {
   const map: Record<string, string> = {
     'Inter':       "'Inter', sans-serif",
+    'Manrope':     "'Manrope', sans-serif",
+    'Space Grotesk': "'Space Grotesk', sans-serif",
     'Lora':        "'Lora', serif",
+    'Newsreader':  "'Newsreader', serif",
+    'Fraunces':    "'Fraunces', serif",
+    'Cormorant':   "'Cormorant', serif",
+    'Instrument Serif': "'Instrument Serif', serif",
     'Space Mono':  "'Space Mono', monospace",
     // Space Mono ships only 400 and 700 — every other weight in the CMS dropdown
     // silently rounds to one of those two. IBM Plex Mono carries 100–700, so the
     // weight controls actually do something.
     'IBM Plex Mono': "'IBM Plex Mono', monospace",
-    'Newsreader':  "'Newsreader', serif",
   };
   return map[name] || `'${name}', sans-serif`;
+};
+
+/**
+ * Typography → tracking fields store a Tailwind class ("tracking-[0.5em]",
+ * "tracking-normal") since that's what every class={} usage needs directly.
+ * The notice banner builds its styling as one big inline style string instead
+ * of Tailwind classes, so it needs the raw CSS value out of that same class —
+ * this pulls it out rather than requiring a second, parallel options list.
+ */
+/**
+ * Typography → weight fields store a Tailwind class ("font-bold") since
+ * that's what class={} usages need directly. The Data and Fit Check pages
+ * style themselves with plain CSS custom properties instead of Tailwind
+ * classes, so they need the raw numeric font-weight out of that same class.
+ */
+export const fontWeightNumber = (value?: string): string | undefined => {
+  const map: Record<string, string> = {
+    'font-thin': '100', 'font-light': '300', 'font-normal': '400',
+    'font-medium': '500', 'font-semibold': '600', 'font-bold': '700',
+  };
+  return value ? map[value] : undefined;
+};
+
+export const trackingEm = (value?: string): string | undefined => {
+  if (!value) return undefined;
+  if (value === 'tracking-normal') return 'normal';
+  const m = value.match(/tracking-\[(.+)\]/);
+  return m ? m[1] : undefined;
 };
 
 /** Builds an inline style string for a text element. */

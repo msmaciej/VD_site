@@ -165,10 +165,15 @@ var fitCheckCollection = {
 var fontTypeOptions = [
   { label: "Inherit global font", value: "" },
   { label: "Inter \u2014 Modern Sans", value: "Inter" },
+  { label: "Manrope \u2014 Warm Geometric Sans", value: "Manrope" },
+  { label: "Space Grotesk \u2014 Technical Sans", value: "Space Grotesk" },
   { label: "Lora \u2014 Elegant Serif", value: "Lora" },
+  { label: "Newsreader \u2014 Editorial Serif", value: "Newsreader" },
+  { label: "Fraunces \u2014 Soft Display Serif", value: "Fraunces" },
+  { label: "Cormorant \u2014 Light Display Serif", value: "Cormorant" },
+  { label: "Instrument Serif \u2014 Minimal Editorial Serif", value: "Instrument Serif" },
   { label: "IBM Plex Mono \u2014 Monospace (7 weights)", value: "IBM Plex Mono" },
-  { label: "Space Mono \u2014 Monospace (only 400 + 700)", value: "Space Mono" },
-  { label: "Newsreader \u2014 Editorial Serif", value: "Newsreader" }
+  { label: "Space Mono \u2014 Monospace (only 400 + 700)", value: "Space Mono" }
 ];
 var fontSizeOptions = [
   { label: "2XS \u2014 9px (meta / attribution)", value: "2xs" },
@@ -191,12 +196,15 @@ var fontWeightOptions = [
   { label: "Semibold (600)", value: "font-semibold" },
   { label: "Bold (700)", value: "font-bold" }
 ];
-var noticeSizeOptions = [
-  { label: "XS \u2014 10px", value: "10px" },
-  { label: "S \u2014 11px", value: "11px" },
-  { label: "M \u2014 12px", value: "12px" },
-  { label: "L \u2014 13px", value: "13px" },
-  { label: "XL \u2014 14px", value: "14px" }
+var trackingOptions = [
+  { label: "Default / inherit", value: "" },
+  { label: "None", value: "tracking-normal" },
+  { label: "Tight \u2014 0.15em", value: "tracking-[0.15em]" },
+  { label: "Normal \u2014 0.25em", value: "tracking-[0.25em]" },
+  { label: "Wide \u2014 0.4em", value: "tracking-[0.4em]" },
+  { label: "Wider \u2014 0.5em", value: "tracking-[0.5em]" },
+  { label: "Very wide \u2014 1.2em", value: "tracking-[1.2em]" },
+  { label: "Extremely wide \u2014 1.5em", value: "tracking-[1.5em]" }
 ];
 var noticeWeightOptions = [
   { label: "Thin (100)", value: "100" },
@@ -223,14 +231,19 @@ var pageTemplates = [
       { type: "string", name: "titleFont", label: "Title \u2014 Font", options: fontTypeOptions },
       { type: "string", name: "titleFontSize", label: "Title \u2014 Size", options: fontSizeOptions },
       { type: "string", name: "titleFontWeight", label: "Title \u2014 Weight", options: fontWeightOptions },
+      { type: "number", name: "titleOpacity", label: "Title \u2014 Opacity 0-100 (optional, overrides site default)" },
+      { type: "string", name: "titleTracking", label: "Title \u2014 Letter spacing (optional, overrides site default)", options: trackingOptions },
       { type: "string", name: "subTitle", label: "Sub-title text" },
       { type: "string", name: "subTitleFont", label: "Sub-title \u2014 Font", options: fontTypeOptions },
       { type: "string", name: "subTitleFontSize", label: "Sub-title \u2014 Size", options: fontSizeOptions },
       { type: "string", name: "subTitleFontWeight", label: "Sub-title \u2014 Weight", options: fontWeightOptions },
+      { type: "number", name: "subTitleOpacity", label: "Sub-title \u2014 Opacity 0-100 (optional, overrides site default)" },
+      { type: "string", name: "subTitleTracking", label: "Sub-title \u2014 Letter spacing (optional, overrides site default)", options: trackingOptions },
       { type: "string", name: "content", label: "Body text (use | for line breaks)", ui: { component: "textarea" } },
       { type: "string", name: "bodyFont", label: "Body \u2014 Font", options: fontTypeOptions },
       { type: "string", name: "fontSize", label: "Body \u2014 Size", options: fontSizeOptions },
       { type: "string", name: "fontWeight", label: "Body \u2014 Weight", options: fontWeightOptions },
+      { type: "number", name: "bodyOpacity", label: "Body \u2014 Opacity 0-100 (optional, overrides site default)" },
       // ── Visibility & folding ──────────────────────────────────────────────
       // The three "Show …" switches are ON unless you turn them off (a fresh
       // section with none of them touched shows everything, exactly as before).
@@ -373,9 +386,13 @@ var pageTemplates = [
       { type: "string", name: "cardTitleFont", label: "Card title \u2014 Font (optional, overrides site default)", options: fontTypeOptions },
       { type: "string", name: "cardTitleFontSize", label: "Card title \u2014 Size (optional, overrides site default)", options: fontSizeOptions },
       { type: "string", name: "cardTitleFontWeight", label: "Card title \u2014 Weight (optional, overrides site default)", options: fontWeightOptions },
+      { type: "number", name: "cardTitleOpacity", label: "Card title \u2014 Opacity 0-100 (optional, overrides site default)" },
+      { type: "string", name: "cardTitleTracking", label: "Card title \u2014 Letter spacing (optional, overrides site default)", options: trackingOptions },
       { type: "string", name: "cardLineFont", label: "Card line \u2014 Font (optional, overrides site default)", options: fontTypeOptions },
       { type: "string", name: "cardLineFontSize", label: "Card line \u2014 Size (optional, overrides site default)", options: fontSizeOptions },
       { type: "string", name: "cardLineFontWeight", label: "Card line \u2014 Weight (optional, overrides site default)", options: fontWeightOptions },
+      { type: "number", name: "cardLineOpacity", label: "Card line \u2014 Opacity 0-100 (optional, overrides site default)" },
+      { type: "string", name: "cardLineTracking", label: "Card line \u2014 Letter spacing (optional, overrides site default)", options: trackingOptions },
       {
         type: "string",
         name: "meta",
@@ -738,6 +755,8 @@ var config_default = defineConfig({
             { type: "string", name: "siteNameFont", label: "Main title \u2014 Font", options: fontTypeOptions },
             { type: "string", name: "siteNameFontSize", label: "Main title \u2014 Size", options: fontSizeOptions },
             { type: "string", name: "siteNameFontWeight", label: "Main title \u2014 Weight", options: fontWeightOptions },
+            { type: "number", name: "siteNameOpacity", label: "Main title \u2014 Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "siteNameTracking", label: "Main title \u2014 Letter spacing (optional, overrides Typography default)", options: trackingOptions },
             {
               type: "string",
               name: "subSiteName",
@@ -753,12 +772,8 @@ var config_default = defineConfig({
             { type: "string", name: "subSiteNameFont", label: "Subtitle \u2014 Font", options: fontTypeOptions },
             { type: "string", name: "subSiteNameFontSize", label: "Subtitle \u2014 Size", options: fontSizeOptions },
             { type: "string", name: "subSiteNameFontWeight", label: "Subtitle \u2014 Weight", options: fontWeightOptions },
-            { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: [
-              { label: "Tight  \u2014 0.25em", value: "tracking-[0.25em]" },
-              { label: "Normal \u2014 0.5em", value: "tracking-[0.5em]" },
-              { label: "Wide   \u2014 1.2em (matches page sections)", value: "tracking-[1.2em]" },
-              { label: "Wider  \u2014 1.5em", value: "tracking-[1.5em]" }
-            ] },
+            { type: "number", name: "subSiteNameOpacity", label: "Subtitle \u2014 Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "subSiteNameTracking", label: "Subtitle \u2014 Letter Spacing", options: trackingOptions },
             { type: "boolean", name: "showSubSiteNameOnly", label: "Show subtitle only (hide main title)" }
           ] },
           // ── Notice banner (small strip under the header, on the live site) ─
@@ -783,10 +798,16 @@ var config_default = defineConfig({
               { label: "Animated (pulsing)", value: "animated" },
               { label: "None", value: "none" }
             ] },
-            { type: "string", name: "noticeBannerTextFontSize", label: "Notice banner \u2014 pill text size", options: noticeSizeOptions },
+            { type: "string", name: "noticeBannerFont", label: "Notice banner \u2014 pill text: Font (optional, overrides Typography default)", options: fontTypeOptions },
+            { type: "string", name: "noticeBannerTextFontSize", label: "Notice banner \u2014 pill text size", options: fontSizeOptions },
             { type: "string", name: "noticeBannerTextFontWeight", label: "Notice banner \u2014 pill text weight", options: noticeWeightOptions },
-            { type: "string", name: "noticeBannerBodyFontSize", label: "Notice banner \u2014 longer text size", options: noticeSizeOptions },
-            { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner \u2014 longer text weight", options: noticeWeightOptions }
+            { type: "number", name: "noticeBannerOpacity", label: "Notice banner \u2014 pill text: Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "noticeBannerTracking", label: "Notice banner \u2014 pill text: Letter spacing (optional, overrides Typography default)", options: trackingOptions },
+            { type: "string", name: "noticeBannerBodyFont", label: "Notice banner \u2014 longer text: Font (optional, overrides Typography default)", options: fontTypeOptions },
+            { type: "string", name: "noticeBannerBodyFontSize", label: "Notice banner \u2014 longer text size", options: fontSizeOptions },
+            { type: "string", name: "noticeBannerBodyFontWeight", label: "Notice banner \u2014 longer text weight", options: noticeWeightOptions },
+            { type: "number", name: "noticeBannerBodyOpacity", label: "Notice banner \u2014 longer text: Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "noticeBannerBodyTracking", label: "Notice banner \u2014 longer text: Letter spacing (optional, overrides Typography default)", options: trackingOptions }
           ] },
           // ── Header ────────────────────────────────────────────────────────
           { type: "object", name: "header", label: "Header", fields: [
@@ -795,7 +816,16 @@ var config_default = defineConfig({
               { label: "Centered (Links Above Title)", value: "centered-top" },
               { label: "Left Aligned (Split)", value: "split" }
             ] },
-            { type: "string", name: "headerLinksFontSize", label: "Header Links Size", options: fontSizeOptions },
+            { type: "string", name: "wordmarkFont", label: "Wordmark \u2014 Font (optional, overrides Typography default)", options: fontTypeOptions },
+            { type: "string", name: "wordmarkFontSize", label: "Wordmark \u2014 Size (optional, overrides Typography default)", options: fontSizeOptions },
+            { type: "string", name: "wordmarkFontWeight", label: "Wordmark \u2014 Weight (optional, overrides Typography default)", options: fontWeightOptions },
+            { type: "number", name: "wordmarkOpacity", label: "Wordmark \u2014 Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "wordmarkTracking", label: "Wordmark \u2014 Letter spacing (optional, overrides Typography default)", options: trackingOptions },
+            { type: "string", name: "headerLinksFont", label: "Nav links \u2014 Font (optional, overrides Typography default)", options: fontTypeOptions },
+            { type: "string", name: "headerLinksFontSize", label: "Nav links \u2014 Size (optional, overrides Typography default)", options: fontSizeOptions },
+            { type: "string", name: "headerLinksFontWeight", label: "Nav links \u2014 Weight (optional, overrides Typography default)", options: fontWeightOptions },
+            { type: "number", name: "headerLinksOpacity", label: "Nav links \u2014 Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "headerLinksTracking", label: "Nav links \u2014 Letter spacing (optional, overrides Typography default)", options: trackingOptions },
             {
               type: "object",
               list: true,
@@ -813,7 +843,11 @@ var config_default = defineConfig({
           { type: "object", name: "footer", label: "Footer", fields: [
             { type: "string", name: "footerText", label: "Footer Text (overrides copyright)" },
             { type: "boolean", name: "showFooterLine", label: "Show separator line above footer" },
-            { type: "string", name: "footerTextFontSize", label: "Footer text size", options: fontSizeOptions },
+            { type: "string", name: "footerTextFont", label: "Footer text \u2014 Font (optional, overrides Typography default)", options: fontTypeOptions },
+            { type: "string", name: "footerTextFontSize", label: "Footer text \u2014 Size (optional, overrides Typography default)", options: fontSizeOptions },
+            { type: "string", name: "footerTextFontWeight", label: "Footer text \u2014 Weight (optional, overrides Typography default)", options: fontWeightOptions },
+            { type: "number", name: "footerTextOpacity", label: "Footer text \u2014 Opacity 0-100 (optional, overrides Typography default)" },
+            { type: "string", name: "footerTextTracking", label: "Footer text \u2014 Letter spacing (optional, overrides Typography default)", options: trackingOptions },
             {
               type: "object",
               list: true,
@@ -845,7 +879,14 @@ var config_default = defineConfig({
                   name: "uppercase",
                   label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
-                }
+                },
+                {
+                  type: "number",
+                  name: "opacity",
+                  label: "Opacity (0\u2013100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry \u2014 not limited to preset steps."
+                },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
               { type: "object", name: "subTitle", label: "Sub-titles", fields: [
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
@@ -856,7 +897,14 @@ var config_default = defineConfig({
                   name: "uppercase",
                   label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
-                }
+                },
+                {
+                  type: "number",
+                  name: "opacity",
+                  label: "Opacity (0\u2013100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry \u2014 not limited to preset steps."
+                },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
               { type: "object", name: "body", label: "Body / main text", fields: [
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
@@ -867,7 +915,14 @@ var config_default = defineConfig({
                   name: "uppercase",
                   label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
-                }
+                },
+                {
+                  type: "number",
+                  name: "opacity",
+                  label: "Opacity (0\u2013100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry \u2014 not limited to preset steps."
+                },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
               { type: "object", name: "cardTitle", label: "Card titles (in a card grid)", fields: [
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
@@ -878,7 +933,14 @@ var config_default = defineConfig({
                   name: "uppercase",
                   label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
-                }
+                },
+                {
+                  type: "number",
+                  name: "opacity",
+                  label: "Opacity (0\u2013100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry \u2014 not limited to preset steps."
+                },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
               { type: "object", name: "cardLine", label: "Card lines (in a card grid)", fields: [
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
@@ -889,20 +951,147 @@ var config_default = defineConfig({
                   name: "uppercase",
                   label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way."
-                }
-              ] }
+                },
+                {
+                  type: "number",
+                  name: "opacity",
+                  label: "Opacity (0\u2013100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry \u2014 not limited to preset steps."
+                },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+              ] },
+              { type: "object", name: "header", label: "Header (wordmark + nav links)", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
+                { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+              ] },
+              { type: "object", name: "footer", label: "Footer text", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
+                { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+              ] },
+              { type: "object", name: "noticeBannerText", label: "Notice banner \u2014 pill text", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: noticeWeightOptions },
+                { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+              ] },
+              { type: "object", name: "noticeBannerBody", label: "Notice banner \u2014 longer text", fields: [
+                { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                { type: "string", name: "weight", label: "Weight", options: noticeWeightOptions },
+                { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+              ] },
+              {
+                type: "object",
+                name: "label",
+                label: "Small labels (eyebrows, tags, section labels)",
+                description: "Used by the Data page (eyebrow, sub-heading) and the Fit Check page (tags, form labels, footer links) \u2014 the small uppercase tracked text that isn't a main title.",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "docTitle",
+                label: "Data page \u2014 main heading",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "docLede",
+                label: "Data page \u2014 intro paragraph",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "docBody",
+                label: "Data page \u2014 body text, lists, notes",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "quizTitle",
+                label: "Fit Check \u2014 question & result heading",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "quizBody",
+                label: "Fit Check \u2014 result text & form input",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              }
             ]
           },
           // ── Global appearance ─────────────────────────────────────────────
           { type: "object", name: "appearance", label: "Global appearance", fields: [
             { type: "string", name: "fontPreset", label: "Global Default Font", options: [
               { label: "Inter \u2014 Modern Sans", value: "Inter" },
+              { label: "Manrope \u2014 Warm Geometric Sans", value: "Manrope" },
+              { label: "Space Grotesk \u2014 Technical Sans", value: "Space Grotesk" },
               { label: "Lora \u2014 Elegant Serif", value: "Lora" },
-              { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
               { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
+              { label: "Fraunces \u2014 Soft Display Serif", value: "Fraunces" },
+              { label: "Cormorant \u2014 Light Display Serif", value: "Cormorant" },
+              { label: "Instrument Serif \u2014 Minimal Editorial Serif", value: "Instrument Serif" },
+              { label: "IBM Plex Mono \u2014 Monospace", value: "IBM Plex Mono" },
+              { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
               { label: "Custom Google Font", value: "custom" }
             ] },
-            { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+            {
+              type: "string",
+              name: "customFontName",
+              label: "Custom Font Name (if Custom selected)",
+              description: "Exact name of any font on fonts.google.com \u2014 e.g. 'Playfair Display'. Fetches it directly from Google Fonts (weights 300\u2013800, italic included), so any real Google Font works for testing, not just the curated list above."
+            },
             { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
             { type: "string", name: "theme", label: "Theme", options: [
               { label: "Light \u2014 pure white", value: "light" },

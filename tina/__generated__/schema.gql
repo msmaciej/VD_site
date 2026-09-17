@@ -126,14 +126,19 @@ type PageBlocksSection {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  titleOpacity: Float
+  titleTracking: String
   subTitle: String
   subTitleFont: String
   subTitleFontSize: String
   subTitleFontWeight: String
+  subTitleOpacity: Float
+  subTitleTracking: String
   content: String
   bodyFont: String
   fontSize: String
   fontWeight: String
+  bodyOpacity: Float
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -150,9 +155,13 @@ type PageBlocksSection {
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
+  cardTitleOpacity: Float
+  cardTitleTracking: String
   cardLineFont: String
   cardLineFontSize: String
   cardLineFontWeight: String
+  cardLineOpacity: Float
+  cardLineTracking: String
   meta: String
   email: String
   phone: String
@@ -256,6 +265,16 @@ input StringFilter {
   in: [String]
 }
 
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
 input BooleanFilter {
   eq: Boolean
   exists: Boolean
@@ -285,14 +304,19 @@ input PageBlocksSectionFilter {
   titleFont: StringFilter
   titleFontSize: StringFilter
   titleFontWeight: StringFilter
+  titleOpacity: NumberFilter
+  titleTracking: StringFilter
   subTitle: StringFilter
   subTitleFont: StringFilter
   subTitleFontSize: StringFilter
   subTitleFontWeight: StringFilter
+  subTitleOpacity: NumberFilter
+  subTitleTracking: StringFilter
   content: StringFilter
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  bodyOpacity: NumberFilter
   showTitle: BooleanFilter
   showSubtitle: BooleanFilter
   showBody: BooleanFilter
@@ -309,9 +333,13 @@ input PageBlocksSectionFilter {
   cardTitleFont: StringFilter
   cardTitleFontSize: StringFilter
   cardTitleFontWeight: StringFilter
+  cardTitleOpacity: NumberFilter
+  cardTitleTracking: StringFilter
   cardLineFont: StringFilter
   cardLineFontSize: StringFilter
   cardLineFontWeight: StringFilter
+  cardLineOpacity: NumberFilter
+  cardLineTracking: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -327,16 +355,6 @@ input PageBlocksProcessFlowStepsFilter {
   font: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
-}
-
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
 }
 
 input PageBlocksProcessFlowFilter {
@@ -455,14 +473,19 @@ type Page_deBlocksSection {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  titleOpacity: Float
+  titleTracking: String
   subTitle: String
   subTitleFont: String
   subTitleFontSize: String
   subTitleFontWeight: String
+  subTitleOpacity: Float
+  subTitleTracking: String
   content: String
   bodyFont: String
   fontSize: String
   fontWeight: String
+  bodyOpacity: Float
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -479,9 +502,13 @@ type Page_deBlocksSection {
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
+  cardTitleOpacity: Float
+  cardTitleTracking: String
   cardLineFont: String
   cardLineFontSize: String
   cardLineFontWeight: String
+  cardLineOpacity: Float
+  cardLineTracking: String
   meta: String
   email: String
   phone: String
@@ -602,14 +629,19 @@ input Page_deBlocksSectionFilter {
   titleFont: StringFilter
   titleFontSize: StringFilter
   titleFontWeight: StringFilter
+  titleOpacity: NumberFilter
+  titleTracking: StringFilter
   subTitle: StringFilter
   subTitleFont: StringFilter
   subTitleFontSize: StringFilter
   subTitleFontWeight: StringFilter
+  subTitleOpacity: NumberFilter
+  subTitleTracking: StringFilter
   content: StringFilter
   bodyFont: StringFilter
   fontSize: StringFilter
   fontWeight: StringFilter
+  bodyOpacity: NumberFilter
   showTitle: BooleanFilter
   showSubtitle: BooleanFilter
   showBody: BooleanFilter
@@ -626,9 +658,13 @@ input Page_deBlocksSectionFilter {
   cardTitleFont: StringFilter
   cardTitleFontSize: StringFilter
   cardTitleFontWeight: StringFilter
+  cardTitleOpacity: NumberFilter
+  cardTitleTracking: StringFilter
   cardLineFont: StringFilter
   cardLineFontSize: StringFilter
   cardLineFontWeight: StringFilter
+  cardLineOpacity: NumberFilter
+  cardLineTracking: StringFilter
   meta: StringFilter
   email: StringFilter
   phone: StringFilter
@@ -754,11 +790,14 @@ type SettingsHero {
   siteNameFont: String
   siteNameFontSize: String
   siteNameFontWeight: String
+  siteNameOpacity: Float
+  siteNameTracking: String
   subSiteName: String
   subSiteName_de: String
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
+  subSiteNameOpacity: Float
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
 }
@@ -772,10 +811,16 @@ type SettingsNoticeBanner {
   noticeBannerStyle: String
   noticeBannerFlowSeconds: String
   noticeBannerDot: String
+  noticeBannerFont: String
   noticeBannerTextFontSize: String
   noticeBannerTextFontWeight: String
+  noticeBannerOpacity: Float
+  noticeBannerTracking: String
+  noticeBannerBodyFont: String
   noticeBannerBodyFontSize: String
   noticeBannerBodyFontWeight: String
+  noticeBannerBodyOpacity: Float
+  noticeBannerBodyTracking: String
 }
 
 type SettingsHeaderNavLinks {
@@ -786,7 +831,16 @@ type SettingsHeaderNavLinks {
 
 type SettingsHeader {
   headerLayout: String
+  wordmarkFont: String
+  wordmarkFontSize: String
+  wordmarkFontWeight: String
+  wordmarkOpacity: Float
+  wordmarkTracking: String
+  headerLinksFont: String
   headerLinksFontSize: String
+  headerLinksFontWeight: String
+  headerLinksOpacity: Float
+  headerLinksTracking: String
   navLinks: [SettingsHeaderNavLinks]
 }
 
@@ -798,7 +852,11 @@ type SettingsFooterSocialLinks {
 type SettingsFooter {
   footerText: String
   showFooterLine: Boolean
+  footerTextFont: String
   footerTextFontSize: String
+  footerTextFontWeight: String
+  footerTextOpacity: Float
+  footerTextTracking: String
   socialLinks: [SettingsFooterSocialLinks]
 }
 
@@ -807,6 +865,8 @@ type SettingsTypographyTitle {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 type SettingsTypographySubTitle {
@@ -814,6 +874,8 @@ type SettingsTypographySubTitle {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 type SettingsTypographyBody {
@@ -821,6 +883,8 @@ type SettingsTypographyBody {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 type SettingsTypographyCardTitle {
@@ -828,6 +892,8 @@ type SettingsTypographyCardTitle {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 type SettingsTypographyCardLine {
@@ -835,6 +901,96 @@ type SettingsTypographyCardLine {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyHeader {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyFooter {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyNoticeBannerText {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyNoticeBannerBody {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyLabel {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyDocTitle {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyDocLede {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyDocBody {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyQuizTitle {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyQuizBody {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 type SettingsTypography {
@@ -843,6 +999,16 @@ type SettingsTypography {
   body: SettingsTypographyBody
   cardTitle: SettingsTypographyCardTitle
   cardLine: SettingsTypographyCardLine
+  header: SettingsTypographyHeader
+  footer: SettingsTypographyFooter
+  noticeBannerText: SettingsTypographyNoticeBannerText
+  noticeBannerBody: SettingsTypographyNoticeBannerBody
+  label: SettingsTypographyLabel
+  docTitle: SettingsTypographyDocTitle
+  docLede: SettingsTypographyDocLede
+  docBody: SettingsTypographyDocBody
+  quizTitle: SettingsTypographyQuizTitle
+  quizBody: SettingsTypographyQuizBody
 }
 
 type SettingsAppearance {
@@ -947,11 +1113,14 @@ input SettingsHeroFilter {
   siteNameFont: StringFilter
   siteNameFontSize: StringFilter
   siteNameFontWeight: StringFilter
+  siteNameOpacity: NumberFilter
+  siteNameTracking: StringFilter
   subSiteName: StringFilter
   subSiteName_de: StringFilter
   subSiteNameFont: StringFilter
   subSiteNameFontSize: StringFilter
   subSiteNameFontWeight: StringFilter
+  subSiteNameOpacity: NumberFilter
   subSiteNameTracking: StringFilter
   showSubSiteNameOnly: BooleanFilter
 }
@@ -965,10 +1134,16 @@ input SettingsNoticeBannerFilter {
   noticeBannerStyle: StringFilter
   noticeBannerFlowSeconds: StringFilter
   noticeBannerDot: StringFilter
+  noticeBannerFont: StringFilter
   noticeBannerTextFontSize: StringFilter
   noticeBannerTextFontWeight: StringFilter
+  noticeBannerOpacity: NumberFilter
+  noticeBannerTracking: StringFilter
+  noticeBannerBodyFont: StringFilter
   noticeBannerBodyFontSize: StringFilter
   noticeBannerBodyFontWeight: StringFilter
+  noticeBannerBodyOpacity: NumberFilter
+  noticeBannerBodyTracking: StringFilter
 }
 
 input SettingsHeaderNavLinksFilter {
@@ -979,7 +1154,16 @@ input SettingsHeaderNavLinksFilter {
 
 input SettingsHeaderFilter {
   headerLayout: StringFilter
+  wordmarkFont: StringFilter
+  wordmarkFontSize: StringFilter
+  wordmarkFontWeight: StringFilter
+  wordmarkOpacity: NumberFilter
+  wordmarkTracking: StringFilter
+  headerLinksFont: StringFilter
   headerLinksFontSize: StringFilter
+  headerLinksFontWeight: StringFilter
+  headerLinksOpacity: NumberFilter
+  headerLinksTracking: StringFilter
   navLinks: SettingsHeaderNavLinksFilter
 }
 
@@ -991,7 +1175,11 @@ input SettingsFooterSocialLinksFilter {
 input SettingsFooterFilter {
   footerText: StringFilter
   showFooterLine: BooleanFilter
+  footerTextFont: StringFilter
   footerTextFontSize: StringFilter
+  footerTextFontWeight: StringFilter
+  footerTextOpacity: NumberFilter
+  footerTextTracking: StringFilter
   socialLinks: SettingsFooterSocialLinksFilter
 }
 
@@ -1000,6 +1188,8 @@ input SettingsTypographyTitleFilter {
   size: StringFilter
   weight: StringFilter
   uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
 }
 
 input SettingsTypographySubTitleFilter {
@@ -1007,6 +1197,8 @@ input SettingsTypographySubTitleFilter {
   size: StringFilter
   weight: StringFilter
   uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
 }
 
 input SettingsTypographyBodyFilter {
@@ -1014,6 +1206,8 @@ input SettingsTypographyBodyFilter {
   size: StringFilter
   weight: StringFilter
   uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
 }
 
 input SettingsTypographyCardTitleFilter {
@@ -1021,6 +1215,8 @@ input SettingsTypographyCardTitleFilter {
   size: StringFilter
   weight: StringFilter
   uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
 }
 
 input SettingsTypographyCardLineFilter {
@@ -1028,6 +1224,96 @@ input SettingsTypographyCardLineFilter {
   size: StringFilter
   weight: StringFilter
   uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyHeaderFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyFooterFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyNoticeBannerTextFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyNoticeBannerBodyFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyLabelFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyDocTitleFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyDocLedeFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyDocBodyFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyQuizTitleFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyQuizBodyFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
 }
 
 input SettingsTypographyFilter {
@@ -1036,6 +1322,16 @@ input SettingsTypographyFilter {
   body: SettingsTypographyBodyFilter
   cardTitle: SettingsTypographyCardTitleFilter
   cardLine: SettingsTypographyCardLineFilter
+  header: SettingsTypographyHeaderFilter
+  footer: SettingsTypographyFooterFilter
+  noticeBannerText: SettingsTypographyNoticeBannerTextFilter
+  noticeBannerBody: SettingsTypographyNoticeBannerBodyFilter
+  label: SettingsTypographyLabelFilter
+  docTitle: SettingsTypographyDocTitleFilter
+  docLede: SettingsTypographyDocLedeFilter
+  docBody: SettingsTypographyDocBodyFilter
+  quizTitle: SettingsTypographyQuizTitleFilter
+  quizBody: SettingsTypographyQuizBodyFilter
 }
 
 input SettingsAppearanceFilter {
@@ -1868,14 +2164,19 @@ input PageBlocksSectionMutation {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  titleOpacity: Float
+  titleTracking: String
   subTitle: String
   subTitleFont: String
   subTitleFontSize: String
   subTitleFontWeight: String
+  subTitleOpacity: Float
+  subTitleTracking: String
   content: String
   bodyFont: String
   fontSize: String
   fontWeight: String
+  bodyOpacity: Float
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -1892,9 +2193,13 @@ input PageBlocksSectionMutation {
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
+  cardTitleOpacity: Float
+  cardTitleTracking: String
   cardLineFont: String
   cardLineFontSize: String
   cardLineFontWeight: String
+  cardLineOpacity: Float
+  cardLineTracking: String
   meta: String
   email: String
   phone: String
@@ -2017,14 +2322,19 @@ input Page_deBlocksSectionMutation {
   titleFont: String
   titleFontSize: String
   titleFontWeight: String
+  titleOpacity: Float
+  titleTracking: String
   subTitle: String
   subTitleFont: String
   subTitleFontSize: String
   subTitleFontWeight: String
+  subTitleOpacity: Float
+  subTitleTracking: String
   content: String
   bodyFont: String
   fontSize: String
   fontWeight: String
+  bodyOpacity: Float
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -2041,9 +2351,13 @@ input Page_deBlocksSectionMutation {
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
+  cardTitleOpacity: Float
+  cardTitleTracking: String
   cardLineFont: String
   cardLineFontSize: String
   cardLineFontWeight: String
+  cardLineOpacity: Float
+  cardLineTracking: String
   meta: String
   email: String
   phone: String
@@ -2158,11 +2472,14 @@ input SettingsHeroMutation {
   siteNameFont: String
   siteNameFontSize: String
   siteNameFontWeight: String
+  siteNameOpacity: Float
+  siteNameTracking: String
   subSiteName: String
   subSiteName_de: String
   subSiteNameFont: String
   subSiteNameFontSize: String
   subSiteNameFontWeight: String
+  subSiteNameOpacity: Float
   subSiteNameTracking: String
   showSubSiteNameOnly: Boolean
 }
@@ -2176,10 +2493,16 @@ input SettingsNoticeBannerMutation {
   noticeBannerStyle: String
   noticeBannerFlowSeconds: String
   noticeBannerDot: String
+  noticeBannerFont: String
   noticeBannerTextFontSize: String
   noticeBannerTextFontWeight: String
+  noticeBannerOpacity: Float
+  noticeBannerTracking: String
+  noticeBannerBodyFont: String
   noticeBannerBodyFontSize: String
   noticeBannerBodyFontWeight: String
+  noticeBannerBodyOpacity: Float
+  noticeBannerBodyTracking: String
 }
 
 input SettingsHeaderNavLinksMutation {
@@ -2190,7 +2513,16 @@ input SettingsHeaderNavLinksMutation {
 
 input SettingsHeaderMutation {
   headerLayout: String
+  wordmarkFont: String
+  wordmarkFontSize: String
+  wordmarkFontWeight: String
+  wordmarkOpacity: Float
+  wordmarkTracking: String
+  headerLinksFont: String
   headerLinksFontSize: String
+  headerLinksFontWeight: String
+  headerLinksOpacity: Float
+  headerLinksTracking: String
   navLinks: [SettingsHeaderNavLinksMutation]
 }
 
@@ -2202,7 +2534,11 @@ input SettingsFooterSocialLinksMutation {
 input SettingsFooterMutation {
   footerText: String
   showFooterLine: Boolean
+  footerTextFont: String
   footerTextFontSize: String
+  footerTextFontWeight: String
+  footerTextOpacity: Float
+  footerTextTracking: String
   socialLinks: [SettingsFooterSocialLinksMutation]
 }
 
@@ -2211,6 +2547,8 @@ input SettingsTypographyTitleMutation {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 input SettingsTypographySubTitleMutation {
@@ -2218,6 +2556,8 @@ input SettingsTypographySubTitleMutation {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 input SettingsTypographyBodyMutation {
@@ -2225,6 +2565,8 @@ input SettingsTypographyBodyMutation {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 input SettingsTypographyCardTitleMutation {
@@ -2232,6 +2574,8 @@ input SettingsTypographyCardTitleMutation {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 input SettingsTypographyCardLineMutation {
@@ -2239,6 +2583,96 @@ input SettingsTypographyCardLineMutation {
   size: String
   weight: String
   uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyHeaderMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyFooterMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyNoticeBannerTextMutation {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyNoticeBannerBodyMutation {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyLabelMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyDocTitleMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyDocLedeMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyDocBodyMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyQuizTitleMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyQuizBodyMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
 }
 
 input SettingsTypographyMutation {
@@ -2247,6 +2681,16 @@ input SettingsTypographyMutation {
   body: SettingsTypographyBodyMutation
   cardTitle: SettingsTypographyCardTitleMutation
   cardLine: SettingsTypographyCardLineMutation
+  header: SettingsTypographyHeaderMutation
+  footer: SettingsTypographyFooterMutation
+  noticeBannerText: SettingsTypographyNoticeBannerTextMutation
+  noticeBannerBody: SettingsTypographyNoticeBannerBodyMutation
+  label: SettingsTypographyLabelMutation
+  docTitle: SettingsTypographyDocTitleMutation
+  docLede: SettingsTypographyDocLedeMutation
+  docBody: SettingsTypographyDocBodyMutation
+  quizTitle: SettingsTypographyQuizTitleMutation
+  quizBody: SettingsTypographyQuizBodyMutation
 }
 
 input SettingsAppearanceMutation {

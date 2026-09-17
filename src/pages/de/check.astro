@@ -2,7 +2,7 @@
 // src/pages/de/check.astro  →  vortexdeep.ch/de/check
 import Layout from '../../layouts/Layout.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
-import { themeColors, themeFamily, fontFamily, fontScaleFactor, socialIcon } from '../../utils/siteHelpers.ts';
+import { themeColors, themeFamily, fontFamily, fontScaleFactor, socialIcon, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm } from '../../utils/siteHelpers.ts';
 
 // Pull real Site Settings so this page mimics the rest of the site's header,
 // footer, and theme — same data source de/index.astro passes into
@@ -17,6 +17,30 @@ import { themeColors, themeFamily, fontFamily, fontScaleFactor, socialIcon } fro
 // known gap rather than a silent one.
 const settingFiles = await Astro.glob('../../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
+const typo = (settings.typography || {}) as any;
+
+// Fit Check quiz content — was entirely hardcoded CSS, now driven by
+// Typography → Label / Fit Check roles (blank there = these exact values).
+// The existing fcTextScale multiplier is preserved on top, unchanged.
+const qz = {
+  qlSize: typo.quizTitle?.size ? fontSizePx(typo.quizTitle.size) : '15px',
+  qlWeight: typo.quizTitle?.weight ? fontWeightNumber(typo.quizTitle.weight) : '200',
+  qlTracking: typo.quizTitle?.tracking ? trackingEm(typo.quizTitle.tracking) : '0.04em',
+  qlOpacity: typo.quizTitle?.opacity ?? 100,
+  rhSize: typo.quizTitle?.size ? fontSizePx(typo.quizTitle.size) : '17px',
+  optSize: typo.label?.size ? fontSizePx(typo.label.size) : '13px',
+  optTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.05em',
+  tagSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
+  tagTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.2em',
+  flTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.3em',
+  labelWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
+  rbSize: typo.quizBody?.size ? fontSizePx(typo.quizBody.size) : '14px',
+  rbOpacity: typo.quizBody?.opacity ?? 65,
+  inputSize: typo.quizBody?.size ? fontSizePx(typo.quizBody.size) : '14px',
+  quizFont: typo.quizTitle?.font ? fontFamily(typo.quizTitle.font) : null,
+  labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
+  bodyFont: typo.quizBody?.font ? fontFamily(typo.quizBody.font) : null,
+};
 
 const currentTheme = settings.appearance.theme || 'light';
 const currentYear  = new Date().getFullYear();
@@ -140,8 +164,8 @@ for (const key of categoryKeysList) {
                   fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
           </svg>
         )}
-        <span class="text-[10px] uppercase tracking-[0.4em]"
-              style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+        <span class={`${fontSizeClass(settings.header.wordmarkFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.wordmarkFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.wordmarkTracking || typo.header?.tracking || 'tracking-[0.4em]'}`}
+              style={textStyle('var(--zen-text)', settings.header.wordmarkFont || typo.header?.font, settings.header.wordmarkOpacity ?? typo.header?.opacity ?? 100) + ` font-family: ${settings.header.wordmarkFont || typo.header?.font ? fontFamily(settings.header.wordmarkFont || typo.header?.font) : activeFontFamily};`}>
           {settings.hero.siteName || 'VortexDeep'}
         </span>
         {checkAnimationsEnabled && (
@@ -152,8 +176,8 @@ for (const key of categoryKeysList) {
       <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
         {resolvedNavLinks.map((link: any) => (
           <a href={link.url}
-             class={`${settings.header.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
-             style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+             class={`vd-nav-link ${fontSizeClass(settings.header.headerLinksFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.headerLinksFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.headerLinksTracking || typo.header?.tracking || 'tracking-[0.3em]'}`}
+             style={`color: var(--zen-text); opacity: ${settings.header.headerLinksOpacity ?? typo.header?.opacity ?? 50}%; font-family: ${settings.header.headerLinksFont || typo.header?.font ? fontFamily(settings.header.headerLinksFont || typo.header?.font) : activeFontFamily};`}>
             {link.label}
           </a>
         ))}
@@ -387,15 +411,23 @@ for (const key of categoryKeysList) {
     {settings.footer.socialLinks?.length > 0 && (
       <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
     )}
-    <p class={`${settings.footer.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
-       style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+    <p class={`${fontSizeClass(settings.footer.footerTextFontSize || typo.footer?.size || 'text-[9px]')} ${settings.footer.footerTextFontWeight || typo.footer?.weight || ''} ${typo.footer?.uppercase !== false ? 'uppercase' : ''} ${settings.footer.footerTextTracking || typo.footer?.tracking || 'tracking-[0.25em]'}`}
+       style={`color: var(--zen-text); opacity: ${settings.footer.footerTextOpacity ?? typo.footer?.opacity ?? 30}%; font-family: ${settings.footer.footerTextFont || typo.footer?.font ? fontFamily(settings.footer.footerTextFont || typo.footer?.font) : activeFontFamily};`}>
       {settings.footer.footerText
         ? settings.footer.footerText
         : `© ${currentYear} ${settings.hero.siteName || 'VortexDeep'}`}
     </p>
   </footer>
 
-  <style is:global define:vars={{ activeFontFamily, fcTextScale }}>
+  <style is:global define:vars={{ activeFontFamily, fcTextScale,
+    qlSize: qz.qlSize, qlWeight: qz.qlWeight, qlTracking: qz.qlTracking, qlOpacity: qz.qlOpacity, rhSize: qz.rhSize,
+    optSize: qz.optSize, optTracking: qz.optTracking, tagSize: qz.tagSize, tagTracking: qz.tagTracking,
+    flTracking: qz.flTracking, labelWeight: qz.labelWeight,
+    rbSize: qz.rbSize, rbOpacity: qz.rbOpacity, inputSize: qz.inputSize,
+    quizFont: qz.quizFont || activeFontFamily, labelFont: qz.labelFont || activeFontFamily, fcBodyFont: qz.bodyFont || activeFontFamily,
+  }}>
+    .vd-nav-link { transition: opacity 0.2s ease; }
+    .vd-nav-link:hover { opacity: 1 !important; }
     /* ── Font parity: use the configured font globally (see EN /check). ── */
     html, body { font-family: var(--activeFontFamily); }
 
@@ -485,19 +517,19 @@ for (const key of categoryKeysList) {
   </style>
 
   <style>
-    .vd-ql { font-size:calc(15px * var(--fcTextScale, 1)); font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 2rem; text-align:center; }
-    .vd-opt { text-align:left; font-size:calc(13px * var(--fcTextScale, 1)); letter-spacing:0.05em; text-transform:uppercase; padding:14px 4px; border:none; border-bottom:1px solid var(--zen-muted); background:transparent; color:var(--zen-text); opacity:0.6; cursor:pointer; font-family:inherit; transition:opacity 0.2s ease, border-color 0.2s ease; width:100%; }
+    .vd-ql { font-size:calc(var(--qlSize) * var(--fcTextScale, 1)); font-weight:var(--qlWeight); letter-spacing:var(--qlTracking); opacity:calc(var(--qlOpacity, 100) * 1%); text-transform:uppercase; line-height:1.5; margin:0 0 2rem; text-align:center; font-family:var(--quizFont); }
+    .vd-opt { text-align:left; font-size:calc(var(--optSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--optTracking); text-transform:uppercase; padding:14px 4px; border:none; border-bottom:1px solid var(--zen-muted); background:transparent; color:var(--zen-text); opacity:0.6; cursor:pointer; font-family:var(--labelFont); transition:opacity 0.2s ease, border-color 0.2s ease; width:100%; }
     .vd-opt:hover { opacity:1; border-color:var(--zen-text); }
     .vd-opt.selected { opacity:1; border-color:var(--zen-text); font-weight:600; }
-    .vd-tag { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; border-bottom:1px solid var(--zen-muted); display:inline-block; padding-bottom:6px; margin-bottom:1.5rem; }
-    .vd-rh { font-size:calc(17px * var(--fcTextScale, 1)); font-weight:200; letter-spacing:0.04em; text-transform:uppercase; line-height:1.5; margin:0 0 1rem; }
-    .vd-rb { opacity:0.65; font-size:calc(14px * var(--fcTextScale, 1)); line-height:1.7; max-width:38rem; margin:0 auto 2rem; }
-    .vd-fl { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; display:block; margin-bottom:4px; }
-    .vd-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--zen-muted); color:var(--zen-text); font-family:inherit; font-size:calc(14px * var(--fcTextScale, 1)); padding:8px 2px; resize:vertical; }
+    .vd-tag { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--tagTracking); text-transform:uppercase; opacity:0.5; border-bottom:1px solid var(--zen-muted); display:inline-block; padding-bottom:6px; margin-bottom:1.5rem; font-family:var(--labelFont); }
+    .vd-rh { font-size:calc(var(--rhSize) * var(--fcTextScale, 1)); font-weight:var(--qlWeight); letter-spacing:var(--qlTracking); opacity:calc(var(--qlOpacity, 100) * 1%); text-transform:uppercase; line-height:1.5; margin:0 0 1rem; font-family:var(--quizFont); }
+    .vd-rb { opacity:calc(var(--rbOpacity, 65) * 1%); font-size:calc(var(--rbSize) * var(--fcTextScale, 1)); line-height:1.7; max-width:38rem; margin:0 auto 2rem; font-family:var(--fcBodyFont); }
+    .vd-fl { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--flTracking); text-transform:uppercase; opacity:0.5; display:block; margin-bottom:4px; font-family:var(--labelFont); }
+    .vd-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--zen-muted); color:var(--zen-text); font-family:var(--fcBodyFont); font-size:calc(var(--inputSize) * var(--fcTextScale, 1)); padding:8px 2px; resize:vertical; }
     .vd-input:focus { outline:none; border-color:var(--zen-text); }
-    .vd-soft-link { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; color:var(--zen-text); border-bottom:1px solid var(--zen-muted); padding-bottom:3px; text-decoration:none; }
+    .vd-soft-link { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--flTracking); text-transform:uppercase; opacity:0.5; color:var(--zen-text); border-bottom:1px solid var(--zen-muted); padding-bottom:3px; text-decoration:none; font-family:var(--labelFont); }
     .vd-soft-link:hover { opacity:1; }
-    .vd-restart { font-size:calc(11px * var(--fcTextScale, 1)); letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; background:none; border:none; cursor:pointer; font-family:inherit; color:var(--zen-text); }
+    .vd-restart { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--flTracking); text-transform:uppercase; opacity:0.4; background:none; border:none; cursor:pointer; font-family:var(--labelFont); color:var(--zen-text); }
     .vd-restart:hover { opacity:0.9; }
     /* Progress: the same dot motif as the background network and the process flow.
        Replaces six 1px hairlines at 0.3 opacity — present in the DOM, invisible on screen. */

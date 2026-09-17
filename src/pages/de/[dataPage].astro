@@ -5,7 +5,7 @@
 // page is not built at all — a direct visit just gets the normal not-found.
 import Layout from '../../layouts/Layout.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
-import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled } from '../../utils/siteHelpers.ts';
+import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm } from '../../utils/siteHelpers.ts';
 import doc from '../../content/dataPage/de.json';
 
 export async function getStaticPaths() {
@@ -15,6 +15,35 @@ export async function getStaticPaths() {
 
 const settingFiles = await Astro.glob('../../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
+const typo = (settings.typography || {}) as any;
+
+// Data page content — was entirely hardcoded CSS, now driven by Typography →
+// Label / Data page roles (blank there = these exact current values).
+const vd = {
+  eyebrowSize: typo.label?.size ? fontSizePx(typo.label.size) : '10px',
+  eyebrowWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
+  eyebrowTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.24em',
+  eyebrowOpacity: typo.label?.opacity ?? 100,
+  h1Size: typo.docTitle?.size ? fontSizePx(typo.docTitle.size) : '20px',
+  h1Weight: typo.docTitle?.weight ? fontWeightNumber(typo.docTitle.weight) : '600',
+  h1Tracking: typo.docTitle?.tracking ? trackingEm(typo.docTitle.tracking) : '0.01em',
+  h1Opacity: typo.docTitle?.opacity ?? 100,
+  ledeSize: typo.docLede?.size ? fontSizePx(typo.docLede.size) : '16px',
+  ledeWeight: typo.docLede?.weight ? fontWeightNumber(typo.docLede.weight) : '400',
+  ledeTracking: typo.docLede?.tracking ? trackingEm(typo.docLede.tracking) : 'normal',
+  ledeOpacity: typo.docLede?.opacity ?? 92,
+  h2Size: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
+  h2Weight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '600',
+  h2Tracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
+  h2Opacity: typo.label?.opacity ?? 100,
+  bodySize: typo.docBody?.size ? fontSizePx(typo.docBody.size) : '15px',
+  bodyWeight: typo.docBody?.weight ? fontWeightNumber(typo.docBody.weight) : '400',
+  bodyTracking: typo.docBody?.tracking ? trackingEm(typo.docBody.tracking) : 'normal',
+  bodyOpacity: typo.docBody?.opacity ?? 100,
+  noteSize: typo.docBody?.size ? fontSizePx(typo.docBody.size) : '12px',
+  docFont: typo.docBody?.font ? fontFamily(typo.docBody.font) : null,
+  labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
+};
 
 const currentTheme = settings.appearance.theme || 'light';
 const currentYear  = new Date().getFullYear();
@@ -66,8 +95,8 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
                   fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
           </svg>
         )}
-        <span class="text-[10px] uppercase tracking-[0.4em]"
-              style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+        <span class={`${fontSizeClass(settings.header.wordmarkFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.wordmarkFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.wordmarkTracking || typo.header?.tracking || 'tracking-[0.4em]'}`}
+              style={textStyle('var(--zen-text)', settings.header.wordmarkFont || typo.header?.font, settings.header.wordmarkOpacity ?? typo.header?.opacity ?? 100) + ` font-family: ${settings.header.wordmarkFont || typo.header?.font ? fontFamily(settings.header.wordmarkFont || typo.header?.font) : activeFontFamily};`}>
           {settings.hero.siteName || 'VortexDeep'}
         </span>
       </a>
@@ -75,8 +104,8 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
       <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
         {resolvedNavLinks.map((link: any) => (
           <a href={link.url}
-             class={`${settings.header.headerLinksFontSize || 'text-[10px]'} uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity`}
-             style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+             class={`vd-nav-link ${fontSizeClass(settings.header.headerLinksFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.headerLinksFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.headerLinksTracking || typo.header?.tracking || 'tracking-[0.3em]'}`}
+             style={`color: var(--zen-text); opacity: ${settings.header.headerLinksOpacity ?? typo.header?.opacity ?? 50}%; font-family: ${settings.header.headerLinksFont || typo.header?.font ? fontFamily(settings.header.headerLinksFont || typo.header?.font) : activeFontFamily};`}>
             {link.label}
           </a>
         ))}
@@ -126,13 +155,15 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
     {settings.footer.socialLinks?.length > 0 && (
       <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
     )}
-    <p class={`${settings.footer.footerTextFontSize || 'text-[9px]'} uppercase tracking-[0.25em] opacity-30`}
-       style={`color: var(--zen-text); font-family: ${activeFontFamily};`}>
+    <p class={`${fontSizeClass(settings.footer.footerTextFontSize || typo.footer?.size || 'text-[9px]')} ${settings.footer.footerTextFontWeight || typo.footer?.weight || ''} ${typo.footer?.uppercase !== false ? 'uppercase' : ''} ${settings.footer.footerTextTracking || typo.footer?.tracking || 'tracking-[0.25em]'}`}
+       style={`color: var(--zen-text); opacity: ${settings.footer.footerTextOpacity ?? typo.footer?.opacity ?? 30}%; font-family: ${settings.footer.footerTextFont || typo.footer?.font ? fontFamily(settings.footer.footerTextFont || typo.footer?.font) : activeFontFamily};`}>
       {settings.footer.footerText ? settings.footer.footerText : `© ${currentYear} ${settings.hero.siteName || 'VortexDeep'}`}
     </p>
   </footer>
 
   <style is:global>
+    .vd-nav-link { transition: opacity 0.2s ease; }
+    .vd-nav-link:hover { opacity: 1 !important; }
     .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
     .vd-fixed-header-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 4vw, 2rem); }
     .vd-fixed-footer { position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: env(safe-area-inset-bottom, 0px); z-index: 50; display: flex; align-items: center; justify-content: center; gap: 1.2rem; }
@@ -141,21 +172,29 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
     .vd-icon.round { border-radius: 50%; }
   </style>
 
-  <style>
-    .vd-doc { max-width: 640px; width: 100%; margin: 0 auto; line-height: 1.75; }
-    .vd-eyebrow { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; }
-    .vd-h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.01em; text-align: center; margin: 0 0 16px; line-height: 1.4; }
-    .vd-lede { font-size: 16px; text-align: center; opacity: 0.92; margin: 0 auto 52px; max-width: 540px; }
+  <style define:vars={{
+    eyebrowSize: vd.eyebrowSize, eyebrowWeight: vd.eyebrowWeight, eyebrowTracking: vd.eyebrowTracking, eyebrowOpacity: vd.eyebrowOpacity,
+    h1Size: vd.h1Size, h1Weight: vd.h1Weight, h1Tracking: vd.h1Tracking, h1Opacity: vd.h1Opacity,
+    ledeSize: vd.ledeSize, ledeWeight: vd.ledeWeight, ledeTracking: vd.ledeTracking, ledeOpacity: vd.ledeOpacity,
+    h2Size: vd.h2Size, h2Weight: vd.h2Weight, h2Tracking: vd.h2Tracking, h2Opacity: vd.h2Opacity,
+    bodySize: vd.bodySize, bodyWeight: vd.bodyWeight, bodyTracking: vd.bodyTracking, bodyOpacity: vd.bodyOpacity,
+    noteSize: vd.noteSize,
+    docFont: vd.docFont || activeFontFamily, labelFont: vd.labelFont || activeFontFamily,
+  }}>
+    .vd-doc { max-width: 640px; width: 100%; margin: 0 auto; line-height: 1.75; font-family: var(--docFont); }
+    .vd-eyebrow { font-size: var(--eyebrowSize); font-weight: var(--eyebrowWeight); letter-spacing: var(--eyebrowTracking); opacity: calc(var(--eyebrowOpacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; font-family: var(--labelFont); }
+    .vd-h1 { font-size: var(--h1Size); font-weight: var(--h1Weight); letter-spacing: var(--h1Tracking); opacity: calc(var(--h1Opacity, 100) * 1%); text-align: center; margin: 0 0 16px; line-height: 1.4; }
+    .vd-lede { font-size: var(--ledeSize); font-weight: var(--ledeWeight); letter-spacing: var(--ledeTracking); text-align: center; opacity: calc(var(--ledeOpacity, 92) * 1%); margin: 0 auto 52px; max-width: 540px; }
     .vd-doc section { border-top: 1px solid color-mix(in srgb, var(--zen-muted) 22%, transparent); padding-top: 24px; margin: 0 0 36px; }
-    .vd-h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; }
-    .vd-doc p { font-size: 15px; margin: 0 0 12px; }
+    .vd-h2 { font-size: var(--h2Size); font-weight: var(--h2Weight); letter-spacing: var(--h2Tracking); opacity: calc(var(--h2Opacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; font-family: var(--labelFont); }
+    .vd-doc p { font-size: var(--bodySize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); margin: 0 0 12px; }
     .vd-muted { color: var(--zen-muted); }
     .vd-list { list-style: none; padding: 0; margin: 8px 0 0; }
-    .vd-list li { font-size: 15px; padding: 7px 0 7px 20px; position: relative; }
+    .vd-list li { font-size: var(--bodySize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); padding: 7px 0 7px 20px; position: relative; }
     .vd-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--zen-accent, var(--zen-muted)); }
-    .vd-note { font-size: 12px; color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+    .vd-note { font-size: var(--noteSize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
     .vd-contact { text-align: center; margin-top: 52px; }
-    .vd-soft-link { color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; }
+    .vd-soft-link { font-size: var(--eyebrowSize); letter-spacing: var(--eyebrowTracking); color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; font-family: var(--labelFont); }
     .vd-soft-link:hover { opacity: 0.8; }
   </style>
 </Layout>

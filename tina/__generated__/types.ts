@@ -283,14 +283,19 @@ export type PageBlocksSection = {
   titleFont?: Maybe<Scalars['String']['output']>;
   titleFontSize?: Maybe<Scalars['String']['output']>;
   titleFontWeight?: Maybe<Scalars['String']['output']>;
+  titleOpacity?: Maybe<Scalars['Float']['output']>;
+  titleTracking?: Maybe<Scalars['String']['output']>;
   subTitle?: Maybe<Scalars['String']['output']>;
   subTitleFont?: Maybe<Scalars['String']['output']>;
   subTitleFontSize?: Maybe<Scalars['String']['output']>;
   subTitleFontWeight?: Maybe<Scalars['String']['output']>;
+  subTitleOpacity?: Maybe<Scalars['Float']['output']>;
+  subTitleTracking?: Maybe<Scalars['String']['output']>;
   content?: Maybe<Scalars['String']['output']>;
   bodyFont?: Maybe<Scalars['String']['output']>;
   fontSize?: Maybe<Scalars['String']['output']>;
   fontWeight?: Maybe<Scalars['String']['output']>;
+  bodyOpacity?: Maybe<Scalars['Float']['output']>;
   showTitle?: Maybe<Scalars['Boolean']['output']>;
   showSubtitle?: Maybe<Scalars['Boolean']['output']>;
   showBody?: Maybe<Scalars['Boolean']['output']>;
@@ -307,9 +312,13 @@ export type PageBlocksSection = {
   cardTitleFont?: Maybe<Scalars['String']['output']>;
   cardTitleFontSize?: Maybe<Scalars['String']['output']>;
   cardTitleFontWeight?: Maybe<Scalars['String']['output']>;
+  cardTitleOpacity?: Maybe<Scalars['Float']['output']>;
+  cardTitleTracking?: Maybe<Scalars['String']['output']>;
   cardLineFont?: Maybe<Scalars['String']['output']>;
   cardLineFontSize?: Maybe<Scalars['String']['output']>;
   cardLineFontWeight?: Maybe<Scalars['String']['output']>;
+  cardLineOpacity?: Maybe<Scalars['Float']['output']>;
+  cardLineTracking?: Maybe<Scalars['String']['output']>;
   meta?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
@@ -418,6 +427,16 @@ export type StringFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
 export type BooleanFilter = {
   eq?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -447,14 +466,19 @@ export type PageBlocksSectionFilter = {
   titleFont?: InputMaybe<StringFilter>;
   titleFontSize?: InputMaybe<StringFilter>;
   titleFontWeight?: InputMaybe<StringFilter>;
+  titleOpacity?: InputMaybe<NumberFilter>;
+  titleTracking?: InputMaybe<StringFilter>;
   subTitle?: InputMaybe<StringFilter>;
   subTitleFont?: InputMaybe<StringFilter>;
   subTitleFontSize?: InputMaybe<StringFilter>;
   subTitleFontWeight?: InputMaybe<StringFilter>;
+  subTitleOpacity?: InputMaybe<NumberFilter>;
+  subTitleTracking?: InputMaybe<StringFilter>;
   content?: InputMaybe<StringFilter>;
   bodyFont?: InputMaybe<StringFilter>;
   fontSize?: InputMaybe<StringFilter>;
   fontWeight?: InputMaybe<StringFilter>;
+  bodyOpacity?: InputMaybe<NumberFilter>;
   showTitle?: InputMaybe<BooleanFilter>;
   showSubtitle?: InputMaybe<BooleanFilter>;
   showBody?: InputMaybe<BooleanFilter>;
@@ -471,9 +495,13 @@ export type PageBlocksSectionFilter = {
   cardTitleFont?: InputMaybe<StringFilter>;
   cardTitleFontSize?: InputMaybe<StringFilter>;
   cardTitleFontWeight?: InputMaybe<StringFilter>;
+  cardTitleOpacity?: InputMaybe<NumberFilter>;
+  cardTitleTracking?: InputMaybe<StringFilter>;
   cardLineFont?: InputMaybe<StringFilter>;
   cardLineFontSize?: InputMaybe<StringFilter>;
   cardLineFontWeight?: InputMaybe<StringFilter>;
+  cardLineOpacity?: InputMaybe<NumberFilter>;
+  cardLineTracking?: InputMaybe<StringFilter>;
   meta?: InputMaybe<StringFilter>;
   email?: InputMaybe<StringFilter>;
   phone?: InputMaybe<StringFilter>;
@@ -489,16 +517,6 @@ export type PageBlocksProcessFlowStepsFilter = {
   font?: InputMaybe<StringFilter>;
   fontSize?: InputMaybe<StringFilter>;
   fontWeight?: InputMaybe<StringFilter>;
-};
-
-export type NumberFilter = {
-  lt?: InputMaybe<Scalars['Float']['input']>;
-  lte?: InputMaybe<Scalars['Float']['input']>;
-  gte?: InputMaybe<Scalars['Float']['input']>;
-  gt?: InputMaybe<Scalars['Float']['input']>;
-  eq?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
 export type PageBlocksProcessFlowFilter = {
@@ -623,14 +641,19 @@ export type Page_DeBlocksSection = {
   titleFont?: Maybe<Scalars['String']['output']>;
   titleFontSize?: Maybe<Scalars['String']['output']>;
   titleFontWeight?: Maybe<Scalars['String']['output']>;
+  titleOpacity?: Maybe<Scalars['Float']['output']>;
+  titleTracking?: Maybe<Scalars['String']['output']>;
   subTitle?: Maybe<Scalars['String']['output']>;
   subTitleFont?: Maybe<Scalars['String']['output']>;
   subTitleFontSize?: Maybe<Scalars['String']['output']>;
   subTitleFontWeight?: Maybe<Scalars['String']['output']>;
+  subTitleOpacity?: Maybe<Scalars['Float']['output']>;
+  subTitleTracking?: Maybe<Scalars['String']['output']>;
   content?: Maybe<Scalars['String']['output']>;
   bodyFont?: Maybe<Scalars['String']['output']>;
   fontSize?: Maybe<Scalars['String']['output']>;
   fontWeight?: Maybe<Scalars['String']['output']>;
+  bodyOpacity?: Maybe<Scalars['Float']['output']>;
   showTitle?: Maybe<Scalars['Boolean']['output']>;
   showSubtitle?: Maybe<Scalars['Boolean']['output']>;
   showBody?: Maybe<Scalars['Boolean']['output']>;
@@ -647,9 +670,13 @@ export type Page_DeBlocksSection = {
   cardTitleFont?: Maybe<Scalars['String']['output']>;
   cardTitleFontSize?: Maybe<Scalars['String']['output']>;
   cardTitleFontWeight?: Maybe<Scalars['String']['output']>;
+  cardTitleOpacity?: Maybe<Scalars['Float']['output']>;
+  cardTitleTracking?: Maybe<Scalars['String']['output']>;
   cardLineFont?: Maybe<Scalars['String']['output']>;
   cardLineFontSize?: Maybe<Scalars['String']['output']>;
   cardLineFontWeight?: Maybe<Scalars['String']['output']>;
+  cardLineOpacity?: Maybe<Scalars['Float']['output']>;
+  cardLineTracking?: Maybe<Scalars['String']['output']>;
   meta?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
@@ -775,14 +802,19 @@ export type Page_DeBlocksSectionFilter = {
   titleFont?: InputMaybe<StringFilter>;
   titleFontSize?: InputMaybe<StringFilter>;
   titleFontWeight?: InputMaybe<StringFilter>;
+  titleOpacity?: InputMaybe<NumberFilter>;
+  titleTracking?: InputMaybe<StringFilter>;
   subTitle?: InputMaybe<StringFilter>;
   subTitleFont?: InputMaybe<StringFilter>;
   subTitleFontSize?: InputMaybe<StringFilter>;
   subTitleFontWeight?: InputMaybe<StringFilter>;
+  subTitleOpacity?: InputMaybe<NumberFilter>;
+  subTitleTracking?: InputMaybe<StringFilter>;
   content?: InputMaybe<StringFilter>;
   bodyFont?: InputMaybe<StringFilter>;
   fontSize?: InputMaybe<StringFilter>;
   fontWeight?: InputMaybe<StringFilter>;
+  bodyOpacity?: InputMaybe<NumberFilter>;
   showTitle?: InputMaybe<BooleanFilter>;
   showSubtitle?: InputMaybe<BooleanFilter>;
   showBody?: InputMaybe<BooleanFilter>;
@@ -799,9 +831,13 @@ export type Page_DeBlocksSectionFilter = {
   cardTitleFont?: InputMaybe<StringFilter>;
   cardTitleFontSize?: InputMaybe<StringFilter>;
   cardTitleFontWeight?: InputMaybe<StringFilter>;
+  cardTitleOpacity?: InputMaybe<NumberFilter>;
+  cardTitleTracking?: InputMaybe<StringFilter>;
   cardLineFont?: InputMaybe<StringFilter>;
   cardLineFontSize?: InputMaybe<StringFilter>;
   cardLineFontWeight?: InputMaybe<StringFilter>;
+  cardLineOpacity?: InputMaybe<NumberFilter>;
+  cardLineTracking?: InputMaybe<StringFilter>;
   meta?: InputMaybe<StringFilter>;
   email?: InputMaybe<StringFilter>;
   phone?: InputMaybe<StringFilter>;
@@ -931,11 +967,14 @@ export type SettingsHero = {
   siteNameFont?: Maybe<Scalars['String']['output']>;
   siteNameFontSize?: Maybe<Scalars['String']['output']>;
   siteNameFontWeight?: Maybe<Scalars['String']['output']>;
+  siteNameOpacity?: Maybe<Scalars['Float']['output']>;
+  siteNameTracking?: Maybe<Scalars['String']['output']>;
   subSiteName?: Maybe<Scalars['String']['output']>;
   subSiteName_de?: Maybe<Scalars['String']['output']>;
   subSiteNameFont?: Maybe<Scalars['String']['output']>;
   subSiteNameFontSize?: Maybe<Scalars['String']['output']>;
   subSiteNameFontWeight?: Maybe<Scalars['String']['output']>;
+  subSiteNameOpacity?: Maybe<Scalars['Float']['output']>;
   subSiteNameTracking?: Maybe<Scalars['String']['output']>;
   showSubSiteNameOnly?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -950,10 +989,16 @@ export type SettingsNoticeBanner = {
   noticeBannerStyle?: Maybe<Scalars['String']['output']>;
   noticeBannerFlowSeconds?: Maybe<Scalars['String']['output']>;
   noticeBannerDot?: Maybe<Scalars['String']['output']>;
+  noticeBannerFont?: Maybe<Scalars['String']['output']>;
   noticeBannerTextFontSize?: Maybe<Scalars['String']['output']>;
   noticeBannerTextFontWeight?: Maybe<Scalars['String']['output']>;
+  noticeBannerOpacity?: Maybe<Scalars['Float']['output']>;
+  noticeBannerTracking?: Maybe<Scalars['String']['output']>;
+  noticeBannerBodyFont?: Maybe<Scalars['String']['output']>;
   noticeBannerBodyFontSize?: Maybe<Scalars['String']['output']>;
   noticeBannerBodyFontWeight?: Maybe<Scalars['String']['output']>;
+  noticeBannerBodyOpacity?: Maybe<Scalars['Float']['output']>;
+  noticeBannerBodyTracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsHeaderNavLinks = {
@@ -966,7 +1011,16 @@ export type SettingsHeaderNavLinks = {
 export type SettingsHeader = {
   __typename?: 'SettingsHeader';
   headerLayout?: Maybe<Scalars['String']['output']>;
+  wordmarkFont?: Maybe<Scalars['String']['output']>;
+  wordmarkFontSize?: Maybe<Scalars['String']['output']>;
+  wordmarkFontWeight?: Maybe<Scalars['String']['output']>;
+  wordmarkOpacity?: Maybe<Scalars['Float']['output']>;
+  wordmarkTracking?: Maybe<Scalars['String']['output']>;
+  headerLinksFont?: Maybe<Scalars['String']['output']>;
   headerLinksFontSize?: Maybe<Scalars['String']['output']>;
+  headerLinksFontWeight?: Maybe<Scalars['String']['output']>;
+  headerLinksOpacity?: Maybe<Scalars['Float']['output']>;
+  headerLinksTracking?: Maybe<Scalars['String']['output']>;
   navLinks?: Maybe<Array<Maybe<SettingsHeaderNavLinks>>>;
 };
 
@@ -980,7 +1034,11 @@ export type SettingsFooter = {
   __typename?: 'SettingsFooter';
   footerText?: Maybe<Scalars['String']['output']>;
   showFooterLine?: Maybe<Scalars['Boolean']['output']>;
+  footerTextFont?: Maybe<Scalars['String']['output']>;
   footerTextFontSize?: Maybe<Scalars['String']['output']>;
+  footerTextFontWeight?: Maybe<Scalars['String']['output']>;
+  footerTextOpacity?: Maybe<Scalars['Float']['output']>;
+  footerTextTracking?: Maybe<Scalars['String']['output']>;
   socialLinks?: Maybe<Array<Maybe<SettingsFooterSocialLinks>>>;
 };
 
@@ -990,6 +1048,8 @@ export type SettingsTypographyTitle = {
   size?: Maybe<Scalars['String']['output']>;
   weight?: Maybe<Scalars['String']['output']>;
   uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsTypographySubTitle = {
@@ -998,6 +1058,8 @@ export type SettingsTypographySubTitle = {
   size?: Maybe<Scalars['String']['output']>;
   weight?: Maybe<Scalars['String']['output']>;
   uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsTypographyBody = {
@@ -1006,6 +1068,8 @@ export type SettingsTypographyBody = {
   size?: Maybe<Scalars['String']['output']>;
   weight?: Maybe<Scalars['String']['output']>;
   uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsTypographyCardTitle = {
@@ -1014,6 +1078,8 @@ export type SettingsTypographyCardTitle = {
   size?: Maybe<Scalars['String']['output']>;
   weight?: Maybe<Scalars['String']['output']>;
   uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsTypographyCardLine = {
@@ -1022,6 +1088,106 @@ export type SettingsTypographyCardLine = {
   size?: Maybe<Scalars['String']['output']>;
   weight?: Maybe<Scalars['String']['output']>;
   uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyHeader = {
+  __typename?: 'SettingsTypographyHeader';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyFooter = {
+  __typename?: 'SettingsTypographyFooter';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyNoticeBannerText = {
+  __typename?: 'SettingsTypographyNoticeBannerText';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyNoticeBannerBody = {
+  __typename?: 'SettingsTypographyNoticeBannerBody';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyLabel = {
+  __typename?: 'SettingsTypographyLabel';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyDocTitle = {
+  __typename?: 'SettingsTypographyDocTitle';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyDocLede = {
+  __typename?: 'SettingsTypographyDocLede';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyDocBody = {
+  __typename?: 'SettingsTypographyDocBody';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyQuizTitle = {
+  __typename?: 'SettingsTypographyQuizTitle';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsTypographyQuizBody = {
+  __typename?: 'SettingsTypographyQuizBody';
+  font?: Maybe<Scalars['String']['output']>;
+  size?: Maybe<Scalars['String']['output']>;
+  weight?: Maybe<Scalars['String']['output']>;
+  uppercase?: Maybe<Scalars['Boolean']['output']>;
+  opacity?: Maybe<Scalars['Float']['output']>;
+  tracking?: Maybe<Scalars['String']['output']>;
 };
 
 export type SettingsTypography = {
@@ -1031,6 +1197,16 @@ export type SettingsTypography = {
   body?: Maybe<SettingsTypographyBody>;
   cardTitle?: Maybe<SettingsTypographyCardTitle>;
   cardLine?: Maybe<SettingsTypographyCardLine>;
+  header?: Maybe<SettingsTypographyHeader>;
+  footer?: Maybe<SettingsTypographyFooter>;
+  noticeBannerText?: Maybe<SettingsTypographyNoticeBannerText>;
+  noticeBannerBody?: Maybe<SettingsTypographyNoticeBannerBody>;
+  label?: Maybe<SettingsTypographyLabel>;
+  docTitle?: Maybe<SettingsTypographyDocTitle>;
+  docLede?: Maybe<SettingsTypographyDocLede>;
+  docBody?: Maybe<SettingsTypographyDocBody>;
+  quizTitle?: Maybe<SettingsTypographyQuizTitle>;
+  quizBody?: Maybe<SettingsTypographyQuizBody>;
 };
 
 export type SettingsAppearance = {
@@ -1143,11 +1319,14 @@ export type SettingsHeroFilter = {
   siteNameFont?: InputMaybe<StringFilter>;
   siteNameFontSize?: InputMaybe<StringFilter>;
   siteNameFontWeight?: InputMaybe<StringFilter>;
+  siteNameOpacity?: InputMaybe<NumberFilter>;
+  siteNameTracking?: InputMaybe<StringFilter>;
   subSiteName?: InputMaybe<StringFilter>;
   subSiteName_de?: InputMaybe<StringFilter>;
   subSiteNameFont?: InputMaybe<StringFilter>;
   subSiteNameFontSize?: InputMaybe<StringFilter>;
   subSiteNameFontWeight?: InputMaybe<StringFilter>;
+  subSiteNameOpacity?: InputMaybe<NumberFilter>;
   subSiteNameTracking?: InputMaybe<StringFilter>;
   showSubSiteNameOnly?: InputMaybe<BooleanFilter>;
 };
@@ -1161,10 +1340,16 @@ export type SettingsNoticeBannerFilter = {
   noticeBannerStyle?: InputMaybe<StringFilter>;
   noticeBannerFlowSeconds?: InputMaybe<StringFilter>;
   noticeBannerDot?: InputMaybe<StringFilter>;
+  noticeBannerFont?: InputMaybe<StringFilter>;
   noticeBannerTextFontSize?: InputMaybe<StringFilter>;
   noticeBannerTextFontWeight?: InputMaybe<StringFilter>;
+  noticeBannerOpacity?: InputMaybe<NumberFilter>;
+  noticeBannerTracking?: InputMaybe<StringFilter>;
+  noticeBannerBodyFont?: InputMaybe<StringFilter>;
   noticeBannerBodyFontSize?: InputMaybe<StringFilter>;
   noticeBannerBodyFontWeight?: InputMaybe<StringFilter>;
+  noticeBannerBodyOpacity?: InputMaybe<NumberFilter>;
+  noticeBannerBodyTracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsHeaderNavLinksFilter = {
@@ -1175,7 +1360,16 @@ export type SettingsHeaderNavLinksFilter = {
 
 export type SettingsHeaderFilter = {
   headerLayout?: InputMaybe<StringFilter>;
+  wordmarkFont?: InputMaybe<StringFilter>;
+  wordmarkFontSize?: InputMaybe<StringFilter>;
+  wordmarkFontWeight?: InputMaybe<StringFilter>;
+  wordmarkOpacity?: InputMaybe<NumberFilter>;
+  wordmarkTracking?: InputMaybe<StringFilter>;
+  headerLinksFont?: InputMaybe<StringFilter>;
   headerLinksFontSize?: InputMaybe<StringFilter>;
+  headerLinksFontWeight?: InputMaybe<StringFilter>;
+  headerLinksOpacity?: InputMaybe<NumberFilter>;
+  headerLinksTracking?: InputMaybe<StringFilter>;
   navLinks?: InputMaybe<SettingsHeaderNavLinksFilter>;
 };
 
@@ -1187,7 +1381,11 @@ export type SettingsFooterSocialLinksFilter = {
 export type SettingsFooterFilter = {
   footerText?: InputMaybe<StringFilter>;
   showFooterLine?: InputMaybe<BooleanFilter>;
+  footerTextFont?: InputMaybe<StringFilter>;
   footerTextFontSize?: InputMaybe<StringFilter>;
+  footerTextFontWeight?: InputMaybe<StringFilter>;
+  footerTextOpacity?: InputMaybe<NumberFilter>;
+  footerTextTracking?: InputMaybe<StringFilter>;
   socialLinks?: InputMaybe<SettingsFooterSocialLinksFilter>;
 };
 
@@ -1196,6 +1394,8 @@ export type SettingsTypographyTitleFilter = {
   size?: InputMaybe<StringFilter>;
   weight?: InputMaybe<StringFilter>;
   uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsTypographySubTitleFilter = {
@@ -1203,6 +1403,8 @@ export type SettingsTypographySubTitleFilter = {
   size?: InputMaybe<StringFilter>;
   weight?: InputMaybe<StringFilter>;
   uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsTypographyBodyFilter = {
@@ -1210,6 +1412,8 @@ export type SettingsTypographyBodyFilter = {
   size?: InputMaybe<StringFilter>;
   weight?: InputMaybe<StringFilter>;
   uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsTypographyCardTitleFilter = {
@@ -1217,6 +1421,8 @@ export type SettingsTypographyCardTitleFilter = {
   size?: InputMaybe<StringFilter>;
   weight?: InputMaybe<StringFilter>;
   uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsTypographyCardLineFilter = {
@@ -1224,6 +1430,96 @@ export type SettingsTypographyCardLineFilter = {
   size?: InputMaybe<StringFilter>;
   weight?: InputMaybe<StringFilter>;
   uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyHeaderFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyFooterFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyNoticeBannerTextFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyNoticeBannerBodyFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyLabelFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyDocTitleFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyDocLedeFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyDocBodyFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyQuizTitleFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
+};
+
+export type SettingsTypographyQuizBodyFilter = {
+  font?: InputMaybe<StringFilter>;
+  size?: InputMaybe<StringFilter>;
+  weight?: InputMaybe<StringFilter>;
+  uppercase?: InputMaybe<BooleanFilter>;
+  opacity?: InputMaybe<NumberFilter>;
+  tracking?: InputMaybe<StringFilter>;
 };
 
 export type SettingsTypographyFilter = {
@@ -1232,6 +1528,16 @@ export type SettingsTypographyFilter = {
   body?: InputMaybe<SettingsTypographyBodyFilter>;
   cardTitle?: InputMaybe<SettingsTypographyCardTitleFilter>;
   cardLine?: InputMaybe<SettingsTypographyCardLineFilter>;
+  header?: InputMaybe<SettingsTypographyHeaderFilter>;
+  footer?: InputMaybe<SettingsTypographyFooterFilter>;
+  noticeBannerText?: InputMaybe<SettingsTypographyNoticeBannerTextFilter>;
+  noticeBannerBody?: InputMaybe<SettingsTypographyNoticeBannerBodyFilter>;
+  label?: InputMaybe<SettingsTypographyLabelFilter>;
+  docTitle?: InputMaybe<SettingsTypographyDocTitleFilter>;
+  docLede?: InputMaybe<SettingsTypographyDocLedeFilter>;
+  docBody?: InputMaybe<SettingsTypographyDocBodyFilter>;
+  quizTitle?: InputMaybe<SettingsTypographyQuizTitleFilter>;
+  quizBody?: InputMaybe<SettingsTypographyQuizBodyFilter>;
 };
 
 export type SettingsAppearanceFilter = {
@@ -2210,14 +2516,19 @@ export type PageBlocksSectionMutation = {
   titleFont?: InputMaybe<Scalars['String']['input']>;
   titleFontSize?: InputMaybe<Scalars['String']['input']>;
   titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  titleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  titleTracking?: InputMaybe<Scalars['String']['input']>;
   subTitle?: InputMaybe<Scalars['String']['input']>;
   subTitleFont?: InputMaybe<Scalars['String']['input']>;
   subTitleFontSize?: InputMaybe<Scalars['String']['input']>;
   subTitleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  subTitleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  subTitleTracking?: InputMaybe<Scalars['String']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
   bodyFont?: InputMaybe<Scalars['String']['input']>;
   fontSize?: InputMaybe<Scalars['String']['input']>;
   fontWeight?: InputMaybe<Scalars['String']['input']>;
+  bodyOpacity?: InputMaybe<Scalars['Float']['input']>;
   showTitle?: InputMaybe<Scalars['Boolean']['input']>;
   showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
   showBody?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2234,9 +2545,13 @@ export type PageBlocksSectionMutation = {
   cardTitleFont?: InputMaybe<Scalars['String']['input']>;
   cardTitleFontSize?: InputMaybe<Scalars['String']['input']>;
   cardTitleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  cardTitleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  cardTitleTracking?: InputMaybe<Scalars['String']['input']>;
   cardLineFont?: InputMaybe<Scalars['String']['input']>;
   cardLineFontSize?: InputMaybe<Scalars['String']['input']>;
   cardLineFontWeight?: InputMaybe<Scalars['String']['input']>;
+  cardLineOpacity?: InputMaybe<Scalars['Float']['input']>;
+  cardLineTracking?: InputMaybe<Scalars['String']['input']>;
   meta?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
@@ -2359,14 +2674,19 @@ export type Page_DeBlocksSectionMutation = {
   titleFont?: InputMaybe<Scalars['String']['input']>;
   titleFontSize?: InputMaybe<Scalars['String']['input']>;
   titleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  titleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  titleTracking?: InputMaybe<Scalars['String']['input']>;
   subTitle?: InputMaybe<Scalars['String']['input']>;
   subTitleFont?: InputMaybe<Scalars['String']['input']>;
   subTitleFontSize?: InputMaybe<Scalars['String']['input']>;
   subTitleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  subTitleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  subTitleTracking?: InputMaybe<Scalars['String']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
   bodyFont?: InputMaybe<Scalars['String']['input']>;
   fontSize?: InputMaybe<Scalars['String']['input']>;
   fontWeight?: InputMaybe<Scalars['String']['input']>;
+  bodyOpacity?: InputMaybe<Scalars['Float']['input']>;
   showTitle?: InputMaybe<Scalars['Boolean']['input']>;
   showSubtitle?: InputMaybe<Scalars['Boolean']['input']>;
   showBody?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2383,9 +2703,13 @@ export type Page_DeBlocksSectionMutation = {
   cardTitleFont?: InputMaybe<Scalars['String']['input']>;
   cardTitleFontSize?: InputMaybe<Scalars['String']['input']>;
   cardTitleFontWeight?: InputMaybe<Scalars['String']['input']>;
+  cardTitleOpacity?: InputMaybe<Scalars['Float']['input']>;
+  cardTitleTracking?: InputMaybe<Scalars['String']['input']>;
   cardLineFont?: InputMaybe<Scalars['String']['input']>;
   cardLineFontSize?: InputMaybe<Scalars['String']['input']>;
   cardLineFontWeight?: InputMaybe<Scalars['String']['input']>;
+  cardLineOpacity?: InputMaybe<Scalars['Float']['input']>;
+  cardLineTracking?: InputMaybe<Scalars['String']['input']>;
   meta?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
@@ -2500,11 +2824,14 @@ export type SettingsHeroMutation = {
   siteNameFont?: InputMaybe<Scalars['String']['input']>;
   siteNameFontSize?: InputMaybe<Scalars['String']['input']>;
   siteNameFontWeight?: InputMaybe<Scalars['String']['input']>;
+  siteNameOpacity?: InputMaybe<Scalars['Float']['input']>;
+  siteNameTracking?: InputMaybe<Scalars['String']['input']>;
   subSiteName?: InputMaybe<Scalars['String']['input']>;
   subSiteName_de?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFont?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFontSize?: InputMaybe<Scalars['String']['input']>;
   subSiteNameFontWeight?: InputMaybe<Scalars['String']['input']>;
+  subSiteNameOpacity?: InputMaybe<Scalars['Float']['input']>;
   subSiteNameTracking?: InputMaybe<Scalars['String']['input']>;
   showSubSiteNameOnly?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -2518,10 +2845,16 @@ export type SettingsNoticeBannerMutation = {
   noticeBannerStyle?: InputMaybe<Scalars['String']['input']>;
   noticeBannerFlowSeconds?: InputMaybe<Scalars['String']['input']>;
   noticeBannerDot?: InputMaybe<Scalars['String']['input']>;
+  noticeBannerFont?: InputMaybe<Scalars['String']['input']>;
   noticeBannerTextFontSize?: InputMaybe<Scalars['String']['input']>;
   noticeBannerTextFontWeight?: InputMaybe<Scalars['String']['input']>;
+  noticeBannerOpacity?: InputMaybe<Scalars['Float']['input']>;
+  noticeBannerTracking?: InputMaybe<Scalars['String']['input']>;
+  noticeBannerBodyFont?: InputMaybe<Scalars['String']['input']>;
   noticeBannerBodyFontSize?: InputMaybe<Scalars['String']['input']>;
   noticeBannerBodyFontWeight?: InputMaybe<Scalars['String']['input']>;
+  noticeBannerBodyOpacity?: InputMaybe<Scalars['Float']['input']>;
+  noticeBannerBodyTracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsHeaderNavLinksMutation = {
@@ -2532,7 +2865,16 @@ export type SettingsHeaderNavLinksMutation = {
 
 export type SettingsHeaderMutation = {
   headerLayout?: InputMaybe<Scalars['String']['input']>;
+  wordmarkFont?: InputMaybe<Scalars['String']['input']>;
+  wordmarkFontSize?: InputMaybe<Scalars['String']['input']>;
+  wordmarkFontWeight?: InputMaybe<Scalars['String']['input']>;
+  wordmarkOpacity?: InputMaybe<Scalars['Float']['input']>;
+  wordmarkTracking?: InputMaybe<Scalars['String']['input']>;
+  headerLinksFont?: InputMaybe<Scalars['String']['input']>;
   headerLinksFontSize?: InputMaybe<Scalars['String']['input']>;
+  headerLinksFontWeight?: InputMaybe<Scalars['String']['input']>;
+  headerLinksOpacity?: InputMaybe<Scalars['Float']['input']>;
+  headerLinksTracking?: InputMaybe<Scalars['String']['input']>;
   navLinks?: InputMaybe<Array<InputMaybe<SettingsHeaderNavLinksMutation>>>;
 };
 
@@ -2544,7 +2886,11 @@ export type SettingsFooterSocialLinksMutation = {
 export type SettingsFooterMutation = {
   footerText?: InputMaybe<Scalars['String']['input']>;
   showFooterLine?: InputMaybe<Scalars['Boolean']['input']>;
+  footerTextFont?: InputMaybe<Scalars['String']['input']>;
   footerTextFontSize?: InputMaybe<Scalars['String']['input']>;
+  footerTextFontWeight?: InputMaybe<Scalars['String']['input']>;
+  footerTextOpacity?: InputMaybe<Scalars['Float']['input']>;
+  footerTextTracking?: InputMaybe<Scalars['String']['input']>;
   socialLinks?: InputMaybe<Array<InputMaybe<SettingsFooterSocialLinksMutation>>>;
 };
 
@@ -2553,6 +2899,8 @@ export type SettingsTypographyTitleMutation = {
   size?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['String']['input']>;
   uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsTypographySubTitleMutation = {
@@ -2560,6 +2908,8 @@ export type SettingsTypographySubTitleMutation = {
   size?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['String']['input']>;
   uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsTypographyBodyMutation = {
@@ -2567,6 +2917,8 @@ export type SettingsTypographyBodyMutation = {
   size?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['String']['input']>;
   uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsTypographyCardTitleMutation = {
@@ -2574,6 +2926,8 @@ export type SettingsTypographyCardTitleMutation = {
   size?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['String']['input']>;
   uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsTypographyCardLineMutation = {
@@ -2581,6 +2935,96 @@ export type SettingsTypographyCardLineMutation = {
   size?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['String']['input']>;
   uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyHeaderMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyFooterMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyNoticeBannerTextMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyNoticeBannerBodyMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyLabelMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyDocTitleMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyDocLedeMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyDocBodyMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyQuizTitleMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsTypographyQuizBodyMutation = {
+  font?: InputMaybe<Scalars['String']['input']>;
+  size?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['String']['input']>;
+  uppercase?: InputMaybe<Scalars['Boolean']['input']>;
+  opacity?: InputMaybe<Scalars['Float']['input']>;
+  tracking?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SettingsTypographyMutation = {
@@ -2589,6 +3033,16 @@ export type SettingsTypographyMutation = {
   body?: InputMaybe<SettingsTypographyBodyMutation>;
   cardTitle?: InputMaybe<SettingsTypographyCardTitleMutation>;
   cardLine?: InputMaybe<SettingsTypographyCardLineMutation>;
+  header?: InputMaybe<SettingsTypographyHeaderMutation>;
+  footer?: InputMaybe<SettingsTypographyFooterMutation>;
+  noticeBannerText?: InputMaybe<SettingsTypographyNoticeBannerTextMutation>;
+  noticeBannerBody?: InputMaybe<SettingsTypographyNoticeBannerBodyMutation>;
+  label?: InputMaybe<SettingsTypographyLabelMutation>;
+  docTitle?: InputMaybe<SettingsTypographyDocTitleMutation>;
+  docLede?: InputMaybe<SettingsTypographyDocLedeMutation>;
+  docBody?: InputMaybe<SettingsTypographyDocBodyMutation>;
+  quizTitle?: InputMaybe<SettingsTypographyQuizTitleMutation>;
+  quizBody?: InputMaybe<SettingsTypographyQuizBodyMutation>;
 };
 
 export type SettingsAppearanceMutation = {
@@ -2986,11 +3440,11 @@ export type ArtMutation = {
   showLine?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
+export type PagePartsFragment = { __typename: 'Page', blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
+export type Page_DePartsFragment = { __typename: 'Page_de', blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null };
 
-export type SettingsPartsFragment = { __typename: 'Settings', siteStatus?: string | null, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, headerLinksFontSize?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null };
+export type SettingsPartsFragment = { __typename: 'Settings', siteStatus?: string | null, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, siteNameOpacity?: number | null, siteNameTracking?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameOpacity?: number | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerFont?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerOpacity?: number | null, noticeBannerTracking?: string | null, noticeBannerBodyFont?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null, noticeBannerBodyOpacity?: number | null, noticeBannerBodyTracking?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, wordmarkFont?: string | null, wordmarkFontSize?: string | null, wordmarkFontWeight?: string | null, wordmarkOpacity?: number | null, wordmarkTracking?: string | null, headerLinksFont?: string | null, headerLinksFontSize?: string | null, headerLinksFontWeight?: string | null, headerLinksOpacity?: number | null, headerLinksTracking?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFont?: string | null, footerTextFontSize?: string | null, footerTextFontWeight?: string | null, footerTextOpacity?: number | null, footerTextTracking?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, header?: { __typename: 'SettingsTypographyHeader', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, footer?: { __typename: 'SettingsTypographyFooter', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerText?: { __typename: 'SettingsTypographyNoticeBannerText', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerBody?: { __typename: 'SettingsTypographyNoticeBannerBody', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, label?: { __typename: 'SettingsTypographyLabel', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docTitle?: { __typename: 'SettingsTypographyDocTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docLede?: { __typename: 'SettingsTypographyDocLede', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docBody?: { __typename: 'SettingsTypographyDocBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizTitle?: { __typename: 'SettingsTypographyQuizTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizBody?: { __typename: 'SettingsTypographyQuizBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null };
 
 export type DataPagePartsFragment = { __typename: 'DataPage', lang?: string | null, enabled?: boolean | null, eyebrow?: string | null, heading?: string | null, intro?: string | null, contactEmail?: string | null, sections?: Array<{ __typename: 'DataPageSections', heading?: string | null, style?: string | null, body?: string | null } | null> | null };
 
@@ -3003,7 +3457,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
+export type PageQuery = { __typename?: 'Query', page: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
 
 export type PageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3015,14 +3469,14 @@ export type PageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageConnectionEdges', cursor: string, node?: { __typename: 'Page', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'PageBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'PageBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'PageBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'PageBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'PageBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'PageBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'PageBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type Page_DeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type Page_DeQuery = { __typename?: 'Query', page_de: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
+export type Page_DeQuery = { __typename?: 'Query', page_de: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } };
 
 export type Page_DeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3034,14 +3488,14 @@ export type Page_DeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type Page_DeConnectionQuery = { __typename?: 'Query', page_deConnection: { __typename?: 'Page_deConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'Page_deConnectionEdges', cursor: string, node?: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
+export type Page_DeConnectionQuery = { __typename?: 'Query', page_deConnection: { __typename?: 'Page_deConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'Page_deConnectionEdges', cursor: string, node?: { __typename: 'Page_de', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'Page_deBlocksSection', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, titleOpacity?: number | null, titleTracking?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, subTitleOpacity?: number | null, subTitleTracking?: string | null, content?: string | null, bodyFont?: string | null, fontSize?: string | null, fontWeight?: string | null, bodyOpacity?: number | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, showGroupIntros?: boolean | null, showItemCopy?: boolean | null, cardColumns?: string | null, cardGridSpacing?: string | null, cardTitleFont?: string | null, cardTitleFontSize?: string | null, cardTitleFontWeight?: string | null, cardTitleOpacity?: number | null, cardTitleTracking?: string | null, cardLineFont?: string | null, cardLineFontSize?: string | null, cardLineFontWeight?: string | null, cardLineOpacity?: number | null, cardLineTracking?: string | null, meta?: string | null, email?: string | null, phone?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showArt?: boolean | null, columns?: string | null, enabled?: boolean | null, groups?: Array<{ __typename: 'Page_deBlocksSectionGroups', label?: string | null, intro?: string | null, showIntro?: boolean | null, items?: Array<{ __typename: 'Page_deBlocksSectionGroupsItems', label?: string | null, problem?: string | null, handled?: string | null, showCopy?: boolean | null } | null> | null } | null> | null, cards?: Array<{ __typename: 'Page_deBlocksSectionCards', title?: string | null, line?: string | null } | null> | null } | { __typename: 'Page_deBlocksProcessFlow', title?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, subTitle?: string | null, subTitleFont?: string | null, subTitleFontSize?: string | null, subTitleFontWeight?: string | null, orientation?: string | null, stepFont?: string | null, stepFontSize?: string | null, stepFontWeight?: string | null, dotsPerConnector?: number | null, dotSize?: number | null, dotRestOpacity?: number | null, dotPeakOpacity?: number | null, flowSpeed?: number | null, connectorGap?: number | null, stepSpacing?: number | null, content?: string | null, fontSize?: string | null, fontWeight?: string | null, ctaLabel?: string | null, ctaUrl?: string | null, showTitle?: boolean | null, showSubtitle?: boolean | null, showBody?: boolean | null, foldProcess?: boolean | null, foldBody?: boolean | null, cueStyle?: string | null, cueLabel?: string | null, cueLabelOpen?: string | null, enabled?: boolean | null, steps?: Array<{ __typename: 'Page_deBlocksProcessFlowSteps', label?: string | null, font?: string | null, fontSize?: string | null, fontWeight?: string | null } | null> | null } | { __typename: 'Page_deBlocksCaseStudy', industry?: string | null, client?: string | null, location?: string | null, package?: string | null, timeline?: string | null, challenge?: string | null, built?: string | null, result?: string | null, titleFont?: string | null, titleFontSize?: string | null, titleFontWeight?: string | null, bodyFont?: string | null, bodyFontSize?: string | null, bodyFontWeight?: string | null, labelFont?: string | null, labelFontSize?: string | null, labelFontWeight?: string | null, metaFont?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | { __typename: 'Page_deBlocksTestimonial', quote?: string | null, attributionName?: string | null, attributionOrg?: string | null, quoteFontSize?: string | null, quoteFontWeight?: string | null, metaFontSize?: string | null, enabled?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type SettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteStatus?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, headerLinksFontSize?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null } };
+export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, siteStatus?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, siteNameOpacity?: number | null, siteNameTracking?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameOpacity?: number | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerFont?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerOpacity?: number | null, noticeBannerTracking?: string | null, noticeBannerBodyFont?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null, noticeBannerBodyOpacity?: number | null, noticeBannerBodyTracking?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, wordmarkFont?: string | null, wordmarkFontSize?: string | null, wordmarkFontWeight?: string | null, wordmarkOpacity?: number | null, wordmarkTracking?: string | null, headerLinksFont?: string | null, headerLinksFontSize?: string | null, headerLinksFontWeight?: string | null, headerLinksOpacity?: number | null, headerLinksTracking?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFont?: string | null, footerTextFontSize?: string | null, footerTextFontWeight?: string | null, footerTextOpacity?: number | null, footerTextTracking?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, header?: { __typename: 'SettingsTypographyHeader', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, footer?: { __typename: 'SettingsTypographyFooter', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerText?: { __typename: 'SettingsTypographyNoticeBannerText', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerBody?: { __typename: 'SettingsTypographyNoticeBannerBody', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, label?: { __typename: 'SettingsTypographyLabel', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docTitle?: { __typename: 'SettingsTypographyDocTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docLede?: { __typename: 'SettingsTypographyDocLede', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docBody?: { __typename: 'SettingsTypographyDocBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizTitle?: { __typename: 'SettingsTypographyQuizTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizBody?: { __typename: 'SettingsTypographyQuizBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null } };
 
 export type SettingsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3053,7 +3507,7 @@ export type SettingsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteStatus?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, headerLinksFontSize?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFontSize?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null } | null } | null> | null } };
+export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, siteStatus?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, siteStatusContent?: { __typename: 'SettingsSiteStatusContent', preparationBadge_de?: string | null, preparationBadge_en?: string | null, preparationMessage_de?: string | null, preparationMessage_en?: string | null, maintenanceBadge_de?: string | null, maintenanceBadge_en?: string | null, maintenanceMessage_de?: string | null, maintenanceMessage_en?: string | null } | null, hero?: { __typename: 'SettingsHero', siteName?: string | null, siteNameFont?: string | null, siteNameFontSize?: string | null, siteNameFontWeight?: string | null, siteNameOpacity?: number | null, siteNameTracking?: string | null, subSiteName?: string | null, subSiteName_de?: string | null, subSiteNameFont?: string | null, subSiteNameFontSize?: string | null, subSiteNameFontWeight?: string | null, subSiteNameOpacity?: number | null, subSiteNameTracking?: string | null, showSubSiteNameOnly?: boolean | null } | null, noticeBanner?: { __typename: 'SettingsNoticeBanner', noticeBannerEnabled?: boolean | null, noticeBannerText_en?: string | null, noticeBannerText_de?: string | null, noticeBannerBody_en?: string | null, noticeBannerBody_de?: string | null, noticeBannerStyle?: string | null, noticeBannerFlowSeconds?: string | null, noticeBannerDot?: string | null, noticeBannerFont?: string | null, noticeBannerTextFontSize?: string | null, noticeBannerTextFontWeight?: string | null, noticeBannerOpacity?: number | null, noticeBannerTracking?: string | null, noticeBannerBodyFont?: string | null, noticeBannerBodyFontSize?: string | null, noticeBannerBodyFontWeight?: string | null, noticeBannerBodyOpacity?: number | null, noticeBannerBodyTracking?: string | null } | null, header?: { __typename: 'SettingsHeader', headerLayout?: string | null, wordmarkFont?: string | null, wordmarkFontSize?: string | null, wordmarkFontWeight?: string | null, wordmarkOpacity?: number | null, wordmarkTracking?: string | null, headerLinksFont?: string | null, headerLinksFontSize?: string | null, headerLinksFontWeight?: string | null, headerLinksOpacity?: number | null, headerLinksTracking?: string | null, navLinks?: Array<{ __typename: 'SettingsHeaderNavLinks', label?: string | null, label_de?: string | null, url?: string | null } | null> | null } | null, footer?: { __typename: 'SettingsFooter', footerText?: string | null, showFooterLine?: boolean | null, footerTextFont?: string | null, footerTextFontSize?: string | null, footerTextFontWeight?: string | null, footerTextOpacity?: number | null, footerTextTracking?: string | null, socialLinks?: Array<{ __typename: 'SettingsFooterSocialLinks', platform?: string | null, url?: string | null } | null> | null } | null, typography?: { __typename: 'SettingsTypography', title?: { __typename: 'SettingsTypographyTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, subTitle?: { __typename: 'SettingsTypographySubTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, body?: { __typename: 'SettingsTypographyBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardTitle?: { __typename: 'SettingsTypographyCardTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, cardLine?: { __typename: 'SettingsTypographyCardLine', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, header?: { __typename: 'SettingsTypographyHeader', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, footer?: { __typename: 'SettingsTypographyFooter', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerText?: { __typename: 'SettingsTypographyNoticeBannerText', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, noticeBannerBody?: { __typename: 'SettingsTypographyNoticeBannerBody', font?: string | null, size?: string | null, weight?: string | null, opacity?: number | null, tracking?: string | null } | null, label?: { __typename: 'SettingsTypographyLabel', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docTitle?: { __typename: 'SettingsTypographyDocTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docLede?: { __typename: 'SettingsTypographyDocLede', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, docBody?: { __typename: 'SettingsTypographyDocBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizTitle?: { __typename: 'SettingsTypographyQuizTitle', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null, quizBody?: { __typename: 'SettingsTypographyQuizBody', font?: string | null, size?: string | null, weight?: string | null, uppercase?: boolean | null, opacity?: number | null, tracking?: string | null } | null } | null, appearance?: { __typename: 'SettingsAppearance', fontPreset?: string | null, customFontName?: string | null, showLogo?: boolean | null, theme?: string | null, baseTextColor?: string | null, customBackgroundColor?: string | null, enableThemeToggle?: boolean | null } | null, animations?: { __typename: 'SettingsAnimations', enableLogoAnimation?: boolean | null, enableStatusDot?: boolean | null, enableCascadeReveal?: boolean | null, enableTextHover?: boolean | null, enableCheckPageAnimations?: boolean | null, backgroundStyle?: string | null, processFlow?: { __typename: 'SettingsAnimationsProcessFlow', enabled?: boolean | null } | null, depthBackground?: { __typename: 'SettingsAnimationsDepthBackground', nodeCount?: number | null, connectDistance?: number | null, lineOpacity?: number | null, nodeOpacity?: number | null, nodeColor?: string | null, fogColor?: string | null } | null, planetarySystems?: { __typename: 'SettingsAnimationsPlanetarySystems', systemCount?: number | null, maxPlanets?: number | null, orbitMinRadius?: number | null, orbitMaxRadius?: number | null, starColor?: string | null, pathOpacity?: number | null } | null } | null, layout?: { __typename: 'SettingsLayout', headerHeight?: string | null, matchFooterToHeader?: boolean | null, footerHeight?: string | null, headerInnerWidth?: string | null, cardGridSpacing?: string | null } | null, seo?: { __typename: 'SettingsSeo', siteUrl?: string | null, metaTitle?: string | null, metaTitle_de?: string | null, metaDescription?: string | null, metaDescription_de?: string | null, ogImage?: string | null, founderName?: string | null, founderUrl?: string | null, enableContentProtection?: boolean | null, addressStreet?: string | null, addressCity?: string | null, addressPostal?: string | null, contactEmail?: string | null, contactPhone?: string | null } | null } | null } | null> | null } };
 
 export type DataPageQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3122,14 +3576,19 @@ export const PagePartsFragmentDoc = gql`
       titleFont
       titleFontSize
       titleFontWeight
+      titleOpacity
+      titleTracking
       subTitle
       subTitleFont
       subTitleFontSize
       subTitleFontWeight
+      subTitleOpacity
+      subTitleTracking
       content
       bodyFont
       fontSize
       fontWeight
+      bodyOpacity
       showTitle
       showSubtitle
       showBody
@@ -3162,9 +3621,13 @@ export const PagePartsFragmentDoc = gql`
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
+      cardTitleOpacity
+      cardTitleTracking
       cardLineFont
       cardLineFontSize
       cardLineFontWeight
+      cardLineOpacity
+      cardLineTracking
       meta
       email
       phone
@@ -3260,14 +3723,19 @@ export const Page_DePartsFragmentDoc = gql`
       titleFont
       titleFontSize
       titleFontWeight
+      titleOpacity
+      titleTracking
       subTitle
       subTitleFont
       subTitleFontSize
       subTitleFontWeight
+      subTitleOpacity
+      subTitleTracking
       content
       bodyFont
       fontSize
       fontWeight
+      bodyOpacity
       showTitle
       showSubtitle
       showBody
@@ -3300,9 +3768,13 @@ export const Page_DePartsFragmentDoc = gql`
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
+      cardTitleOpacity
+      cardTitleTracking
       cardLineFont
       cardLineFontSize
       cardLineFontWeight
+      cardLineOpacity
+      cardLineTracking
       meta
       email
       phone
@@ -3409,11 +3881,14 @@ export const SettingsPartsFragmentDoc = gql`
     siteNameFont
     siteNameFontSize
     siteNameFontWeight
+    siteNameOpacity
+    siteNameTracking
     subSiteName
     subSiteName_de
     subSiteNameFont
     subSiteNameFontSize
     subSiteNameFontWeight
+    subSiteNameOpacity
     subSiteNameTracking
     showSubSiteNameOnly
   }
@@ -3427,15 +3902,30 @@ export const SettingsPartsFragmentDoc = gql`
     noticeBannerStyle
     noticeBannerFlowSeconds
     noticeBannerDot
+    noticeBannerFont
     noticeBannerTextFontSize
     noticeBannerTextFontWeight
+    noticeBannerOpacity
+    noticeBannerTracking
+    noticeBannerBodyFont
     noticeBannerBodyFontSize
     noticeBannerBodyFontWeight
+    noticeBannerBodyOpacity
+    noticeBannerBodyTracking
   }
   header {
     __typename
     headerLayout
+    wordmarkFont
+    wordmarkFontSize
+    wordmarkFontWeight
+    wordmarkOpacity
+    wordmarkTracking
+    headerLinksFont
     headerLinksFontSize
+    headerLinksFontWeight
+    headerLinksOpacity
+    headerLinksTracking
     navLinks {
       __typename
       label
@@ -3447,7 +3937,11 @@ export const SettingsPartsFragmentDoc = gql`
     __typename
     footerText
     showFooterLine
+    footerTextFont
     footerTextFontSize
+    footerTextFontWeight
+    footerTextOpacity
+    footerTextTracking
     socialLinks {
       __typename
       platform
@@ -3462,6 +3956,8 @@ export const SettingsPartsFragmentDoc = gql`
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     subTitle {
       __typename
@@ -3469,6 +3965,8 @@ export const SettingsPartsFragmentDoc = gql`
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     body {
       __typename
@@ -3476,6 +3974,8 @@ export const SettingsPartsFragmentDoc = gql`
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     cardTitle {
       __typename
@@ -3483,6 +3983,8 @@ export const SettingsPartsFragmentDoc = gql`
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     cardLine {
       __typename
@@ -3490,6 +3992,96 @@ export const SettingsPartsFragmentDoc = gql`
       size
       weight
       uppercase
+      opacity
+      tracking
+    }
+    header {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    footer {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    noticeBannerText {
+      __typename
+      font
+      size
+      weight
+      opacity
+      tracking
+    }
+    noticeBannerBody {
+      __typename
+      font
+      size
+      weight
+      opacity
+      tracking
+    }
+    label {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docTitle {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docLede {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docBody {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    quizTitle {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    quizBody {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
     }
   }
   appearance {

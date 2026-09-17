@@ -3,12 +3,12 @@
   "hero": {
     "siteName": "VortexDeep",
     "siteNameFont": "",
-    "siteNameFontSize": "lg",
+    "siteNameFontSize": "",
     "subSiteName": "Practical | AI automation | . | for small and mid-sized companies | . | From Zürich, Switzerland | Worldwide",
     "subSiteName_de": "Praktische | KI-Automatisierung | . | für KMU | . | Aus Zürich, Schweiz | Weltweit",
-    "subSiteNameFontSize": "lg",
-    "subSiteNameFontWeight": "font-normal",
-    "subSiteNameTracking": "tracking-[1.2em]",
+    "subSiteNameFontSize": "",
+    "subSiteNameFontWeight": "",
+    "subSiteNameTracking": "",
     "showSubSiteNameOnly": true
   },
   "noticeBanner": {
@@ -49,40 +49,77 @@
   },
   "typography": {
     "title": {
-      "font": "Inter",
+      "font": "",
       "size": "xl",
       "weight": "font-bold",
       "uppercase": true,
       "opacity": 90
     },
     "subTitle": {
-      "font": "Inter",
-      "size": "xl",
-      "weight": "font-normal",
-      "uppercase": false,
-      "opacity": 70
-    },
-    "body": {
-      "font": "Inter",
+      "font": "",
       "size": "xl",
       "weight": "font-light",
+      "uppercase": false,
+      "opacity": 50
+    },
+    "body": {
+      "font": "",
+      "size": "xl",
+      "weight": "font-medium",
       "opacity": 90
     },
     "cardTitle": {
-      "font": "Inter",
+      "font": "",
       "size": "xl",
       "weight": "font-medium",
-      "opacity": 100
+      "opacity": 90
     },
     "cardLine": {
-      "font": "Inter",
+      "font": "",
       "size": "xl",
       "weight": "font-light",
-      "opacity": 65
+      "opacity": 50
+    },
+    "header": {
+      "font": "",
+      "size": "xl",
+      "weight": "font-normal",
+      "opacity": 100
+    },
+    "footer": {
+      "font": "",
+      "size": "xl",
+      "weight": "font-normal",
+      "opacity": 100
+    },
+    "noticeBannerText": {
+      "size": "xl"
+    },
+    "noticeBannerBody": {
+      "size": "sm"
+    },
+    "label": {
+      "size": "xl"
+    },
+    "docTitle": {
+      "size": "xl"
+    },
+    "docLede": {
+      "size": "xl"
+    },
+    "docBody": {
+      "size": "xl",
+      "opacity": 50
+    },
+    "quizTitle": {
+      "size": "xl"
+    },
+    "quizBody": {
+      "size": "xl"
     }
   },
   "appearance": {
-    "fontPreset": "IBM Plex Mono",
+    "fontPreset": "Space Mono",
     "showLogo": true,
     "theme": "paper",
     "baseTextColor": "",

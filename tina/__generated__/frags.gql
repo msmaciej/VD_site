@@ -7,14 +7,19 @@ fragment PageParts on Page {
       titleFont
       titleFontSize
       titleFontWeight
+      titleOpacity
+      titleTracking
       subTitle
       subTitleFont
       subTitleFontSize
       subTitleFontWeight
+      subTitleOpacity
+      subTitleTracking
       content
       bodyFont
       fontSize
       fontWeight
+      bodyOpacity
       showTitle
       showSubtitle
       showBody
@@ -47,9 +52,13 @@ fragment PageParts on Page {
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
+      cardTitleOpacity
+      cardTitleTracking
       cardLineFont
       cardLineFontSize
       cardLineFontWeight
+      cardLineOpacity
+      cardLineTracking
       meta
       email
       phone
@@ -144,14 +153,19 @@ fragment Page_deParts on Page_de {
       titleFont
       titleFontSize
       titleFontWeight
+      titleOpacity
+      titleTracking
       subTitle
       subTitleFont
       subTitleFontSize
       subTitleFontWeight
+      subTitleOpacity
+      subTitleTracking
       content
       bodyFont
       fontSize
       fontWeight
+      bodyOpacity
       showTitle
       showSubtitle
       showBody
@@ -184,9 +198,13 @@ fragment Page_deParts on Page_de {
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
+      cardTitleOpacity
+      cardTitleTracking
       cardLineFont
       cardLineFontSize
       cardLineFontWeight
+      cardLineOpacity
+      cardLineTracking
       meta
       email
       phone
@@ -292,11 +310,14 @@ fragment SettingsParts on Settings {
     siteNameFont
     siteNameFontSize
     siteNameFontWeight
+    siteNameOpacity
+    siteNameTracking
     subSiteName
     subSiteName_de
     subSiteNameFont
     subSiteNameFontSize
     subSiteNameFontWeight
+    subSiteNameOpacity
     subSiteNameTracking
     showSubSiteNameOnly
   }
@@ -310,15 +331,30 @@ fragment SettingsParts on Settings {
     noticeBannerStyle
     noticeBannerFlowSeconds
     noticeBannerDot
+    noticeBannerFont
     noticeBannerTextFontSize
     noticeBannerTextFontWeight
+    noticeBannerOpacity
+    noticeBannerTracking
+    noticeBannerBodyFont
     noticeBannerBodyFontSize
     noticeBannerBodyFontWeight
+    noticeBannerBodyOpacity
+    noticeBannerBodyTracking
   }
   header {
     __typename
     headerLayout
+    wordmarkFont
+    wordmarkFontSize
+    wordmarkFontWeight
+    wordmarkOpacity
+    wordmarkTracking
+    headerLinksFont
     headerLinksFontSize
+    headerLinksFontWeight
+    headerLinksOpacity
+    headerLinksTracking
     navLinks {
       __typename
       label
@@ -330,7 +366,11 @@ fragment SettingsParts on Settings {
     __typename
     footerText
     showFooterLine
+    footerTextFont
     footerTextFontSize
+    footerTextFontWeight
+    footerTextOpacity
+    footerTextTracking
     socialLinks {
       __typename
       platform
@@ -345,6 +385,8 @@ fragment SettingsParts on Settings {
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     subTitle {
       __typename
@@ -352,6 +394,8 @@ fragment SettingsParts on Settings {
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     body {
       __typename
@@ -359,6 +403,8 @@ fragment SettingsParts on Settings {
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     cardTitle {
       __typename
@@ -366,6 +412,8 @@ fragment SettingsParts on Settings {
       size
       weight
       uppercase
+      opacity
+      tracking
     }
     cardLine {
       __typename
@@ -373,6 +421,96 @@ fragment SettingsParts on Settings {
       size
       weight
       uppercase
+      opacity
+      tracking
+    }
+    header {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    footer {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    noticeBannerText {
+      __typename
+      font
+      size
+      weight
+      opacity
+      tracking
+    }
+    noticeBannerBody {
+      __typename
+      font
+      size
+      weight
+      opacity
+      tracking
+    }
+    label {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docTitle {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docLede {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docBody {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    quizTitle {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    quizBody {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
     }
   }
   appearance {
