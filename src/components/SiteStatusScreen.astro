@@ -23,7 +23,7 @@
 
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
-import { themeColors } from '../utils/siteHelpers.ts';
+import { themeColors, fontFamily, fontSizePx, fontWeightNumber, trackingEm } from '../utils/siteHelpers.ts';
 import settingsJson from '../content/settings/site.json';
 
 interface Props {
@@ -32,6 +32,29 @@ interface Props {
 }
 const { mode } = Astro.props;
 const settings: any = settingsJson;
+const typo = (settings.typography || {}) as any;
+
+// This screen was entirely hardcoded CSS with no Typography connection at
+// all — now driven by Title / Label / Body, each keeping its current value
+// as the fallback.
+const st = {
+  brandSize: typo.title?.size ? fontSizePx(typo.title.size) : null, // clamp() has no token equivalent — only overridden when a role size is actually set
+  brandWeight: typo.title?.weight ? fontWeightNumber(typo.title.weight) : '500',
+  brandTracking: typo.title?.tracking ? trackingEm(typo.title.tracking) : '0.18em',
+  brandOpacity: typo.title?.opacity ?? 100,
+  badgeSize: typo.label?.size ? fontSizePx(typo.label.size) : '12px',
+  badgeTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.14em',
+  badgeOpacity: typo.label?.opacity ?? 100,
+  msgSize: typo.body?.size ? fontSizePx(typo.body.size) : '15.5px',
+  msgWeight: typo.body?.weight ? fontWeightNumber(typo.body.weight) : '400',
+  msgOpacity: typo.body?.opacity ?? 100,
+  footSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
+  footTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.08em',
+  footOpacity: typo.label?.opacity ?? 80,
+  titleFont: typo.title?.font ? fontFamily(typo.title.font) : null,
+  labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
+  bodyFont: typo.body?.font ? fontFamily(typo.body.font) : null,
+};
 
 // ── Colours: resolve exactly like SitePage so the canvas matches the theme ──
 const currentTheme = settings.appearance.theme || 'light';
@@ -131,7 +154,13 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
   </div>
 </main>
 
-<style>
+<style define:vars={{
+  brandWeight: st.brandWeight, brandTracking: st.brandTracking, brandOpacity: st.brandOpacity,
+  badgeSize: st.badgeSize, badgeTracking: st.badgeTracking, badgeOpacity: st.badgeOpacity,
+  msgSize: st.msgSize, msgWeight: st.msgWeight, msgOpacity: st.msgOpacity,
+  footSize: st.footSize, footTracking: st.footTracking, footOpacity: st.footOpacity,
+  titleFont: st.titleFont || 'inherit', labelFont: st.labelFont || 'inherit', bodyFont: st.bodyFont || 'inherit',
+}}>
   .vd-status__scrim {
     position: fixed;
     inset: 0;
@@ -159,8 +188,10 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
   }
   .vd-status__brand {
     font-size: clamp(22px, 5vw, 30px);
-    font-weight: 500;
-    letter-spacing: 0.18em;
+    font-weight: var(--brandWeight);
+    letter-spacing: var(--brandTracking);
+    opacity: calc(var(--brandOpacity, 100) * 1%);
+    font-family: var(--titleFont);
     color: var(--zen-text);
   }
   .vd-status__badge {
@@ -171,8 +202,10 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
     padding: 7px 16px;
     border: 1px solid var(--zen-muted);
     border-radius: 999px;
-    font-size: 12px;
-    letter-spacing: 0.14em;
+    font-size: var(--badgeSize);
+    letter-spacing: var(--badgeTracking);
+    opacity: calc(var(--badgeOpacity, 100) * 1%);
+    font-family: var(--labelFont);
     text-transform: uppercase;
     color: var(--zen-muted);
     background: color-mix(in srgb, var(--zen-bg) 55%, transparent);
@@ -189,7 +222,10 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
   .vd-status__msg {
     margin: 0 auto;
     max-width: 46ch;
-    font-size: 15.5px;
+    font-size: var(--msgSize);
+    font-weight: var(--msgWeight);
+    opacity: calc(var(--msgOpacity, 100) * 1%);
+    font-family: var(--bodyFont);
     line-height: 1.65;
     color: var(--zen-text);
   }
@@ -203,10 +239,11 @@ const updated  = new Date().toLocaleDateString('de-CH', { year: 'numeric', month
   }
   .vd-status__foot {
     margin-top: 34px;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-size: var(--footSize);
+    letter-spacing: var(--footTracking);
+    opacity: calc(var(--footOpacity, 80) * 1%);
+    font-family: var(--labelFont);
     color: var(--zen-muted);
-    opacity: 0.8;
   }
 
   @keyframes vd-status-fade {

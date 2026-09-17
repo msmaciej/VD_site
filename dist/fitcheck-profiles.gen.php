@@ -9,7 +9,7 @@
  *
  * Any edit you make here is overwritten on the next build. Change the copy
  * in config.json / Tina instead.
- * Generated: 2026-09-17T11:36:36.744Z
+ * Generated: 2026-09-17T12:59:16.214Z
  */
 
 $PROFILES = [
@@ -100,5 +100,5 @@ $FITCHECK_THEME = [
     'text' => '#0a0a0a',
     'muted' => '#737373',
     'accent' => '#0a0a0a',
-    'font' => '\'Space Mono\', monospace',
+    'font' => '\'IBM Plex Mono\', monospace',
 ];

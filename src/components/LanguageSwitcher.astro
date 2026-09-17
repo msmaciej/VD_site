@@ -8,6 +8,9 @@
 //           '' (empty string) = home / root
 //           'check'           = /check  or  /de/check
 //
+import { fontSizeClass, fontFamily, trackingEm } from '../utils/siteHelpers.ts';
+import settingsJson from '../content/settings/site.json';
+
 interface Props {
   lang: 'en' | 'de';
   slug?: string;
@@ -17,6 +20,14 @@ const { lang, slug = '' } = Astro.props;
 
 const enUrl = slug ? `/${slug}` : '/';
 const deUrl = slug ? `/de/${slug}` : '/de/';
+
+// Was entirely hardcoded (9px, fixed tracking) with no Typography connection.
+// Now driven by Label — current values kept as the fallback.
+const settings: any = settingsJson;
+const typo = (settings.typography || {}) as any;
+const lsSizeClass = fontSizeClass(typo.label?.size || 'text-[9px]');
+const lsTracking = typo.label?.tracking || 'tracking-[0.35em]';
+const lsFont = typo.label?.font ? fontFamily(typo.label.font) : 'inherit';
 ---
 
 <div class="flex items-center gap-[0.6rem]" aria-label="Language switcher">
@@ -24,10 +35,10 @@ const deUrl = slug ? `/de/${slug}` : '/de/';
     href={enUrl}
     aria-current={lang === 'en' ? 'page' : undefined}
     class={[
-      'text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity',
+      lsSizeClass, 'uppercase', lsTracking, 'no-underline transition-opacity',
       lang === 'en' ? 'opacity-80' : 'opacity-30 hover:opacity-70',
     ].join(' ')}
-    style="color: inherit;"
+    style={`color: inherit; font-family: ${lsFont};`}
   >EN</a>
 
   <span class="opacity-20 text-[9px]" aria-hidden="true">/</span>
@@ -36,9 +47,9 @@ const deUrl = slug ? `/de/${slug}` : '/de/';
     href={deUrl}
     aria-current={lang === 'de' ? 'page' : undefined}
     class={[
-      'text-[9px] uppercase tracking-[0.35em] no-underline transition-opacity',
+      lsSizeClass, 'uppercase', lsTracking, 'no-underline transition-opacity',
       lang === 'de' ? 'opacity-80' : 'opacity-30 hover:opacity-70',
     ].join(' ')}
-    style="color: inherit;"
+    style={`color: inherit; font-family: ${lsFont};`}
   >DE</a>
 </div>

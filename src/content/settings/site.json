@@ -93,10 +93,12 @@
       "opacity": 100
     },
     "noticeBannerText": {
-      "size": "xl"
+      "size": "xl",
+      "opacity": 50
     },
     "noticeBannerBody": {
-      "size": "sm"
+      "size": "xl",
+      "opacity": 50
     },
     "label": {
       "size": "xl"
@@ -119,7 +121,8 @@
     }
   },
   "appearance": {
-    "fontPreset": "Space Mono",
+    "fontPreset": "custom",
+    "customFontName": "Montserrat",
     "showLogo": true,
     "theme": "paper",
     "baseTextColor": "",

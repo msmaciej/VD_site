@@ -260,16 +260,16 @@
       "cueLabelOpen": "Less",
       "cards": [
         {
-          "title": "We automate the routine",
-          "line": "Reading, sorting, drafting, filing. Every result is prepared for you to approve."
+          "title": "Automation",
+          "line": "We automate routines: reading, sorting, drafting, filing. Every result is prepared for you to approve."
         },
         {
-          "title": "You keep the judgement",
-          "line": "The ambiguous cases, the decisions, the final sign-off."
+          "title": "Control",
+          "line": "You keep the judgement: the ambiguous cases, the decisions, the final sign-off."
         },
         {
-          "title": "We're straight about limits",
-          "line": "We'll always say plainly what's better left with you."
+          "title": "Limits",
+          "line": "We're straight about limits and say plainly what's better left with you."
         }
       ],
       "cardColumns": "grid-cols-3",
@@ -318,12 +318,12 @@
       "cueLabelOpen": "Less",
       "cards": [
         {
-          "title": "Small, proven steps",
+          "title": "Small Steps",
           "line": "Get it working, earning its keep, then build from there."
         },
         {
-          "title": "Built to fit together",
-          "line": "Every automation shares the same shape, so they connect as you grow."
+          "title": "Design",
+          "line": "Every automation shares the similar shape, so they connect as you grow."
         }
       ],
       "cardColumns": "grid-cols-2",
@@ -352,14 +352,14 @@
     },
     {
       "title": "The Six Phases",
-      "titleFontSize": "lg",
+      "titleFontSize": "",
       "titleFontWeight": "",
       "subTitle": "This is how your project runs | you sign off on each one.",
-      "subTitleFontSize": "lg",
+      "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",
-      "stepFontSize": "sm",
-      "stepFontWeight": "font-thin",
+      "stepFontSize": "",
+      "stepFontWeight": "",
       "steps": [
         {
           "label": "Discovery"
@@ -386,7 +386,7 @@
       "stepSpacing": 5,
       "content": "",
       "fontSize": "",
-      "fontWeight": "font-light",
+      "fontWeight": "",
       "showTitle": true,
       "showSubtitle": true,
       "showBody": false,
@@ -432,8 +432,8 @@
       "titleFontWeight": "",
       "bodyFontSize": "",
       "bodyFontWeight": "",
-      "labelFontSize": "base",
-      "metaFontSize": "base",
+      "labelFontSize": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "caseStudy"
     },
@@ -441,9 +441,9 @@
       "quote": "\"We used to spend a lot of time checking and classifying emails before we could even reply. That's now greatly reduced — we can focus on the replies that actually move the business.\"",
       "attributionName": "",
       "attributionOrg": "MG Redshift -",
-      "quoteFontSize": "base",
-      "quoteFontWeight": "font-normal",
-      "metaFontSize": "sm",
+      "quoteFontSize": "",
+      "quoteFontWeight": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "testimonial"
     },
@@ -460,8 +460,8 @@
       "titleFontWeight": "",
       "bodyFontSize": "",
       "bodyFontWeight": "",
-      "labelFontSize": "sm",
-      "metaFontSize": "sm",
+      "labelFontSize": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "caseStudy"
     },
@@ -489,14 +489,14 @@
     },
     {
       "title": "The Fit Check -",
-      "titleFontSize": "lg",
+      "titleFontSize": "",
       "titleFontWeight": "",
       "subTitle": "Six questions | About two minutes",
-      "subTitleFontSize": "lg",
+      "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",
-      "stepFontSize": "sm",
-      "stepFontWeight": "font-thin",
+      "stepFontSize": "",
+      "stepFontWeight": "",
       "steps": [
         {
           "label": "Your role"
@@ -522,8 +522,8 @@
       "connectorGap": 5,
       "stepSpacing": 5,
       "content": "At the end you leave an email address. | Your result appears on screen straight away, with a recommendation you can act on.",
-      "fontSize": "lg",
-      "fontWeight": "font-light",
+      "fontSize": "",
+      "fontWeight": "",
       "ctaLabel": "Start the Fit Check",
       "ctaUrl": "/check",
       "showTitle": true,

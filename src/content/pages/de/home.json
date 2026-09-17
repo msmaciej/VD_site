@@ -358,8 +358,8 @@
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",
-      "stepFontSize": "sm",
-      "stepFontWeight": "font-thin",
+      "stepFontSize": "",
+      "stepFontWeight": "",
       "steps": [
         {
           "label": "Analyse"
@@ -386,7 +386,7 @@
       "stepSpacing": 5,
       "content": "",
       "fontSize": "",
-      "fontWeight": "font-light",
+      "fontWeight": "",
       "showTitle": true,
       "showSubtitle": true,
       "showBody": false,
@@ -431,8 +431,8 @@
       "titleFontWeight": "",
       "bodyFontSize": "",
       "bodyFontWeight": "",
-      "labelFontSize": "sm",
-      "metaFontSize": "sm",
+      "labelFontSize": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "caseStudy"
     },
@@ -440,9 +440,9 @@
       "quote": "„Früher haben wir viel Zeit damit verbracht, E-Mails zu prüfen und zu sortieren, bevor wir überhaupt antworten konnten. Das ist jetzt deutlich weniger — wir können uns auf die Antworten konzentrieren, die das Geschäft wirklich voranbringen.\"",
       "attributionName": "",
       "attributionOrg": "MG Redshift -",
-      "quoteFontSize": "base",
-      "quoteFontWeight": "font-normal",
-      "metaFontSize": "xs",
+      "quoteFontSize": "",
+      "quoteFontWeight": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "testimonial"
     },
@@ -459,8 +459,8 @@
       "titleFontWeight": "",
       "bodyFontSize": "",
       "bodyFontWeight": "",
-      "labelFontSize": "sm",
-      "metaFontSize": "sm",
+      "labelFontSize": "",
+      "metaFontSize": "",
       "enabled": false,
       "_template": "caseStudy"
     },
@@ -494,8 +494,8 @@
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",
-      "stepFontSize": "sm",
-      "stepFontWeight": "font-thin",
+      "stepFontSize": "",
+      "stepFontWeight": "",
       "steps": [
         {
           "label": "Ihre Rolle"
@@ -522,7 +522,7 @@
       "stepSpacing": 5,
       "content": "Am Ende hinterlassen Sie eine E-Mail-Adresse. | Ihr Ergebnis erscheint direkt auf dem Bildschirm, mit einer Empfehlung, mit der Sie arbeiten können.",
       "fontSize": "",
-      "fontWeight": "font-normal",
+      "fontWeight": "",
       "ctaLabel": "Fit-Check starten",
       "ctaUrl": "/check",
       "showTitle": true,

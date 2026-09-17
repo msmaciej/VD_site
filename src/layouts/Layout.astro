@@ -2,6 +2,21 @@
 // src/layouts/Layout.astro
 import siteSettings from '../content/settings/site.json';
 import SiteStatusScreen from '../components/SiteStatusScreen.astro';
+import { fontFamily } from '../utils/siteHelpers.ts';
+
+// The site-wide default font, computed the same way SitePage.astro/check.astro/
+// dataPage.astro compute it — needed here too because this Layout's own
+// `body { font-family }` rule (below) was hardcoded to 'Inter' and silently
+// winning the cascade over the dynamic rule those pages define, since Astro
+// doesn't reliably merge two separate is:global blocks targeting the same
+// selector across files. Anything that sets its own explicit font-family
+// (a Typography role, a per-section override) already overrides this via
+// inline style regardless; this is only the base default.
+const layoutActiveFont: string =
+  ((siteSettings as any).appearance?.fontPreset === 'custom' && (siteSettings as any).appearance?.customFontName)
+    ? (siteSettings as any).appearance.customFontName
+    : ((siteSettings as any).appearance?.fontPreset || 'Inter');
+const layoutActiveFontFamily = fontFamily(layoutActiveFont);
 
 // ── Site status gate ──────────────────────────────────────────────────────
 // Every page (home, /check, /data, EN + DE) renders through this Layout, so
@@ -172,7 +187,7 @@ const autoOverrideCss = (autoBg || autoText)
       <link href={`https://fonts.googleapis.com/css2?family=${encodeURIComponent((siteSettings as any).appearance.customFontName).replace(/%20/g, '+')}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap`} rel="stylesheet">
     )}
     <slot name="head" />
-    <style is:global>
+    <style is:global define:vars={{ layoutActiveFontFamily }}>
       :root[data-theme="light"]  { --zen-bg:#ffffff; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#000000; }
       :root[data-theme="dark"]   { --zen-bg:#000000; --zen-text:#f5f5f5; --zen-muted:#a3a3a3; --zen-accent:#ffffff; }
       :root[data-theme="paper"]  { --zen-bg:#F9F7F2; --zen-text:#0a0a0a; --zen-muted:#737373; --zen-accent:#0a0a0a; }
@@ -184,7 +199,7 @@ const autoOverrideCss = (autoBg || autoText)
       body {
         background-color: var(--zen-bg);
         color: var(--zen-text);
-        font-family: 'Inter', sans-serif;
+        font-family: var(--layoutActiveFontFamily);
         transition: background-color 0.7s ease, color 0.7s ease;
         margin: 0;
         -webkit-font-smoothing: antialiased;

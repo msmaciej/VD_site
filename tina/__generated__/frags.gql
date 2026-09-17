@@ -49,6 +49,8 @@ fragment PageParts on Page {
       }
       cardColumns
       cardGridSpacing
+      cardGap
+      cardInternalSpacing
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
@@ -195,6 +197,8 @@ fragment Page_deParts on Page_de {
       }
       cardColumns
       cardGridSpacing
+      cardGap
+      cardInternalSpacing
       cardTitleFont
       cardTitleFontSize
       cardTitleFontWeight
@@ -561,6 +565,8 @@ fragment SettingsParts on Settings {
     footerHeight
     headerInnerWidth
     cardGridSpacing
+    cardGap
+    cardInternalSpacing
   }
   seo {
     __typename

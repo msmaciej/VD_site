@@ -120,7 +120,6 @@ const typo = (settings.typography || {}) as any;
 // with no Tina field at all. Now driven by Label / Body — each keeps its own
 // current value as the fallback, so nothing moves until you set something.
 const acc = {
-  labelSize: typo.label?.size ? fontSizePx(typo.label.size) : '13px',
   labelWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
   labelTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
   labelOpacity: typo.label?.opacity ?? 50,
@@ -136,8 +135,6 @@ const acc = {
   cueSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
   cueTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
   cueOpacity: typo.label?.opacity ?? 50,
-  contactSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
-  contactTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.15em',
   iconTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.03em',
   labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
   bodyFont2: typo.body?.font ? fontFamily(typo.body.font) : null,
@@ -450,13 +447,12 @@ const contentGroups = (text: string) => {
   )}
 
   <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth, noticeH,
-    accLabelSize: acc.labelSize, accLabelWeight: acc.labelWeight, accLabelTracking: acc.labelTracking, accLabelOpacity: acc.labelOpacity,
+    accLabelWeight: acc.labelWeight, accLabelTracking: acc.labelTracking, accLabelOpacity: acc.labelOpacity,
     accSubSize: acc.subSize, accSubTracking: acc.subTracking, accSubOpacity: acc.subOpacity,
     accIntroSize: acc.introSize, accIntroOpacity: acc.introOpacity,
     accCopySize: acc.copySize, accCopyOpacity: acc.copyOpacity,
     accCtaTracking: acc.ctaTracking, accCtaOpacity: acc.ctaOpacity,
     accCueSize: acc.cueSize, accCueTracking: acc.cueTracking, accCueOpacity: acc.cueOpacity,
-    accContactSize: acc.contactSize, accContactTracking: acc.contactTracking,
     accIconTracking: acc.iconTracking,
     accLabelFont: acc.labelFont || activeFontFamily, accBodyFont: acc.bodyFont2 || activeFontFamily,
   }}>
@@ -1286,7 +1282,7 @@ const contentGroups = (text: string) => {
               {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
                 <div class="flex justify-center mt-10">
                   <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                     class="vd-cta text-[11px]"
+                     class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
                      style={`color: ${zenText};`}>
                     {block.ctaLabel}
                   </a>
@@ -1547,15 +1543,15 @@ const contentGroups = (text: string) => {
                 fields (border + tracked label + short copy), turned horizontal
                 and laid out in a grid instead of stacked full-width blocks. */}
             {block.cards?.length > 0 && (
-              <div class={`grid ${block.cardColumns || 'grid-cols-2'} ${block.cardGridSpacing || settings.layout?.cardGridSpacing || ''} gap-x-6 gap-y-5 text-left max-w-xl mx-auto mb-6`}>
+              <div class={`grid ${block.cardColumns || 'grid-cols-2'} ${block.cardGridSpacing || settings.layout?.cardGridSpacing || ''} ${block.cardGap || settings.layout?.cardGap || 'gap-x-6 gap-y-5'} text-left max-w-xl mx-auto mb-6`}>
                 {block.cards.map((c: any, i: number) => (
                   <div class="border-t border-current border-opacity-10 pt-2.5">
-                    <p class={`${fontSizeClass(typo.label?.size || 'text-[9px]')} uppercase ${typo.label?.tracking || 'tracking-[0.25em]'} mb-1.5 translate-x-[0.125em]`}
+                    <p class={`${fontSizeClass(typo.label?.size || 'text-[9px]')} uppercase ${typo.label?.tracking || 'tracking-[0.25em]'} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} translate-x-[0.125em]`}
                        style={textStyle(zenText, typo.label?.font, typo.label?.opacity ?? 30)}>
                       {String(i + 1).padStart(2, '0')}
                     </p>
                     {c.title && (
-                      <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} mb-1.5 ${animTextHover ? 'vd-hover-grow' : ''}`}
+                      <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} ${animTextHover ? 'vd-hover-grow' : ''}`}
                          style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>
                         {c.title}
                       </p>
@@ -1605,7 +1601,7 @@ const contentGroups = (text: string) => {
             {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
               <div class="flex justify-center mt-10">
                 <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                   class="vd-cta text-[11px]"
+                   class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
                    style={`color: ${zenText};`}>
                   {block.ctaLabel}
                 </a>

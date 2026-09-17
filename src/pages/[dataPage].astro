@@ -192,7 +192,7 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
     .vd-list { list-style: none; padding: 0; margin: 8px 0 0; }
     .vd-list li { font-size: var(--bodySize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); padding: 7px 0 7px 20px; position: relative; }
     .vd-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--zen-accent, var(--zen-muted)); }
-    .vd-note { font-size: var(--noteSize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+    .vd-note { font-size: var(--noteSize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
     .vd-contact { text-align: center; margin-top: 52px; }
     .vd-soft-link { font-size: var(--eyebrowSize); letter-spacing: var(--eyebrowTracking); color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; font-family: var(--labelFont); }
     .vd-soft-link:hover { opacity: 0.8; }

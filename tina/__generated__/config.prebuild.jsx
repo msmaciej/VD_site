@@ -383,6 +383,27 @@ var pageTemplates = [
         { label: "Medium", value: "mt-6" },
         { label: "Large", value: "mt-10" }
       ] },
+      {
+        type: "string",
+        name: "cardGap",
+        label: "Gap between cards (optional, overrides site default)",
+        description: "Default (blank) keeps the current look \u2014 a slightly wider horizontal gap than vertical. Any other choice sets both to the same value.",
+        options: [
+          { label: "Default \u2014 inherit site-wide setting", value: "" },
+          { label: "Tight", value: "gap-4" },
+          { label: "Snug", value: "gap-5" },
+          { label: "Normal", value: "gap-6" },
+          { label: "Relaxed", value: "gap-8" },
+          { label: "Loose", value: "gap-10" }
+        ]
+      },
+      { type: "string", name: "cardInternalSpacing", label: "Space within each card \u2014 index to title, title to line (optional, overrides site default)", options: [
+        { label: "Default \u2014 inherit site-wide setting", value: "" },
+        { label: "Tight", value: "mb-1" },
+        { label: "Normal", value: "mb-1.5" },
+        { label: "Relaxed", value: "mb-2" },
+        { label: "Loose", value: "mb-3" }
+      ] },
       { type: "string", name: "cardTitleFont", label: "Card title \u2014 Font (optional, overrides site default)", options: fontTypeOptions },
       { type: "string", name: "cardTitleFontSize", label: "Card title \u2014 Size (optional, overrides site default)", options: fontSizeOptions },
       { type: "string", name: "cardTitleFontWeight", label: "Card title \u2014 Weight (optional, overrides site default)", options: fontWeightOptions },
@@ -1302,6 +1323,31 @@ var config_default = defineConfig({
                 { label: "Small", value: "mt-3" },
                 { label: "Medium", value: "mt-6" },
                 { label: "Large", value: "mt-10" }
+              ]
+            },
+            {
+              type: "string",
+              name: "cardGap",
+              label: "Card grid \u2014 default gap between cards",
+              description: "Site-wide default. A section can still override this individually \u2014 blank there = inherit this, and this itself can be left blank to keep the built-in default (a slightly wider horizontal gap than vertical).",
+              options: [
+                { label: "Tight", value: "gap-4" },
+                { label: "Snug", value: "gap-5" },
+                { label: "Normal", value: "gap-6" },
+                { label: "Relaxed", value: "gap-8" },
+                { label: "Loose", value: "gap-10" }
+              ]
+            },
+            {
+              type: "string",
+              name: "cardInternalSpacing",
+              label: "Card grid \u2014 default space within each card",
+              description: "Index to title, title to line. Site-wide default. A section can still override this individually \u2014 blank there = inherit this.",
+              options: [
+                { label: "Tight", value: "mb-1" },
+                { label: "Normal", value: "mb-1.5" },
+                { label: "Relaxed", value: "mb-2" },
+                { label: "Loose", value: "mb-3" }
               ]
             }
           ] },

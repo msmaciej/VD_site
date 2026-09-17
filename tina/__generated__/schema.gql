@@ -152,6 +152,8 @@ type PageBlocksSection {
   cards: [PageBlocksSectionCards]
   cardColumns: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
@@ -330,6 +332,8 @@ input PageBlocksSectionFilter {
   cards: PageBlocksSectionCardsFilter
   cardColumns: StringFilter
   cardGridSpacing: StringFilter
+  cardGap: StringFilter
+  cardInternalSpacing: StringFilter
   cardTitleFont: StringFilter
   cardTitleFontSize: StringFilter
   cardTitleFontWeight: StringFilter
@@ -499,6 +503,8 @@ type Page_deBlocksSection {
   cards: [Page_deBlocksSectionCards]
   cardColumns: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
@@ -655,6 +661,8 @@ input Page_deBlocksSectionFilter {
   cards: Page_deBlocksSectionCardsFilter
   cardColumns: StringFilter
   cardGridSpacing: StringFilter
+  cardGap: StringFilter
+  cardInternalSpacing: StringFilter
   cardTitleFont: StringFilter
   cardTitleFontSize: StringFilter
   cardTitleFontWeight: StringFilter
@@ -1061,6 +1069,8 @@ type SettingsLayout {
   footerHeight: String
   headerInnerWidth: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
 }
 
 type SettingsSeo {
@@ -1384,6 +1394,8 @@ input SettingsLayoutFilter {
   footerHeight: StringFilter
   headerInnerWidth: StringFilter
   cardGridSpacing: StringFilter
+  cardGap: StringFilter
+  cardInternalSpacing: StringFilter
 }
 
 input ImageFilter {
@@ -2190,6 +2202,8 @@ input PageBlocksSectionMutation {
   cards: [PageBlocksSectionCardsMutation]
   cardColumns: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
@@ -2348,6 +2362,8 @@ input Page_deBlocksSectionMutation {
   cards: [Page_deBlocksSectionCardsMutation]
   cardColumns: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
   cardTitleFont: String
   cardTitleFontSize: String
   cardTitleFontWeight: String
@@ -2743,6 +2759,8 @@ input SettingsLayoutMutation {
   footerHeight: String
   headerInnerWidth: String
   cardGridSpacing: String
+  cardGap: String
+  cardInternalSpacing: String
 }
 
 input SettingsSeoMutation {
