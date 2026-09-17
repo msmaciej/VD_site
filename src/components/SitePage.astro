@@ -1161,8 +1161,8 @@ const contentGroups = (text: string) => {
         );
 
         const explainerEl = block.content ? (
-          <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} opacity-90 leading-relaxed max-w-lg mx-auto text-center mt-10`}
-               style={(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''}>
+          <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} leading-relaxed max-w-lg mx-auto text-center mt-10`}
+               style={`${(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''} opacity: ${block.bodyOpacity ?? typo.body?.opacity ?? 90}%;`}>
             {contentGroups(block.content).map((g) => (
               g.kind === 'dots' ? (
                 <div class="vd-dots" aria-hidden="true">
@@ -1183,8 +1183,8 @@ const contentGroups = (text: string) => {
           <div class="vd-screen vd-reveal vd-screen--flow">
             <div class="w-full max-w-2xl text-center my-auto">
               {showTitle && block.title && (
-                <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-thin'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} opacity-90 translate-x-[0.6em]`}
-                    style={textStyle(zenText, block.titleFont || typo.title?.font)}>
+                <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-thin'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] ${block.subTitle ? 'mb-8' : 'mb-12'} translate-x-[0.6em]`}
+                    style={textStyle(zenText, block.titleFont || typo.title?.font, block.titleOpacity ?? typo.title?.opacity ?? 90)}>
                   {block.title.split('|').map((line: string) => (
                     <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                   ))}
@@ -1194,8 +1194,8 @@ const contentGroups = (text: string) => {
                   sub-title sits — so a process flow can say what it is FOR before it shows
                   what it IS. Dot-only segments render as drawn dividers, same as elsewhere. */}
               {showSubtitle && block.subTitle && (
-                <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3 opacity-70`}
-                    style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font)}>
+                <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3`}
+                    style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font, block.subTitleOpacity ?? typo.subTitle?.opacity ?? 70)}>
                   {contentLines(block.subTitle).map(({ line, dots }) => (
                     dots > 0 ? (
                       <span class="vd-dots block" aria-hidden="true">
@@ -1253,8 +1253,8 @@ const contentGroups = (text: string) => {
                 {t.caseStudyTag}
               </p>
 
-              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[13px]')} ${block.titleFontWeight || typo.title?.weight || 'font-bold'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] mb-1 opacity-60 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
-                  style={textStyle(zenText, block.titleFont || typo.title?.font)}>
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[13px]')} ${block.titleFontWeight || typo.title?.weight || 'font-bold'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[1.2em] mb-1 translate-x-[0.6em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+                  style={textStyle(zenText, block.titleFont || typo.title?.font, typo.title?.opacity ?? 60)}>
                 {block.industry || 'Industry'}
               </h2>
 
@@ -1283,8 +1283,8 @@ const contentGroups = (text: string) => {
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.challenge}</p>
-                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed`}
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font, typo.body?.opacity ?? 70)}>
                       {streamLines(block.challenge).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1296,8 +1296,8 @@ const contentGroups = (text: string) => {
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.built}</p>
-                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed`}
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font, typo.body?.opacity ?? 70)}>
                       {streamLines(block.built).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1309,8 +1309,8 @@ const contentGroups = (text: string) => {
                   <div class="border-l border-current border-opacity-10 pl-5">
                     <p class={`${fontSizeClass(block.labelFontSize || 'text-[9px]')} ${block.labelFontWeight || 'font-normal'} uppercase tracking-[0.25em] opacity-30 mb-2 translate-x-[0.125em]`}
                        style={textStyle(zenText, block.labelFont)}>{t.result}</p>
-                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed opacity-70`}
-                         style={textStyle(zenText, block.bodyFont || typo.body?.font)}>
+                    <div class={`${fontSizeClass(block.bodyFontSize || typo.body?.size || 'text-[12px]')} ${block.bodyFontWeight || typo.body?.weight || 'font-thin'} leading-relaxed`}
+                         style={textStyle(zenText, block.bodyFont || typo.body?.font, typo.body?.opacity ?? 70)}>
                       {streamLines(block.result).map((line) => (
                         <span class={`vd-line ${animTextHover ? "vd-hover-grow" : ""}`} style={`transition-delay: ${line.delay};`}>{line.text}</span>
                       ))}
@@ -1390,8 +1390,8 @@ const contentGroups = (text: string) => {
       // inside the fold — identical either way, so folding changes nothing but
       // whether it starts hidden behind the cue.
       const sectionBodyEl = block.content ? (
-        <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} ${typo.body?.uppercase === true ? 'uppercase' : ''} opacity-90 leading-relaxed max-w-lg mx-auto text-center`}
-             style={(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''}>
+        <div class={`${fontSizeClass(block.fontSize || typo.body?.size || 'text-[15px]')} ${block.fontWeight || 'font-normal'} ${typo.body?.uppercase === true ? 'uppercase' : ''} leading-relaxed max-w-lg mx-auto text-center`}
+             style={`${(block.bodyFont || typo.body?.font) ? `font-family: ${fontFamily(block.bodyFont || typo.body?.font)};` : ''} opacity: ${block.bodyOpacity ?? typo.body?.opacity ?? 90}%;`}>
           {contentGroups(block.content).map((g) => (
             g.kind === 'dots' ? (
               <div class="vd-dots" aria-hidden="true">
@@ -1412,8 +1412,8 @@ const contentGroups = (text: string) => {
           <div class={`w-full max-w-2xl text-center ${foldableSection ? 'my-auto' : ''}`}>
 
             {showTitle && block.title && (
-              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-normal'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[0.4em] translate-x-[0.2em] mb-8 opacity-90`}
-                  style={textStyle(zenText, block.titleFont || typo.title?.font)}>
+              <h2 class={`${fontSizeClass(block.titleFontSize || typo.title?.size || 'text-[11px]')} ${block.titleFontWeight || typo.title?.weight || 'font-normal'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} tracking-[0.4em] translate-x-[0.2em] mb-8`}
+                  style={textStyle(zenText, block.titleFont || typo.title?.font, block.titleOpacity ?? typo.title?.opacity ?? 90)}>
                 {block.title.split('|').map((line: string) => (
                   <span class={`block ${animTextHover ? "vd-hover-grow" : ""}`}>{line.trim()}</span>
                 ))}
@@ -1421,8 +1421,8 @@ const contentGroups = (text: string) => {
             )}
 
             {showSubtitle && block.subTitle && (
-              <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3 opacity-70`}
-                  style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font)}>
+              <h3 class={`${fontSizeClass(block.subTitleFontSize || typo.subTitle?.size || 'text-[11px]')} ${block.subTitleFontWeight || typo.subTitle?.weight || 'font-normal'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} tracking-[0.15em] mb-3`}
+                  style={textStyle(zenText, block.subTitleFont || typo.subTitle?.font, block.subTitleOpacity ?? typo.subTitle?.opacity ?? 70)}>
                 {contentLines(block.subTitle).map(({ line, dots }) => (
                   dots > 0 ? (
                     <span class="vd-dots block" aria-hidden="true">
@@ -1501,13 +1501,13 @@ const contentGroups = (text: string) => {
                     </p>
                     {c.title && (
                       <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} mb-1.5 ${animTextHover ? 'vd-hover-grow' : ''}`}
-                         style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font)}>
+                         style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>
                         {c.title}
                       </p>
                     )}
                     {c.line && (
-                      <p class={`${fontSizeClass(block.cardLineFontSize || typo.cardLine?.size || 'xs')} ${block.cardLineFontWeight || typo.cardLine?.weight || 'font-light'} ${typo.cardLine?.uppercase === true ? 'uppercase' : ''} leading-relaxed opacity-65`}
-                         style={textStyle(zenText, block.cardLineFont || typo.cardLine?.font)}>
+                      <p class={`${fontSizeClass(block.cardLineFontSize || typo.cardLine?.size || 'xs')} ${block.cardLineFontWeight || typo.cardLine?.weight || 'font-light'} ${typo.cardLine?.uppercase === true ? 'uppercase' : ''} leading-relaxed`}
+                         style={textStyle(zenText, block.cardLineFont || typo.cardLine?.font, block.cardLineOpacity ?? typo.cardLine?.opacity ?? 65)}>
                         {c.line}
                       </p>
                     )}

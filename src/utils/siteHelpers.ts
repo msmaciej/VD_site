@@ -116,9 +116,10 @@ export const fontFamily = (name: string): string => {
 };
 
 /** Builds an inline style string for a text element. */
-export const textStyle = (color: string, fontName?: string): string => {
+export const textStyle = (color: string, fontName?: string, opacity?: number): string => {
   let s = `color: ${color};`;
   if (fontName) s += ` font-family: ${fontFamily(fontName)};`;
+  if (opacity !== undefined && opacity !== null && !Number.isNaN(opacity)) s += ` opacity: ${opacity}%;`;
   return s;
 };
 

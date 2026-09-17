@@ -52,28 +52,33 @@
       "font": "Inter",
       "size": "xl",
       "weight": "font-bold",
-      "uppercase": true
+      "uppercase": true,
+      "opacity": 90
     },
     "subTitle": {
       "font": "Inter",
       "size": "xl",
       "weight": "font-normal",
-      "uppercase": false
+      "uppercase": false,
+      "opacity": 70
     },
     "body": {
       "font": "Inter",
       "size": "xl",
-      "weight": "font-light"
+      "weight": "font-light",
+      "opacity": 90
     },
     "cardTitle": {
       "font": "Inter",
       "size": "xl",
-      "weight": "font-medium"
+      "weight": "font-medium",
+      "opacity": 100
     },
     "cardLine": {
       "font": "Inter",
       "size": "xl",
-      "weight": "font-light"
+      "weight": "font-light",
+      "opacity": 65
     }
   },
   "appearance": {
