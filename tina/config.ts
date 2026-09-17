@@ -85,16 +85,19 @@ const pageTemplates = [
       { type: "string",  name: "titleFont",       label: "Title — Font",   options: fontTypeOptions },
       { type: "string",  name: "titleFontSize",   label: "Title — Size",   options: fontSizeOptions },
       { type: "string",  name: "titleFontWeight", label: "Title — Weight", options: fontWeightOptions },
+      { type: "number",  name: "titleOpacity",    label: "Title — Opacity 0-100 (optional, overrides site default)" },
 
       { type: "string",  name: "subTitle",           label: "Sub-title text" },
       { type: "string",  name: "subTitleFont",       label: "Sub-title — Font",   options: fontTypeOptions },
       { type: "string",  name: "subTitleFontSize",   label: "Sub-title — Size",   options: fontSizeOptions },
       { type: "string",  name: "subTitleFontWeight", label: "Sub-title — Weight", options: fontWeightOptions },
+      { type: "number",  name: "subTitleOpacity",    label: "Sub-title — Opacity 0-100 (optional, overrides site default)" },
 
       { type: "string",  name: "content",    label: "Body text (use | for line breaks)", ui: { component: "textarea" } },
       { type: "string",  name: "bodyFont",   label: "Body — Font",   options: fontTypeOptions },
       { type: "string",  name: "fontSize",   label: "Body — Size",   options: fontSizeOptions },
       { type: "string",  name: "fontWeight", label: "Body — Weight", options: fontWeightOptions },
+      { type: "number",  name: "bodyOpacity", label: "Body — Opacity 0-100 (optional, overrides site default)" },
 
       // ── Visibility & folding ──────────────────────────────────────────────
       // The three "Show …" switches are ON unless you turn them off (a fresh
@@ -173,9 +176,11 @@ const pageTemplates = [
       { type: "string", name: "cardTitleFont",       label: "Card title — Font (optional, overrides site default)",   options: fontTypeOptions },
       { type: "string", name: "cardTitleFontSize",   label: "Card title — Size (optional, overrides site default)",   options: fontSizeOptions },
       { type: "string", name: "cardTitleFontWeight", label: "Card title — Weight (optional, overrides site default)", options: fontWeightOptions },
+      { type: "number", name: "cardTitleOpacity",    label: "Card title — Opacity 0-100 (optional, overrides site default)" },
       { type: "string", name: "cardLineFont",        label: "Card line — Font (optional, overrides site default)",    options: fontTypeOptions },
       { type: "string", name: "cardLineFontSize",    label: "Card line — Size (optional, overrides site default)",    options: fontSizeOptions },
       { type: "string", name: "cardLineFontWeight",  label: "Card line — Weight (optional, overrides site default)",  options: fontWeightOptions },
+      { type: "number", name: "cardLineOpacity",     label: "Card line — Opacity 0-100 (optional, overrides site default)" },
 
       { type: "string",  name: "meta",    label: "Meta line (optional)",
         description: "Small, quiet line under the body — location, signature. Sized with the contact links, not the body copy." },
@@ -517,6 +522,8 @@ export default defineConfig({
                 { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
                 { type: "boolean", name: "uppercase", label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way." },
+                { type: "number", name: "opacity", label: "Opacity (0–100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry — not limited to preset steps." },
               ]},
               { type: "object", name: "subTitle", label: "Sub-titles", fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -524,6 +531,8 @@ export default defineConfig({
                 { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
                 { type: "boolean", name: "uppercase", label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way." },
+                { type: "number", name: "opacity", label: "Opacity (0–100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry — not limited to preset steps." },
               ]},
               { type: "object", name: "body", label: "Body / main text", fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -531,6 +540,8 @@ export default defineConfig({
                 { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
                 { type: "boolean", name: "uppercase", label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way." },
+                { type: "number", name: "opacity", label: "Opacity (0–100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry — not limited to preset steps." },
               ]},
               { type: "object", name: "cardTitle", label: "Card titles (in a card grid)", fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -538,6 +549,8 @@ export default defineConfig({
                 { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
                 { type: "boolean", name: "uppercase", label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way." },
+                { type: "number", name: "opacity", label: "Opacity (0–100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry — not limited to preset steps." },
               ]},
               { type: "object", name: "cardLine", label: "Card lines (in a card grid)", fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -545,6 +558,8 @@ export default defineConfig({
                 { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
                 { type: "boolean", name: "uppercase", label: "Uppercase",
                   description: "On = displayed in capitals (site look for titles/sub-titles by default). Off = shown exactly as typed. Content in Tina is never changed either way." },
+                { type: "number", name: "opacity", label: "Opacity (0–100)",
+                  description: "100 = fully solid. Lower = fainter / more muted. Free entry — not limited to preset steps." },
               ]},
             ],
           },
