@@ -119,6 +119,7 @@ type PageBlocksSectionGroups {
 type PageBlocksSectionCards {
   title: String
   line: String
+  url: String
 }
 
 type PageBlocksSection {
@@ -318,6 +319,7 @@ input PageBlocksSectionGroupsFilter {
 input PageBlocksSectionCardsFilter {
   title: StringFilter
   line: StringFilter
+  url: StringFilter
 }
 
 input PageBlocksSectionFilter {
@@ -509,6 +511,7 @@ type Page_deBlocksSectionGroups {
 type Page_deBlocksSectionCards {
   title: String
   line: String
+  url: String
 }
 
 type Page_deBlocksSection {
@@ -686,6 +689,7 @@ input Page_deBlocksSectionGroupsFilter {
 input Page_deBlocksSectionCardsFilter {
   title: StringFilter
   line: StringFilter
+  url: StringFilter
 }
 
 input Page_deBlocksSectionFilter {
@@ -2271,6 +2275,7 @@ input PageBlocksSectionGroupsMutation {
 input PageBlocksSectionCardsMutation {
   title: String
   line: String
+  url: String
 }
 
 input PageBlocksSectionMutation {
@@ -2451,6 +2456,7 @@ input Page_deBlocksSectionGroupsMutation {
 input Page_deBlocksSectionCardsMutation {
   title: String
   line: String
+  url: String
 }
 
 input Page_deBlocksSectionMutation {

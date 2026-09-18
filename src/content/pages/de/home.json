@@ -63,7 +63,8 @@
         },
         {
           "title": "Ihre Daten",
-          "line": "Ihre Daten bleiben Ihre, nie gespeichert, nie weitergegeben."
+          "line": "Ihre Daten bleiben Ihre, nie gespeichert, nie weitergegeben.",
+          "url": "/de/data"
         },
         {
           "title": "Vertrag",
@@ -297,7 +298,7 @@
       "showGroupIntros": true,
       "ctaLabel": "Wie wir mit Ihren Daten umgehen",
       "ctaUrl": "/data",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {

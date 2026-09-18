@@ -179,6 +179,8 @@ const pageTemplates = [
         fields: [
           { type: "string", name: "title", label: "Card title (a few words)" },
           { type: "string", name: "line",  label: "One line", ui: { component: "textarea" } },
+          { type: "string", name: "url",   label: "Link URL (optional)",
+            description: "If set, this card renders as a clickable pill linking here instead of the plain card layout. Leave blank for a normal, non-clickable card." },
         ],
       },
       { type: "string", name: "cardColumns", label: "Card grid columns", options: [

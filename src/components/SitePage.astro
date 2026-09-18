@@ -1628,10 +1628,22 @@ const contentGroups = (text: string) => {
                       {String(i + 1).padStart(2, '0')}
                     </p>
                     {c.title && (
-                      <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} ${animTextHover ? 'vd-hover-grow' : ''}`}
-                         style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>
-                        {c.title}
-                      </p>
+                      c.url ? (
+                        // Same title typography/position as the plain card below —
+                        // just wrapped in a pill border and made clickable. Deliberately
+                        // NOT the bigger .vd-cta treatment: this should read as "the same
+                        // card, its title happens to be a pill," not a different layout.
+                        <a href={c.url}
+                           class={`inline-block ${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} rounded-full border border-current border-opacity-25 px-3 py-0.5 -mx-3 hover:border-opacity-60 hover:opacity-80 transition-all duration-300`}
+                           style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>
+                          {c.title}
+                        </a>
+                      ) : (
+                        <p class={`${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} ${animTextHover ? 'vd-hover-grow' : ''}`}
+                           style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>
+                          {c.title}
+                        </p>
+                      )
                     )}
                     {c.line && (
                       <p class={`${fontSizeClass(block.cardLineFontSize || typo.cardLine?.size || 'xs')} ${block.cardLineFontWeight || typo.cardLine?.weight || 'font-light'} ${typo.cardLine?.uppercase === true ? 'uppercase' : ''} ${block.cardLineTracking || typo.cardLine?.tracking || ''} leading-relaxed`}

@@ -61,7 +61,8 @@
         },
         {
           "title": "Your Data",
-          "line": "Your data stays yours and never stored or shared."
+          "line": "Your data stays yours and never stored or shared.",
+          "url": "/data"
         },
         {
           "title": "Contract",
@@ -297,7 +298,7 @@
       "showGroupIntros": true,
       "ctaLabel": "How we handle your data",
       "ctaUrl": "/data",
-      "enabled": true,
+      "enabled": false,
       "_template": "section"
     },
     {

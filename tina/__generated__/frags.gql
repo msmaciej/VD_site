@@ -46,6 +46,7 @@ fragment PageParts on Page {
         __typename
         title
         line
+        url
       }
       cardColumns
       cardGridSpacing
@@ -211,6 +212,7 @@ fragment Page_deParts on Page_de {
         __typename
         title
         line
+        url
       }
       cardColumns
       cardGridSpacing

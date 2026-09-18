@@ -5,7 +5,7 @@
 // page is not built at all — a direct visit just gets the normal not-found.
 import Layout from '../../layouts/Layout.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
-import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm } from '../../utils/siteHelpers.ts';
+import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm, themeColors, themeFamily } from '../../utils/siteHelpers.ts';
 import doc from '../../content/dataPage/de.json';
 
 export async function getStaticPaths() {
@@ -48,6 +48,19 @@ const vd = {
 const currentTheme = settings.appearance.theme || 'light';
 const currentYear  = new Date().getFullYear();
 
+// ── Theme toggle (mirrors SitePage.astro / the EN data page exactly) ──────
+const getBgColor = () => {
+  if (settings.appearance.customBackgroundColor) return settings.appearance.customBackgroundColor;
+  return themeColors[currentTheme]?.bg || '#ffffff';
+};
+const getTextColor = (customColor?: string) => {
+  const base = customColor || settings.appearance.baseTextColor;
+  if (!base) return themeColors[currentTheme]?.text || '#0a0a0a';
+  return base;
+};
+const themeToggleEnabled = settings.appearance.enableThemeToggle === true;
+const autoFamily = themeFamily(getBgColor());
+
 const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
   ? settings.appearance.customFontName
   : (settings.appearance.fontPreset || 'Inter');
@@ -69,7 +82,8 @@ const contactEmail = (doc as any).contactEmail || settings.seo.contactEmail || '
 const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Boolean);
 ---
 
-<Layout title={`${(doc as any).heading} — VortexDeep`} description={(doc as any).intro || ''} ogImage={settings.seo.ogImage || ''} siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'} theme={currentTheme} lang="de">
+<Layout title={`${(doc as any).heading} — VortexDeep`} description={(doc as any).intro || ''} ogImage={settings.seo.ogImage || ''} siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'} theme={currentTheme} lang="de"
+        autoBg={getBgColor()} autoText={getTextColor()} autoFamily={autoFamily} themeToggleEnabled={themeToggleEnabled}>
   <header class="vd-fixed-header"
           style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
     <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
@@ -110,6 +124,23 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
           </a>
         ))}
         <LanguageSwitcher lang="de" slug="data" />
+        {themeToggleEnabled && (
+          <button type="button" data-vd-theme-cycle
+                  class="vd-theme-btn" style="color: var(--zen-text);"
+                  aria-label="Hell-/Dunkelansicht wechseln">
+            <span class="vd-theme-icon vd-theme-icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="12" cy="12" r="4.2"/>
+                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/>
+              </svg>
+            </span>
+            <span class="vd-theme-icon vd-theme-icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.7 6.7 0 0 0 10.7 10.7Z"/>
+              </svg>
+            </span>
+          </button>
+        )}
       </nav>
     </div>
   </header>
@@ -170,6 +201,26 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
     .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
     .vd-icon:hover { opacity: 0.9; }
     .vd-icon.round { border-radius: 50%; }
+
+    /* ── Theme toggle (sun/moon) — copied verbatim, see EN data page for why. */
+    .vd-theme-btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; padding: 0; border: none; background: none;
+      cursor: pointer;
+    }
+    .vd-theme-icon {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.4) rotate(-70deg);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .vd-theme-icon svg { width: 100%; height: 100%; }
+    html:not([data-theme-forced])[data-auto-family="dark"]  .vd-theme-icon-sun  { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced])[data-auto-family="light"] .vd-theme-icon-moon { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced]) .vd-theme-btn:hover .vd-theme-icon { opacity: 0.62; }
+    html[data-theme-forced="light"] .vd-theme-icon-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+    html[data-theme-forced="dark"]  .vd-theme-icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
   </style>
 
   <style define:vars={{
