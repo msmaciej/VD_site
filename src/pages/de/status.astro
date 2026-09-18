@@ -1,14 +1,24 @@
 ---
-// src/pages/de/status.astro  →  vortexdeep.ch/de/status
-// German mirror of src/pages/status.astro — see that file for the full
-// explanation of why this reuses SiteStatusScreen. SiteStatusScreen itself
-// already shows both languages at once (German first, English muted below),
-// so the two language routes exist for URL/hreflang consistency with the
-// rest of the bilingual site, not because the content itself differs.
+// src/pages/status.astro  →  vortexdeep.ch/status
+// Full explanation behind the "In preparation" notice-banner pill.
+//
+// Previous version of this page rendered SiteStatusScreen (the component
+// that also backs the full-site gate) and then patched its independent
+// typography from outside with CSS overrides computed to (in theory) match
+// the hero. That kept drifting in practice, apparently — so this version
+// takes a more direct approach: no separate component, no override, no
+// recomputation of values that are supposed to match something else. The
+// title, badge, body text and background below are built with the exact
+// same fontSizeClass()/textStyle() calls, the exact same Typography-role
+// lookups (typo.title / typo.body / typo.noticeBannerText), and the exact
+// same background-muting formula that SitePage.astro's own hero uses — not
+// a parallel copy of the numbers, the literal same function calls on the
+// literal same settings object. If the hero ever changes, so does this.
 import Layout from '../../layouts/Layout.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
-import SiteStatusScreen from '../../components/SiteStatusScreen.astro';
-import { fontFamily, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, themeColors, themeFamily, socialIcon, fontSizePx, fontWeightNumber, trackingEm } from '../../utils/siteHelpers.ts';
+import DepthNetworkBackground from '../../components/DepthNetworkBackground.astro';
+import PlanetarySystemsBackground from '../../components/PlanetarySystemsBackground.astro';
+import { fontFamily, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, themeColors, themeFamily, socialIcon, fontSizePx, trackingEm } from '../../utils/siteHelpers.ts';
 
 const settingFiles = await Astro.glob('../../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
@@ -27,6 +37,8 @@ const getTextColor = (customColor?: string) => {
 };
 const themeToggleEnabled = settings.appearance.enableThemeToggle === true;
 const autoFamily = themeFamily(getBgColor());
+const zenText = 'var(--zen-text)';
+const zenBg   = 'var(--zen-bg)';
 
 const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
   ? settings.appearance.customFontName
@@ -46,11 +58,38 @@ const resolvedNavLinks = filterNavLinks(settings.header.navLinks, fitCheckEnable
   url:   link.url,
 }));
 
-// See src/pages/status.astro for why — same fix, same reasoning.
-const heroTitleSizePx    = fontSizePx(settings.hero.siteNameFontSize || typo.title?.size, '3xl');
-const heroTitleWeight    = fontWeightNumber(settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin') || '400';
-const heroTitleTracking  = trackingEm(settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]') || '0.5em';
-const heroTitleUppercase = typo.title?.uppercase !== false;
+// ── Background: identical formula to SitePage.astro's hero (not a copy of
+// its output, the same color-mix() calculation on the same settings) ──────
+const backgroundStyle = settings.animations.backgroundStyle || 'none';
+const animDepthBg   = backgroundStyle === 'depth';
+const animPlanetary = backgroundStyle === 'planetary';
+const anyFixedBackground = animDepthBg || animPlanetary;
+const headerFooterBg = anyFixedBackground
+  ? `background-color: color-mix(in srgb, ${zenBg} 70%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
+  : `background-color: ${zenBg};`;
+const contentWrapperBg = anyFixedBackground
+  ? `background-color: color-mix(in srgb, ${zenBg} 82%, transparent); position: relative; z-index: 1;`
+  : `background-color: ${zenBg};`;
+
+// ── Badge: the exact "pill" notice-banner values (this badge IS that pill,
+// just standing alone on its own page instead of sitting atop the hero) ───
+const noticeTextSize     = fontSizePx(settings.noticeBanner?.noticeBannerTextFontSize || typo.noticeBannerText?.size, 'xs');
+const noticeTextWeight   = settings.noticeBanner?.noticeBannerTextFontWeight || typo.noticeBannerText?.weight || '400';
+const noticeTextFont     = settings.noticeBanner?.noticeBannerFont || typo.noticeBannerText?.font;
+const noticeTextOpacity  = settings.noticeBanner?.noticeBannerOpacity ?? typo.noticeBannerText?.opacity;
+const noticeTextTracking = trackingEm(settings.noticeBanner?.noticeBannerTracking || typo.noticeBannerText?.tracking);
+const noticeDot          = settings.noticeBanner?.noticeBannerDot || 'static';
+
+// ── Status copy: Tina override (Site Settings → Site status — custom
+// wording) if filled in, else the same bilingual defaults the full-site gate
+// uses — kept here rather than importing SiteStatusScreen just for its
+// constants, since this page no longer renders that component. ───────────
+const sc: any = settings.siteStatusContent || {};
+const badgeDe = sc.preparationBadge_de   || 'In Vorbereitung';
+const badgeEn = sc.preparationBadge_en   || 'In preparation';
+const msgDe   = sc.preparationMessage_de || 'VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.';
+const msgEn   = sc.preparationMessage_en || 'VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.';
+const updated = new Date().toLocaleDateString('de-CH', { year: 'numeric', month: 'long' });
 
 const title = 'In Vorbereitung — VortexDeep';
 const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig.';
@@ -58,9 +97,8 @@ const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist no
 
 <Layout title={title} description={description} ogImage={settings.seo.ogImage || ''} siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'} theme={currentTheme} lang="de"
         autoBg={getBgColor()} autoText={getTextColor()} autoFamily={autoFamily} themeToggleEnabled={themeToggleEnabled} noindex={true}>
-  <header class="vd-fixed-header"
-          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
-    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+  <header class="vd-fixed-header" style={headerFooterBg}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth}; color: var(--zen-text);`}>
       <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
          style="text-decoration:none; color:inherit;">
         {settings.appearance.showLogo && (
@@ -119,7 +157,73 @@ const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist no
     </div>
   </header>
 
-  <SiteStatusScreen mode="preparation" lang="de" />
+  {animDepthBg && (
+    <DepthNetworkBackground
+      nodeColor={settings.animations.depthBackground?.nodeColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      nodeCount={settings.animations.depthBackground?.nodeCount || undefined}
+      connectDistance={settings.animations.depthBackground?.connectDistance || undefined}
+      lineOpacity={settings.animations.depthBackground?.lineOpacity ?? undefined}
+      nodeOpacity={settings.animations.depthBackground?.nodeOpacity ?? undefined}
+      lightNodeColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkNodeColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
+    />
+  )}
+  {animPlanetary && (
+    <PlanetarySystemsBackground
+      starColor={settings.animations.planetarySystems?.starColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      systemCount={settings.animations.planetarySystems?.systemCount ?? undefined}
+      maxPlanets={settings.animations.planetarySystems?.maxPlanets ?? undefined}
+      orbitMinRadius={settings.animations.planetarySystems?.orbitMinRadius ?? undefined}
+      orbitMaxRadius={settings.animations.planetarySystems?.orbitMaxRadius ?? undefined}
+      pathOpacity={settings.animations.planetarySystems?.pathOpacity ?? undefined}
+      lightStarColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkStarColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
+    />
+  )}
+
+  <div style={contentWrapperBg}>
+    <main class="min-h-[100svh] flex flex-col items-center justify-center px-6 text-center"
+          style={`padding-top: calc(${headerHeight} + 40px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 40px);`}>
+      <div class="w-full max-w-xl">
+
+        {/* Brand line — the literal hero h1 JSX from SitePage.astro. */}
+        <h1 class={`${fontSizeClass(settings.hero.siteNameFontSize || typo.title?.size || 'text-3xl md:text-4xl')} ${settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin'} text-center ${settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} leading-none translate-x-[0.25em] mb-8`}
+            style={textStyle(zenText, settings.hero.siteNameFont || typo.title?.font, settings.hero.siteNameOpacity ?? typo.title?.opacity ?? 100)}>
+          {settings.hero.siteName || 'VortexDeep'}
+        </h1>
+
+        {/* Badge — the literal 'pill' notice-banner JSX, as a static (non-link)
+            span since we're already on the page it would otherwise link to. */}
+        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%; margin-bottom: 30px;`}>
+          {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{badgeDe} · {badgeEn}
+        </span>
+
+        {/* Body — the literal section-body paragraph pattern (typo.body),
+            same as any other section's `content` field on the home page. */}
+        <p class={`${fontSizeClass(typo.body?.size || 'text-[15.5px]')} ${typo.body?.weight || 'font-normal'} leading-relaxed max-w-md mx-auto`}
+           style={`${(typo.body?.font) ? `font-family: ${fontFamily(typo.body.font)};` : ''} color: ${zenText}; opacity: ${typo.body?.opacity ?? 100}%; margin-top: 30px;`} lang="de">
+          {msgDe}
+        </p>
+        <div style="width: 40px; height: 1px; margin: 22px auto; background: var(--zen-muted); opacity: 0.5;" aria-hidden="true"></div>
+        <p class={`${fontSizeClass(typo.body?.size || 'text-[15.5px]')} ${typo.body?.weight || 'font-normal'} leading-relaxed max-w-md mx-auto`}
+           style={`${(typo.body?.font) ? `font-family: ${fontFamily(typo.body.font)};` : ''} color: var(--zen-muted); opacity: 90%;`} lang="en">
+          {msgEn}
+        </p>
+
+        <p class={`${fontSizeClass(typo.label?.size || 'text-[11px]')} tracking-[0.08em]`}
+           style={`color: var(--zen-muted); opacity: ${typo.label?.opacity ?? 80}%; margin-top: 34px; ${typo.label?.font ? `font-family: ${fontFamily(typo.label.font)};` : ''}`}>
+          Stand · Last updated: {updated}
+        </p>
+
+      </div>
+    </main>
+  </div>
 
   <footer class="vd-fixed-footer"
           style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
@@ -142,7 +246,7 @@ const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist no
     </p>
   </footer>
 
-  <style define:vars={{ headerHeight, footerHeight, heroTitleSizePx, heroTitleWeight, heroTitleTracking }} is:global>
+  <style is:global>
     .vd-nav-link { transition: opacity 0.2s ease; }
     .vd-nav-link:hover { opacity: 1 !important; }
     .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
@@ -151,18 +255,10 @@ const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist no
     .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
     .vd-icon:hover { opacity: 0.9; }
     .vd-icon.round { border-radius: 50%; }
-    .vd-status {
-      padding-top: calc(var(--headerHeight) + 40px) !important;
-      padding-bottom: calc(var(--footerHeight) + env(safe-area-inset-bottom, 0px) + 40px) !important;
-    }
-    .vd-status__brand {
-      font-size: var(--heroTitleSizePx) !important;
-      font-weight: var(--heroTitleWeight) !important;
-      letter-spacing: var(--heroTitleTracking) !important;
-      text-transform: uppercase !important;
-    }
-    .vd-status__badge { font-size: var(--heroTitleSizePx) !important; }
-    .vd-status__scrim { opacity: 0.82 !important; }
+    .vd-notice-dot { width:7px; height:7px; border-radius:50%; background:var(--zen-accent); box-shadow:0 0 11px 1px var(--zen-accent); flex:none; display:inline-block; }
+    .vd-notice-dot--pulse { animation: vdNoticePulse 3s ease-in-out infinite; }
+    @keyframes vdNoticePulse { 0%,100%{ opacity:1; box-shadow:0 0 11px 1px var(--zen-accent); } 50%{ opacity:0.45; box-shadow:0 0 4px 0 var(--zen-accent); } }
+    @media (prefers-reduced-motion: reduce){ .vd-notice-dot--pulse{ animation:none; } }
 
     .vd-theme-btn {
       position: relative;

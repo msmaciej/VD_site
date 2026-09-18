@@ -1,18 +1,24 @@
 ---
 // src/pages/status.astro  →  vortexdeep.ch/status
-// Full explanation behind the "In preparation" notice-banner pill (SitePage.astro
-// links to this from the pill when noticeBannerStyle === 'pill'). Reuses
-// SiteStatusScreen — the exact same component/copy already used to gate the
-// WHOLE site when Site Settings → Site status is "In preparation" — rather
-// than duplicating that message in a second place. The difference here is
-// only the wrapper: this page keeps the normal fixed header (so there's a
-// way back to the site and the theme toggle still works), where the full-site
-// gate in Layout.astro shows SiteStatusScreen with no header at all, since in
-// that mode there's nowhere else on the site to navigate to anyway.
+// Full explanation behind the "In preparation" notice-banner pill.
+//
+// Previous version of this page rendered SiteStatusScreen (the component
+// that also backs the full-site gate) and then patched its independent
+// typography from outside with CSS overrides computed to (in theory) match
+// the hero. That kept drifting in practice, apparently — so this version
+// takes a more direct approach: no separate component, no override, no
+// recomputation of values that are supposed to match something else. The
+// title, badge, body text and background below are built with the exact
+// same fontSizeClass()/textStyle() calls, the exact same Typography-role
+// lookups (typo.title / typo.body / typo.noticeBannerText), and the exact
+// same background-muting formula that SitePage.astro's own hero uses — not
+// a parallel copy of the numbers, the literal same function calls on the
+// literal same settings object. If the hero ever changes, so does this.
 import Layout from '../layouts/Layout.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-import SiteStatusScreen from '../components/SiteStatusScreen.astro';
-import { fontFamily, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, themeColors, themeFamily, socialIcon, fontSizePx, fontWeightNumber, trackingEm } from '../utils/siteHelpers.ts';
+import DepthNetworkBackground from '../components/DepthNetworkBackground.astro';
+import PlanetarySystemsBackground from '../components/PlanetarySystemsBackground.astro';
+import { fontFamily, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, themeColors, themeFamily, socialIcon, fontSizePx, trackingEm } from '../utils/siteHelpers.ts';
 
 const settingFiles = await Astro.glob('../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
@@ -20,7 +26,6 @@ const typo = (settings.typography || {}) as any;
 
 const currentTheme = settings.appearance.theme || 'light';
 
-// ── Theme toggle (mirrors SitePage.astro / the data page exactly) ─────────
 const getBgColor = () => {
   if (settings.appearance.customBackgroundColor) return settings.appearance.customBackgroundColor;
   return themeColors[currentTheme]?.bg || '#ffffff';
@@ -32,6 +37,8 @@ const getTextColor = (customColor?: string) => {
 };
 const themeToggleEnabled = settings.appearance.enableThemeToggle === true;
 const autoFamily = themeFamily(getBgColor());
+const zenText = 'var(--zen-text)';
+const zenBg   = 'var(--zen-bg)';
 
 const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
   ? settings.appearance.customFontName
@@ -51,20 +58,38 @@ const resolvedNavLinks = filterNavLinks(settings.header.navLinks, fitCheckEnable
   url:   link.url,
 }));
 
-// SiteStatusScreen's own title/text sizing is a standalone clamp() that
-// ignores the Title typography role entirely (a pre-existing gap in that
-// component — its computed brandSize value is calculated but never actually
-// wired into its CSS), so on this page it rendered up to 30px, skipped
-// uppercase, and used different letter-spacing, versus the hero heading's
-// actual 20px/bold/uppercase/0.5em on the home page. Resolved the exact same
-// way SitePage.astro resolves its own hero title, then applied as an
-// override below — not by editing the shared component, since it also backs
-// the full-site "paused" gate elsewhere and message/badge sizing there are
-// already correct (only the brand title had this gap).
-const heroTitleSizePx    = fontSizePx(settings.hero.siteNameFontSize || typo.title?.size, '3xl');
-const heroTitleWeight    = fontWeightNumber(settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin') || '400';
-const heroTitleTracking  = trackingEm(settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]') || '0.5em';
-const heroTitleUppercase = typo.title?.uppercase !== false;
+// ── Background: identical formula to SitePage.astro's hero (not a copy of
+// its output, the same color-mix() calculation on the same settings) ──────
+const backgroundStyle = settings.animations.backgroundStyle || 'none';
+const animDepthBg   = backgroundStyle === 'depth';
+const animPlanetary = backgroundStyle === 'planetary';
+const anyFixedBackground = animDepthBg || animPlanetary;
+const headerFooterBg = anyFixedBackground
+  ? `background-color: color-mix(in srgb, ${zenBg} 70%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);`
+  : `background-color: ${zenBg};`;
+const contentWrapperBg = anyFixedBackground
+  ? `background-color: color-mix(in srgb, ${zenBg} 82%, transparent); position: relative; z-index: 1;`
+  : `background-color: ${zenBg};`;
+
+// ── Badge: the exact "pill" notice-banner values (this badge IS that pill,
+// just standing alone on its own page instead of sitting atop the hero) ───
+const noticeTextSize     = fontSizePx(settings.noticeBanner?.noticeBannerTextFontSize || typo.noticeBannerText?.size, 'xs');
+const noticeTextWeight   = settings.noticeBanner?.noticeBannerTextFontWeight || typo.noticeBannerText?.weight || '400';
+const noticeTextFont     = settings.noticeBanner?.noticeBannerFont || typo.noticeBannerText?.font;
+const noticeTextOpacity  = settings.noticeBanner?.noticeBannerOpacity ?? typo.noticeBannerText?.opacity;
+const noticeTextTracking = trackingEm(settings.noticeBanner?.noticeBannerTracking || typo.noticeBannerText?.tracking);
+const noticeDot          = settings.noticeBanner?.noticeBannerDot || 'static';
+
+// ── Status copy: Tina override (Site Settings → Site status — custom
+// wording) if filled in, else the same bilingual defaults the full-site gate
+// uses — kept here rather than importing SiteStatusScreen just for its
+// constants, since this page no longer renders that component. ───────────
+const sc: any = settings.siteStatusContent || {};
+const badgeDe = sc.preparationBadge_de   || 'In Vorbereitung';
+const badgeEn = sc.preparationBadge_en   || 'In preparation';
+const msgDe   = sc.preparationMessage_de || 'VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.';
+const msgEn   = sc.preparationMessage_en || 'VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.';
+const updated = new Date().toLocaleDateString('de-CH', { year: 'numeric', month: 'long' });
 
 const title = 'In preparation — VortexDeep';
 const description = 'VortexDeep is currently in preparation and is not yet commercially active.';
@@ -72,9 +97,8 @@ const description = 'VortexDeep is currently in preparation and is not yet comme
 
 <Layout title={title} description={description} ogImage={settings.seo.ogImage || ''} siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'} theme={currentTheme} lang="en"
         autoBg={getBgColor()} autoText={getTextColor()} autoFamily={autoFamily} themeToggleEnabled={themeToggleEnabled} noindex={true}>
-  <header class="vd-fixed-header"
-          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
-    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+  <header class="vd-fixed-header" style={headerFooterBg}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth}; color: var(--zen-text);`}>
       <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
          style="text-decoration:none; color:inherit;">
         {settings.appearance.showLogo && (
@@ -133,7 +157,73 @@ const description = 'VortexDeep is currently in preparation and is not yet comme
     </div>
   </header>
 
-  <SiteStatusScreen mode="preparation" lang="en" />
+  {animDepthBg && (
+    <DepthNetworkBackground
+      nodeColor={settings.animations.depthBackground?.nodeColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      nodeCount={settings.animations.depthBackground?.nodeCount || undefined}
+      connectDistance={settings.animations.depthBackground?.connectDistance || undefined}
+      lineOpacity={settings.animations.depthBackground?.lineOpacity ?? undefined}
+      nodeOpacity={settings.animations.depthBackground?.nodeOpacity ?? undefined}
+      lightNodeColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkNodeColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
+    />
+  )}
+  {animPlanetary && (
+    <PlanetarySystemsBackground
+      starColor={settings.animations.planetarySystems?.starColor || getTextColor()}
+      fogColor={settings.animations.depthBackground?.fogColor || getBgColor()}
+      systemCount={settings.animations.planetarySystems?.systemCount ?? undefined}
+      maxPlanets={settings.animations.planetarySystems?.maxPlanets ?? undefined}
+      orbitMinRadius={settings.animations.planetarySystems?.orbitMinRadius ?? undefined}
+      orbitMaxRadius={settings.animations.planetarySystems?.orbitMaxRadius ?? undefined}
+      pathOpacity={settings.animations.planetarySystems?.pathOpacity ?? undefined}
+      lightStarColor={themeColors.light.text}
+      lightFogColor={themeColors.light.bg}
+      darkStarColor={themeColors.dark.text}
+      darkFogColor={themeColors.dark.bg}
+    />
+  )}
+
+  <div style={contentWrapperBg}>
+    <main class="min-h-[100svh] flex flex-col items-center justify-center px-6 text-center"
+          style={`padding-top: calc(${headerHeight} + 40px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 40px);`}>
+      <div class="w-full max-w-xl">
+
+        {/* Brand line — the literal hero h1 JSX from SitePage.astro. */}
+        <h1 class={`${fontSizeClass(settings.hero.siteNameFontSize || typo.title?.size || 'text-3xl md:text-4xl')} ${settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin'} text-center ${settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} leading-none translate-x-[0.25em] mb-8`}
+            style={textStyle(zenText, settings.hero.siteNameFont || typo.title?.font, settings.hero.siteNameOpacity ?? typo.title?.opacity ?? 100)}>
+          {settings.hero.siteName || 'VortexDeep'}
+        </h1>
+
+        {/* Badge — the literal 'pill' notice-banner JSX, as a static (non-link)
+            span since we're already on the page it would otherwise link to. */}
+        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%; margin-bottom: 30px;`}>
+          {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{badgeDe} · {badgeEn}
+        </span>
+
+        {/* Body — the literal section-body paragraph pattern (typo.body),
+            same as any other section's `content` field on the home page. */}
+        <p class={`${fontSizeClass(typo.body?.size || 'text-[15.5px]')} ${typo.body?.weight || 'font-normal'} leading-relaxed max-w-md mx-auto`}
+           style={`${(typo.body?.font) ? `font-family: ${fontFamily(typo.body.font)};` : ''} color: ${zenText}; opacity: ${typo.body?.opacity ?? 100}%; margin-top: 30px;`} lang="de">
+          {msgDe}
+        </p>
+        <div style="width: 40px; height: 1px; margin: 22px auto; background: var(--zen-muted); opacity: 0.5;" aria-hidden="true"></div>
+        <p class={`${fontSizeClass(typo.body?.size || 'text-[15.5px]')} ${typo.body?.weight || 'font-normal'} leading-relaxed max-w-md mx-auto`}
+           style={`${(typo.body?.font) ? `font-family: ${fontFamily(typo.body.font)};` : ''} color: var(--zen-muted); opacity: 90%;`} lang="en">
+          {msgEn}
+        </p>
+
+        <p class={`${fontSizeClass(typo.label?.size || 'text-[11px]')} tracking-[0.08em]`}
+           style={`color: var(--zen-muted); opacity: ${typo.label?.opacity ?? 80}%; margin-top: 34px; ${typo.label?.font ? `font-family: ${fontFamily(typo.label.font)};` : ''}`}>
+          Stand · Last updated: {updated}
+        </p>
+
+      </div>
+    </main>
+  </div>
 
   <footer class="vd-fixed-footer"
           style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
@@ -156,7 +246,7 @@ const description = 'VortexDeep is currently in preparation and is not yet comme
     </p>
   </footer>
 
-  <style define:vars={{ headerHeight, footerHeight, heroTitleSizePx, heroTitleWeight, heroTitleTracking }} is:global>
+  <style is:global>
     .vd-nav-link { transition: opacity 0.2s ease; }
     .vd-nav-link:hover { opacity: 1 !important; }
     .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
@@ -165,44 +255,11 @@ const description = 'VortexDeep is currently in preparation and is not yet comme
     .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
     .vd-icon:hover { opacity: 0.9; }
     .vd-icon.round { border-radius: 50%; }
+    .vd-notice-dot { width:7px; height:7px; border-radius:50%; background:var(--zen-accent); box-shadow:0 0 11px 1px var(--zen-accent); flex:none; display:inline-block; }
+    .vd-notice-dot--pulse { animation: vdNoticePulse 3s ease-in-out infinite; }
+    @keyframes vdNoticePulse { 0%,100%{ opacity:1; box-shadow:0 0 11px 1px var(--zen-accent); } 50%{ opacity:0.45; box-shadow:0 0 4px 0 var(--zen-accent); } }
+    @media (prefers-reduced-motion: reduce){ .vd-notice-dot--pulse{ animation:none; } }
 
-    /* SiteStatusScreen's own layout assumes no header/footer around it (its
-       usual home, the full-site gate, has neither). Embedded here between a
-       fixed header AND a fixed footer, it needs extra top AND bottom padding
-       so neither one sits over its content — added from outside via plain
-       class override rather than editing the shared component, since that
-       component also backs the critical full-site "paused" gate and
-       shouldn't change for this. */
-    .vd-status {
-      padding-top: calc(var(--headerHeight) + 40px) !important;
-      padding-bottom: calc(var(--footerHeight) + env(safe-area-inset-bottom, 0px) + 40px) !important;
-    }
-
-    /* Brand title: match the hero heading's actual size/weight/tracking/case
-       (computed above) instead of the component's own standalone clamp(). */
-    .vd-status__brand {
-      font-size: var(--heroTitleSizePx) !important;
-      font-weight: var(--heroTitleWeight) !important;
-      letter-spacing: var(--heroTitleTracking) !important;
-      text-transform: uppercase !important;
-    }
-
-    /* The "IN preparation" badge uses the component's own Label-role size
-       (17px here) rather than Title (20px) — a different, smaller role by
-       default, not a bug, but not what "matches the section headings" means
-       either. Matched to Title/heroTitleSizePx here since that's the
-       comparison actually wanted. */
-    .vd-status__badge { font-size: var(--heroTitleSizePx) !important; }
-
-    /* The home page doesn't skip muting the canvas either — it has no literal
-       scrim div, but SitePage.astro's whole content wrapper carries
-       background-color: color-mix(in srgb, zenBg 82%, transparent), which
-       mutes it the same way. SiteStatusScreen's own scrim defaults to 0.55
-       (~45% visible) — noticeably LESS muted than the hero's ~18% visible,
-       not more, so matching the hero means raising this, not zeroing it. */
-    .vd-status__scrim { opacity: 0.82 !important; }
-
-    /* ── Theme toggle (sun/moon) — copied verbatim, see the data page for why. */
     .vd-theme-btn {
       position: relative;
       display: inline-flex; align-items: center; justify-content: center;
