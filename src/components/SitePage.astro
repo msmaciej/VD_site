@@ -1670,9 +1670,19 @@ const contentGroups = (text: string) => {
           section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
           item.setAttribute('data-open', 'true');
-          // Anchor the opened group's header near the top so its content
-          // unfolds downward rather than pushing up into the panel above.
-          setTimeout(() => head.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+          // Anchor to the SECTION's own top, not the clicked header. The
+          // section's top is always an exact scroll-snap point; a header
+          // further down the list is not. With scroll-snap-type:mandatory
+          // and this section's scroll-snap-stop:normal (needed so a plain
+          // wheel-scroll can still pass over this tall section), scrolling
+          // to a non-snap point deep in the section gets resolved by the
+          // browser onto the NEXT section's snap point instead of this
+          // one — which is exactly the "jumps to the next section" bug
+          // seen when opening one of the later groups. Scrolling to the
+          // section itself removes the ambiguity entirely (this mirrors
+          // the close-branch above, and the separate per-section fold
+          // below, both of which never exhibited the jump).
+          setTimeout(() => section?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
         }
       });
 
