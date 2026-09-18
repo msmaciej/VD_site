@@ -543,7 +543,9 @@
       "titleFontWeight": "",
       "subTitle": "",
       "subTitleFontSize": "",
+      "meta": "Zürich, Schweiz",
       "email": "info@vortexdeep.ch",
+      "ctaLabel": "",
       "enabled": true,
       "_template": "section"
     }

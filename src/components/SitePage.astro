@@ -46,8 +46,6 @@ const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appe
 
 const activeFontFamily = fontFamily(activeFont);
 
-const allFontsUrl = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=Inter:wght@100;300;400;500;600;700&family=Lora:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Mono:wght@400;700&family=Newsreader:ital,wght@0,100;0,300;0,400;0,700;1,400&display=swap";
-
 // ── Colour helpers ────────────────────────────────────────────────────────────
 const getBgColor = () => {
   if (settings.appearance.customBackgroundColor) return settings.appearance.customBackgroundColor;
@@ -104,13 +102,11 @@ const noticeBannerBody = lang === 'de'
   : (settings.noticeBanner.noticeBannerBody_en || settings.noticeBanner.noticeBannerBody_de);
 const noticeBannerStyle = settings.noticeBanner.noticeBannerStyle || 'ribbon';
 const noticeFlowSecs    = settings.noticeBanner.noticeBannerFlowSeconds || '34';
-// Reserved height for the persistent notice bar (ribbon/pill sit fixed under the
-// header on every screen). Stacked stays hero-only, so it reserves nothing.
-const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
-  ? '0px'
-  : (noticeBannerStyle === 'pill' ? '38px' : '32px');
 // Banner dot: 'static' (steady glow, default), 'animated' (pulses), or 'none'.
 const noticeDot = settings.noticeBanner.noticeBannerDot || 'static';
+// CTA button shape (Site Settings → Layout dimensions → Button — default
+// shape, or a per-button override). 'sharp' matches the original look.
+const ctaRadiusOf = (shape?: string) => shape === 'pill' ? '999px' : shape === 'rounded' ? '8px' : '0px';
 // Site-wide typography defaults (Site Settings → Typography). Blocks inherit
 // these unless they set their own size/weight. blank/undefined = fall through.
 const typo = (settings.typography || {}) as any;
@@ -120,6 +116,7 @@ const typo = (settings.typography || {}) as any;
 // with no Tina field at all. Now driven by Label / Body — each keeps its own
 // current value as the fallback, so nothing moves until you set something.
 const acc = {
+  labelSize: typo.label?.size ? fontSizePx(typo.label.size) : '13px',
   labelWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
   labelTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
   labelOpacity: typo.label?.opacity ?? 50,
@@ -130,8 +127,11 @@ const acc = {
   introOpacity: typo.body?.opacity ?? 60,
   copySize: typo.body?.size ? fontSizePx(typo.body.size) : '12px',
   copyOpacity: typo.body?.opacity ?? 58,
-  ctaTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.3em',
-  ctaOpacity: typo.label?.opacity ?? 75,
+  ctaSize: typo.button?.size ? fontSizePx(typo.button.size) : '11px',
+  ctaWeight: typo.button?.weight ? fontWeightNumber(typo.button.weight) : '400',
+  ctaTracking: typo.button?.tracking ? trackingEm(typo.button.tracking) : '0.3em',
+  ctaOpacity: typo.button?.opacity ?? 75,
+  ctaFont: typo.button?.font ? fontFamily(typo.button.font) : null,
   cueSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
   cueTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
   cueOpacity: typo.label?.opacity ?? 50,
@@ -149,6 +149,25 @@ const noticeBodyWeight   = settings.noticeBanner.noticeBannerBodyFontWeight || t
 const noticeBodyFont     = settings.noticeBanner.noticeBannerBodyFont || typo.noticeBannerBody?.font;
 const noticeBodyOpacity  = settings.noticeBanner.noticeBannerBodyOpacity ?? typo.noticeBannerBody?.opacity;
 const noticeBodyTracking = trackingEm(settings.noticeBanner.noticeBannerBodyTracking || typo.noticeBannerBody?.tracking);
+
+// Reserved height for the persistent notice bar (ribbon/pill sit fixed under the
+// header on every screen). Stacked stays hero-only, so it reserves nothing.
+// This used to be a flat 32px/38px regardless of font size — correct only at
+// the small default size, and too short once Typography sets a larger size
+// for the notice banner text, letting the (now taller) bar overlap the hero
+// content below it. The formula below reproduces the exact original 32px/38px
+// at the original small default size, and grows from there in proportion to
+// the actual configured font size.
+const noticeMaxFontPx = Math.max(
+  parseFloat(noticeTextSize) || 11,
+  parseFloat(noticeBodySize) || 11,
+);
+const noticeH = (!showNoticeBanner || noticeBannerStyle === 'stacked')
+  ? '0px'
+  : `${Math.max(
+      noticeBannerStyle === 'pill' ? 38 : 32,
+      Math.round(noticeMaxFontPx * 1.5) + (noticeBannerStyle === 'pill' ? 18 : 12),
+    )}px`;
 
 const metaTitle = lang === 'de'
   ? (settings.seo.metaTitle_de     || settings.seo.metaTitle     || 'VortexDeep — KI-Automatisierung für KMU in Zürich')
@@ -412,7 +431,6 @@ const contentGroups = (text: string) => {
   autoFamily={autoFamily}
   themeToggleEnabled={themeToggleEnabled}
 >
-  <link rel="stylesheet" href={allFontsUrl} slot="head" />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
   {animDepthBg && (
@@ -447,17 +465,16 @@ const contentGroups = (text: string) => {
   )}
 
   <style is:global define:vars={{ activeFont, activeFontFamily, headerHeight, footerHeight, headerInnerWidth, noticeH,
-    accLabelWeight: acc.labelWeight, accLabelTracking: acc.labelTracking, accLabelOpacity: acc.labelOpacity,
+    accLabelSize: acc.labelSize, accLabelWeight: acc.labelWeight, accLabelTracking: acc.labelTracking, accLabelOpacity: acc.labelOpacity,
     accSubSize: acc.subSize, accSubTracking: acc.subTracking, accSubOpacity: acc.subOpacity,
     accIntroSize: acc.introSize, accIntroOpacity: acc.introOpacity,
     accCopySize: acc.copySize, accCopyOpacity: acc.copyOpacity,
-    accCtaTracking: acc.ctaTracking, accCtaOpacity: acc.ctaOpacity,
+    ctaTracking: acc.ctaTracking, ctaOpacity: acc.ctaOpacity, ctaWeight: acc.ctaWeight,
+    ctaFont: acc.ctaFont || activeFontFamily,
     accCueSize: acc.cueSize, accCueTracking: acc.cueTracking, accCueOpacity: acc.cueOpacity,
     accIconTracking: acc.iconTracking,
     accLabelFont: acc.labelFont || activeFontFamily, accBodyFont: acc.bodyFont2 || activeFontFamily,
   }}>
-    html, body { font-family: var(--activeFontFamily); }
-
     /* Nav link base opacity is now a flexible inline value (Typography →
        Header), so the hover-to-full-opacity effect can't use Tailwind's
        hover: utility (that only toggles a class, not an inline style) —
@@ -657,15 +674,16 @@ const contentGroups = (text: string) => {
                                       starts nudging the closing line. */
     .vd-acc-item { padding: 3px 0; }
     .vd-acc-head {
-      display: flex; align-items: center; justify-content: center; gap: 12px;
+      display: flex; align-items: flex-start; justify-content: center; gap: calc(var(--accLabelSize, 13px) * 0.923);
       width: 100%; background: none; border: none; cursor: pointer;
       font-family: inherit; padding: 7px 0;
     }
     .vd-acc-dot {
-      width: 6px; height: 6px; border-radius: 50%;
+      width: calc(var(--accLabelSize, 13px) * 0.4615); height: calc(var(--accLabelSize, 13px) * 0.4615); border-radius: 50%;
       background: currentColor; opacity: 0.28;
       transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
       flex-shrink: 0;
+      margin-top: calc(var(--accLabelSize, 13px) * 0.42);
     }
     .vd-acc-label {
       text-transform: uppercase; letter-spacing: var(--accLabelTracking);
@@ -717,12 +735,12 @@ const contentGroups = (text: string) => {
     .vd-acc-sub-item { border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent); }
     .vd-acc-sub-item--static { padding: 11px 0; }
     .vd-acc-sub-head {
-      display: flex; align-items: center; justify-content: center; gap: 9px;
+      display: flex; align-items: center; justify-content: center; gap: calc(var(--accSubSize, 12px) * 0.75);
       width: 100%; background: none; border: none; cursor: pointer;
       font-family: inherit; padding: 6px 0; /* row-to-row distance lever; ~5–8px is the sweet spot */
     }
     .vd-acc-sub-dot {
-      width: 3px; height: 3px; border-radius: 50%; background: currentColor;
+      width: calc(var(--accSubSize, 12px) * 0.25); height: calc(var(--accSubSize, 12px) * 0.25); border-radius: 50%; background: currentColor;
       opacity: 0.22; transition: opacity 0.35s; flex-shrink: 0;
     }
     .vd-acc-sub-head:hover .vd-acc-sub { opacity: 0.82; }
@@ -837,10 +855,12 @@ const contentGroups = (text: string) => {
       border: 1px solid currentColor;
       border-color: color-mix(in srgb, currentColor 30%, transparent);
       padding: 0.85rem 1.9rem;
+      border-radius: var(--ctaRadius, 0px);
       text-transform: uppercase;
-      letter-spacing: var(--accCtaTracking);
-      font-family: var(--accLabelFont);
-      opacity: calc(var(--accCtaOpacity, 75) * 1%);
+      letter-spacing: var(--ctaTracking);
+      font-weight: var(--ctaWeight);
+      font-family: var(--ctaFont);
+      opacity: calc(var(--ctaOpacity, 75) * 1%);
       transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1),
                   border-color 0.35s cubic-bezier(0.4,0,0.2,1);
     }
@@ -1053,14 +1073,14 @@ const contentGroups = (text: string) => {
     <div class="vd-notice-bar vd-load-fade" role="status" style={headerFooterBg}>
       {noticeBannerStyle === 'ribbon' && (
         <div class="vd-notice-row">
-          <span style={`display:inline-flex; align-items:center; gap:9px; flex:none; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.2em'}; text-transform:uppercase; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
+          <span style={`display:inline-flex; align-items:center; gap:9px; flex:none; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.2em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
             {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
           </span>
           {noticeBannerBody && (
             <Fragment>
               <span style="width:1px; height:15px; background:var(--zen-muted); opacity:0.5; flex:none;"></span>
               <div class="vd-notice-flow">
-                <div class="vd-notice-track" style={`--vdFlowSecs:${noticeFlowSecs}s; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; letter-spacing:${noticeBodyTracking || '0.12em'}; font-family:${fontFamily(noticeBodyFont || activeFont)}; opacity:${noticeBodyOpacity ?? 100}%;`}>
+                <div class="vd-notice-track" style={`--vdFlowSecs:${noticeFlowSecs}s; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; letter-spacing:${noticeBodyTracking || '0.12em'}; text-transform:${typo.noticeBannerBody?.uppercase === true ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeBodyFont || activeFont)}; opacity:${noticeBodyOpacity ?? 100}%;`}>
                   <span style="padding:0 42px;">{noticeBannerBody}</span>
                   <span style="padding:0 42px;" aria-hidden="true">{noticeBannerBody}</span>
                 </div>
@@ -1070,7 +1090,7 @@ const contentGroups = (text: string) => {
         </div>
       )}
       {noticeBannerStyle === 'pill' && (
-        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:uppercase; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
+        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
           {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
         </span>
       )}
@@ -1109,24 +1129,24 @@ const contentGroups = (text: string) => {
       {showNoticeBanner && noticeBannerStyle === 'stacked' && (
         <div class="vd-notice-wrap vd-load-fade" role="status">
           <div class="vd-notice-block">
-            <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:uppercase; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
+            <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
               {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
             </span>
             {noticeBannerBody && (
-              <p style={`max-width:52ch; margin:14px auto 0; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; line-height:1.65; letter-spacing:${noticeBodyTracking || '0.02em'}; opacity:${noticeBodyOpacity ?? 90}%; font-family:${fontFamily(noticeBodyFont || activeFont)};`}>{noticeBannerBody}</p>
+              <p style={`max-width:52ch; margin:14px auto 0; color:var(--zen-muted); font-size:${noticeBodySize}; font-weight:${noticeBodyWeight}; line-height:1.65; letter-spacing:${noticeBodyTracking || '0.02em'}; text-transform:${typo.noticeBannerBody?.uppercase === true ? 'uppercase' : 'none'}; opacity:${noticeBodyOpacity ?? 90}%; font-family:${fontFamily(noticeBodyFont || activeFont)};`}>{noticeBannerBody}</p>
             )}
           </div>
         </div>
       )}
       <div class="w-full max-w-xl text-center">
         {!settings.hero.showSubSiteNameOnly && settings.hero.siteName && (
-          <h1 class={`${fontSizeClass(settings.hero.siteNameFontSize || typo.title?.size || 'text-3xl md:text-4xl')} ${settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin'} text-center ${settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]'} uppercase leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
+          <h1 class={`${fontSizeClass(settings.hero.siteNameFontSize || typo.title?.size || 'text-3xl md:text-4xl')} ${settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin'} text-center ${settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]'} ${typo.title?.uppercase !== false ? 'uppercase' : ''} leading-none translate-x-[0.25em] ${animTextHover ? 'vd-hover-grow' : ''}`}
               style={textStyle(zenText, settings.hero.siteNameFont || typo.title?.font, settings.hero.siteNameOpacity ?? typo.title?.opacity ?? 100)}>
             {settings.hero.siteName}
           </h1>
         )}
         {subSiteName && (
-          <h2 class={`${fontSizeClass(settings.hero.subSiteNameFontSize || typo.subTitle?.size || 'text-[13px]')} ${settings.hero.subSiteNameFontWeight || typo.subTitle?.weight || 'font-thin'} text-center ${settings.hero.subSiteNameTracking || typo.subTitle?.tracking || 'tracking-[0.25em]'} uppercase mt-6 leading-relaxed translate-x-[0.12em]`}
+          <h2 class={`${fontSizeClass(settings.hero.subSiteNameFontSize || typo.subTitle?.size || 'text-[13px]')} ${settings.hero.subSiteNameFontWeight || typo.subTitle?.weight || 'font-thin'} text-center ${settings.hero.subSiteNameTracking || typo.subTitle?.tracking || 'tracking-[0.25em]'} ${typo.subTitle?.uppercase !== false ? 'uppercase' : ''} mt-6 leading-relaxed translate-x-[0.12em]`}
               style={textStyle(zenText, settings.hero.subSiteNameFont || typo.subTitle?.font, settings.hero.subSiteNameOpacity ?? typo.subTitle?.opacity ?? 70)}>
             {contentLines(subSiteName).map(({ line, dots }) => (
               dots > 0 ? (
@@ -1282,8 +1302,8 @@ const contentGroups = (text: string) => {
               {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
                 <div class="flex justify-center mt-10">
                   <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                     class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
-                     style={`color: ${zenText};`}>
+                     class={`vd-cta ${fontSizeClass(typo.button?.size || 'text-[11px]')}`}
+                     style={`color: ${zenText}; border-radius: ${ctaRadiusOf(block.ctaShape || settings.layout?.ctaShape)};`}>
                     {block.ctaLabel}
                   </a>
                 </div>
@@ -1601,8 +1621,8 @@ const contentGroups = (text: string) => {
             {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
               <div class="flex justify-center mt-10">
                 <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                   class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
-                   style={`color: ${zenText};`}>
+                   class={`vd-cta ${fontSizeClass(typo.button?.size || 'text-[11px]')}`}
+                   style={`color: ${zenText}; border-radius: ${ctaRadiusOf(block.ctaShape || settings.layout?.ctaShape)};`}>
                   {block.ctaLabel}
                 </a>
               </div>

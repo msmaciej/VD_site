@@ -169,6 +169,7 @@ type PageBlocksSection {
   phone: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -207,6 +208,7 @@ type PageBlocksProcessFlow {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -349,6 +351,7 @@ input PageBlocksSectionFilter {
   phone: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  ctaShape: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -387,6 +390,7 @@ input PageBlocksProcessFlowFilter {
   fontWeight: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  ctaShape: StringFilter
   showTitle: BooleanFilter
   showSubtitle: BooleanFilter
   showBody: BooleanFilter
@@ -520,6 +524,7 @@ type Page_deBlocksSection {
   phone: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -558,6 +563,7 @@ type Page_deBlocksProcessFlow {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -678,6 +684,7 @@ input Page_deBlocksSectionFilter {
   phone: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  ctaShape: StringFilter
   showArt: BooleanFilter
   columns: StringFilter
   enabled: BooleanFilter
@@ -716,6 +723,7 @@ input Page_deBlocksProcessFlowFilter {
   fontWeight: StringFilter
   ctaLabel: StringFilter
   ctaUrl: StringFilter
+  ctaShape: StringFilter
   showTitle: BooleanFilter
   showSubtitle: BooleanFilter
   showBody: BooleanFilter
@@ -935,6 +943,7 @@ type SettingsTypographyNoticeBannerText {
   font: String
   size: String
   weight: String
+  uppercase: Boolean
   opacity: Float
   tracking: String
 }
@@ -943,6 +952,7 @@ type SettingsTypographyNoticeBannerBody {
   font: String
   size: String
   weight: String
+  uppercase: Boolean
   opacity: Float
   tracking: String
 }
@@ -1001,6 +1011,14 @@ type SettingsTypographyQuizBody {
   tracking: String
 }
 
+type SettingsTypographyButton {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
 type SettingsTypography {
   title: SettingsTypographyTitle
   subTitle: SettingsTypographySubTitle
@@ -1017,6 +1035,7 @@ type SettingsTypography {
   docBody: SettingsTypographyDocBody
   quizTitle: SettingsTypographyQuizTitle
   quizBody: SettingsTypographyQuizBody
+  button: SettingsTypographyButton
 }
 
 type SettingsAppearance {
@@ -1071,6 +1090,7 @@ type SettingsLayout {
   cardGridSpacing: String
   cardGap: String
   cardInternalSpacing: String
+  ctaShape: String
 }
 
 type SettingsSeo {
@@ -1260,6 +1280,7 @@ input SettingsTypographyNoticeBannerTextFilter {
   font: StringFilter
   size: StringFilter
   weight: StringFilter
+  uppercase: BooleanFilter
   opacity: NumberFilter
   tracking: StringFilter
 }
@@ -1268,6 +1289,7 @@ input SettingsTypographyNoticeBannerBodyFilter {
   font: StringFilter
   size: StringFilter
   weight: StringFilter
+  uppercase: BooleanFilter
   opacity: NumberFilter
   tracking: StringFilter
 }
@@ -1326,6 +1348,14 @@ input SettingsTypographyQuizBodyFilter {
   tracking: StringFilter
 }
 
+input SettingsTypographyButtonFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
 input SettingsTypographyFilter {
   title: SettingsTypographyTitleFilter
   subTitle: SettingsTypographySubTitleFilter
@@ -1342,6 +1372,7 @@ input SettingsTypographyFilter {
   docBody: SettingsTypographyDocBodyFilter
   quizTitle: SettingsTypographyQuizTitleFilter
   quizBody: SettingsTypographyQuizBodyFilter
+  button: SettingsTypographyButtonFilter
 }
 
 input SettingsAppearanceFilter {
@@ -1396,6 +1427,7 @@ input SettingsLayoutFilter {
   cardGridSpacing: StringFilter
   cardGap: StringFilter
   cardInternalSpacing: StringFilter
+  ctaShape: StringFilter
 }
 
 input ImageFilter {
@@ -2219,6 +2251,7 @@ input PageBlocksSectionMutation {
   phone: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -2257,6 +2290,7 @@ input PageBlocksProcessFlowMutation {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -2379,6 +2413,7 @@ input Page_deBlocksSectionMutation {
   phone: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showArt: Boolean
   columns: String
   enabled: Boolean
@@ -2417,6 +2452,7 @@ input Page_deBlocksProcessFlowMutation {
   fontWeight: String
   ctaLabel: String
   ctaUrl: String
+  ctaShape: String
   showTitle: Boolean
   showSubtitle: Boolean
   showBody: Boolean
@@ -2625,6 +2661,7 @@ input SettingsTypographyNoticeBannerTextMutation {
   font: String
   size: String
   weight: String
+  uppercase: Boolean
   opacity: Float
   tracking: String
 }
@@ -2633,6 +2670,7 @@ input SettingsTypographyNoticeBannerBodyMutation {
   font: String
   size: String
   weight: String
+  uppercase: Boolean
   opacity: Float
   tracking: String
 }
@@ -2691,6 +2729,14 @@ input SettingsTypographyQuizBodyMutation {
   tracking: String
 }
 
+input SettingsTypographyButtonMutation {
+  font: String
+  size: String
+  weight: String
+  opacity: Float
+  tracking: String
+}
+
 input SettingsTypographyMutation {
   title: SettingsTypographyTitleMutation
   subTitle: SettingsTypographySubTitleMutation
@@ -2707,6 +2753,7 @@ input SettingsTypographyMutation {
   docBody: SettingsTypographyDocBodyMutation
   quizTitle: SettingsTypographyQuizTitleMutation
   quizBody: SettingsTypographyQuizBodyMutation
+  button: SettingsTypographyButtonMutation
 }
 
 input SettingsAppearanceMutation {
@@ -2761,6 +2808,7 @@ input SettingsLayoutMutation {
   cardGridSpacing: String
   cardGap: String
   cardInternalSpacing: String
+  ctaShape: String
 }
 
 input SettingsSeoMutation {

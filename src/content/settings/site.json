@@ -4,12 +4,12 @@
     "siteName": "VortexDeep",
     "siteNameFont": "",
     "siteNameFontSize": "",
-    "subSiteName": "Practical | AI automation | . | for small and mid-sized companies | . | From Zürich, Switzerland | Worldwide",
-    "subSiteName_de": "Praktische | KI-Automatisierung | . | für KMU | . | Aus Zürich, Schweiz | Weltweit",
+    "subSiteName": "PRACTICAL | AI AUTOMATION | . | for small and mid-sized companies | . | Zürich, Switzerland",
+    "subSiteName_de": "PRAKTISCHE | KI-AUTOMATISIERUNG | . | für KMU | . | Zürich, Schweiz",
     "subSiteNameFontSize": "",
     "subSiteNameFontWeight": "",
     "subSiteNameTracking": "",
-    "showSubSiteNameOnly": true
+    "showSubSiteNameOnly": false
   },
   "noticeBanner": {
     "noticeBannerEnabled": true,
@@ -17,13 +17,13 @@
     "noticeBannerText_de": "In Vorbereitung",
     "noticeBannerBody_en": "VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.",
     "noticeBannerBody_de": "VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.",
-    "noticeBannerStyle": "ribbon",
+    "noticeBannerStyle": "pill",
     "noticeBannerFlowSeconds": "34",
     "noticeBannerDot": "none",
-    "noticeBannerTextFontSize": "12px",
-    "noticeBannerTextFontWeight": "400",
-    "noticeBannerBodyFontSize": "12px",
-    "noticeBannerBodyFontWeight": "400"
+    "noticeBannerTextFontSize": "",
+    "noticeBannerTextFontWeight": "",
+    "noticeBannerBodyFontSize": "",
+    "noticeBannerBodyFontWeight": ""
   },
   "header": {
     "headerLayout": "centered",
@@ -38,7 +38,7 @@
   },
   "footer": {
     "footerText": "© 2026 VortexDeep",
-    "showFooterLine": true,
+    "showFooterLine": false,
     "footerTextFontSize": "",
     "socialLinks": [
       {
@@ -60,7 +60,7 @@
       "size": "xl",
       "weight": "font-light",
       "uppercase": false,
-      "opacity": 50
+      "opacity": 65
     },
     "body": {
       "font": "",
@@ -82,7 +82,7 @@
     },
     "header": {
       "font": "",
-      "size": "xl",
+      "size": "lg",
       "weight": "font-normal",
       "opacity": 100
     },
@@ -93,15 +93,15 @@
       "opacity": 100
     },
     "noticeBannerText": {
-      "size": "xl",
+      "size": "lg",
       "opacity": 50
     },
     "noticeBannerBody": {
-      "size": "xl",
+      "size": "lg",
       "opacity": 50
     },
     "label": {
-      "size": "xl"
+      "size": "lg"
     },
     "docTitle": {
       "size": "xl"
@@ -111,7 +111,7 @@
     },
     "docBody": {
       "size": "xl",
-      "opacity": 50
+      "opacity": 65
     },
     "quizTitle": {
       "size": "xl"
@@ -122,7 +122,7 @@
   },
   "appearance": {
     "fontPreset": "custom",
-    "customFontName": "Montserrat",
+    "customFontName": "Abel",
     "showLogo": true,
     "theme": "paper",
     "baseTextColor": "",
@@ -147,7 +147,8 @@
     "headerHeight": "52px",
     "matchFooterToHeader": true,
     "footerHeight": "52px",
-    "cardGridSpacing": "mt-10"
+    "cardGridSpacing": "mt-10",
+    "ctaShape": "pill"
   },
   "seo": {
     "siteUrl": "https://vortexdeep.ch",

@@ -440,6 +440,12 @@ var pageTemplates = [
         label: "Button link (optional)",
         description: "Where the button goes \u2014 e.g. /data. A '/\u2026' link is prefixed with /de automatically on the German site. A '/data' button hides itself automatically when the Data Page is switched off."
       },
+      { type: "string", name: "ctaShape", label: "Button shape (optional, overrides site default)", options: [
+        { label: "Default \u2014 inherit site-wide setting", value: "" },
+        { label: "Sharp corners", value: "sharp" },
+        { label: "Rounded", value: "rounded" },
+        { label: "Pill", value: "pill" }
+      ] },
       { type: "boolean", name: "showArt", label: "Activate Art Gallery?" },
       { type: "string", name: "columns", label: "Gallery columns", options: [
         { label: "2 Columns", value: "grid-cols-2" },
@@ -553,6 +559,12 @@ var pageTemplates = [
         label: "Button link (optional)",
         description: "e.g. /check \u2014 the /de prefix is added automatically on the German page."
       },
+      { type: "string", name: "ctaShape", label: "Button shape (optional, overrides site default)", options: [
+        { label: "Default \u2014 inherit site-wide setting", value: "" },
+        { label: "Sharp corners", value: "sharp" },
+        { label: "Rounded", value: "rounded" },
+        { label: "Pill", value: "pill" }
+      ] },
       // ── Visibility & folding ──────────────────────────────────────────────
       // "Show …" switches are ON unless turned off. Two independent folds are
       // possible: the steps, and the explainer text. Normally you'd use one.
@@ -1001,6 +1013,7 @@ var config_default = defineConfig({
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
                 { type: "string", name: "size", label: "Size", options: fontSizeOptions },
                 { type: "string", name: "weight", label: "Weight", options: noticeWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
                 { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
                 { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
@@ -1008,6 +1021,7 @@ var config_default = defineConfig({
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
                 { type: "string", name: "size", label: "Size", options: fontSizeOptions },
                 { type: "string", name: "weight", label: "Weight", options: noticeWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
                 { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
                 { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
               ] },
@@ -1086,6 +1100,19 @@ var config_default = defineConfig({
                   { type: "string", name: "size", label: "Size", options: fontSizeOptions },
                   { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
                   { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "button",
+                label: "Buttons (call-to-action links)",
+                description: "The bordered link buttons under a section, e.g. 'How we handle your data', 'Start the Fit Check'. Separate from Label so testing one doesn't resize the other.",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
                   { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
                   { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
                 ]
@@ -1348,6 +1375,17 @@ var config_default = defineConfig({
                 { label: "Normal", value: "mb-1.5" },
                 { label: "Relaxed", value: "mb-2" },
                 { label: "Loose", value: "mb-3" }
+              ]
+            },
+            {
+              type: "string",
+              name: "ctaShape",
+              label: "Button \u2014 default shape",
+              description: "Applies to every link button (e.g. 'How we handle your data', 'Start the Fit Check'). Site-wide default. A button can still override this individually \u2014 blank there = inherit this.",
+              options: [
+                { label: "Sharp corners", value: "sharp" },
+                { label: "Rounded", value: "rounded" },
+                { label: "Pill \u2014 like the notice banner's pill style", value: "pill" }
               ]
             }
           ] },

@@ -66,6 +66,7 @@ fragment PageParts on Page {
       phone
       ctaLabel
       ctaUrl
+      ctaShape
       showArt
       columns
       enabled
@@ -102,6 +103,7 @@ fragment PageParts on Page {
       fontWeight
       ctaLabel
       ctaUrl
+      ctaShape
       showTitle
       showSubtitle
       showBody
@@ -214,6 +216,7 @@ fragment Page_deParts on Page_de {
       phone
       ctaLabel
       ctaUrl
+      ctaShape
       showArt
       columns
       enabled
@@ -250,6 +253,7 @@ fragment Page_deParts on Page_de {
       fontWeight
       ctaLabel
       ctaUrl
+      ctaShape
       showTitle
       showSubtitle
       showBody
@@ -451,6 +455,7 @@ fragment SettingsParts on Settings {
       font
       size
       weight
+      uppercase
       opacity
       tracking
     }
@@ -459,6 +464,7 @@ fragment SettingsParts on Settings {
       font
       size
       weight
+      uppercase
       opacity
       tracking
     }
@@ -516,6 +522,14 @@ fragment SettingsParts on Settings {
       opacity
       tracking
     }
+    button {
+      __typename
+      font
+      size
+      weight
+      opacity
+      tracking
+    }
   }
   appearance {
     __typename
@@ -567,6 +581,7 @@ fragment SettingsParts on Settings {
     cardGridSpacing
     cardGap
     cardInternalSpacing
+    ctaShape
   }
   seo {
     __typename
