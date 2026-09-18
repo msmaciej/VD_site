@@ -1,7 +1,17 @@
 {
   "siteStatus": "live",
+  "siteStatusContent": {
+    "preparationBadge_de": "In Vorbereitung",
+    "preparationBadge_en": "In preparation",
+    "preparationMessage_de": "VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig. Es bestehen keine Kundenaufträge, keine laufenden Projekte, keine Rechnungsstellung und keine Einnahmen.",
+    "preparationMessage_en": "VortexDeep is currently in preparation and is not yet commercially active. There are no customer orders, no ongoing projects, no invoicing, and no revenue.",
+    "maintenanceBadge_de": "Wartungsarbeiten",
+    "maintenanceBadge_en": "Under maintenance",
+    "maintenanceMessage_de": "Die Website wird derzeit gewartet und ist vorübergehend nicht verfügbar. Bitte versuchen Sie es in Kürze erneut.",
+    "maintenanceMessage_en": "This site is undergoing maintenance and is temporarily unavailable. Please check back shortly."
+  },
   "hero": {
-    "siteName": "VortexDeep",
+    "siteName": "VORTEXDEEP",
     "siteNameFont": "",
     "siteNameFontSize": "",
     "subSiteName": "PRACTICAL | AI AUTOMATION | . | for small and mid-sized companies | . | Zürich, Switzerland",

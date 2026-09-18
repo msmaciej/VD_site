@@ -1,0 +1,186 @@
+---
+// src/pages/de/status.astro  →  vortexdeep.ch/de/status
+// German mirror of src/pages/status.astro — see that file for the full
+// explanation of why this reuses SiteStatusScreen. SiteStatusScreen itself
+// already shows both languages at once (German first, English muted below),
+// so the two language routes exist for URL/hreflang consistency with the
+// rest of the bilingual site, not because the content itself differs.
+import Layout from '../../layouts/Layout.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
+import SiteStatusScreen from '../../components/SiteStatusScreen.astro';
+import { fontFamily, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, themeColors, themeFamily, socialIcon, fontSizePx, fontWeightNumber, trackingEm } from '../../utils/siteHelpers.ts';
+
+const settingFiles = await Astro.glob('../../content/settings/*.json');
+const settings = settingFiles[0]?.default || {};
+const typo = (settings.typography || {}) as any;
+
+const currentTheme = settings.appearance.theme || 'light';
+
+const getBgColor = () => {
+  if (settings.appearance.customBackgroundColor) return settings.appearance.customBackgroundColor;
+  return themeColors[currentTheme]?.bg || '#ffffff';
+};
+const getTextColor = (customColor?: string) => {
+  const base = customColor || settings.appearance.baseTextColor;
+  if (!base) return themeColors[currentTheme]?.text || '#0a0a0a';
+  return base;
+};
+const themeToggleEnabled = settings.appearance.enableThemeToggle === true;
+const autoFamily = themeFamily(getBgColor());
+
+const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
+  ? settings.appearance.customFontName
+  : (settings.appearance.fontPreset || 'Inter');
+const activeFontFamily = fontFamily(activeFont);
+
+const headerHeight     = settings.layout.headerHeight     || '52px';
+const footerHeight     = settings.layout.footerHeight     || '44px';
+const headerInnerWidth = settings.layout.headerInnerWidth || '680px';
+const currentYear      = new Date().getFullYear();
+
+const homeUrl = '/de/';
+const fitCheckFiles = await Astro.glob('../../content/fitcheck/*.json');
+const fitCheckEnabled = isFitCheckEnabled(fitCheckFiles[0]?.default);
+const resolvedNavLinks = filterNavLinks(settings.header.navLinks, fitCheckEnabled).map((link: any) => ({
+  label: link.label_de || link.label,
+  url:   link.url,
+}));
+
+// See src/pages/status.astro for why — same fix, same reasoning.
+const heroTitleSizePx    = fontSizePx(settings.hero.siteNameFontSize || typo.title?.size, '3xl');
+const heroTitleWeight    = fontWeightNumber(settings.hero.siteNameFontWeight || typo.title?.weight || 'font-thin') || '400';
+const heroTitleTracking  = trackingEm(settings.hero.siteNameTracking || typo.title?.tracking || 'tracking-[0.5em]') || '0.5em';
+const heroTitleUppercase = typo.title?.uppercase !== false;
+
+const title = 'In Vorbereitung — VortexDeep';
+const description = 'VortexDeep befindet sich derzeit in Vorbereitung und ist noch nicht kommerziell am Markt tätig.';
+---
+
+<Layout title={title} description={description} ogImage={settings.seo.ogImage || ''} siteUrl={settings.seo.siteUrl || 'https://vortexdeep.ch'} theme={currentTheme} lang="de"
+        autoBg={getBgColor()} autoText={getTextColor()} autoFamily={autoFamily} themeToggleEnabled={themeToggleEnabled} noindex={true}>
+  <header class="vd-fixed-header"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); height: ${headerHeight};`}>
+    <div class="vd-fixed-header-inner" style={`max-width: ${headerInnerWidth};`}>
+      <a href={homeUrl} class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+         style="text-decoration:none; color:inherit;">
+        {settings.appearance.showLogo && (
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+               style="color: var(--zen-text);" class="w-5 h-5 flex-shrink-0">
+            <polygon points="100,22 168,61 168,139 100,178 32,139 32,61"
+                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="100" cy="22"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="61"  r="5" fill="currentColor"/>
+            <circle cx="168" cy="139" r="5" fill="currentColor"/>
+            <circle cx="100" cy="178" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="139" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="61"  r="5" fill="currentColor"/>
+            <polyline points="56,76 78,122 100,76"
+                      fill="none" stroke="currentColor" stroke-width="6"
+                      stroke-linecap="round" stroke-linejoin="miter"/>
+            <line x1="104" y1="76" x2="104" y2="122"
+                  stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 104,76 C 134,76 144,86 144,99 C 144,112 134,122 104,122"
+                  fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        )}
+        <span class={`${fontSizeClass(settings.header.wordmarkFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.wordmarkFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.wordmarkTracking || typo.header?.tracking || 'tracking-[0.4em]'}`}
+              style={textStyle('var(--zen-text)', settings.header.wordmarkFont || typo.header?.font, settings.header.wordmarkOpacity ?? typo.header?.opacity ?? 100) + ` font-family: ${settings.header.wordmarkFont || typo.header?.font ? fontFamily(settings.header.wordmarkFont || typo.header?.font) : activeFontFamily};`}>
+          {settings.hero.siteName || 'VortexDeep'}
+        </span>
+      </a>
+
+      <nav class="flex gap-6 items-center" style="color: var(--zen-text);">
+        {resolvedNavLinks.map((link: any) => (
+          <a href={link.url}
+             class={`vd-nav-link ${fontSizeClass(settings.header.headerLinksFontSize || typo.header?.size || 'text-[10px]')} ${settings.header.headerLinksFontWeight || typo.header?.weight || ''} ${typo.header?.uppercase !== false ? 'uppercase' : ''} ${settings.header.headerLinksTracking || typo.header?.tracking || 'tracking-[0.3em]'}`}
+             style={`color: var(--zen-text); opacity: ${settings.header.headerLinksOpacity ?? typo.header?.opacity ?? 50}%; font-family: ${settings.header.headerLinksFont || typo.header?.font ? fontFamily(settings.header.headerLinksFont || typo.header?.font) : activeFontFamily};`}>
+            {link.label}
+          </a>
+        ))}
+        <LanguageSwitcher lang="de" slug="status" />
+        {themeToggleEnabled && (
+          <button type="button" data-vd-theme-cycle
+                  class="vd-theme-btn" style="color: var(--zen-text);"
+                  aria-label="Hell-/Dunkelansicht wechseln">
+            <span class="vd-theme-icon vd-theme-icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="12" cy="12" r="4.2"/>
+                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/>
+              </svg>
+            </span>
+            <span class="vd-theme-icon vd-theme-icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.7 6.7 0 0 0 10.7 10.7Z"/>
+              </svg>
+            </span>
+          </button>
+        )}
+      </nav>
+    </div>
+  </header>
+
+  <SiteStatusScreen mode="preparation" lang="de" />
+
+  <footer class="vd-fixed-footer"
+          style={`background-color: var(--zen-bg); color: var(--zen-text); min-height: ${footerHeight};`}>
+    {settings.footer.socialLinks?.map((social: any) => {
+      const { icon, round } = socialIcon(social.platform || '');
+      return (
+        <a href={social.url} target="_blank" rel="noopener noreferrer"
+           class={`vd-icon ${round ? 'round' : ''}`} title={social.platform}
+           style="color: var(--zen-text);">
+          {icon}
+        </a>
+      );
+    })}
+    {settings.footer.socialLinks?.length > 0 && (
+      <span class="opacity-20 text-[9px]" style="color: var(--zen-text);">·</span>
+    )}
+    <p class={`${fontSizeClass(settings.footer.footerTextFontSize || typo.footer?.size || 'text-[9px]')} ${settings.footer.footerTextFontWeight || typo.footer?.weight || ''} ${typo.footer?.uppercase !== false ? 'uppercase' : ''} ${settings.footer.footerTextTracking || typo.footer?.tracking || 'tracking-[0.25em]'}`}
+       style={`color: var(--zen-text); opacity: ${settings.footer.footerTextOpacity ?? typo.footer?.opacity ?? 30}%; font-family: ${settings.footer.footerTextFont || typo.footer?.font ? fontFamily(settings.footer.footerTextFont || typo.footer?.font) : activeFontFamily};`}>
+      {settings.footer.footerText ? settings.footer.footerText : `© ${currentYear} ${settings.hero.siteName || 'VortexDeep'}`}
+    </p>
+  </footer>
+
+  <style define:vars={{ headerHeight, footerHeight, heroTitleSizePx, heroTitleWeight, heroTitleTracking }} is:global>
+    .vd-nav-link { transition: opacity 0.2s ease; }
+    .vd-nav-link:hover { opacity: 1 !important; }
+    .vd-fixed-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
+    .vd-fixed-header-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 4vw, 2rem); }
+    .vd-fixed-footer { position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: env(safe-area-inset-bottom, 0px); z-index: 50; display: flex; align-items: center; justify-content: center; gap: 1.2rem; }
+    .vd-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid currentColor; font-size: 8px; font-weight: 600; letter-spacing: 0.03em; text-transform: lowercase; text-decoration: none; border-radius: 3px; opacity: 0.35; transition: opacity 0.25s ease; }
+    .vd-icon:hover { opacity: 0.9; }
+    .vd-icon.round { border-radius: 50%; }
+    .vd-status {
+      padding-top: calc(var(--headerHeight) + 40px) !important;
+      padding-bottom: calc(var(--footerHeight) + env(safe-area-inset-bottom, 0px) + 40px) !important;
+    }
+    .vd-status__brand {
+      font-size: var(--heroTitleSizePx) !important;
+      font-weight: var(--heroTitleWeight) !important;
+      letter-spacing: var(--heroTitleTracking) !important;
+      text-transform: uppercase !important;
+    }
+    .vd-status__badge { font-size: var(--heroTitleSizePx) !important; }
+    .vd-status__scrim { opacity: 0.82 !important; }
+
+    .vd-theme-btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; padding: 0; border: none; background: none;
+      cursor: pointer;
+    }
+    .vd-theme-icon {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.4) rotate(-70deg);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .vd-theme-icon svg { width: 100%; height: 100%; }
+    html:not([data-theme-forced])[data-auto-family="dark"]  .vd-theme-icon-sun  { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced])[data-auto-family="light"] .vd-theme-icon-moon { opacity: 0.32; transform: scale(1) rotate(0deg); }
+    html:not([data-theme-forced]) .vd-theme-btn:hover .vd-theme-icon { opacity: 0.62; }
+    html[data-theme-forced="light"] .vd-theme-icon-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+    html[data-theme-forced="dark"]  .vd-theme-icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+  </style>
+</Layout>

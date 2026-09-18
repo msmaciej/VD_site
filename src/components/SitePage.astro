@@ -618,6 +618,10 @@ const contentGroups = (text: string) => {
     @keyframes vdNoticePulse { 0%,100%{ opacity:1; box-shadow:0 0 11px 1px var(--zen-accent); }
       50%{ opacity:0.45; box-shadow:0 0 4px 0 var(--zen-accent); } }
     @media (prefers-reduced-motion: reduce){ .vd-notice-dot--pulse{ animation:none; } }
+    /* The pill notice banner is now a link to /status (a full explanation of
+       what the badge means) — a hover cue so it reads as clickable, not just
+       a bigger click target with no visual affordance. */
+    .vd-notice-pill-link:hover { border-color: var(--zen-text) !important; opacity: 0.82 !important; }
     .vd-notice-flow { flex:1; min-width:0; overflow:hidden;
       -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
       mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%); }
@@ -1090,9 +1094,12 @@ const contentGroups = (text: string) => {
         </div>
       )}
       {noticeBannerStyle === 'pill' && (
-        <span style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%;`}>
+        <a href={lang === 'de' ? '/de/status' : '/status'}
+           style={`display:inline-flex; align-items:center; gap:9px; padding:6px 15px; border:1px solid var(--zen-muted); border-radius:999px; color:var(--zen-muted); font-size:${noticeTextSize}; font-weight:${noticeTextWeight}; letter-spacing:${noticeTextTracking || '0.16em'}; text-transform:${typo.noticeBannerText?.uppercase !== false ? 'uppercase' : 'none'}; font-family:${fontFamily(noticeTextFont || activeFont)}; opacity:${noticeTextOpacity ?? 100}%; text-decoration:none; cursor:pointer; transition: border-color 0.3s ease, opacity 0.3s ease;`}
+           class="vd-notice-pill-link"
+           aria-label={lang === 'de' ? `${noticeBannerText} — mehr erfahren` : `${noticeBannerText} — learn more`}>
           {noticeDot !== 'none' && (<span aria-hidden="true" class={`vd-notice-dot ${noticeDot === 'animated' ? 'vd-notice-dot--pulse' : ''}`}></span>)}{noticeBannerText}
-        </span>
+        </a>
       )}
     </div>
   )}

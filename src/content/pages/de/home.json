@@ -17,9 +17,6 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "showArt": false,
-      "enabled": true,
-      "_template": "section",
       "cards": [
         {
           "title": "Abläufe",
@@ -34,7 +31,10 @@
           "line": "Die Kontrolle bleibt beim Menschen."
         }
       ],
-      "cardColumns": "grid-cols-3"
+      "cardColumns": "grid-cols-3",
+      "showArt": false,
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "Warum VortexDeep",
@@ -54,8 +54,6 @@
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
       "showGroupIntros": false,
-      "enabled": true,
-      "_template": "section",
       "cards": [
         {
           "title": "Sie",
@@ -75,7 +73,9 @@
           "line": "Wer es baut, geht auch ans Telefon."
         }
       ],
-      "cardColumns": "grid-cols-2"
+      "cardColumns": "grid-cols-2",
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "Wo wir ansetzen",
@@ -260,8 +260,6 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "enabled": true,
-      "_template": "section",
       "cards": [
         {
           "title": "Wir automatisieren das Wiederkehrende",
@@ -276,7 +274,9 @@
           "line": "Wir sind offen über Grenzen und sagen klar, was besser bei Ihnen bleibt."
         }
       ],
-      "cardColumns": "grid-cols-3"
+      "cardColumns": "grid-cols-3",
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "Ihre Daten",
@@ -318,8 +318,6 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
-      "enabled": true,
-      "_template": "section",
       "cards": [
         {
           "title": "Einfach starten",
@@ -330,7 +328,9 @@
           "line": "Komplexe Automatisierungen wachsen aus den einfachen, die bereits funktionieren."
         }
       ],
-      "cardColumns": "grid-cols-2"
+      "cardColumns": "grid-cols-2",
+      "enabled": true,
+      "_template": "section"
     },
     {
       "title": "Was Sie erwartet -",
@@ -541,21 +541,21 @@
     {
       "quotes": [
         {
-          "text": "Vollkommenheit entsteht offensichtlich nicht dann, wenn man nichts mehr hinzuzufügen hat, sondern wenn man nichts mehr wegnehmen kann.",
+          "text": "Vollkommenheit entsteht offensichtlich nicht dann, | wenn man nichts mehr hinzuzufügen hat, | sondern wenn man nichts mehr | wegnehmen kann.",
           "author": "Antoine de Saint-Exupéry",
-          "source": "Wind, Sand und Sterne, 1939",
-          "active": true
-        },
-        {
-          "text": "Es ist nicht die tägliche Zunahme, sondern die tägliche Abnahme. Weg mit dem Unwesentlichen.",
-          "author": "Bruce Lee",
-          "source": "",
+          "source": "| - Wind, Sand und Sterne, 1939",
           "active": false
         },
         {
-          "text": "Macht, Gewalt, Zwang wird durch die Sinne erlebt; Kraft kann man nur durch innere Achtsamkeit erkennen.",
+          "text": "Es ist nicht die tägliche Zunahme, | sondern die tägliche Abnahme. | Weg mit dem Unwesentlichen.",
+          "author": "Bruce Lee",
+          "source": "",
+          "active": true
+        },
+        {
+          "text": "Macht, Gewalt, Zwang wird durch die Sinne erlebt; | Kraft kann man nur durch innere Achtsamkeit erkennen.",
           "author": "David R. Hawkins",
-          "source": "Die Ebenen des Bewußtseins",
+          "source": "| - Die Ebenen des Bewußtseins",
           "active": false
         }
       ],
@@ -563,7 +563,7 @@
       "quoteFontSize": "xl",
       "quoteFontWeight": "font-light",
       "quoteItalic": true,
-      "attributionFontSize": "2xs",
+      "attributionFontSize": "base",
       "enabled": true,
       "_template": "quote"
     },
