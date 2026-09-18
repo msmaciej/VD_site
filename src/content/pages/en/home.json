@@ -65,7 +65,7 @@
         },
         {
           "title": "Contract",
-          "line": "No lock-in or long contracts. You can stop it at the end of any month."
+          "line": "No lock-in, no long contracts — stop at the end of any month."
         },
         {
           "title": "Build",
@@ -320,11 +320,11 @@
       "cards": [
         {
           "title": "Start Simple",
-          "line": "Get working business adjusted simple solutions."
+          "line": "Get a simple, working solution built for your business first."
         },
         {
           "title": "Grow at Need",
-          "line": "Complex automations are based on workig simple solutions."
+          "line": "Complex automations grow from the simple ones that already work."
         }
       ],
       "cardColumns": "grid-cols-2",
@@ -355,7 +355,7 @@
       "title": "The Six Phases",
       "titleFontSize": "",
       "titleFontWeight": "",
-      "subTitle": "This is how your project runs | you sign off on each one phase.",
+      "subTitle": "This is how your project runs | you sign off on each phase.",
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",

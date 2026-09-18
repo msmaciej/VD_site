@@ -67,7 +67,7 @@
         },
         {
           "title": "Vertrag",
-          "line": "Keine Bindung, kein langer Vertrag. Kündbar auf Ende jedes Monats."
+          "line": "Keine Bindung, kein langer Vertrag — kündbar auf Ende jedes Monats."
         },
         {
           "title": "Aufbau",
@@ -268,7 +268,7 @@
         },
         {
           "title": "Sie behalten das Ermessen",
-          "line": "Sie behalten das Ermessen: die unklaren Fälle, die Entscheidungen, die letzte Freigabe."
+          "line": "Sie behalten das Ermessen: die unklaren Fälle, die Entscheidungen und die letzte Freigabe."
         },
         {
           "title": "Wir sind offen über Grenzen",
@@ -321,12 +321,12 @@
       "_template": "section",
       "cards": [
         {
-          "title": "Kleine Schritte",
-          "line": "Bringen Sie ihn zum Laufen, sodass er sich lohnt, und bauen Sie von dort weiter."
+          "title": "Einfach starten",
+          "line": "Zuerst eine einfache, funktionierende Lösung für Ihr Unternehmen."
         },
         {
-          "title": "Einheitliches Design",
-          "line": "Jede Automatisierung folgt derselben Form, sodass sie sich beim Wachsen zusammenfügen."
+          "title": "Bei Bedarf wachsen",
+          "line": "Komplexe Automatisierungen wachsen aus den einfachen, die bereits funktionieren."
         }
       ],
       "cardColumns": "grid-cols-2"
