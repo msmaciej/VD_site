@@ -145,6 +145,21 @@ fragment PageParts on Page {
       metaFontSize
       enabled
     }
+    ... on PageBlocksQuote {
+      quotes {
+        __typename
+        text
+        author
+        source
+        active
+      }
+      quoteFont
+      quoteFontSize
+      quoteFontWeight
+      quoteItalic
+      attributionFontSize
+      enabled
+    }
   }
 }
 
@@ -293,6 +308,21 @@ fragment Page_deParts on Page_de {
       quoteFontSize
       quoteFontWeight
       metaFontSize
+      enabled
+    }
+    ... on Page_deBlocksQuote {
+      quotes {
+        __typename
+        text
+        author
+        source
+        active
+      }
+      quoteFont
+      quoteFontSize
+      quoteFontWeight
+      quoteItalic
+      attributionFontSize
       enabled
     }
   }

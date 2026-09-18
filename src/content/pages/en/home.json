@@ -4,7 +4,7 @@
       "title": "What We Do",
       "titleFontSize": "",
       "titleFontWeight": "",
-      "subTitle": "We turn repetitive everyday tasks | into practical AI-assisted workflows",
+      "subTitle": "We turn repetitive everyday | tasks into practical | AI-assisted workflows",
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "content": "Workflows are built for your business. | They are managed monthly. | Human control stays at the centre.\n",
@@ -80,7 +80,7 @@
       "title": "The Work We Take Off You",
       "titleFontSize": "",
       "titleFontWeight": "",
-      "subTitle": "The work your team keeps redoing | caught, sorted and drafted for you | . ",
+      "subTitle": "The work your team keeps | redoing caught, sorted | and drafted for you ",
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "content": "Almost every one of these follows the same shape: something arrives, it's read and sorted, a reply or entry is drafted — and held for you. We take the repetitive slice; the deciding, the researching and the judgement stay with you. | . | Some work is only ever partly automatable — where a person must investigate or decide, like a root-cause review or a quality programme. We take the measurable, repeatable part and say plainly where you stay in charge. | . | Most requests cross more than one area: an order query can mean a message, a stock check and a return at once. We assemble the right pieces behind the scenes, so your customer gets one smooth reply. Start with the one that's costing you hours, and grow from there. | .",
@@ -537,6 +537,35 @@
       "cueLabelOpen": "Less",
       "enabled": false,
       "_template": "processFlow"
+    },
+    {
+      "quotes": [
+        {
+          "text": "Perfection is achieved, not when there is nothing more to add, | but when there is nothing left to take away.",
+          "author": "Antoine de Saint-Exupéry",
+          "source": "| - Wind, Sand and Stars, 1939",
+          "active": false
+        },
+        {
+          "text": "It's not the daily increase but daily decrease. | Hack away at the unessential.",
+          "author": "Bruce Lee",
+          "source": "",
+          "active": true
+        },
+        {
+          "text": "Force is experienced through the senses; | power can be recognized only | through inner awareness.",
+          "author": "David R. Hawkins",
+          "source": "| - Power vs. Force",
+          "active": false
+        }
+      ],
+      "quoteFont": "Newsreader",
+      "quoteFontSize": "xl",
+      "quoteFontWeight": "font-light",
+      "quoteItalic": true,
+      "attributionFontSize": "base",
+      "enabled": true,
+      "_template": "quote"
     },
     {
       "title": "Contact",

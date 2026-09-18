@@ -391,6 +391,47 @@ const pageTemplates = [
       { type: "boolean", name: "enabled",         label: "Section Enabled" },
     ],
   },
+  {
+    // A quiet epigraph, not a testimonial: one attributed quote from outside
+    // the company (philosophy/craft, not a client), placed as a closing beat
+    // before Contact. Store several candidates, activate exactly one — so
+    // trying a different quote later is a checkbox, not a rewrite.
+    name: "quote",
+    label: "Quote (Epigraph)",
+    ui: {
+      itemProps: () => ({ label: "Quote" }),
+    },
+    fields: [
+      {
+        type: "object",
+        list: true,
+        name: "quotes",
+        label: "Quotes",
+        description: "Keep as many candidates here as you like — only the one marked Active renders on the site.",
+        ui: {
+          itemProps: (item: any) => ({ label: `${item?.active ? '\u2605 ' : ''}${item?.author || 'Quote'}` }),
+        },
+        fields: [
+          { type: "string", name: "text", label: "Quote Text", ui: { component: "textarea" },
+            description: "Use | to break into separate lines, same as every other text field on the site." },
+          { type: "string", name: "author", label: "Attribution — Name" },
+          { type: "string", name: "source", label: "Attribution — Source",
+            description: "Book, talk, etc. Optional. Combined with Name as 'Name — Source'; add | at the end of either field to force a line break instead." },
+          { type: "boolean", name: "active", label: "Active (shown on site)",
+            description: "Exactly one quote should be Active. If several are, the first one wins." },
+        ],
+      },
+      { type: "string",  name: "quoteFont",           label: "Quote — Font", options: fontTypeOptions,
+        description: "Leave as 'Inherit' to use the site font. Pick an editorial serif for a distinct literary feel." },
+      { type: "string",  name: "quoteFontSize",       label: "Quote — Size",   options: fontSizeOptions },
+      { type: "string",  name: "quoteFontWeight",     label: "Quote — Weight", options: fontWeightOptions },
+      { type: "boolean", name: "quoteItalic",         label: "Quote — Italic",
+        description: "Works well combined with a Font choice above, or on its own with the site font." },
+      { type: "string",  name: "attributionFontSize", label: "Attribution — Size", options: fontSizeOptions,
+        description: "The attribution line is never italic, regardless of the Quote settings above." },
+      { type: "boolean", name: "enabled",             label: "Section Enabled" },
+    ],
+  },
 ] as const;
 
 // ── Collection fields list ────────────────────────────────────────────────────

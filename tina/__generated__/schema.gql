@@ -253,7 +253,24 @@ type PageBlocksTestimonial {
   enabled: Boolean
 }
 
-union PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy | PageBlocksTestimonial
+type PageBlocksQuoteQuotes {
+  text: String
+  author: String
+  source: String
+  active: Boolean
+}
+
+type PageBlocksQuote {
+  quotes: [PageBlocksQuoteQuotes]
+  quoteFont: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  quoteItalic: Boolean
+  attributionFontSize: String
+  enabled: Boolean
+}
+
+union PageBlocks = PageBlocksSection | PageBlocksProcessFlow | PageBlocksCaseStudy | PageBlocksTestimonial | PageBlocksQuote
 
 type Page implements Node & Document {
   blocks: [PageBlocks]
@@ -435,11 +452,29 @@ input PageBlocksTestimonialFilter {
   enabled: BooleanFilter
 }
 
+input PageBlocksQuoteQuotesFilter {
+  text: StringFilter
+  author: StringFilter
+  source: StringFilter
+  active: BooleanFilter
+}
+
+input PageBlocksQuoteFilter {
+  quotes: PageBlocksQuoteQuotesFilter
+  quoteFont: StringFilter
+  quoteFontSize: StringFilter
+  quoteFontWeight: StringFilter
+  quoteItalic: BooleanFilter
+  attributionFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
 input PageBlocksFilter {
   section: PageBlocksSectionFilter
   processFlow: PageBlocksProcessFlowFilter
   caseStudy: PageBlocksCaseStudyFilter
   testimonial: PageBlocksTestimonialFilter
+  quote: PageBlocksQuoteFilter
 }
 
 input PageFilter {
@@ -608,7 +643,24 @@ type Page_deBlocksTestimonial {
   enabled: Boolean
 }
 
-union Page_deBlocks = Page_deBlocksSection | Page_deBlocksProcessFlow | Page_deBlocksCaseStudy | Page_deBlocksTestimonial
+type Page_deBlocksQuoteQuotes {
+  text: String
+  author: String
+  source: String
+  active: Boolean
+}
+
+type Page_deBlocksQuote {
+  quotes: [Page_deBlocksQuoteQuotes]
+  quoteFont: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  quoteItalic: Boolean
+  attributionFontSize: String
+  enabled: Boolean
+}
+
+union Page_deBlocks = Page_deBlocksSection | Page_deBlocksProcessFlow | Page_deBlocksCaseStudy | Page_deBlocksTestimonial | Page_deBlocksQuote
 
 type Page_de implements Node & Document {
   blocks: [Page_deBlocks]
@@ -768,11 +820,29 @@ input Page_deBlocksTestimonialFilter {
   enabled: BooleanFilter
 }
 
+input Page_deBlocksQuoteQuotesFilter {
+  text: StringFilter
+  author: StringFilter
+  source: StringFilter
+  active: BooleanFilter
+}
+
+input Page_deBlocksQuoteFilter {
+  quotes: Page_deBlocksQuoteQuotesFilter
+  quoteFont: StringFilter
+  quoteFontSize: StringFilter
+  quoteFontWeight: StringFilter
+  quoteItalic: BooleanFilter
+  attributionFontSize: StringFilter
+  enabled: BooleanFilter
+}
+
 input Page_deBlocksFilter {
   section: Page_deBlocksSectionFilter
   processFlow: Page_deBlocksProcessFlowFilter
   caseStudy: Page_deBlocksCaseStudyFilter
   testimonial: Page_deBlocksTestimonialFilter
+  quote: Page_deBlocksQuoteFilter
 }
 
 input Page_deFilter {
@@ -2335,11 +2405,29 @@ input PageBlocksTestimonialMutation {
   enabled: Boolean
 }
 
+input PageBlocksQuoteQuotesMutation {
+  text: String
+  author: String
+  source: String
+  active: Boolean
+}
+
+input PageBlocksQuoteMutation {
+  quotes: [PageBlocksQuoteQuotesMutation]
+  quoteFont: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  quoteItalic: Boolean
+  attributionFontSize: String
+  enabled: Boolean
+}
+
 input PageBlocksMutation {
   section: PageBlocksSectionMutation
   processFlow: PageBlocksProcessFlowMutation
   caseStudy: PageBlocksCaseStudyMutation
   testimonial: PageBlocksTestimonialMutation
+  quote: PageBlocksQuoteMutation
 }
 
 input PageMutation {
@@ -2497,11 +2585,29 @@ input Page_deBlocksTestimonialMutation {
   enabled: Boolean
 }
 
+input Page_deBlocksQuoteQuotesMutation {
+  text: String
+  author: String
+  source: String
+  active: Boolean
+}
+
+input Page_deBlocksQuoteMutation {
+  quotes: [Page_deBlocksQuoteQuotesMutation]
+  quoteFont: String
+  quoteFontSize: String
+  quoteFontWeight: String
+  quoteItalic: Boolean
+  attributionFontSize: String
+  enabled: Boolean
+}
+
 input Page_deBlocksMutation {
   section: Page_deBlocksSectionMutation
   processFlow: Page_deBlocksProcessFlowMutation
   caseStudy: Page_deBlocksCaseStudyMutation
   testimonial: Page_deBlocksTestimonialMutation
+  quote: Page_deBlocksQuoteMutation
 }
 
 input Page_deMutation {

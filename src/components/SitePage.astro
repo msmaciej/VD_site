@@ -1440,6 +1440,63 @@ const contentGroups = (text: string) => {
         );
       }
 
+      // ── Quote (epigraph) ────────────────────────────────────────────────────
+      // A closing philosophical beat, not client social proof — deliberately no
+      // eyebrow label above it (unlike testimonial's tag), just the line itself.
+      // Several quotes can be stored; the one with active:true renders (falls
+      // back to the first stored quote if none is marked, so this never
+      // silently renders blank). Font is fully overridable per the CMS fields
+      // above: a different family, italic, or both — the attribution line is
+      // hard-set to not-italic regardless, since a name should never slant.
+      if (block._template === 'quote') {
+        const activeQuote = block.quotes?.find((q: any) => q.active) || block.quotes?.[0];
+        // Built from the two separate Tina fields first (author — source),
+        // THEN run through the same '|' convention as everywhere else — so a
+        // '|' typed at the end of Author, or anywhere inside Source, breaks
+        // the attribution onto its own line exactly like it does in the
+        // quote text above, with no separate mechanism to learn. The auto
+        // ' — ' separator only gets inserted when neither field already has
+        // a manual '|' break — otherwise it'd land stranded at the start of
+        // whichever line follows it, which nobody wants.
+        const quoteHasManualBreak = (activeQuote?.author || '').includes('|') || (activeQuote?.source || '').includes('|');
+        const quoteAttributionRaw = activeQuote
+          ? [activeQuote.author, activeQuote.source].filter(Boolean).join(quoteHasManualBreak ? '' : ' — ')
+          : '';
+        const quoteLines = activeQuote?.text ? streamLines(activeQuote.text) : [];
+        const attributionLines = quoteAttributionRaw ? streamLines(quoteAttributionRaw, 0, 0.08) : [];
+        return (
+          <div class="vd-screen vd-reveal">
+            <div class="w-full max-w-2xl text-center">
+
+              {quoteLines.length > 0 && (
+                <blockquote
+                  class={`${fontSizeClass(block.quoteFontSize || typo.body?.size || 'text-[20px]')} ${block.quoteFontWeight || typo.body?.weight || 'font-light'} ${block.quoteItalic ? 'italic' : ''} leading-relaxed mb-6`}
+                  style={textStyle(zenText, block.quoteFont || typo.body?.font, typo.body?.opacity ?? 85)}
+                >
+                  {quoteLines.map((line, i) => (
+                    <span class={`vd-line ${animTextHover ? 'vd-hover-grow' : ''}`} style={`transition-delay: ${line.delay};`}>
+                      {i === 0 ? '\u201c' : ''}{line.text}{i === quoteLines.length - 1 ? '\u201d' : ''}
+                    </span>
+                  ))}
+                </blockquote>
+              )}
+
+              {attributionLines.length > 0 && (
+                <p
+                  class={`not-italic ${fontSizeClass(block.attributionFontSize || typo.label?.size || 'text-[9px]')} ${typo.label?.uppercase !== false ? 'uppercase' : ''} ${typo.label?.tracking || 'tracking-[0.25em]'}`}
+                  style={textStyle(zenText, typo.label?.font, typo.label?.opacity ?? 40)}
+                >
+                  {attributionLines.map((line) => (
+                    <span class="vd-line" style={`transition-delay: ${line.delay};`}>{line.text}</span>
+                  ))}
+                </p>
+              )}
+
+            </div>
+          </div>
+        );
+      }
+
       // ── Standard content section ──────────────────────────────────────────
       // Body fold is only live when there IS a body to fold and it's shown.
       // A foldable section borrows the proven .vd-screen--flow treatment (grow +

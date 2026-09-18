@@ -538,6 +538,35 @@
       "_template": "processFlow"
     },
     {
+      "quotes": [
+        {
+          "text": "Vollkommenheit entsteht offensichtlich nicht dann, wenn man nichts mehr hinzuzufügen hat, sondern wenn man nichts mehr wegnehmen kann.",
+          "author": "Antoine de Saint-Exupéry",
+          "source": "Wind, Sand und Sterne, 1939",
+          "active": true
+        },
+        {
+          "text": "Es ist nicht die tägliche Zunahme, sondern die tägliche Abnahme. Weg mit dem Unwesentlichen.",
+          "author": "Bruce Lee",
+          "source": "",
+          "active": false
+        },
+        {
+          "text": "Macht, Gewalt, Zwang wird durch die Sinne erlebt; Kraft kann man nur durch innere Achtsamkeit erkennen.",
+          "author": "David R. Hawkins",
+          "source": "Die Ebenen des Bewußtseins",
+          "active": false
+        }
+      ],
+      "quoteFont": "Newsreader",
+      "quoteFontSize": "xl",
+      "quoteFontWeight": "font-light",
+      "quoteItalic": true,
+      "attributionFontSize": "2xs",
+      "enabled": true,
+      "_template": "quote"
+    },
+    {
       "title": "Kontakt",
       "titleFontSize": "",
       "titleFontWeight": "",
