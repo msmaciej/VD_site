@@ -127,11 +127,11 @@ const acc = {
   introOpacity: typo.body?.opacity ?? 60,
   copySize: typo.body?.size ? fontSizePx(typo.body.size) : '12px',
   copyOpacity: typo.body?.opacity ?? 58,
-  ctaSize: typo.button?.size ? fontSizePx(typo.button.size) : '11px',
-  ctaWeight: typo.button?.weight ? fontWeightNumber(typo.button.weight) : '400',
-  ctaTracking: typo.button?.tracking ? trackingEm(typo.button.tracking) : '0.3em',
-  ctaOpacity: typo.button?.opacity ?? 75,
-  ctaFont: typo.button?.font ? fontFamily(typo.button.font) : null,
+  ctaSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
+  ctaWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
+  ctaTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.3em',
+  ctaOpacity: typo.label?.opacity ?? 75,
+  ctaFont: typo.label?.font ? fontFamily(typo.label.font) : null,
   cueSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
   cueTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
   cueOpacity: typo.label?.opacity ?? 50,
@@ -1302,7 +1302,7 @@ const contentGroups = (text: string) => {
               {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
                 <div class="flex justify-center mt-10">
                   <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                     class={`vd-cta ${fontSizeClass(typo.button?.size || 'text-[11px]')}`}
+                     class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
                      style={`color: ${zenText}; border-radius: ${ctaRadiusOf(block.ctaShape || settings.layout?.ctaShape)};`}>
                     {block.ctaLabel}
                   </a>
@@ -1621,7 +1621,7 @@ const contentGroups = (text: string) => {
             {block.ctaLabel && block.ctaUrl && (block.ctaUrl !== '/data' || dataPageEnabled) && (block.ctaUrl !== '/check' || fitCheckEnabled) && (
               <div class="flex justify-center mt-10">
                 <a href={lang === 'de' && block.ctaUrl.startsWith('/') ? `/de${block.ctaUrl}` : block.ctaUrl}
-                   class={`vd-cta ${fontSizeClass(typo.button?.size || 'text-[11px]')}`}
+                   class={`vd-cta ${fontSizeClass(typo.label?.size || 'text-[11px]')}`}
                    style={`color: ${zenText}; border-radius: ${ctaRadiusOf(block.ctaShape || settings.layout?.ctaShape)};`}>
                   {block.ctaLabel}
                 </a>

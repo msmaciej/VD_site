@@ -19,15 +19,15 @@
       "cueLabelOpen": "Less",
       "cards": [
         {
-          "title": "Workflow",
-          "line": "Workflows are built for your business."
+          "title": "Workflows",
+          "line": "They are built for your business."
         },
         {
-          "title": "Management",
+          "title": "Managed",
           "line": "They are managed monthly."
         },
         {
-          "title": "Control",
+          "title": "by Human",
           "line": "Human control stays at the centre."
         }
       ],
@@ -53,18 +53,19 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
+      "showGroupIntros": false,
       "cards": [
         {
-          "title": "Control",
+          "title": "You",
           "line": "You stay in control. Nothing is sent, paid or filed on its own."
         },
         {
-          "title": "Data",
+          "title": "Your Data",
           "line": "Your data stays yours and never stored or shared."
         },
         {
-          "title": "No lock-in",
-          "line": "Stop at the end of any month."
+          "title": "Contract",
+          "line": "No lock-in or long contracts. You can stop it at the end of any month."
         },
         {
           "title": "Build",
@@ -265,7 +266,7 @@
         },
         {
           "title": "Control",
-          "line": "You keep the judgement: the ambiguous cases, the decisions, the final sign-off."
+          "line": "You keep the judgement: the ambiguous cases, the decisions and the final sign-off."
         },
         {
           "title": "Limits",
@@ -318,12 +319,12 @@
       "cueLabelOpen": "Less",
       "cards": [
         {
-          "title": "Small Steps",
-          "line": "Get it working, earning its keep, then build from there."
+          "title": "Start Simple",
+          "line": "Get working business adjusted simple solutions."
         },
         {
-          "title": "Design",
-          "line": "Every automation shares the similar shape, so they connect as you grow."
+          "title": "Grow at Need",
+          "line": "Complex automations are based on workig simple solutions."
         }
       ],
       "cardColumns": "grid-cols-2",
@@ -354,7 +355,7 @@
       "title": "The Six Phases",
       "titleFontSize": "",
       "titleFontWeight": "",
-      "subTitle": "This is how your project runs | you sign off on each one.",
+      "subTitle": "This is how your project runs | you sign off on each one phase.",
       "subTitleFontSize": "",
       "subTitleFontWeight": "",
       "orientation": "vertical",

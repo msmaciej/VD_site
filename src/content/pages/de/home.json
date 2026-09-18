@@ -17,19 +17,20 @@
       "cueStyle": "dots",
       "cueLabel": "Mehr",
       "cueLabelOpen": "Weniger",
+      "showArt": false,
       "enabled": true,
       "_template": "section",
       "cards": [
         {
-          "title": "Für Ihr Unternehmen gebaut",
+          "title": "Abläufe",
           "line": "Die Abläufe werden für Ihr Unternehmen gebaut."
         },
         {
-          "title": "Monatlich betreut",
+          "title": "Betreut",
           "line": "Sie werden monatlich betreut."
         },
         {
-          "title": "Kontrolle beim Menschen",
+          "title": "vom Menschen",
           "line": "Die Kontrolle bleibt beim Menschen."
         }
       ],
@@ -57,19 +58,19 @@
       "_template": "section",
       "cards": [
         {
-          "title": "Sie behalten die Kontrolle",
-          "line": "Nichts wird von allein gesendet, bezahlt oder eingereicht."
+          "title": "Sie",
+          "line": "Sie behalten die Kontrolle. Nichts wird von allein gesendet, bezahlt oder eingereicht."
         },
         {
-          "title": "Ihre Daten bleiben Ihre",
-          "line": "Nie gespeichert, nie weitergegeben."
+          "title": "Ihre Daten",
+          "line": "Ihre Daten bleiben Ihre, nie gespeichert, nie weitergegeben."
         },
         {
-          "title": "Keine Bindung",
-          "line": "Kündbar auf Ende jedes Monats."
+          "title": "Vertrag",
+          "line": "Keine Bindung, kein langer Vertrag. Kündbar auf Ende jedes Monats."
         },
         {
-          "title": "Immer dieselbe Person",
+          "title": "Aufbau",
           "line": "Wer es baut, geht auch ans Telefon."
         }
       ],
@@ -263,15 +264,15 @@
       "cards": [
         {
           "title": "Wir automatisieren das Wiederkehrende",
-          "line": "Lesen, sortieren, entwerfen, ablegen. Jedes Ergebnis wird Ihnen zur Freigabe vorbereitet."
+          "line": "Wir automatisieren Routinen: lesen, sortieren, entwerfen, ablegen. Jedes Ergebnis wird Ihnen zur Freigabe vorbereitet."
         },
         {
           "title": "Sie behalten das Ermessen",
-          "line": "Die unklaren Fälle, die Entscheidungen, die letzte Freigabe."
+          "line": "Sie behalten das Ermessen: die unklaren Fälle, die Entscheidungen, die letzte Freigabe."
         },
         {
           "title": "Wir sind offen über Grenzen",
-          "line": "Wir sagen Ihnen immer offen, was besser bei Ihnen bleibt."
+          "line": "Wir sind offen über Grenzen und sagen klar, was besser bei Ihnen bleibt."
         }
       ],
       "cardColumns": "grid-cols-3"
@@ -320,12 +321,12 @@
       "_template": "section",
       "cards": [
         {
-          "title": "Klein, erprobt",
+          "title": "Kleine Schritte",
           "line": "Bringen Sie ihn zum Laufen, sodass er sich lohnt, und bauen Sie von dort weiter."
         },
         {
-          "title": "Passt zusammen",
-          "line": "Jede Automatisierung folgt derselben Form, sie fügen sich beim Wachsen zusammen."
+          "title": "Einheitliches Design",
+          "line": "Jede Automatisierung folgt derselben Form, sodass sie sich beim Wachsen zusammenfügen."
         }
       ],
       "cardColumns": "grid-cols-2"
@@ -542,7 +543,9 @@
       "titleFontWeight": "",
       "subTitle": "",
       "subTitleFontSize": "",
+      "meta": "Zürich, Schweiz",
       "email": "info@vortexdeep.ch",
+      "ctaLabel": "",
       "enabled": true,
       "_template": "section"
     }
