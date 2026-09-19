@@ -222,7 +222,7 @@ const appearanceFields = [
 export const fitCheckCollection = {
 
   name: "fitCheck",
-  label: "Fit Check",
+  label: "Page — Fit Check (/check)",
   path: "src/content/fitcheck",
   format: "json",
   ui: {

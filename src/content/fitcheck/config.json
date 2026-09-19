@@ -3,7 +3,7 @@
   "appearance": {
     "fontPreset": "",
     "customFontName": "",
-    "baseSize": "lg"
+    "baseSize": "base"
   },
   "introScreen": {
     "showIntro": true,
@@ -11,6 +11,7 @@
     "heading_de": "Passt das zu Ihnen?",
     "timing": "Six questions | About two minutes",
     "timing_de": "Sechs Fragen | Etwa zwei Minuten",
+    "foldSteps": true,
     "steps": [
       {
         "label": "Your role",

@@ -38,13 +38,7 @@
   "header": {
     "headerLayout": "centered",
     "headerLinksFontSize": "",
-    "navLinks": [
-      {
-        "label": "Fit Check",
-        "label_de": "Fit-Check",
-        "url": "/check"
-      }
-    ]
+    "navLinks": []
   },
   "footer": {
     "footerText": "© 2026 VortexDeep",
@@ -114,17 +108,27 @@
       "size": "lg"
     },
     "docTitle": {
-      "size": "xl"
+      "size": "",
+      "weight": ""
     },
     "docLede": {
-      "size": "xl"
+      "size": "",
+      "weight": ""
     },
     "docBody": {
-      "size": "xl",
-      "opacity": 65
+      "size": "",
+      "opacity": 50
+    },
+    "docEyebrow": {
+      "size": "",
+      "weight": ""
+    },
+    "docSectionHeading": {
+      "weight": ""
     },
     "quizTitle": {
-      "size": "xl"
+      "size": "lg",
+      "weight": "font-bold"
     },
     "quizBody": {
       "size": "xl"

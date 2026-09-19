@@ -158,7 +158,7 @@ var appearanceFields = [
 ];
 var fitCheckCollection = {
   name: "fitCheck",
-  label: "Fit Check",
+  label: "Page \u2014 Fit Check (/check)",
   path: "src/content/fitcheck",
   format: "json",
   ui: {
@@ -999,8 +999,8 @@ var config_default = defineConfig({
           {
             type: "object",
             name: "typography",
-            label: "Typography \u2014 site-wide text defaults",
-            description: "Titles, sub-titles and body text across all pages inherit these unless a block overrides them.",
+            label: "Typography \u2014 fonts for every named role (Title, Body, Data page, Fit Check, etc.)",
+            description: 'This is where to style a SPECIFIC piece of text \u2014 every named role lives here, including the per-page ones further down ("Data page \u2014 eyebrow" controls "Data & Privacy," etc.). For the ONE site-wide fallback font instead, see Global Appearance above.',
             fields: [
               { type: "object", name: "title", label: "Titles (bold headings)", fields: [
                 { type: "string", name: "font", label: "Font", options: fontTypeOptions },
@@ -1179,6 +1179,34 @@ var config_default = defineConfig({
               },
               {
                 type: "object",
+                name: "docEyebrow",
+                label: "Data page \u2014 eyebrow (small tag above the heading)",
+                description: "Blank = inherits the site-wide Label role (shared with nav links, card numbers, etc.) \u2014 same as today. Fill in to control this one tag independently.",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
+                name: "docSectionHeading",
+                label: "Data page \u2014 section headings",
+                description: "The small caps line at the top of each section ('Sample-first by default', 'What we never do', etc.) \u2014 every section on the page, all at once. Blank = inherits the site-wide Label role, same as today.",
+                fields: [
+                  { type: "string", name: "font", label: "Font", options: fontTypeOptions },
+                  { type: "string", name: "size", label: "Size", options: fontSizeOptions },
+                  { type: "string", name: "weight", label: "Weight", options: fontWeightOptions },
+                  { type: "boolean", name: "uppercase", label: "Uppercase" },
+                  { type: "number", name: "opacity", label: "Opacity (0\u2013100)" },
+                  { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions }
+                ]
+              },
+              {
+                type: "object",
                 name: "quizTitle",
                 label: "Fit Check \u2014 question & result heading",
                 fields: [
@@ -1219,46 +1247,52 @@ var config_default = defineConfig({
             ]
           },
           // ── Global appearance ─────────────────────────────────────────────
-          { type: "object", name: "appearance", label: "Global appearance", fields: [
-            { type: "string", name: "fontPreset", label: "Global Default Font", options: [
-              { label: "Inter \u2014 Modern Sans", value: "Inter" },
-              { label: "Manrope \u2014 Warm Geometric Sans", value: "Manrope" },
-              { label: "Space Grotesk \u2014 Technical Sans", value: "Space Grotesk" },
-              { label: "Lora \u2014 Elegant Serif", value: "Lora" },
-              { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
-              { label: "Fraunces \u2014 Soft Display Serif", value: "Fraunces" },
-              { label: "Cormorant \u2014 Light Display Serif", value: "Cormorant" },
-              { label: "Instrument Serif \u2014 Minimal Editorial Serif", value: "Instrument Serif" },
-              { label: "IBM Plex Mono \u2014 Monospace", value: "IBM Plex Mono" },
-              { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
-              { label: "Custom Google Font", value: "custom" }
-            ] },
-            {
-              type: "string",
-              name: "customFontName",
-              label: "Custom Font Name (if Custom selected)",
-              description: "Exact name of any font on fonts.google.com \u2014 e.g. 'Playfair Display'. Fetches it directly from Google Fonts (weights 300\u2013800, italic included), so any real Google Font works for testing, not just the curated list above."
-            },
-            { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
-            { type: "string", name: "theme", label: "Theme", options: [
-              { label: "Light \u2014 pure white", value: "light" },
-              { label: "Dark  \u2014 pure black", value: "dark" },
-              { label: "Paper \u2014 warm white", value: "paper" },
-              { label: "Stone \u2014 warm grey", value: "stone" },
-              { label: "Mist  \u2014 cool blue-grey", value: "mist" },
-              { label: "Ink   \u2014 dark warm ground", value: "ink" },
-              { label: "Sand  \u2014 dry neutral", value: "sand" },
-              { label: "Deep  \u2014 constellation dark", value: "deep" }
-            ] },
-            { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
-            { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
-            {
-              type: "boolean",
-              name: "enableThemeToggle",
-              label: "Show visitor light/dark toggle (sun/moon icon)",
-              description: 'When on, visitors see a sun/moon icon in the header. It always starts showing your Theme setting above ("Current"), correctly iconed as sun or moon depending on how light or dark that theme actually reads. A visitor can click through to a fixed plain white or fixed plain black view and back \u2014 those two fixed views never use your custom colours above, only your Theme setting does. Their choice is remembered for their next visit; turning this off here always shows everyone your Theme setting again, regardless of anything a visitor previously chose.'
-            }
-          ] },
+          {
+            type: "object",
+            name: "appearance",
+            label: "Global Appearance \u2014 theme, colors & default font",
+            description: `Site-wide defaults: color theme, background style, and the ONE fallback font every element uses unless overridden below. To style a SPECIFIC piece of text (a heading, a page's body text, etc.) \u2014 including "Data & Privacy" and every other named role \u2014 go to Typography instead, further down this same page.`,
+            fields: [
+              { type: "string", name: "fontPreset", label: "Global Default Font", options: [
+                { label: "Inter \u2014 Modern Sans", value: "Inter" },
+                { label: "Manrope \u2014 Warm Geometric Sans", value: "Manrope" },
+                { label: "Space Grotesk \u2014 Technical Sans", value: "Space Grotesk" },
+                { label: "Lora \u2014 Elegant Serif", value: "Lora" },
+                { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
+                { label: "Fraunces \u2014 Soft Display Serif", value: "Fraunces" },
+                { label: "Cormorant \u2014 Light Display Serif", value: "Cormorant" },
+                { label: "Instrument Serif \u2014 Minimal Editorial Serif", value: "Instrument Serif" },
+                { label: "IBM Plex Mono \u2014 Monospace", value: "IBM Plex Mono" },
+                { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
+                { label: "Custom Google Font", value: "custom" }
+              ] },
+              {
+                type: "string",
+                name: "customFontName",
+                label: "Custom Font Name (if Custom selected)",
+                description: "Exact name of any font on fonts.google.com \u2014 e.g. 'Playfair Display'. Fetches it directly from Google Fonts (weights 300\u2013800, italic included), so any real Google Font works for testing, not just the curated list above."
+              },
+              { type: "boolean", name: "showLogo", label: "Show logo mark in header (alongside wordmark)" },
+              { type: "string", name: "theme", label: "Theme", options: [
+                { label: "Light \u2014 pure white", value: "light" },
+                { label: "Dark  \u2014 pure black", value: "dark" },
+                { label: "Paper \u2014 warm white", value: "paper" },
+                { label: "Stone \u2014 warm grey", value: "stone" },
+                { label: "Mist  \u2014 cool blue-grey", value: "mist" },
+                { label: "Ink   \u2014 dark warm ground", value: "ink" },
+                { label: "Sand  \u2014 dry neutral", value: "sand" },
+                { label: "Deep  \u2014 constellation dark", value: "deep" }
+              ] },
+              { type: "string", name: "baseTextColor", label: "Global Text Colour", ui: { component: "color" } },
+              { type: "string", name: "customBackgroundColor", label: "Custom Background Colour", ui: { component: "color" } },
+              {
+                type: "boolean",
+                name: "enableThemeToggle",
+                label: "Show visitor light/dark toggle (sun/moon icon)",
+                description: 'When on, visitors see a sun/moon icon in the header. It always starts showing your Theme setting above ("Current"), correctly iconed as sun or moon depending on how light or dark that theme actually reads. A visitor can click through to a fixed plain white or fixed plain black view and back \u2014 those two fixed views never use your custom colours above, only your Theme setting does. Their choice is remembered for their next visit; turning this off here always shows everyone your Theme setting again, regardless of anything a visitor previously chose.'
+              }
+            ]
+          },
           // ── Animations ────────────────────────────────────────────────────
           // General toggles default to ON when left unset (existing content
           // with no value for these fields keeps animating exactly as before
@@ -1560,7 +1594,7 @@ var config_default = defineConfig({
       // the home page hides itself.
       {
         name: "dataPage",
-        label: "Data Page (/data)",
+        label: "Page \u2014 Data (/data)",
         path: "src/content/dataPage",
         format: "json",
         ui: { allowedActions: { create: false, delete: false } },
@@ -1577,9 +1611,54 @@ var config_default = defineConfig({
             label: "Page enabled",
             description: "Off = the /data page is not built and its button on the home page disappears. On = the page exists and the button shows."
           },
+          {
+            type: "object",
+            name: "appearance",
+            label: "Appearance \u2014 font & text size",
+            description: "A local shortcut for this page only \u2014 same idea as Fit Check's own Appearance section. Leave blank to inherit Site Settings \u2192 Typography \u2192 Data page roles (set there for full per-element control); fill in here for a quick page-wide override instead.",
+            fields: [
+              {
+                type: "string",
+                name: "fontPreset",
+                label: "Data Page Font",
+                description: "Overrides the site's Global Default Font on this page only. 'Inherit' follows Site Settings.",
+                options: [
+                  { label: "Inherit site default", value: "" },
+                  { label: "IBM Plex Mono \u2014 Monospace", value: "IBM Plex Mono" },
+                  { label: "Inter \u2014 Modern Sans", value: "Inter" },
+                  { label: "Lora \u2014 Elegant Serif", value: "Lora" },
+                  { label: "Space Mono \u2014 Monospace", value: "Space Mono" },
+                  { label: "Newsreader \u2014 Editorial", value: "Newsreader" },
+                  { label: "Custom Google Font", value: "custom" }
+                ]
+              },
+              { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+              {
+                type: "string",
+                name: "baseSize",
+                label: "Data Page Text Size",
+                description: "Scales the whole page's type up or down proportionally, same size scale used across the site.",
+                options: [
+                  { label: "S \u2014 compact", value: "sm" },
+                  { label: "M \u2014 default", value: "base" },
+                  { label: "L \u2014 larger", value: "lg" },
+                  { label: "XL \u2014 largest", value: "xl" }
+                ]
+              }
+            ]
+          },
           { type: "string", name: "eyebrow", label: "Small label (eyebrow)" },
+          { type: "string", name: "eyebrowFont", label: "Eyebrow \u2014 Font", options: fontTypeOptions },
+          { type: "string", name: "eyebrowFontSize", label: "Eyebrow \u2014 Size", options: fontSizeOptions },
+          { type: "string", name: "eyebrowFontWeight", label: "Eyebrow \u2014 Weight", options: fontWeightOptions },
           { type: "string", name: "heading", label: "Heading" },
+          { type: "string", name: "headingFont", label: "Heading \u2014 Font", options: fontTypeOptions },
+          { type: "string", name: "headingFontSize", label: "Heading \u2014 Size", options: fontSizeOptions },
+          { type: "string", name: "headingFontWeight", label: "Heading \u2014 Weight", options: fontWeightOptions },
           { type: "string", name: "intro", label: "Intro line", ui: { component: "textarea" } },
+          { type: "string", name: "introFont", label: "Intro \u2014 Font", options: fontTypeOptions },
+          { type: "string", name: "introFontSize", label: "Intro \u2014 Size", options: fontSizeOptions },
+          { type: "string", name: "introFontWeight", label: "Intro \u2014 Weight", options: fontWeightOptions },
           {
             type: "object",
             list: true,
@@ -1588,6 +1667,9 @@ var config_default = defineConfig({
             ui: { itemProps: (item) => ({ label: item?.heading || "(note)" }) },
             fields: [
               { type: "string", name: "heading", label: "Heading (leave empty for a plain note)" },
+              { type: "string", name: "headingFont", label: "Heading \u2014 Font", options: fontTypeOptions },
+              { type: "string", name: "headingFontSize", label: "Heading \u2014 Size", options: fontSizeOptions },
+              { type: "string", name: "headingFontWeight", label: "Heading \u2014 Weight", options: fontWeightOptions },
               { type: "string", name: "style", label: "Style", options: [
                 { label: "Paragraphs", value: "prose" },
                 { label: "Bulleted list", value: "list" },
@@ -1598,7 +1680,10 @@ var config_default = defineConfig({
                 name: "body",
                 label: "Body \u2014 separate paragraphs / bullets with |",
                 ui: { component: "textarea" }
-              }
+              },
+              { type: "string", name: "bodyFont", label: "Body \u2014 Font", options: fontTypeOptions },
+              { type: "string", name: "bodyFontSize", label: "Body \u2014 Size", options: fontSizeOptions },
+              { type: "string", name: "bodyFontWeight", label: "Body \u2014 Weight", options: fontWeightOptions }
             ]
           },
           { type: "string", name: "contactEmail", label: "Contact email" }

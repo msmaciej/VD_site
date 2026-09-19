@@ -1,7 +1,12 @@
 {
   "lang": "en",
   "enabled": true,
+  "appearance": {
+    "baseSize": ""
+  },
   "eyebrow": "Data & Privacy",
+  "eyebrowFontSize": "xl",
+  "eyebrowFontWeight": "font-bold",
   "heading": "How we handle your data",
   "intro": "Your data is yours, and we build so it stays that way — much of the work never touches your real data at all.",
   "sections": [

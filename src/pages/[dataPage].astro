@@ -5,7 +5,7 @@
 // page is not built at all — a direct visit just gets the normal not-found.
 import Layout from '../layouts/Layout.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm, themeColors, themeFamily } from '../utils/siteHelpers.ts';
+import { fontFamily, socialIcon, filterNavLinks, isFitCheckEnabled, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm, themeColors, themeFamily, fontScaleFactor } from '../utils/siteHelpers.ts';
 import doc from '../content/dataPage/en.json';
 
 export async function getStaticPaths() {
@@ -17,32 +17,96 @@ const settingFiles = await Astro.glob('../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
 const typo = (settings.typography || {}) as any;
 
-// Data page content — was entirely hardcoded CSS, now driven by Typography →
-// Label / Data page roles (blank there = these exact current values).
+// Data page content — driven by Typography → Data page roles when set;
+// otherwise now falls through to the SAME global roles every other title/
+// body/label on the site reads (title/subTitle/body/label), before finally
+// landing on a hard literal. Previously docTitle/docLede/docBody fell
+// straight to a hardcoded number when unset, skipping the global roles
+// entirely — meaning changing the site-wide Titles/Body typography had no
+// effect here at all, unlike a normal section or "The Six Phases", which
+// read typo.title/typo.body directly. This restores that inheritance while
+// keeping the Data-page-specific roles available for anyone who wants this
+// page to look deliberately different from the rest of the site.
+const roleSize    = (specific: any, fallback: any, hard: string) => specific?.size    ? fontSizePx(specific.size)         : fallback?.size    ? fontSizePx(fallback.size)         : hard;
+const roleWeight   = (specific: any, fallback: any, hard: string) => specific?.weight  ? fontWeightNumber(specific.weight) : fallback?.weight  ? fontWeightNumber(fallback.weight)  : hard;
+const roleTracking = (specific: any, fallback: any, hard: string) => specific?.tracking ? trackingEm(specific.tracking)    : fallback?.tracking ? trackingEm(fallback.tracking)     : hard;
+const roleOpacity  = (specific: any, fallback: any, hard: number) => specific?.opacity ?? fallback?.opacity ?? hard;
+const roleFont     = (specific: any, fallback: any) => specific?.font ? fontFamily(specific.font) : fallback?.font ? fontFamily(fallback.font) : null;
+
+// Inline per-field overrides (the Font/Size/Weight controls sitting right
+// next to Eyebrow/Heading/Intro above) take priority over the Typography
+// role, which takes priority over the shared global role — same 3-tier
+// idea as everywhere else on the site, just merged into one object here so
+// the existing roleSize/roleWeight/etc. helpers (specific, fallback, hard)
+// still only need two levels to check.
+const d = doc as any;
+const inlineEyebrow = { font: d.eyebrowFont, size: d.eyebrowFontSize, weight: d.eyebrowFontWeight, tracking: typo.docEyebrow?.tracking, opacity: typo.docEyebrow?.opacity };
+const inlineHeading = { font: d.headingFont, size: d.headingFontSize, weight: d.headingFontWeight, tracking: typo.docTitle?.tracking, opacity: typo.docTitle?.opacity };
+const inlineIntro   = { font: d.introFont,   size: d.introFontSize,   weight: d.introFontWeight,   tracking: typo.docLede?.tracking,  opacity: typo.docLede?.opacity  };
+// Falls through inline → Typography role → global role, in that order.
+const mergedEyebrow = { ...typo.docEyebrow, ...Object.fromEntries(Object.entries(inlineEyebrow).filter(([, v]) => v)) };
+const mergedHeading = { ...typo.docTitle,   ...Object.fromEntries(Object.entries(inlineHeading).filter(([, v]) => v)) };
+const mergedIntro   = { ...typo.docLede,    ...Object.fromEntries(Object.entries(inlineIntro).filter(([, v]) => v)) };
+
 const vd = {
-  eyebrowSize: typo.label?.size ? fontSizePx(typo.label.size) : '10px',
-  eyebrowWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
-  eyebrowTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.24em',
-  eyebrowOpacity: typo.label?.opacity ?? 100,
-  h1Size: typo.docTitle?.size ? fontSizePx(typo.docTitle.size) : '20px',
-  h1Weight: typo.docTitle?.weight ? fontWeightNumber(typo.docTitle.weight) : '600',
-  h1Tracking: typo.docTitle?.tracking ? trackingEm(typo.docTitle.tracking) : '0.01em',
-  h1Opacity: typo.docTitle?.opacity ?? 100,
-  ledeSize: typo.docLede?.size ? fontSizePx(typo.docLede.size) : '16px',
-  ledeWeight: typo.docLede?.weight ? fontWeightNumber(typo.docLede.weight) : '400',
-  ledeTracking: typo.docLede?.tracking ? trackingEm(typo.docLede.tracking) : 'normal',
-  ledeOpacity: typo.docLede?.opacity ?? 92,
-  h2Size: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
-  h2Weight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '600',
-  h2Tracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.22em',
-  h2Opacity: typo.label?.opacity ?? 100,
-  bodySize: typo.docBody?.size ? fontSizePx(typo.docBody.size) : '15px',
-  bodyWeight: typo.docBody?.weight ? fontWeightNumber(typo.docBody.weight) : '400',
-  bodyTracking: typo.docBody?.tracking ? trackingEm(typo.docBody.tracking) : 'normal',
-  bodyOpacity: typo.docBody?.opacity ?? 100,
-  noteSize: typo.docBody?.size ? fontSizePx(typo.docBody.size) : '12px',
-  docFont: typo.docBody?.font ? fontFamily(typo.docBody.font) : null,
-  labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
+  eyebrowSize: roleSize(mergedEyebrow, typo.label, '10px'),
+  eyebrowWeight: roleWeight(mergedEyebrow, typo.label, '400'),
+  eyebrowTracking: roleTracking(mergedEyebrow, typo.label, '0.24em'),
+  eyebrowOpacity: roleOpacity(mergedEyebrow, typo.label, 100),
+  h1Size: roleSize(mergedHeading, typo.title, '20px'),
+  h1Weight: roleWeight(mergedHeading, typo.title, '600'),
+  h1Tracking: roleTracking(mergedHeading, typo.title, '0.01em'),
+  h1Opacity: roleOpacity(mergedHeading, typo.title, 100),
+  ledeSize: roleSize(mergedIntro, typo.subTitle, '16px'),
+  ledeWeight: roleWeight(mergedIntro, typo.subTitle, '400'),
+  ledeTracking: roleTracking(mergedIntro, typo.subTitle, 'normal'),
+  ledeOpacity: roleOpacity(mergedIntro, typo.subTitle, 92),
+  h2Size: roleSize(typo.docSectionHeading, typo.label, '11px'),
+  h2Weight: roleWeight(typo.docSectionHeading, typo.label, '600'),
+  h2Tracking: roleTracking(typo.docSectionHeading, typo.label, '0.22em'),
+  h2Opacity: roleOpacity(typo.docSectionHeading, typo.label, 100),
+  bodySize: roleSize(typo.docBody, typo.body, '15px'),
+  bodyWeight: roleWeight(typo.docBody, typo.body, '400'),
+  bodyTracking: roleTracking(typo.docBody, typo.body, 'normal'),
+  bodyOpacity: roleOpacity(typo.docBody, typo.body, 100),
+  noteSize: roleSize(typo.docBody, typo.body, '12px'),
+  docFont: roleFont(typo.docBody, typo.body),
+  eyebrowFont: roleFont(mergedEyebrow, typo.label),
+  h2Font: roleFont(typo.docSectionHeading, typo.label),
+  // Found via a full audit of every text-bearing CSS rule on this page:
+  // .vd-h1 and .vd-lede had size/weight/tracking/opacity correctly wired to
+  // docTitle/docLede, but never had their OWN font-family — they silently
+  // inherited whatever .vd-doc's (body-derived) font resolved to instead of
+  // their own role's font. Size could diverge from the global Title/Subtitle
+  // roles correctly; the actual typeface could not.
+  h1Font: roleFont(mergedHeading, typo.title),
+  ledeFont: roleFont(mergedIntro, typo.subTitle),
+  // The contact email link — independent from the eyebrow on purpose. It
+  // used to literally share eyebrowSize/eyebrowTracking/eyebrowFont, so
+  // editing "Data & Privacy" silently dragged the email link's styling
+  // along with it. Sourced from the shared Label role directly, same as
+  // the email link on every other page, not from anything eyebrow-specific.
+  linkSize: typo.label?.size ? fontSizePx(typo.label.size) : '10px',
+  linkTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.24em',
+  linkFont: typo.label?.font ? fontFamily(typo.label.font) : null,
+};
+
+// Per-section inline overrides — sections are a list, so each one can set
+// its own Heading/Body Font/Size/Weight, unlike the single doc-level fields
+// above. Same inline → Typography role → global fallback order, computed
+// per-section at render time instead of once, and returned as a ready
+// inline style string.
+const sectionHeadingStyle = (sec: any) => {
+  const merged = { ...typo.docSectionHeading, ...Object.fromEntries(Object.entries({
+    font: sec.headingFont, size: sec.headingFontSize, weight: sec.headingFontWeight,
+  }).filter(([, v]) => v)) };
+  return `font-size: calc(${roleSize(merged, typo.label, '11px')} * var(--docTextScale, 1)); font-weight: ${roleWeight(merged, typo.label, '600')}; letter-spacing: ${roleTracking(merged, typo.label, '0.22em')}; opacity: ${roleOpacity(merged, typo.label, 100)}%; font-family: ${roleFont(merged, typo.label) || activeFontFamily};`;
+};
+const sectionBodyStyle = (sec: any) => {
+  const merged = { ...typo.docBody, ...Object.fromEntries(Object.entries({
+    font: sec.bodyFont, size: sec.bodyFontSize, weight: sec.bodyFontWeight,
+  }).filter(([, v]) => v)) };
+  return `font-size: calc(${roleSize(merged, typo.body, '15px')} * var(--docTextScale, 1)); font-weight: ${roleWeight(merged, typo.body, '400')}; letter-spacing: ${roleTracking(merged, typo.body, 'normal')}; opacity: ${roleOpacity(merged, typo.body, 100)}%; font-family: ${roleFont(merged, typo.body) || activeFontFamily};`;
 };
 
 const currentTheme = settings.appearance.theme || 'light';
@@ -71,7 +135,22 @@ const autoFamily = themeFamily(getBgColor());
 const activeFont = (settings.appearance.fontPreset === 'custom' && settings.appearance.customFontName)
   ? settings.appearance.customFontName
   : (settings.appearance.fontPreset || 'Inter');
-const activeFontFamily = fontFamily(activeFont);
+let activeFontFamily = fontFamily(activeFont);
+
+// ── Data Page appearance overrides (Tina: Page — Data → Appearance) ───────
+// Same local-shortcut pattern as Fit Check's own Appearance section: Font,
+// if set, overrides the site Global Default Font on this page only (blank =
+// inherit); Text size is a scale factor multiplied into the docFont sizes
+// below, same size-scale used across the site.
+const docAppear = (doc as any).appearance || {};
+const docFontChoice = docAppear.fontPreset || '';
+if (docFontChoice) {
+  const docFontName = (docFontChoice === 'custom' && docAppear.customFontName)
+    ? docAppear.customFontName
+    : docFontChoice;
+  activeFontFamily = fontFamily(docFontName);
+}
+const docTextScale = fontScaleFactor(docAppear.baseSize, 'base');
 
 const headerHeight     = settings.layout.headerHeight     || '52px';
 const footerHeight     = settings.layout.footerHeight     || '44px';
@@ -155,26 +234,26 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
   <main class="min-h-[100svh] flex flex-col items-center px-6"
         style={`background-color: var(--zen-bg); color: var(--zen-text); font-family: ${activeFontFamily}; padding-top: calc(${headerHeight} + 32px); padding-bottom: calc(${footerHeight} + env(safe-area-inset-bottom, 0px) + 40px);`}>
     <article class="vd-doc">
-      {(doc as any).eyebrow && <p class="vd-eyebrow">{(doc as any).eyebrow}</p>}
-      <h1 class="vd-h1">{(doc as any).heading}</h1>
-      {(doc as any).intro && <p class="vd-lede">{(doc as any).intro}</p>}
+      {(doc as any).eyebrow && <p class="vd-eyebrow" style={`font-size:calc(${vd.eyebrowSize} * ${docTextScale}); font-weight:${vd.eyebrowWeight}; letter-spacing:${vd.eyebrowTracking}; opacity:${vd.eyebrowOpacity}%; font-family:${vd.eyebrowFont || activeFontFamily};`}>{(doc as any).eyebrow}</p>}
+      <h1 class="vd-h1" style={`font-size:calc(${vd.h1Size} * ${docTextScale}); font-weight:${vd.h1Weight}; letter-spacing:${vd.h1Tracking}; opacity:${vd.h1Opacity}%; font-family:${vd.h1Font || activeFontFamily};`}>{(doc as any).heading}</h1>
+      {(doc as any).intro && <p class="vd-lede" style={`font-size:calc(${vd.ledeSize} * ${docTextScale}); font-weight:${vd.ledeWeight}; letter-spacing:${vd.ledeTracking}; opacity:${vd.ledeOpacity}%; font-family:${vd.ledeFont || activeFontFamily};`}>{(doc as any).intro}</p>}
 
       {(doc as any).sections?.map((sec: any) => (
         <section>
-          {sec.heading && <h2 class="vd-h2">{sec.heading}</h2>}
+          {sec.heading && <h2 class="vd-h2" style={`font-size:calc(${vd.h2Size} * ${docTextScale}); font-weight:${vd.h2Weight}; letter-spacing:${vd.h2Tracking}; opacity:${vd.h2Opacity}%; font-family:${vd.h2Font || activeFontFamily};`}>{sec.heading}</h2>}
           {sec.style === 'list' ? (
-            <ul class="vd-list">{parts(sec.body).map((li) => <li>{li}</li>)}</ul>
+            <ul class="vd-list">{parts(sec.body).map((li) => <li style={`font-size:calc(${vd.bodySize} * ${docTextScale}); font-weight:${vd.bodyWeight}; letter-spacing:${vd.bodyTracking}; opacity:${vd.bodyOpacity}%; font-family:${vd.docFont || activeFontFamily};`}>{li}</li>)}</ul>
           ) : sec.style === 'note' ? (
-            <div class="vd-note">{parts(sec.body).map((p) => <p style="margin:0 0 6px;">{p}</p>)}</div>
+            <div class="vd-note" style={`font-size:calc(${vd.noteSize} * ${docTextScale}); font-weight:${vd.bodyWeight}; letter-spacing:${vd.bodyTracking}; opacity:${vd.bodyOpacity}%; font-family:${vd.docFont || activeFontFamily};`}>{parts(sec.body).map((p) => <p style="margin:0 0 6px;">{p}</p>)}</div>
           ) : (
             parts(sec.body).map((p, i) => (
-              <p class={i === parts(sec.body).length - 1 && parts(sec.body).length > 2 ? 'vd-muted' : ''}>{p}</p>
+              <p class={i === parts(sec.body).length - 1 && parts(sec.body).length > 2 ? 'vd-muted' : ''} style={`font-size:calc(${vd.bodySize} * ${docTextScale}); font-weight:${vd.bodyWeight}; letter-spacing:${vd.bodyTracking}; opacity:${vd.bodyOpacity}%; font-family:${vd.docFont || activeFontFamily};`}>{p}</p>
             ))
           )}
         </section>
       ))}
 
-      <p class="vd-contact"><a href={`mailto:${contactEmail}`} class="vd-soft-link">{contactEmail}</a></p>
+      <p class="vd-contact"><a href={`mailto:${contactEmail}`} class="vd-soft-link" style={`font-size:calc(${vd.linkSize} * ${docTextScale}); letter-spacing:${vd.linkTracking}; font-family:${vd.linkFont || activeFontFamily};`}>{contactEmail}</a></p>
     </article>
   </main>
 
@@ -242,22 +321,25 @@ const parts = (s: string) => (s || '').split('|').map((x) => x.trim()).filter(Bo
     h2Size: vd.h2Size, h2Weight: vd.h2Weight, h2Tracking: vd.h2Tracking, h2Opacity: vd.h2Opacity,
     bodySize: vd.bodySize, bodyWeight: vd.bodyWeight, bodyTracking: vd.bodyTracking, bodyOpacity: vd.bodyOpacity,
     noteSize: vd.noteSize,
-    docFont: vd.docFont || activeFontFamily, labelFont: vd.labelFont || activeFontFamily,
+    docFont: vd.docFont || activeFontFamily, eyebrowFont: vd.eyebrowFont || activeFontFamily, h2Font: vd.h2Font || activeFontFamily,
+    linkSize: vd.linkSize, linkTracking: vd.linkTracking, linkFont: vd.linkFont || activeFontFamily,
+    h1Font: vd.h1Font || activeFontFamily, ledeFont: vd.ledeFont || activeFontFamily,
+    docTextScale,
   }}>
     .vd-doc { max-width: 640px; width: 100%; margin: 0 auto; line-height: 1.75; font-family: var(--docFont); }
-    .vd-eyebrow { font-size: var(--eyebrowSize); font-weight: var(--eyebrowWeight); letter-spacing: var(--eyebrowTracking); opacity: calc(var(--eyebrowOpacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; font-family: var(--labelFont); }
-    .vd-h1 { font-size: var(--h1Size); font-weight: var(--h1Weight); letter-spacing: var(--h1Tracking); opacity: calc(var(--h1Opacity, 100) * 1%); text-align: center; margin: 0 0 16px; line-height: 1.4; }
-    .vd-lede { font-size: var(--ledeSize); font-weight: var(--ledeWeight); letter-spacing: var(--ledeTracking); text-align: center; opacity: calc(var(--ledeOpacity, 92) * 1%); margin: 0 auto 52px; max-width: 540px; }
+    .vd-eyebrow { font-size: calc(var(--eyebrowSize) * var(--docTextScale, 1)); font-weight: var(--eyebrowWeight); letter-spacing: var(--eyebrowTracking); opacity: calc(var(--eyebrowOpacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); text-align: center; margin: 0 0 14px; font-family: var(--eyebrowFont); }
+    .vd-h1 { font-size: calc(var(--h1Size) * var(--docTextScale, 1)); font-weight: var(--h1Weight); letter-spacing: var(--h1Tracking); opacity: calc(var(--h1Opacity, 100) * 1%); text-align: center; margin: 0 0 16px; line-height: 1.4; font-family: var(--h1Font); }
+    .vd-lede { font-size: calc(var(--ledeSize) * var(--docTextScale, 1)); font-weight: var(--ledeWeight); letter-spacing: var(--ledeTracking); text-align: center; opacity: calc(var(--ledeOpacity, 92) * 1%); margin: 0 auto 52px; max-width: 540px; font-family: var(--ledeFont); }
     .vd-doc section { border-top: 1px solid color-mix(in srgb, var(--zen-muted) 22%, transparent); padding-top: 24px; margin: 0 0 36px; }
-    .vd-h2 { font-size: var(--h2Size); font-weight: var(--h2Weight); letter-spacing: var(--h2Tracking); opacity: calc(var(--h2Opacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; font-family: var(--labelFont); }
-    .vd-doc p { font-size: var(--bodySize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); margin: 0 0 12px; }
+    .vd-h2 { font-size: calc(var(--h2Size) * var(--docTextScale, 1)); font-weight: var(--h2Weight); letter-spacing: var(--h2Tracking); opacity: calc(var(--h2Opacity, 100) * 1%); text-transform: uppercase; color: var(--zen-accent, var(--zen-muted)); margin: 0 0 14px; font-family: var(--h2Font); }
+    .vd-doc p { font-size: calc(var(--bodySize) * var(--docTextScale, 1)); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); margin: 0 0 12px; }
     .vd-muted { color: var(--zen-muted); }
     .vd-list { list-style: none; padding: 0; margin: 8px 0 0; }
-    .vd-list li { font-size: var(--bodySize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); padding: 7px 0 7px 20px; position: relative; }
+    .vd-list li { font-size: calc(var(--bodySize) * var(--docTextScale, 1)); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); padding: 7px 0 7px 20px; position: relative; }
     .vd-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--zen-accent, var(--zen-muted)); }
-    .vd-note { font-size: var(--noteSize); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+    .vd-note { font-size: calc(var(--noteSize) * var(--docTextScale, 1)); font-weight: var(--bodyWeight); letter-spacing: var(--bodyTracking); opacity: calc(var(--bodyOpacity, 100) * 1%); color: var(--zen-muted); border: 1px dashed color-mix(in srgb, var(--zen-muted) 40%, transparent); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
     .vd-contact { text-align: center; margin-top: 52px; }
-    .vd-soft-link { font-size: var(--eyebrowSize); letter-spacing: var(--eyebrowTracking); color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; font-family: var(--labelFont); }
+    .vd-soft-link { font-size: calc(var(--linkSize) * var(--docTextScale, 1)); letter-spacing: var(--linkTracking); color: var(--zen-accent, var(--zen-text)); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--zen-muted) 50%, transparent); padding-bottom: 2px; font-family: var(--linkFont); }
     .vd-soft-link:hover { opacity: 0.8; }
   </style>
 </Layout>

@@ -1067,6 +1067,24 @@ type SettingsTypographyDocBody {
   tracking: String
 }
 
+type SettingsTypographyDocEyebrow {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+type SettingsTypographyDocSectionHeading {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
 type SettingsTypographyQuizTitle {
   font: String
   size: String
@@ -1107,6 +1125,8 @@ type SettingsTypography {
   docTitle: SettingsTypographyDocTitle
   docLede: SettingsTypographyDocLede
   docBody: SettingsTypographyDocBody
+  docEyebrow: SettingsTypographyDocEyebrow
+  docSectionHeading: SettingsTypographyDocSectionHeading
   quizTitle: SettingsTypographyQuizTitle
   quizBody: SettingsTypographyQuizBody
   button: SettingsTypographyButton
@@ -1404,6 +1424,24 @@ input SettingsTypographyDocBodyFilter {
   tracking: StringFilter
 }
 
+input SettingsTypographyDocEyebrowFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
+input SettingsTypographyDocSectionHeadingFilter {
+  font: StringFilter
+  size: StringFilter
+  weight: StringFilter
+  uppercase: BooleanFilter
+  opacity: NumberFilter
+  tracking: StringFilter
+}
+
 input SettingsTypographyQuizTitleFilter {
   font: StringFilter
   size: StringFilter
@@ -1444,6 +1482,8 @@ input SettingsTypographyFilter {
   docTitle: SettingsTypographyDocTitleFilter
   docLede: SettingsTypographyDocLedeFilter
   docBody: SettingsTypographyDocBodyFilter
+  docEyebrow: SettingsTypographyDocEyebrowFilter
+  docSectionHeading: SettingsTypographyDocSectionHeadingFilter
   quizTitle: SettingsTypographyQuizTitleFilter
   quizBody: SettingsTypographyQuizBodyFilter
   button: SettingsTypographyButtonFilter
@@ -1553,18 +1593,40 @@ type SettingsConnection implements Connection {
   edges: [SettingsConnectionEdges]
 }
 
+type DataPageAppearance {
+  fontPreset: String
+  customFontName: String
+  baseSize: String
+}
+
 type DataPageSections {
   heading: String
+  headingFont: String
+  headingFontSize: String
+  headingFontWeight: String
   style: String
   body: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
 }
 
 type DataPage implements Node & Document {
   lang: String
   enabled: Boolean
+  appearance: DataPageAppearance
   eyebrow: String
+  eyebrowFont: String
+  eyebrowFontSize: String
+  eyebrowFontWeight: String
   heading: String
+  headingFont: String
+  headingFontSize: String
+  headingFontWeight: String
   intro: String
+  introFont: String
+  introFontSize: String
+  introFontWeight: String
   sections: [DataPageSections]
   contactEmail: String
   id: ID!
@@ -1572,18 +1634,40 @@ type DataPage implements Node & Document {
   _values: JSON!
 }
 
+input DataPageAppearanceFilter {
+  fontPreset: StringFilter
+  customFontName: StringFilter
+  baseSize: StringFilter
+}
+
 input DataPageSectionsFilter {
   heading: StringFilter
+  headingFont: StringFilter
+  headingFontSize: StringFilter
+  headingFontWeight: StringFilter
   style: StringFilter
   body: StringFilter
+  bodyFont: StringFilter
+  bodyFontSize: StringFilter
+  bodyFontWeight: StringFilter
 }
 
 input DataPageFilter {
   lang: StringFilter
   enabled: BooleanFilter
+  appearance: DataPageAppearanceFilter
   eyebrow: StringFilter
+  eyebrowFont: StringFilter
+  eyebrowFontSize: StringFilter
+  eyebrowFontWeight: StringFilter
   heading: StringFilter
+  headingFont: StringFilter
+  headingFontSize: StringFilter
+  headingFontWeight: StringFilter
   intro: StringFilter
+  introFont: StringFilter
+  introFontSize: StringFilter
+  introFontWeight: StringFilter
   sections: DataPageSectionsFilter
   contactEmail: StringFilter
 }
@@ -2861,6 +2945,24 @@ input SettingsTypographyDocBodyMutation {
   tracking: String
 }
 
+input SettingsTypographyDocEyebrowMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
+input SettingsTypographyDocSectionHeadingMutation {
+  font: String
+  size: String
+  weight: String
+  uppercase: Boolean
+  opacity: Float
+  tracking: String
+}
+
 input SettingsTypographyQuizTitleMutation {
   font: String
   size: String
@@ -2901,6 +3003,8 @@ input SettingsTypographyMutation {
   docTitle: SettingsTypographyDocTitleMutation
   docLede: SettingsTypographyDocLedeMutation
   docBody: SettingsTypographyDocBodyMutation
+  docEyebrow: SettingsTypographyDocEyebrowMutation
+  docSectionHeading: SettingsTypographyDocSectionHeadingMutation
   quizTitle: SettingsTypographyQuizTitleMutation
   quizBody: SettingsTypographyQuizBodyMutation
   button: SettingsTypographyButtonMutation
@@ -2992,18 +3096,40 @@ input SettingsMutation {
   seo: SettingsSeoMutation
 }
 
+input DataPageAppearanceMutation {
+  fontPreset: String
+  customFontName: String
+  baseSize: String
+}
+
 input DataPageSectionsMutation {
   heading: String
+  headingFont: String
+  headingFontSize: String
+  headingFontWeight: String
   style: String
   body: String
+  bodyFont: String
+  bodyFontSize: String
+  bodyFontWeight: String
 }
 
 input DataPageMutation {
   lang: String
   enabled: Boolean
+  appearance: DataPageAppearanceMutation
   eyebrow: String
+  eyebrowFont: String
+  eyebrowFontSize: String
+  eyebrowFontWeight: String
   heading: String
+  headingFont: String
+  headingFontSize: String
+  headingFontWeight: String
   intro: String
+  introFont: String
+  introFontSize: String
+  introFontWeight: String
   sections: [DataPageSectionsMutation]
   contactEmail: String
 }

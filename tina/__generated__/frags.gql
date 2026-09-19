@@ -536,6 +536,24 @@ fragment SettingsParts on Settings {
       opacity
       tracking
     }
+    docEyebrow {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
+    docSectionHeading {
+      __typename
+      font
+      size
+      weight
+      uppercase
+      opacity
+      tracking
+    }
     quizTitle {
       __typename
       font
@@ -638,14 +656,35 @@ fragment DataPageParts on DataPage {
   __typename
   lang
   enabled
+  appearance {
+    __typename
+    fontPreset
+    customFontName
+    baseSize
+  }
   eyebrow
+  eyebrowFont
+  eyebrowFontSize
+  eyebrowFontWeight
   heading
+  headingFont
+  headingFontSize
+  headingFontWeight
   intro
+  introFont
+  introFontSize
+  introFontWeight
   sections {
     __typename
     heading
+    headingFont
+    headingFontSize
+    headingFontWeight
     style
     body
+    bodyFont
+    bodyFontSize
+    bodyFontWeight
   }
   contactEmail
 }

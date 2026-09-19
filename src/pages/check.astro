@@ -2,6 +2,7 @@
 // src/pages/check.astro  →  vortexdeep.ch/check
 import Layout from '../layouts/Layout.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import Fold from '../components/Fold.astro';
 import { themeColors, themeFamily, fontFamily, fontScaleFactor, socialIcon, fontSizeClass, textStyle, fontSizePx, fontWeightNumber, trackingEm } from '../utils/siteHelpers.ts';
 
 // Pull real Site Settings so this page mimics the rest of the site's header,
@@ -19,27 +20,56 @@ const settingFiles = await Astro.glob('../content/settings/*.json');
 const settings = settingFiles[0]?.default || {};
 const typo = (settings.typography || {}) as any;
 
-// Fit Check quiz content — was entirely hardcoded CSS, now driven by
-// Typography → Label / Fit Check roles (blank there = these exact values).
+// Fit Check quiz content — driven by Typography → Fit Check roles when set,
+// otherwise now falls through to the SAME global Title/Body roles every
+// other title/body on the site reads, before finally landing on a hard
+// literal. Previously quizTitle/quizBody fell straight to a hardcoded
+// number when unset, skipping the global roles entirely — see the matching
+// fix (and full rationale) on /data for why this changed.
 // The existing fcTextScale multiplier is preserved on top, unchanged.
+const roleSize     = (specific: any, fallback: any, hard: string) => specific?.size     ? fontSizePx(specific.size)          : fallback?.size     ? fontSizePx(fallback.size)          : hard;
+const roleWeight   = (specific: any, fallback: any, hard: string) => specific?.weight   ? fontWeightNumber(specific.weight)  : fallback?.weight   ? fontWeightNumber(fallback.weight)  : hard;
+const roleTracking = (specific: any, fallback: any, hard: string) => specific?.tracking ? trackingEm(specific.tracking)     : fallback?.tracking ? trackingEm(fallback.tracking)      : hard;
+const roleOpacity  = (specific: any, fallback: any, hard: number) => specific?.opacity ?? fallback?.opacity ?? hard;
+const roleFont     = (specific: any, fallback: any) => specific?.font ? fontFamily(specific.font) : fallback?.font ? fontFamily(fallback.font) : null;
+
 const qz = {
-  qlSize: typo.quizTitle?.size ? fontSizePx(typo.quizTitle.size) : '15px',
-  qlWeight: typo.quizTitle?.weight ? fontWeightNumber(typo.quizTitle.weight) : '200',
-  qlTracking: typo.quizTitle?.tracking ? trackingEm(typo.quizTitle.tracking) : '0.04em',
-  qlOpacity: typo.quizTitle?.opacity ?? 100,
-  rhSize: typo.quizTitle?.size ? fontSizePx(typo.quizTitle.size) : '17px',
+  qlSize: roleSize(typo.quizTitle, typo.title, '15px'),
+  qlWeight: roleWeight(typo.quizTitle, typo.title, '200'),
+  qlTracking: roleTracking(typo.quizTitle, typo.title, '1.2em'),
+  qlOpacity: roleOpacity(typo.quizTitle, typo.title, 100),
+  rhSize: roleSize(typo.quizTitle, typo.title, '17px'),
   optSize: typo.label?.size ? fontSizePx(typo.label.size) : '13px',
   optTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.05em',
   tagSize: typo.label?.size ? fontSizePx(typo.label.size) : '11px',
+  // The intro screen's step-preview labels — matched to the SAME defaults
+  // "The Fit Check" home-page teaser uses for its own steps (a processFlow
+  // block, rendered by SitePage.astro): the Label role, thin weight, 75%
+  // opacity. Previously these reused the question-title styling (qlSize/
+  // qlWeight/qlOpacity) instead — a heavier, title-weight treatment that
+  // never matched the teaser these steps are meant to mirror.
+  stepWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '100',
+  stepOpacity: typo.label?.opacity ?? 75,
+  stepTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.25em',
   tagTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.2em',
   flTracking: typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.3em',
   labelWeight: typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400',
-  rbSize: typo.quizBody?.size ? fontSizePx(typo.quizBody.size) : '14px',
-  rbOpacity: typo.quizBody?.opacity ?? 65,
-  inputSize: typo.quizBody?.size ? fontSizePx(typo.quizBody.size) : '14px',
-  quizFont: typo.quizTitle?.font ? fontFamily(typo.quizTitle.font) : null,
+  rbSize: roleSize(typo.quizBody, typo.body, '14px'),
+  rbOpacity: roleOpacity(typo.quizBody, typo.body, 65),
+  inputSize: roleSize(typo.quizBody, typo.body, '14px'),
+  quizFont: roleFont(typo.quizTitle, typo.title),
   labelFont: typo.label?.font ? fontFamily(typo.label.font) : null,
-  bodyFont: typo.quizBody?.font ? fontFamily(typo.quizBody.font) : null,
+  bodyFont: roleFont(typo.quizBody, typo.body),
+  // The intro screen's "timing" line (e.g. "Six questions | About two
+  // minutes") is the closest thing this page has to a sub-title — matched
+  // to that global role directly, same as processFlow blocks' own subtitle,
+  // rather than the generic Label role it inherited by default before.
+  subSize: typo.subTitle?.size ? fontSizePx(typo.subTitle.size) : (typo.label?.size ? fontSizePx(typo.label.size) : '11px'),
+  subWeight: typo.subTitle?.weight ? fontWeightNumber(typo.subTitle.weight) : (typo.label?.weight ? fontWeightNumber(typo.label.weight) : '400'),
+  subTracking: typo.subTitle?.tracking ? trackingEm(typo.subTitle.tracking) : (typo.label?.tracking ? trackingEm(typo.label.tracking) : '0.15em'),
+  subOpacity: typo.subTitle?.opacity ?? typo.label?.opacity ?? 55,
+  subFont: typo.subTitle?.font ? fontFamily(typo.subTitle.font) : (typo.label?.font ? fontFamily(typo.label.font) : null),
+  subTransform: (typo.subTitle?.uppercase !== false) ? 'uppercase' : 'none',
 };
 
 const currentTheme = settings.appearance.theme || 'light';
@@ -82,6 +112,48 @@ const checkAnimationsEnabled = settings.animations.enableCheckPageAnimations ===
 // server-side scoring keys off them; the visible labels are all CMS-editable.
 const fitCheckFiles = await Astro.glob('../content/fitcheck/*.json');
 const fc = fitCheckFiles[0]?.default || {};
+
+// ── Intro-screen step connector animation ──────────────────────────────────
+// Faithfully replicated from SitePage.astro's processFlow dot-pulse system
+// (same defaults, same keyframe math) rather than importing it — check.astro
+// doesn't share SitePage.astro's component tree, and this is the one piece
+// of "The Fit Check" teaser's rendering that was still purely static here:
+// the teaser's connector dots visibly pulse/travel in sequence; these didn't
+// animate at all. Self-contained so it can't affect the (working, separate)
+// home-page teaser it's modeled on.
+const animFlow = settings.animations.processFlow?.enabled !== false;
+function dotPulseKeyframes(name: string, i: number, k: number, count: number, dotsN: number, restOpacity: number, peakOpacity: number) {
+  const slot = 100 / count;
+  const dotSlot = slot / dotsN;
+  const mid = i * slot + k * dotSlot + dotSlot * 0.5;
+  const spread = dotSlot * 1.7;
+  const riseStart = mid - spread / 2;
+  const fallEnd = mid + spread / 2;
+  const raw: [number, string][] = [
+    [0, `opacity: ${restOpacity};`],
+    [riseStart, `opacity: ${restOpacity};`],
+    [mid, `opacity: ${peakOpacity};`],
+    [fallEnd, `opacity: ${restOpacity};`],
+    [100, `opacity: ${restOpacity};`],
+  ];
+  const stops = new Map<string, string>();
+  raw.sort((a, b) => a[0] - b[0]).forEach(([pct, decl]) => {
+    stops.set(`${Math.min(100, Math.max(0, pct)).toFixed(3)}%`, decl);
+  });
+  return `@keyframes ${name} { ${Array.from(stops.entries()).map(([pct, decl]) => `${pct} { ${decl} }`).join(' ')} }`;
+}
+const introStepsN = fc.introScreen?.steps?.length || 0;
+const introConnectorCount = Math.max(introStepsN - 1, 0);
+const introDotsN = 2;      // matches the fixed dotsPerConnector already used below
+const introRelayDuration = 2 * introConnectorCount; // matches defaultFlowSpeed=2s/connector
+let introRelayCss = '';
+if (animFlow && introConnectorCount > 0) {
+  for (let i = 0; i < introConnectorCount; i++) {
+    for (let k = 0; k < introDotsN; k++) {
+      introRelayCss += dotPulseKeyframes(`vdRelayDot_fcintro_${i}_${k}`, i, k, introConnectorCount, introDotsN, 0.14, 0.85) + '\n';
+    }
+  }
+}
 
 // Shows the new intro screen only when explicitly enabled AND actually
 // filled in — an empty/unfinished draft can't accidentally go live between
@@ -238,7 +310,7 @@ for (const key of categoryKeysList) {
         </div>
       ) : (<>
 
-      <p class="text-[10px] uppercase tracking-[0.4em] mb-8 opacity-40 text-center">
+      <p class="mb-8 text-center" style="font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.4em; text-transform:uppercase; opacity:0.4; font-family:var(--labelFont);">
         The Fit Check
       </p>
 
@@ -246,27 +318,77 @@ for (const key of categoryKeysList) {
         <div id="vd-intro" class="text-center">
           <h1 class="vd-rh">{fc.introScreen.heading}</h1>
           {fc.introScreen.timing && (
-            <p class="vd-fl mb-6" style="opacity:0.55;">
+            <p class="vd-fl-sub mb-3">
               {fc.introScreen.timing.split('|').map((line: string) => <>{line.trim()}<br/></>)}
             </p>
           )}
+
+          {/* Same dot-connector diagram as the home-page teaser (processFlow,
+              vertical orientation) — not a separate list style — copied here
+              rather than imported since check.astro doesn't otherwise share
+              SitePage.astro's component tree. Numbered per step, as asked;
+              the teaser's own diagram is left exactly as it is (unnumbered),
+              this only affects this one intro screen. Fold is OPT-IN via
+              introScreen.foldSteps (Tina), exactly like processFlow blocks'
+              own foldProcess toggle ("The Six Phases" etc.) — off by default,
+              steps show straight away; on, they start behind the same
+              breathing-dots cue. */}
           {fc.introScreen.steps?.length > 0 && (
-            <div class="text-left max-w-[280px] mx-auto mb-6">
-              {fc.introScreen.steps.map((s: any, i: number) => (
-                <div class="flex items-baseline gap-3 py-2" style={`border-top:1px solid var(--zen-muted); opacity:0.85; ${i === fc.introScreen.steps.length - 1 ? 'border-bottom:1px solid var(--zen-muted);' : ''}`}>
-                  <span class="text-[10px] opacity-50" style="width:16px; flex:none;">{String(i + 1).padStart(2, '0')}</span>
-                  <span class="vd-ql" style="font-size:14px; text-transform:none; letter-spacing:normal;">{s.label}</span>
+            fc.introScreen.foldSteps === true ? (
+              <Fold id="vd-intro-steps" cueStyle="dots" ariaClosed="Show the six steps" ariaOpen="Hide the six steps" color="var(--zen-text)">
+                <div class="flex flex-col items-center gap-0 mb-2">
+                  {fc.introScreen.steps.map((s: any, i: number) => (
+                    <div class="flex flex-col items-center">
+                      <span class="vd-step-label" style="display:flex; align-items:baseline; gap:8px; padding-top:5px; padding-bottom:5px; margin:0;">
+                        <span style="opacity:0.4; font-size:0.75em;">{String(i + 1).padStart(2, '0')}</span>
+                        <span>{s.label}</span>
+                      </span>
+                      {i < fc.introScreen.steps.length - 1 && (
+                        <span class="vd-connector-v" style="color: var(--zen-text); gap: 5px;" aria-hidden="true">
+                          {Array.from({ length: introDotsN }).map((_, k) => (
+                            <span class="vd-relay-dot"
+                                  style={`width:1px; height:1px;${animFlow ? ` animation-name: vdRelayDot_fcintro_${i}_${k}; animation-duration: ${introRelayDuration}s;` : ''}`}></span>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+                {fc.introScreen.note && (<p class="vd-rb mt-10">{fc.introScreen.note}</p>)}
+              </Fold>
+            ) : (
+              <>
+                <div class="flex flex-col items-center gap-0 mb-2">
+                  {fc.introScreen.steps.map((s: any, i: number) => (
+                    <div class="flex flex-col items-center">
+                      <span class="vd-step-label" style="display:flex; align-items:baseline; gap:8px; padding-top:5px; padding-bottom:5px; margin:0;">
+                        <span style="opacity:0.4; font-size:0.75em;">{String(i + 1).padStart(2, '0')}</span>
+                        <span>{s.label}</span>
+                      </span>
+                      {i < fc.introScreen.steps.length - 1 && (
+                        <span class="vd-connector-v" style="color: var(--zen-text); gap: 5px;" aria-hidden="true">
+                          {Array.from({ length: introDotsN }).map((_, k) => (
+                            <span class="vd-relay-dot"
+                                  style={`width:1px; height:1px;${animFlow ? ` animation-name: vdRelayDot_fcintro_${i}_${k}; animation-duration: ${introRelayDuration}s;` : ''}`}></span>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {fc.introScreen.note && (<p class="vd-rb mt-10">{fc.introScreen.note}</p>)}
+              </>
+            )
           )}
-          {fc.introScreen.note && (<p class="vd-rb">{fc.introScreen.note}</p>)}
-          <button id="vd-begin" class="vd-soft-link" style="background:none; border:none; border-bottom:1px solid var(--zen-muted); cursor:pointer; display:inline-block;">{fc.introScreen.beginLabel || 'Begin'}</button>
+
+          <div class="mt-6">
+            <button id="vd-begin" class="vd-soft-link" style="background:none; border:none; border-bottom:1px solid var(--zen-muted); cursor:pointer; display:inline-block;">{fc.introScreen.beginLabel || 'Begin'}</button>
+          </div>
         </div>
       )}
 
       <div class={`flex justify-center gap-3 mb-3 ${showIntroScreen ? 'hidden' : ''}`} id="vd-progress"></div>
-      <p id="vd-stepname" class={`text-[10px] uppercase tracking-[0.3em] opacity-35 text-center mb-10 sm:mb-16 ${showIntroScreen ? 'hidden' : ''}`}></p>
+      <p id="vd-stepname" class={`text-center mb-10 sm:mb-16 ${showIntroScreen ? 'hidden' : ''}`} style="font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.3em; text-transform:uppercase; opacity:0.35; font-family:var(--labelFont);"></p>
 
       <!-- Q0: Role -->
       <div class={`vd-q ${showIntroScreen ? 'hidden' : ''}`} data-q="role">
@@ -341,8 +463,8 @@ for (const key of categoryKeysList) {
       </div>
 
       <div class="flex justify-between items-center mt-12" id="vd-nav">
-        <button id="vd-back" class="text-[10px] uppercase tracking-[0.3em] opacity-40 hover:opacity-80 transition-opacity" disabled>← Back</button>
-        <span id="vd-step" class="text-[10px] uppercase tracking-[0.3em] opacity-40">1 / 6</span>
+        <button id="vd-back" class="hover:opacity-80 transition-opacity" style="font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; font-family:var(--labelFont); background:none; border:none; cursor:pointer;" disabled>← Back</button>
+        <span id="vd-step" style="font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.3em; text-transform:uppercase; opacity:0.4; font-family:var(--labelFont);">1 / 6</span>
       </div>
 
       <!-- SHORT CLOSE — role = consultant / curious skip straight here, no
@@ -393,7 +515,7 @@ for (const key of categoryKeysList) {
             <div class="flex items-center justify-between gap-6">
               <div>
                 <span class="vd-fl" style="margin-bottom:6px;display:block;">Security check</span>
-                <p class="text-[12px] uppercase tracking-[0.08em]" style="color:var(--zen-text); margin:0;">
+                <p style="color:var(--zen-text); margin:0; font-size:calc(var(--tagSize) * var(--fcTextScale, 1) * 1.1); font-weight:var(--labelWeight); letter-spacing:0.08em; text-transform:uppercase; font-family:var(--labelFont);">
                   Calculate: <strong id="vd-math-q" style="opacity:1;">···</strong>
                 </p>
               </div>
@@ -403,15 +525,15 @@ for (const key of categoryKeysList) {
                      style="width:64px; text-align:center; font-size:16px; border-bottom:1px solid var(--zen-text);"/>
             </div>
           </div>
-          <p id="vd-gate-error" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
+          <p id="vd-gate-error" class="hidden" style="color:var(--zen-text); font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.1em; text-transform:uppercase; opacity:0.7; font-family:var(--labelFont);">
             Incorrect answer or invalid email — please try again.
           </p>
-          <p id="vd-gate-error-fallback" class="hidden text-[10px] uppercase tracking-[0.1em] opacity-70" style="color:var(--zen-text);">
+          <p id="vd-gate-error-fallback" class="hidden" style="color:var(--zen-text); font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.1em; text-transform:uppercase; opacity:0.7; font-family:var(--labelFont);">
             If this keeps happening, email us directly at <a href={`mailto:${contactEmail}`} class="vd-soft-link" style="text-transform:none; letter-spacing:normal;">{contactEmail}</a>.
           </p>
           <button type="submit"
-                  class="mt-2 text-[10px] uppercase tracking-[0.4em] border-b pb-2 self-center hover:opacity-50 transition-opacity"
-                  style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;font-family:inherit;color:var(--zen-text);">
+                  class="mt-2 border-b pb-2 self-center hover:opacity-50 transition-opacity"
+                  style="background:none;border-top:none;border-left:none;border-right:none;border-bottom:1px solid var(--zen-text);cursor:pointer;color:var(--zen-text); font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:0.4em; text-transform:uppercase; font-family:var(--labelFont);">
             See my result
           </button>
         </form>
@@ -458,15 +580,43 @@ for (const key of categoryKeysList) {
     </p>
   </footer>
 
+  <style set:html={introRelayCss}></style>
+
   <style is:global define:vars={{ activeFontFamily, fcTextScale,
     qlSize: qz.qlSize, qlWeight: qz.qlWeight, qlTracking: qz.qlTracking, qlOpacity: qz.qlOpacity, rhSize: qz.rhSize,
     optSize: qz.optSize, optTracking: qz.optTracking, tagSize: qz.tagSize, tagTracking: qz.tagTracking,
     flTracking: qz.flTracking, labelWeight: qz.labelWeight,
     rbSize: qz.rbSize, rbOpacity: qz.rbOpacity, inputSize: qz.inputSize,
     quizFont: qz.quizFont || activeFontFamily, labelFont: qz.labelFont || activeFontFamily, fcBodyFont: qz.bodyFont || activeFontFamily,
+    subSize: qz.subSize, subWeight: qz.subWeight, subTracking: qz.subTracking, subOpacity: qz.subOpacity,
+    subFont: qz.subFont || activeFontFamily, subTransform: qz.subTransform,
+    stepWeight: qz.stepWeight, stepOpacity: qz.stepOpacity, stepTracking: qz.stepTracking,
   }}>
     .vd-nav-link { transition: opacity 0.2s ease; }
     .vd-nav-link:hover { opacity: 1 !important; }
+    /* Intro screen's step-preview labels — matched to "The Fit Check" home
+       teaser's own steps (Label role, thin weight, 75% opacity), not the
+       question-title styling .vd-ql otherwise carries. */
+    .vd-step-label {
+      font-size: calc(var(--tagSize) * var(--fcTextScale, 1));
+      font-weight: var(--stepWeight);
+      letter-spacing: var(--stepTracking);
+      text-transform: uppercase;
+      opacity: calc(var(--stepOpacity, 75) * 1%);
+      font-family: var(--labelFont);
+    }
+    /* Intro screen's "timing" line — the Sub-title role, matched directly
+       (see the qz.sub* computation above for the full rationale), not the
+       Label role .vd-fl otherwise carries. */
+    .vd-fl-sub {
+      font-size: calc(var(--subSize) * var(--fcTextScale, 1));
+      font-weight: var(--subWeight);
+      letter-spacing: var(--subTracking);
+      text-transform: var(--subTransform);
+      opacity: calc(var(--subOpacity, 55) * 1%);
+      display: block;
+      font-family: var(--subFont);
+    }
     /* ── Font parity with the rest of the site ───────────────────────────────
        Layout.astro defaults body to Inter; SitePage.astro overrides that
        globally with the configured font. The Fit Check bypasses SitePage, so
@@ -580,7 +730,7 @@ for (const key of categoryKeysList) {
     .vd-opt:hover { opacity:1; border-color:var(--zen-text); }
     .vd-opt.selected { opacity:1; border-color:var(--zen-text); font-weight:600; }
     .vd-tag { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--tagTracking); text-transform:uppercase; opacity:0.5; border-bottom:1px solid var(--zen-muted); display:inline-block; padding-bottom:6px; margin-bottom:1.5rem; font-family:var(--labelFont); }
-    .vd-rh { font-size:calc(var(--rhSize) * var(--fcTextScale, 1)); font-weight:var(--qlWeight); letter-spacing:var(--qlTracking); opacity:calc(var(--qlOpacity, 100) * 1%); text-transform:uppercase; line-height:1.5; margin:0 0 1rem; font-family:var(--quizFont); }
+    .vd-rh { font-size:calc(var(--rhSize) * var(--fcTextScale, 1)); font-weight:var(--qlWeight); letter-spacing:var(--qlTracking); opacity:calc(var(--qlOpacity, 100) * 1%); text-transform:uppercase; line-height:1.5; margin:0 0 2rem; font-family:var(--quizFont); }
     .vd-rb { opacity:calc(var(--rbOpacity, 65) * 1%); font-size:calc(var(--rbSize) * var(--fcTextScale, 1)); line-height:1.7; max-width:38rem; margin:0 auto 2rem; font-family:var(--fcBodyFont); }
     .vd-fl { font-size:calc(var(--tagSize) * var(--fcTextScale, 1)); font-weight:var(--labelWeight); letter-spacing:var(--flTracking); text-transform:uppercase; opacity:0.5; display:block; margin-bottom:4px; font-family:var(--labelFont); }
     .vd-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--zen-muted); color:var(--zen-text); font-family:var(--fcBodyFont); font-size:calc(var(--inputSize) * var(--fcTextScale, 1)); padding:8px 2px; resize:vertical; }
@@ -594,6 +744,55 @@ for (const key of categoryKeysList) {
     #vd-progress span { width:7px; height:7px; border-radius:50%; background:var(--zen-text); opacity:0.22; transition:opacity 0.3s ease; }
     #vd-progress span.done { opacity:0.9; }
     .hidden { display:none; }
+
+    /* ── Fold cue (breathing dots) + connector dots — copied from
+       SitePage.astro verbatim (the Fold component's own styling and the
+       processFlow connector visual both live there, not in the Fold
+       component itself), since this page doesn't otherwise import
+       SitePage's styles. Kept unanimated here (no relay-flow keyframes) —
+       SitePage's live flow animation is generated per-block dynamically at
+       build time keyed to a block index that doesn't exist on this
+       single-flow page, and a static dot row already reads as the same
+       family (same size, spacing, connector shape) without that machinery. */
+    .vd-cue {
+      display: inline-flex; align-items: center; justify-content: center; gap: 11px;
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      padding: 10px 8px; margin: 6px auto 0;
+      opacity: 0.5;
+    }
+    .vd-cue-dots { display: inline-flex; align-items: center; gap: 7px; }
+    .vd-cue-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.3;
+      transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+      animation: vdCueBreath 3s ease-in-out infinite;
+    }
+    .vd-cue-dots .vd-cue-dot:nth-child(2) { animation-delay: 0.4s; }
+    .vd-cue-dots .vd-cue-dot:nth-child(3) { animation-delay: 0.8s; }
+    .vd-cue:hover .vd-cue-dot { opacity: 0.72; }
+    [data-vd-fold][data-open="true"] .vd-cue-dot { opacity: 0.9; animation-play-state: paused; }
+    @keyframes vdCueBreath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.42); } }
+
+    .vd-fold-body {
+      display: grid; grid-template-rows: 0fr; overflow: hidden; opacity: 0;
+      transition: grid-template-rows 0.55s cubic-bezier(0.4,0,0.2,1),
+                  opacity 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-vd-fold][data-open="true"] .vd-fold-body { grid-template-rows: 1fr; opacity: 1; }
+    .vd-fold-inner { min-height: 0; overflow: hidden; padding-top: 14px; }
+    @media (prefers-reduced-motion: reduce) {
+      .vd-cue-dot { animation: none; opacity: 0.5; }
+      .vd-fold-body { transition: opacity 0.3s ease; }
+    }
+
+    .vd-connector-v {
+      display: flex; flex-direction: column; align-items: center;
+      width: 8px; margin: 6px auto;
+    }
+    .vd-relay-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: currentColor; opacity: 0.14;
+    }
   </style>
 
   <script>
@@ -798,6 +997,21 @@ for (const key of categoryKeysList) {
 
     const introEl = document.getElementById('vd-intro');
     if (introEl) {
+      // Same open/close wiring as SitePage.astro's [data-vd-fold] handler,
+      // minus the scroll-into-view part — that exists there to re-anchor a
+      // snap-scroll section when it grows/shrinks, which doesn't apply on
+      // this single, non-snapping page.
+      document.querySelectorAll('[data-vd-fold]').forEach((fold) => {
+        const cue = fold.querySelector('[data-vd-fold-cue]');
+        cue?.addEventListener('click', () => {
+          const willOpen = fold.getAttribute('data-open') !== 'true';
+          fold.setAttribute('data-open', willOpen ? 'true' : 'false');
+          cue.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+          const nextAria = willOpen ? cue.getAttribute('data-aria-open') : cue.getAttribute('data-aria-closed');
+          if (nextAria) cue.setAttribute('aria-label', nextAria);
+        });
+      });
+
       // Intro screen present: don't reveal the progress bar / step name /
       // Q0 until "Begin" is clicked — their `hidden` classes are already
       // set server-side in the markup above; showStep('role') removes them

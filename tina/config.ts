@@ -624,8 +624,8 @@ export default defineConfig({
           // Set size + weight ONCE per role here and every page block inherits
           // it, so you don't hunt through each block. A block can still override
           // its own size/weight in the page editor; blank there = inherit these.
-          { type: "object", name: "typography", label: "Typography — site-wide text defaults",
-            description: "Titles, sub-titles and body text across all pages inherit these unless a block overrides them.",
+          { type: "object", name: "typography", label: "Typography — fonts for every named role (Title, Body, Data page, Fit Check, etc.)",
+            description: "This is where to style a SPECIFIC piece of text — every named role lives here, including the per-page ones further down (\"Data page — eyebrow\" controls \"Data & Privacy,\" etc.). For the ONE site-wide fallback font instead, see Global Appearance above.",
             fields: [
               { type: "object", name: "title", label: "Titles (bold headings)", fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -746,6 +746,26 @@ export default defineConfig({
                 { type: "number", name: "opacity", label: "Opacity (0–100)" },
                 { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions },
               ]},
+              { type: "object", name: "docEyebrow", label: "Data page — eyebrow (small tag above the heading)",
+                description: "Blank = inherits the site-wide Label role (shared with nav links, card numbers, etc.) — same as today. Fill in to control this one tag independently.",
+                fields: [
+                { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
+                { type: "string",  name: "size",      label: "Size",      options: fontSizeOptions },
+                { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
+                { type: "number", name: "opacity", label: "Opacity (0–100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions },
+              ]},
+              { type: "object", name: "docSectionHeading", label: "Data page — section headings",
+                description: "The small caps line at the top of each section ('Sample-first by default', 'What we never do', etc.) — every section on the page, all at once. Blank = inherits the site-wide Label role, same as today.",
+                fields: [
+                { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
+                { type: "string",  name: "size",      label: "Size",      options: fontSizeOptions },
+                { type: "string",  name: "weight",    label: "Weight",    options: fontWeightOptions },
+                { type: "boolean", name: "uppercase", label: "Uppercase" },
+                { type: "number", name: "opacity", label: "Opacity (0–100)" },
+                { type: "string", name: "tracking", label: "Letter spacing", options: trackingOptions },
+              ]},
               { type: "object", name: "quizTitle", label: "Fit Check — question & result heading",
                 fields: [
                 { type: "string",  name: "font",      label: "Font",      options: fontTypeOptions },
@@ -777,7 +797,9 @@ export default defineConfig({
           },
 
           // ── Global appearance ─────────────────────────────────────────────
-          { type: "object", name: "appearance", label: "Global appearance", fields: [
+          { type: "object", name: "appearance", label: "Global Appearance — theme, colors & default font",
+            description: "Site-wide defaults: color theme, background style, and the ONE fallback font every element uses unless overridden below. To style a SPECIFIC piece of text (a heading, a page's body text, etc.) — including \"Data & Privacy\" and every other named role — go to Typography instead, further down this same page.",
+            fields: [
             { type: "string", name: "fontPreset", label: "Global Default Font", options: [
               { label: "Inter — Modern Sans",    value: "Inter"      },
               { label: "Manrope — Warm Geometric Sans", value: "Manrope" },
@@ -993,7 +1015,7 @@ export default defineConfig({
       // the home page hides itself.
       {
         name: "dataPage",
-        label: "Data Page (/data)",
+        label: "Page — Data (/data)",
         path: "src/content/dataPage",
         format: "json",
         ui: { allowedActions: { create: false, delete: false } },
@@ -1002,14 +1024,55 @@ export default defineConfig({
             description: "Which language route this is — en or de. Leave as-is." },
           { type: "boolean", name: "enabled", label: "Page enabled",
             description: "Off = the /data page is not built and its button on the home page disappears. On = the page exists and the button shows." },
+          { type: "object", name: "appearance", label: "Appearance — font & text size",
+            description: "A local shortcut for this page only — same idea as Fit Check's own Appearance section. Leave blank to inherit Site Settings → Typography → Data page roles (set there for full per-element control); fill in here for a quick page-wide override instead.",
+            fields: [
+              {
+                type: "string", name: "fontPreset", label: "Data Page Font",
+                description: "Overrides the site's Global Default Font on this page only. 'Inherit' follows Site Settings.",
+                options: [
+                  { label: "Inherit site default",      value: ""             },
+                  { label: "IBM Plex Mono — Monospace", value: "IBM Plex Mono"},
+                  { label: "Inter — Modern Sans",        value: "Inter"        },
+                  { label: "Lora — Elegant Serif",       value: "Lora"         },
+                  { label: "Space Mono — Monospace",     value: "Space Mono"   },
+                  { label: "Newsreader — Editorial",     value: "Newsreader"   },
+                  { label: "Custom Google Font",         value: "custom"       },
+                ],
+              },
+              { type: "string", name: "customFontName", label: "Custom Font Name (if Custom selected)" },
+              {
+                type: "string", name: "baseSize", label: "Data Page Text Size",
+                description: "Scales the whole page's type up or down proportionally, same size scale used across the site.",
+                options: [
+                  { label: "S — compact",        value: "sm"   },
+                  { label: "M — default",        value: "base" },
+                  { label: "L — larger",         value: "lg"   },
+                  { label: "XL — largest",       value: "xl"   },
+                ],
+              },
+            ],
+          },
           { type: "string",  name: "eyebrow", label: "Small label (eyebrow)" },
+          { type: "string", name: "eyebrowFont",       label: "Eyebrow — Font",   options: fontTypeOptions },
+          { type: "string", name: "eyebrowFontSize",   label: "Eyebrow — Size",   options: fontSizeOptions },
+          { type: "string", name: "eyebrowFontWeight", label: "Eyebrow — Weight", options: fontWeightOptions },
           { type: "string",  name: "heading", label: "Heading" },
+          { type: "string", name: "headingFont",       label: "Heading — Font",   options: fontTypeOptions },
+          { type: "string", name: "headingFontSize",   label: "Heading — Size",   options: fontSizeOptions },
+          { type: "string", name: "headingFontWeight", label: "Heading — Weight", options: fontWeightOptions },
           { type: "string",  name: "intro",   label: "Intro line", ui: { component: "textarea" } },
+          { type: "string", name: "introFont",       label: "Intro — Font",   options: fontTypeOptions },
+          { type: "string", name: "introFontSize",   label: "Intro — Size",   options: fontSizeOptions },
+          { type: "string", name: "introFontWeight", label: "Intro — Weight", options: fontWeightOptions },
           {
             type: "object", list: true, name: "sections", label: "Sections",
             ui: { itemProps: (item: any) => ({ label: item?.heading || "(note)" }) },
             fields: [
               { type: "string", name: "heading", label: "Heading (leave empty for a plain note)" },
+              { type: "string", name: "headingFont",       label: "Heading — Font",   options: fontTypeOptions },
+              { type: "string", name: "headingFontSize",   label: "Heading — Size",   options: fontSizeOptions },
+              { type: "string", name: "headingFontWeight", label: "Heading — Weight", options: fontWeightOptions },
               { type: "string", name: "style", label: "Style", options: [
                 { label: "Paragraphs", value: "prose" },
                 { label: "Bulleted list", value: "list" },
@@ -1017,6 +1080,9 @@ export default defineConfig({
               ]},
               { type: "string", name: "body", label: "Body — separate paragraphs / bullets with |",
                 ui: { component: "textarea" } },
+              { type: "string", name: "bodyFont",       label: "Body — Font",   options: fontTypeOptions },
+              { type: "string", name: "bodyFontSize",   label: "Body — Size",   options: fontSizeOptions },
+              { type: "string", name: "bodyFontWeight", label: "Body — Weight", options: fontWeightOptions },
             ],
           },
           { type: "string", name: "contactEmail", label: "Contact email" },
