@@ -10,7 +10,7 @@ import LanguageSwitcher from './LanguageSwitcher.astro';
 import DepthNetworkBackground from './DepthNetworkBackground.astro';
 import PlanetarySystemsBackground from './PlanetarySystemsBackground.astro';
 import { ui, type Lang } from '../i18n/ui.ts';
-import { themeColors, themeFamily, fontFamily, textStyle, socialIcon, fontSizeClass, fontSizePx, trackingEm, fontWeightNumber } from '../utils/siteHelpers.ts';
+import { themeColors, themeFamily, fontFamily, textStyle, socialIcon, fontSizeClass, fontSizePx, trackingEm, fontWeightNumber, isFitCheckUrl } from '../utils/siteHelpers.ts';
 
 interface Props {
   lang:     Lang;
@@ -1635,11 +1635,15 @@ const contentGroups = (text: string) => {
                       {String(i + 1).padStart(2, '0')}
                     </p>
                     {c.title && (
-                      c.url ? (
+                      c.url && (!isFitCheckUrl(c.url) || fitCheckEnabled) ? (
                         // Same title typography/position as the plain card below —
                         // just wrapped in a pill border and made clickable. Deliberately
                         // NOT the bigger .vd-cta treatment: this should read as "the same
                         // card, its title happens to be a pill," not a different layout.
+                        // Gated on isFitCheckUrl/fitCheckEnabled the same way the section
+                        // CTA button already is — if a card links to /check and Fit Check
+                        // is turned off, it silently reverts to a plain card below rather
+                        // than staying a pill that leads to a "not available" page.
                         <a href={c.url}
                            class={`inline-block ${fontSizeClass(block.cardTitleFontSize || typo.cardTitle?.size || 'sm')} ${block.cardTitleFontWeight || typo.cardTitle?.weight || 'font-medium'} ${typo.cardTitle?.uppercase === true ? 'uppercase' : ''} ${block.cardTitleTracking || typo.cardTitle?.tracking || ''} ${block.cardInternalSpacing || settings.layout?.cardInternalSpacing || 'mb-1.5'} rounded-full border border-current border-opacity-25 px-3 py-0.5 -mx-3 hover:border-opacity-60 hover:opacity-80 transition-all duration-300`}
                            style={textStyle(zenText, block.cardTitleFont || typo.cardTitle?.font, block.cardTitleOpacity ?? typo.cardTitle?.opacity ?? 100)}>

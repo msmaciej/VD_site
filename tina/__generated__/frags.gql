@@ -659,6 +659,23 @@ fragment FitCheckParts on FitCheck {
     customFontName
     baseSize
   }
+  introScreen {
+    __typename
+    showIntro
+    heading
+    heading_de
+    timing
+    timing_de
+    steps {
+      __typename
+      label
+      label_de
+    }
+    note
+    note_de
+    beginLabel
+    beginLabel_de
+  }
   roleQuestion {
     __typename
     questionLabel

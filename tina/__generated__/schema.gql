@@ -1605,6 +1605,24 @@ type FitCheckAppearance {
   baseSize: String
 }
 
+type FitCheckIntroScreenSteps {
+  label: String
+  label_de: String
+}
+
+type FitCheckIntroScreen {
+  showIntro: Boolean
+  heading: String
+  heading_de: String
+  timing: String
+  timing_de: String
+  steps: [FitCheckIntroScreenSteps]
+  note: String
+  note_de: String
+  beginLabel: String
+  beginLabel_de: String
+}
+
 type FitCheckRoleQuestion {
   questionLabel: String
   questionLabel_de: String
@@ -1873,6 +1891,7 @@ type FitCheckConfirmPage {
 type FitCheck implements Node & Document {
   enabled: Boolean
   appearance: FitCheckAppearance
+  introScreen: FitCheckIntroScreen
   roleQuestion: FitCheckRoleQuestion
   categoryQuestion: FitCheckCategoryQuestion
   timeQuestion: FitCheckTimeQuestion
@@ -1891,6 +1910,24 @@ input FitCheckAppearanceFilter {
   fontPreset: StringFilter
   customFontName: StringFilter
   baseSize: StringFilter
+}
+
+input FitCheckIntroScreenStepsFilter {
+  label: StringFilter
+  label_de: StringFilter
+}
+
+input FitCheckIntroScreenFilter {
+  showIntro: BooleanFilter
+  heading: StringFilter
+  heading_de: StringFilter
+  timing: StringFilter
+  timing_de: StringFilter
+  steps: FitCheckIntroScreenStepsFilter
+  note: StringFilter
+  note_de: StringFilter
+  beginLabel: StringFilter
+  beginLabel_de: StringFilter
 }
 
 input FitCheckRoleQuestionFilter {
@@ -2161,6 +2198,7 @@ input FitCheckConfirmPageFilter {
 input FitCheckFilter {
   enabled: BooleanFilter
   appearance: FitCheckAppearanceFilter
+  introScreen: FitCheckIntroScreenFilter
   roleQuestion: FitCheckRoleQuestionFilter
   categoryQuestion: FitCheckCategoryQuestionFilter
   timeQuestion: FitCheckTimeQuestionFilter
@@ -2976,6 +3014,24 @@ input FitCheckAppearanceMutation {
   baseSize: String
 }
 
+input FitCheckIntroScreenStepsMutation {
+  label: String
+  label_de: String
+}
+
+input FitCheckIntroScreenMutation {
+  showIntro: Boolean
+  heading: String
+  heading_de: String
+  timing: String
+  timing_de: String
+  steps: [FitCheckIntroScreenStepsMutation]
+  note: String
+  note_de: String
+  beginLabel: String
+  beginLabel_de: String
+}
+
 input FitCheckRoleQuestionMutation {
   questionLabel: String
   questionLabel_de: String
@@ -3244,6 +3300,7 @@ input FitCheckConfirmPageMutation {
 input FitCheckMutation {
   enabled: Boolean
   appearance: FitCheckAppearanceMutation
+  introScreen: FitCheckIntroScreenMutation
   roleQuestion: FitCheckRoleQuestionMutation
   categoryQuestion: FitCheckCategoryQuestionMutation
   timeQuestion: FitCheckTimeQuestionMutation

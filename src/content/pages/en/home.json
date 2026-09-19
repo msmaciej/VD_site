@@ -69,8 +69,9 @@
           "line": "No lock-in, no long contracts — stop at the end of any month."
         },
         {
-          "title": "Build",
-          "line": "Who builds it is who answers the phone."
+          "title": "Fit Check",
+          "line": "Six short questions. Get a recommendation you can act on.",
+          "url": "/check"
         }
       ],
       "cardColumns": "grid-cols-2",
@@ -490,7 +491,7 @@
       "_template": "section"
     },
     {
-      "title": "The Fit Check -",
+      "title": "The Fit Check",
       "titleFontSize": "",
       "titleFontWeight": "",
       "subTitle": "Six questions | About two minutes",
@@ -536,7 +537,7 @@
       "cueStyle": "dots",
       "cueLabel": "More",
       "cueLabelOpen": "Less",
-      "enabled": false,
+      "enabled": true,
       "_template": "processFlow"
     },
     {

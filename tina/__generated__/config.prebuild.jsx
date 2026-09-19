@@ -98,6 +98,30 @@ var confirmPageFields = [
   ...bilingualString("expiredBody", "Expired-link page \u2014 body"),
   ...bilingualString("backLabel", "Expired-link page \u2014 back-to-check link")
 ];
+var introStepFields = [
+  ...bilingualString("label", "Step label")
+];
+var introFields = [
+  {
+    type: "boolean",
+    name: "showIntro",
+    label: "Show this screen before Q0",
+    description: `Off = the quiz opens directly on "Your role", as it did before this screen existed. Also skipped automatically if Heading below is left empty, so an unfinished draft can't go live by accident.`
+  },
+  ...bilingualString("heading", "Heading", "e.g. 'Is this a fit for you?'"),
+  ...bilingualString("timing", "Timing line", "e.g. 'Six questions | About two minutes' \u2014 use | for a line break, same convention as everywhere else on the site."),
+  {
+    type: "object",
+    list: true,
+    name: "steps",
+    label: "Step preview (what's asked, in order)",
+    description: "A quick preview of the questions ahead \u2014 not the questions themselves (those are configured below, in Q0\u2013Q4).",
+    fields: introStepFields,
+    ui: { itemProps: (item) => ({ label: item?.label || "Step" }) }
+  },
+  ...bilingualString("note", "Note under the steps", "e.g. explains the email + instant result."),
+  ...bilingualString("beginLabel", "Button label", "e.g. 'Begin'")
+];
 var appearanceFields = [
   {
     type: "string",
@@ -149,6 +173,7 @@ var fitCheckCollection = {
       description: 'Off = the "Fit Check" link disappears from the site header nav, the "Start the Fit Check" button hides wherever it appears (incl. the home-page teaser section), and the /check and /de/check pages show a short "not available" notice instead of the quiz. On = fully available everywhere. This is the single switch for the whole feature \u2014 no other toggle needs to change.'
     },
     { type: "object", name: "appearance", label: "Appearance \u2014 font & text size", fields: appearanceFields },
+    { type: "object", name: "introScreen", label: "Intro screen (shown before Q0)", fields: introFields },
     { type: "object", name: "roleQuestion", label: "Q0 \u2014 Role", fields: roleQuestionFields },
     { type: "object", name: "categoryQuestion", label: "Q1 \u2014 Category", fields: categoryQuestionFields },
     { type: "object", name: "timeQuestion", label: "Q2 \u2014 Time cost", fields: timeQuestionFields },

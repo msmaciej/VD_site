@@ -1,9 +1,46 @@
 {
-  "enabled": false,
+  "enabled": true,
   "appearance": {
     "fontPreset": "",
     "customFontName": "",
     "baseSize": "lg"
+  },
+  "introScreen": {
+    "showIntro": true,
+    "heading": "Is this a fit for you?",
+    "heading_de": "Passt das zu Ihnen?",
+    "timing": "Six questions | About two minutes",
+    "timing_de": "Sechs Fragen | Etwa zwei Minuten",
+    "steps": [
+      {
+        "label": "Your role",
+        "label_de": "Ihre Rolle"
+      },
+      {
+        "label": "Your area",
+        "label_de": "Ihr Bereich"
+      },
+      {
+        "label": "Where you are today",
+        "label_de": "Wo Sie heute stehen"
+      },
+      {
+        "label": "Your goal",
+        "label_de": "Ihr Ziel"
+      },
+      {
+        "label": "Your profile",
+        "label_de": "Ihr Profil"
+      },
+      {
+        "label": "My reply",
+        "label_de": "Meine Antwort"
+      }
+    ],
+    "note": "At the end you leave an email address. Your result appears on screen straight away, with a recommendation you can act on.",
+    "note_de": "Am Ende hinterlassen Sie eine E-Mail-Adresse. Ihr Ergebnis erscheint sofort auf dem Bildschirm, mit einer Empfehlung, die Sie direkt nutzen können.",
+    "beginLabel": "Begin",
+    "beginLabel_de": "Beginnen"
   },
   "roleQuestion": {
     "questionLabel": "What best describes you right now?",

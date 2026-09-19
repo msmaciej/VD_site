@@ -81,6 +81,12 @@ const checkAnimationsEnabled = settings.animations.enableCheckPageAnimations ===
 const fitCheckFiles = await Astro.glob('../../content/fitcheck/*.json');
 const fc = fitCheckFiles[0]?.default || {};
 
+// Shows the new intro screen only when explicitly enabled AND actually
+// filled in for German — checks heading_de specifically, so leaving only
+// the EN copy filled in doesn't half-render this screen with an empty
+// heading on the German page. See EN /check for the full rationale.
+const showIntroScreen = fc.introScreen?.showIntro !== false && !!fc.introScreen?.heading_de;
+
 // Master switch (Tina: Fit Check → "Fit Check enabled"). Off = this page's
 // own nav link hides itself and the quiz below is replaced by a short
 // "not available" notice — see the vd-root conditional further down.
@@ -224,12 +230,34 @@ for (const key of categoryKeysList) {
         Der Fit-Check
       </p>
 
+      {showIntroScreen && (
+        <div id="vd-intro" class="text-center">
+          <h1 class="vd-rh">{fc.introScreen.heading_de}</h1>
+          {fc.introScreen.timing_de && (
+            <p class="vd-fl mb-6" style="opacity:0.55;">
+              {fc.introScreen.timing_de.split('|').map((line: string) => <>{line.trim()}<br/></>)}
+            </p>
+          )}
+          {fc.introScreen.steps?.length > 0 && (
+            <div class="text-left max-w-[280px] mx-auto mb-6">
+              {fc.introScreen.steps.map((s: any, i: number) => (
+                <div class="flex items-baseline gap-3 py-2" style={`border-top:1px solid var(--zen-muted); opacity:0.85; ${i === fc.introScreen.steps.length - 1 ? 'border-bottom:1px solid var(--zen-muted);' : ''}`}>
+                  <span class="text-[10px] opacity-50" style="width:16px; flex:none;">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="vd-ql" style="font-size:14px; text-transform:none; letter-spacing:normal;">{s.label_de}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {fc.introScreen.note_de && (<p class="vd-rb">{fc.introScreen.note_de}</p>)}
+          <button id="vd-begin" class="vd-soft-link" style="background:none; border:none; border-bottom:1px solid var(--zen-muted); cursor:pointer; display:inline-block;">{fc.introScreen.beginLabel_de || 'Beginnen'}</button>
+        </div>
+      )}
 
-      <div class="flex justify-center gap-3 mb-3" id="vd-progress"></div>
-      <p id="vd-stepname" class="text-[10px] uppercase tracking-[0.3em] opacity-35 text-center mb-10 sm:mb-16"></p>
+      <div class={`flex justify-center gap-3 mb-3 ${showIntroScreen ? 'hidden' : ''}`} id="vd-progress"></div>
+      <p id="vd-stepname" class={`text-[10px] uppercase tracking-[0.3em] opacity-35 text-center mb-10 sm:mb-16 ${showIntroScreen ? 'hidden' : ''}`}></p>
 
       <!-- F0: Rolle -->
-      <div class="vd-q" data-q="role">
+      <div class={`vd-q ${showIntroScreen ? 'hidden' : ''}`} data-q="role">
         <p class="vd-ql">{fc.roleQuestion?.questionLabel_de}</p>
         <div class="flex flex-col gap-1">
           <button class="vd-opt" data-val="business">{fc.roleQuestion?.businessLabel_de}</button>
@@ -738,7 +766,17 @@ for (const key of categoryKeysList) {
     });
 
     document.querySelectorAll('.vd-restart').forEach(btn => btn.addEventListener('click', () => window.location.reload()));
-    showStep('role');
+
+    const introEl = document.getElementById('vd-intro');
+    if (introEl) {
+      document.getElementById('vd-begin')?.addEventListener('click', () => {
+        introEl.classList.add('hidden');
+        document.getElementById('vd-stepname')?.classList.remove('hidden');
+        showStep('role');
+      });
+    } else {
+      showStep('role');
+    }
     } // end fitCheckEnabled guard
   </script>
 </Layout>

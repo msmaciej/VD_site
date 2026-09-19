@@ -69,8 +69,9 @@
           "line": "Keine Bindung, kein langer Vertrag — kündbar auf Ende jedes Monats."
         },
         {
-          "title": "Aufbau",
-          "line": "Wer es baut, geht auch ans Telefon."
+          "title": "Fit Check",
+          "line": "Sechs kurze Fragen. Eine Empfehlung, die Sie direkt nutzen können.",
+          "url": "/de/check"
         }
       ],
       "cardColumns": "grid-cols-2",
